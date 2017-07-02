@@ -19,8 +19,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::prefix('/home')->group(function() {
+    Route::get('/', 'HomeController@index')->name('home');
+});
+
 Route::prefix('/user')->group(function() {
-    Route::get('/', 'HomeController@index')->name('user');
+    Route::get('/', 'UserController@all')->name('users');
+    Route::prefix('{id}')->group(function(){
+        Route::get('/', 'UserController@index')->name('user.id');
+        Route::get('/edit', 'UserController@edit')->name('user.edit');
+        Route::post('/update', 'UserController@update')->name('user.update');
+        Route::get('/delete', 'UserController@delete')->name('user.delete');
+    });
 });
 
 Route::prefix('admin')->group(function() {
