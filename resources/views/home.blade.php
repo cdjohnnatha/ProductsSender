@@ -5,14 +5,16 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">
+                    Dashboard
+                </div>
 
                 <div class="panel-body">
                     <section>
                         <table class="table">
                             <tr>
                                 <th>Name:</th>
-                                <td>{{Auth::user()->name.' '.Auth::user()->surname}}</td>
+                                <td id="name">{{Auth::user()->name.' '.Auth::user()->surname}}</td>
                             </tr>
                             <tr>
                                 <th>Email:</th>

@@ -40,11 +40,15 @@
                 </div>
                 <div class="form-group">
                     <div class="form-group pull-right">
-                        <a href="/home/all" class="btn btn-danger">
+                        @if(auth()->guard('admin')->user())
+                            <a href="/home/all" class="btn btn-danger">
+                        @else
+                            <a href="/home/{{$user->id}}" class="btn btn-danger">
+                        @endif
                             <span class="glyphicon glyphicon-trash"></span>
                             Cancel
                         </a>
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" class="btn btn-success" id="save">
                         <span class="glyphicon glyphicon-save"></span>
                             Save
                         </button>

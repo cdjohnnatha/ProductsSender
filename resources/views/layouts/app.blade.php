@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/common/common.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -53,8 +54,12 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="">Perfil</a></li>
-                                    <li><a href="{{route('user.edit', Auth::user()->id)}}">Edit</a></li>
-                                    <li><a href="{{route('user.destroy', Auth::user()->id)}}">Delete</a></li>
+                                    <li><a id="edit" href="{{route('user.edit', Auth::user()->id)}}">Edit</a></li>
+                                    <li>
+                                        {{Form::open(['method' => 'DELETE', 'url'=> route('user.destroy', Auth::user()->id), 'style' => 'display:inline'])}}
+                                            <button id="delete" type="submit" class="remove-button-border padding-list">Delete</button>
+                                        {{Form::close()}}
+                                    </li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();

@@ -36,7 +36,12 @@ class UserController extends Controller
 //            return response()->json([
 //                'user' => $user
 //            ])->setStatusCode(201);
-            return redirect('home/all');
+            if(auth()->guard('admin')->user()){
+                return redirect('home/all');
+            }else {
+                return redirect('home/'.$id);
+            }
+
         }
 
         return response()->setStatusCode(406);
@@ -58,7 +63,10 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-
-        redirect('home/all');
+        if(auth()->guard('admin')->user()){
+            return redirect('home/all');
+        }else {
+            return redirect('/');
+        }
     }
 }
