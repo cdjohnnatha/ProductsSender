@@ -28,4 +28,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function userAddresses()
+    {
+        return $this->morphMany('App\Address', 'addressable' ,'user_type');
+    }
 }
