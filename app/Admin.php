@@ -10,6 +10,9 @@ class Admin extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     protected $guard = 'admin';
     /**
      * The attributes that are mass assignable.

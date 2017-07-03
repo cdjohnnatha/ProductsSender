@@ -52,6 +52,9 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="">Perfil</a></li>
+                                    <li><a href="{{route('user.edit', Auth::user()->id)}}">Edit</a></li>
+                                    <li><a href="{{route('user.destroy', Auth::user()->id)}}">Delete</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -63,6 +66,7 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+
                                 </ul>
                             </li>
                         @endif
@@ -70,7 +74,9 @@
                 </div>
             </div>
         </nav>
-
+        {{--@if(auth()->guard('admin')->user())--}}
+            {{--@include('layouts._lateral_nav')--}}
+        {{--@endif--}}
         @yield('content')
     </div>
 

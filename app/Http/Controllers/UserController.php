@@ -11,8 +11,8 @@ class UserController extends Controller
     public function listAll()
     {
         return response()->json([
-            'users' => User::paginate(15)
-        ]);
+            'users' => User::paginate(15),
+        ])->setStatusCode(200);
     }
 
     public function show($id)
@@ -27,27 +27,38 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->name = $request->input('name');
         $user->surname = $request->input('surname');
-        $user->surname = $request->input('email');
-        $user->surname = $request->input('plan');
-        $user->surname = $request->input('phone');
+        $user->email = $request->input('email');
+//        $user->plan = $request->input('plan');
+        $user->country = $request->input('country');
+        $user->phone = $request->input('phone');
 
         if($user->save()){
-            return response()->json([
-                'user' => $user
-            ])->setStatusCode(201);
+//            return response()->json([
+//                'user' => $user
+//            ])->setStatusCode(201);
+            return redirect('home/all');
         }
 
         return response()->setStatusCode(406);
+    }
 
+    public function plan(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->plan = $request->input('plan');
+
+        if($user->save()){
+            return redirect('home');
+        }
+
+        return response()->setStatusCode(406);
     }
 
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        if ($user->trashed()) {
-            return response()->setStatusCode(200);
-        }
+        $user->delete();
 
-        return response()->setStatusCode(406);
+        redirect('home/all');
     }
 }

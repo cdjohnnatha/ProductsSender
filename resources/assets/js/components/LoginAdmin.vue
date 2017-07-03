@@ -1,5 +1,5 @@
 <template>
-  <section class="container col-sm-5 col-sm-offset-3" id="form-admin">
+  <section class="container col-sm-6 col-sm-offset-3" id="form-admin">
     <div class="row">
       <div class="panel panel-default">
         <header class="panel-heading">
