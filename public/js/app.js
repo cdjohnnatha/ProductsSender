@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(4);
+var bind = __webpack_require__(6);
 var isBuffer = __webpack_require__(20);
 
 /*global toString:true*/
@@ -375,106 +375,6 @@ module.exports = {
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(23);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(5);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(5);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -571,302 +471,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function bind(fn, thisArg) {
-  return function wrap() {
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-    return fn.apply(thisArg, args);
-  };
-};
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-var settle = __webpack_require__(24);
-var buildURL = __webpack_require__(26);
-var parseHeaders = __webpack_require__(27);
-var isURLSameOrigin = __webpack_require__(28);
-var createError = __webpack_require__(6);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(29);
-
-module.exports = function xhrAdapter(config) {
-  return new Promise(function dispatchXhrRequest(resolve, reject) {
-    var requestData = config.data;
-    var requestHeaders = config.headers;
-
-    if (utils.isFormData(requestData)) {
-      delete requestHeaders['Content-Type']; // Let the browser set it
-    }
-
-    var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if ("development" !== 'test' &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
-
-    // HTTP basic authentication
-    if (config.auth) {
-      var username = config.auth.username || '';
-      var password = config.auth.password || '';
-      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
-    }
-
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
-
-    // Set the request timeout in MS
-    request.timeout = config.timeout;
-
-    // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
-        return;
-      }
-
-      // The request errored out and we didn't get a response, this will be
-      // handled by onerror instead
-      // With one exception: request that using file: protocol, most browsers
-      // will return status as 0 even though it's a successful request
-      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
-        return;
-      }
-
-      // Prepare the response
-      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
-      var response = {
-        data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
-        headers: responseHeaders,
-        config: config,
-        request: request
-      };
-
-      settle(resolve, reject, response);
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle low level network errors
-    request.onerror = function handleError() {
-      // Real errors are hidden from us by the browser
-      // onerror should only fire if it's a network error
-      reject(createError('Network Error', config, null, request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle timeout
-    request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
-        request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Add xsrf header
-    // This is only done if running in a standard browser environment.
-    // Specifically not if we're in a web worker, or react-native.
-    if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(30);
-
-      // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-          cookies.read(config.xsrfCookieName) :
-          undefined;
-
-      if (xsrfValue) {
-        requestHeaders[config.xsrfHeaderName] = xsrfValue;
-      }
-    }
-
-    // Add headers to the request
-    if ('setRequestHeader' in request) {
-      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
-        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
-          // Remove Content-Type if data is undefined
-          delete requestHeaders[key];
-        } else {
-          // Otherwise add header to the request
-          request.setRequestHeader(key, val);
-        }
-      });
-    }
-
-    // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
-    }
-
-    // Add responseType to request if needed
-    if (config.responseType) {
-      try {
-        request.responseType = config.responseType;
-      } catch (e) {
-        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
-        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
-        if (config.responseType !== 'json') {
-          throw e;
-        }
-      }
-    }
-
-    // Handle progress if needed
-    if (typeof config.onDownloadProgress === 'function') {
-      request.addEventListener('progress', config.onDownloadProgress);
-    }
-
-    // Not all browsers support upload events
-    if (typeof config.onUploadProgress === 'function' && request.upload) {
-      request.upload.addEventListener('progress', config.onUploadProgress);
-    }
-
-    if (config.cancelToken) {
-      // Handle cancellation
-      config.cancelToken.promise.then(function onCanceled(cancel) {
-        if (!request) {
-          return;
-        }
-
-        request.abort();
-        reject(cancel);
-        // Clean up request
-        request = null;
-      });
-    }
-
-    if (requestData === undefined) {
-      requestData = null;
-    }
-
-    // Send the request
-    request.send(requestData);
-  });
-};
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var enhanceError = __webpack_require__(25);
-
-/**
- * Create an Error with the specified message, config, error code, request and response.
- *
- * @param {string} message The error message.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The created error.
- */
-module.exports = function createError(message, config, code, request, response) {
-  var error = new Error(message);
-  return enhanceError(error, config, code, request, response);
-};
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function isCancel(value) {
-  return !!(value && value.__CANCEL__);
-};
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * A `Cancel` is an object that is thrown when an operation is canceled.
- *
- * @class
- * @param {string=} message The message.
- */
-function Cancel(message) {
-  this.message = message;
-}
-
-Cancel.prototype.toString = function toString() {
-  return 'Cancel' + (this.message ? ': ' + this.message : '');
-};
-
-Cancel.prototype.__CANCEL__ = true;
-
-module.exports = Cancel;
-
-
-/***/ }),
-/* 9 */
+/* 2 */
 /***/ (function(module, exports) {
 
 /*
@@ -948,7 +553,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 10 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1169,11 +774,406 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(23);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(7);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(7);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+var settle = __webpack_require__(24);
+var buildURL = __webpack_require__(26);
+var parseHeaders = __webpack_require__(27);
+var isURLSameOrigin = __webpack_require__(28);
+var createError = __webpack_require__(8);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(29);
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if ("development" !== 'test' &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(30);
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(25);
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+
+/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(12);
-module.exports = __webpack_require__(53);
+module.exports = __webpack_require__(63);
 
 
 /***/ }),
@@ -1199,7 +1199,9 @@ window.Vue = __webpack_require__(38);
 
 Vue.component('example', __webpack_require__(39));
 Vue.component('login-admin', __webpack_require__(42));
-Vue.component('users', __webpack_require__(48));
+Vue.component('countries-list', __webpack_require__(48));
+Vue.component('user-register', __webpack_require__(53));
+Vue.component('address-form', __webpack_require__(58));
 
 var app = new Vue({
   el: '#app'
@@ -18353,7 +18355,7 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(15)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(15)(module)))
 
 /***/ }),
 /* 15 */
@@ -31040,9 +31042,9 @@ module.exports = __webpack_require__(19);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(4);
+var bind = __webpack_require__(6);
 var Axios = __webpack_require__(21);
-var defaults = __webpack_require__(1);
+var defaults = __webpack_require__(4);
 
 /**
  * Create an instance of Axios
@@ -31075,9 +31077,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(8);
+axios.Cancel = __webpack_require__(10);
 axios.CancelToken = __webpack_require__(36);
-axios.isCancel = __webpack_require__(7);
+axios.isCancel = __webpack_require__(9);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -31125,7 +31127,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(1);
+var defaults = __webpack_require__(4);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(31);
 var dispatchRequest = __webpack_require__(32);
@@ -31427,7 +31429,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(6);
+var createError = __webpack_require__(8);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -31846,8 +31848,8 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(33);
-var isCancel = __webpack_require__(7);
-var defaults = __webpack_require__(1);
+var isCancel = __webpack_require__(9);
+var defaults = __webpack_require__(4);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -31999,7 +32001,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(8);
+var Cancel = __webpack_require__(10);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -41787,14 +41789,14 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var Component = __webpack_require__(2)(
+var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(40),
   /* template */
@@ -41896,7 +41898,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(43)
 }
-var Component = __webpack_require__(2)(
+var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(46),
   /* template */
@@ -41942,7 +41944,7 @@ var content = __webpack_require__(44);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(10)("639a8c66", content, false);
+var update = __webpack_require__(3)("639a8c66", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -41961,7 +41963,7 @@ if(false) {
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(9)(undefined);
+exports = module.exports = __webpack_require__(2)(undefined);
 // imports
 
 
@@ -42102,7 +42104,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(49)
 }
-var Component = __webpack_require__(2)(
+var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(51),
   /* template */
@@ -42114,9 +42116,9 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/Users.vue"
+Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/Countries.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Users.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] Countries.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -42125,9 +42127,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2caafd54", Component.options)
+    hotAPI.createRecord("data-v-96c34c00", Component.options)
   } else {
-    hotAPI.reload("data-v-2caafd54", Component.options)
+    hotAPI.reload("data-v-96c34c00", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -42148,13 +42150,13 @@ var content = __webpack_require__(50);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(10)("24df5d0c", content, false);
+var update = __webpack_require__(3)("1b87ea9c", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2caafd54\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Users.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2caafd54\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Users.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-96c34c00\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Countries.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-96c34c00\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Countries.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -42167,12 +42169,12 @@ if(false) {
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(9)(undefined);
+exports = module.exports = __webpack_require__(2)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -42224,28 +42226,234 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            user: {
-                id: 1,
-                name: 'Claudio',
-                surname: 'Djohnnatha',
-                email: 'claudio@example.com',
-                plan: 'free',
-                phone: '83998000802'
-            }
+            selectedCountry: ''
         };
     },
 
 
     methods: {
-        showUsers: function showUsers() {
-            axios.get('user/').then(function (response) {
-                console.log(response);
-            });
+        selectingCountry: function selectingCountry(event) {
+            this.selectedCountry = event.target.value;
+            this.$emit('selectedCountry', this.selectedCountry);
+            console.log(this.selectedCountry);
         }
+
     }
 });
 
@@ -42254,44 +42462,1851 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', {
-    staticClass: "container col-sm-10 col-sm-offset-1"
-  }, [_c('div', [_c('table', {
-    staticClass: "table"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(_vm.user.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.surname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.plan))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.phone))]), _vm._v(" "), _c('td', [_c('button', {
-    staticClass: "edit-modal btn btn-warning",
+  return _c('select', {
+    staticClass: "form-control",
     on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.editUser(_vm.user)
-      }
+      "change": _vm.selectingCountry
     }
-  }, [_c('span', {
-    staticClass: "glyphicon glyphicon-edit"
-  }), _vm._v("\n              Edit\n            ")]), _vm._v(" "), _c('button', {
-    staticClass: "edit-modal btn btn-error",
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.deleteUser(_vm.user)
-      }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
     }
-  }, [_c('span', {
-    staticClass: "glyphicon glyphicon-trash"
-  }), _vm._v("\n              Delete\n            ")])])])])])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Id")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Surname")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Plan")]), _vm._v(" "), _c('th', [_vm._v("Phone")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])])
-}]}
+  }, [_vm._v("Country...")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Afganistan"
+    }
+  }, [_vm._v("Afghanistan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Albania"
+    }
+  }, [_vm._v("Albania")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Algeria"
+    }
+  }, [_vm._v("Algeria")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "American Samoa"
+    }
+  }, [_vm._v("American Samoa")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Andorra"
+    }
+  }, [_vm._v("Andorra")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Angola"
+    }
+  }, [_vm._v("Angola")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Anguilla"
+    }
+  }, [_vm._v("Anguilla")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Antigua & Barbuda"
+    }
+  }, [_vm._v("Antigua & Barbuda")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Argentina"
+    }
+  }, [_vm._v("Argentina")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Armenia"
+    }
+  }, [_vm._v("Armenia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Aruba"
+    }
+  }, [_vm._v("Aruba")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Australia"
+    }
+  }, [_vm._v("Australia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Austria"
+    }
+  }, [_vm._v("Austria")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Azerbaijan"
+    }
+  }, [_vm._v("Azerbaijan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Bahamas"
+    }
+  }, [_vm._v("Bahamas")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Bahrain"
+    }
+  }, [_vm._v("Bahrain")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Bangladesh"
+    }
+  }, [_vm._v("Bangladesh")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Barbados"
+    }
+  }, [_vm._v("Barbados")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Belarus"
+    }
+  }, [_vm._v("Belarus")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Belgium"
+    }
+  }, [_vm._v("Belgium")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Belize"
+    }
+  }, [_vm._v("Belize")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Benin"
+    }
+  }, [_vm._v("Benin")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Bermuda"
+    }
+  }, [_vm._v("Bermuda")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Bhutan"
+    }
+  }, [_vm._v("Bhutan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Bolivia"
+    }
+  }, [_vm._v("Bolivia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Bonaire"
+    }
+  }, [_vm._v("Bonaire")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Bosnia & Herzegovina"
+    }
+  }, [_vm._v("Bosnia & Herzegovina")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Botswana"
+    }
+  }, [_vm._v("Botswana")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Brazil"
+    }
+  }, [_vm._v("Brazil")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "British Indian Ocean Ter"
+    }
+  }, [_vm._v("British Indian Ocean Ter")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Brunei"
+    }
+  }, [_vm._v("Brunei")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Bulgaria"
+    }
+  }, [_vm._v("Bulgaria")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Burkina Faso"
+    }
+  }, [_vm._v("Burkina Faso")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Burundi"
+    }
+  }, [_vm._v("Burundi")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Cambodia"
+    }
+  }, [_vm._v("Cambodia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Cameroon"
+    }
+  }, [_vm._v("Cameroon")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Canada"
+    }
+  }, [_vm._v("Canada")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Canary Islands"
+    }
+  }, [_vm._v("Canary Islands")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Cape Verde"
+    }
+  }, [_vm._v("Cape Verde")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Cayman Islands"
+    }
+  }, [_vm._v("Cayman Islands")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Central African Republic"
+    }
+  }, [_vm._v("Central African Republic")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Chad"
+    }
+  }, [_vm._v("Chad")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Channel Islands"
+    }
+  }, [_vm._v("Channel Islands")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Chile"
+    }
+  }, [_vm._v("Chile")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "China"
+    }
+  }, [_vm._v("China")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Christmas Island"
+    }
+  }, [_vm._v("Christmas Island")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Cocos Island"
+    }
+  }, [_vm._v("Cocos Island")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Colombia"
+    }
+  }, [_vm._v("Colombia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Comoros"
+    }
+  }, [_vm._v("Comoros")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Congo"
+    }
+  }, [_vm._v("Congo")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Cook Islands"
+    }
+  }, [_vm._v("Cook Islands")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Costa Rica"
+    }
+  }, [_vm._v("Costa Rica")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Cote DIvoire"
+    }
+  }, [_vm._v("Cote D'Ivoire")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Croatia"
+    }
+  }, [_vm._v("Croatia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Cuba"
+    }
+  }, [_vm._v("Cuba")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Curaco"
+    }
+  }, [_vm._v("Curacao")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Cyprus"
+    }
+  }, [_vm._v("Cyprus")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Czech Republic"
+    }
+  }, [_vm._v("Czech Republic")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Denmark"
+    }
+  }, [_vm._v("Denmark")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Djibouti"
+    }
+  }, [_vm._v("Djibouti")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Dominica"
+    }
+  }, [_vm._v("Dominica")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Dominican Republic"
+    }
+  }, [_vm._v("Dominican Republic")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "East Timor"
+    }
+  }, [_vm._v("East Timor")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Ecuador"
+    }
+  }, [_vm._v("Ecuador")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Egypt"
+    }
+  }, [_vm._v("Egypt")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "El Salvador"
+    }
+  }, [_vm._v("El Salvador")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Equatorial Guinea"
+    }
+  }, [_vm._v("Equatorial Guinea")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Eritrea"
+    }
+  }, [_vm._v("Eritrea")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Estonia"
+    }
+  }, [_vm._v("Estonia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Ethiopia"
+    }
+  }, [_vm._v("Ethiopia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Falkland Islands"
+    }
+  }, [_vm._v("Falkland Islands")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Faroe Islands"
+    }
+  }, [_vm._v("Faroe Islands")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Fiji"
+    }
+  }, [_vm._v("Fiji")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Finland"
+    }
+  }, [_vm._v("Finland")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "France"
+    }
+  }, [_vm._v("France")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "French Guiana"
+    }
+  }, [_vm._v("French Guiana")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "French Polynesia"
+    }
+  }, [_vm._v("French Polynesia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "French Southern Ter"
+    }
+  }, [_vm._v("French Southern Ter")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Gabon"
+    }
+  }, [_vm._v("Gabon")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Gambia"
+    }
+  }, [_vm._v("Gambia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Georgia"
+    }
+  }, [_vm._v("Georgia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Germany"
+    }
+  }, [_vm._v("Germany")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Ghana"
+    }
+  }, [_vm._v("Ghana")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Gibraltar"
+    }
+  }, [_vm._v("Gibraltar")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Great Britain"
+    }
+  }, [_vm._v("Great Britain")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Greece"
+    }
+  }, [_vm._v("Greece")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Greenland"
+    }
+  }, [_vm._v("Greenland")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Grenada"
+    }
+  }, [_vm._v("Grenada")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Guadeloupe"
+    }
+  }, [_vm._v("Guadeloupe")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Guam"
+    }
+  }, [_vm._v("Guam")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Guatemala"
+    }
+  }, [_vm._v("Guatemala")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Guinea"
+    }
+  }, [_vm._v("Guinea")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Guyana"
+    }
+  }, [_vm._v("Guyana")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Haiti"
+    }
+  }, [_vm._v("Haiti")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Hawaii"
+    }
+  }, [_vm._v("Hawaii")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Honduras"
+    }
+  }, [_vm._v("Honduras")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Hong Kong"
+    }
+  }, [_vm._v("Hong Kong")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Hungary"
+    }
+  }, [_vm._v("Hungary")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Iceland"
+    }
+  }, [_vm._v("Iceland")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "India"
+    }
+  }, [_vm._v("India")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Indonesia"
+    }
+  }, [_vm._v("Indonesia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Iran"
+    }
+  }, [_vm._v("Iran")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Iraq"
+    }
+  }, [_vm._v("Iraq")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Ireland"
+    }
+  }, [_vm._v("Ireland")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Isle of Man"
+    }
+  }, [_vm._v("Isle of Man")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Israel"
+    }
+  }, [_vm._v("Israel")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Italy"
+    }
+  }, [_vm._v("Italy")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Jamaica"
+    }
+  }, [_vm._v("Jamaica")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Japan"
+    }
+  }, [_vm._v("Japan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Jordan"
+    }
+  }, [_vm._v("Jordan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Kazakhstan"
+    }
+  }, [_vm._v("Kazakhstan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Kenya"
+    }
+  }, [_vm._v("Kenya")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Kiribati"
+    }
+  }, [_vm._v("Kiribati")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Korea North"
+    }
+  }, [_vm._v("Korea North")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Korea Sout"
+    }
+  }, [_vm._v("Korea South")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Kuwait"
+    }
+  }, [_vm._v("Kuwait")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Kyrgyzstan"
+    }
+  }, [_vm._v("Kyrgyzstan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Laos"
+    }
+  }, [_vm._v("Laos")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Latvia"
+    }
+  }, [_vm._v("Latvia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Lebanon"
+    }
+  }, [_vm._v("Lebanon")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Lesotho"
+    }
+  }, [_vm._v("Lesotho")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Liberia"
+    }
+  }, [_vm._v("Liberia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Libya"
+    }
+  }, [_vm._v("Libya")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Liechtenstein"
+    }
+  }, [_vm._v("Liechtenstein")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Lithuania"
+    }
+  }, [_vm._v("Lithuania")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Luxembourg"
+    }
+  }, [_vm._v("Luxembourg")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Macau"
+    }
+  }, [_vm._v("Macau")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Macedonia"
+    }
+  }, [_vm._v("Macedonia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Madagascar"
+    }
+  }, [_vm._v("Madagascar")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Malaysia"
+    }
+  }, [_vm._v("Malaysia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Malawi"
+    }
+  }, [_vm._v("Malawi")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Maldives"
+    }
+  }, [_vm._v("Maldives")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Mali"
+    }
+  }, [_vm._v("Mali")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Malta"
+    }
+  }, [_vm._v("Malta")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Marshall Islands"
+    }
+  }, [_vm._v("Marshall Islands")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Martinique"
+    }
+  }, [_vm._v("Martinique")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Mauritania"
+    }
+  }, [_vm._v("Mauritania")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Mauritius"
+    }
+  }, [_vm._v("Mauritius")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Mayotte"
+    }
+  }, [_vm._v("Mayotte")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Mexico"
+    }
+  }, [_vm._v("Mexico")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Midway Islands"
+    }
+  }, [_vm._v("Midway Islands")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Moldova"
+    }
+  }, [_vm._v("Moldova")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Monaco"
+    }
+  }, [_vm._v("Monaco")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Mongolia"
+    }
+  }, [_vm._v("Mongolia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Montserrat"
+    }
+  }, [_vm._v("Montserrat")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Morocco"
+    }
+  }, [_vm._v("Morocco")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Mozambique"
+    }
+  }, [_vm._v("Mozambique")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Myanmar"
+    }
+  }, [_vm._v("Myanmar")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Nambia"
+    }
+  }, [_vm._v("Nambia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Nauru"
+    }
+  }, [_vm._v("Nauru")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Nepal"
+    }
+  }, [_vm._v("Nepal")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Netherland Antilles"
+    }
+  }, [_vm._v("Netherland Antilles")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Netherlands"
+    }
+  }, [_vm._v("Netherlands (Holland, Europe)")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Nevis"
+    }
+  }, [_vm._v("Nevis")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "New Caledonia"
+    }
+  }, [_vm._v("New Caledonia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "New Zealand"
+    }
+  }, [_vm._v("New Zealand")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Nicaragua"
+    }
+  }, [_vm._v("Nicaragua")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Niger"
+    }
+  }, [_vm._v("Niger")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Nigeria"
+    }
+  }, [_vm._v("Nigeria")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Niue"
+    }
+  }, [_vm._v("Niue")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Norfolk Island"
+    }
+  }, [_vm._v("Norfolk Island")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Norway"
+    }
+  }, [_vm._v("Norway")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Oman"
+    }
+  }, [_vm._v("Oman")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Pakistan"
+    }
+  }, [_vm._v("Pakistan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Palau Island"
+    }
+  }, [_vm._v("Palau Island")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Palestine"
+    }
+  }, [_vm._v("Palestine")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Panama"
+    }
+  }, [_vm._v("Panama")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Papua New Guinea"
+    }
+  }, [_vm._v("Papua New Guinea")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Paraguay"
+    }
+  }, [_vm._v("Paraguay")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Peru"
+    }
+  }, [_vm._v("Peru")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Phillipines"
+    }
+  }, [_vm._v("Philippines")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Pitcairn Island"
+    }
+  }, [_vm._v("Pitcairn Island")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Poland"
+    }
+  }, [_vm._v("Poland")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Portugal"
+    }
+  }, [_vm._v("Portugal")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Puerto Rico"
+    }
+  }, [_vm._v("Puerto Rico")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Qatar"
+    }
+  }, [_vm._v("Qatar")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Republic of Montenegro"
+    }
+  }, [_vm._v("Republic of Montenegro")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Republic of Serbia"
+    }
+  }, [_vm._v("Republic of Serbia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Reunion"
+    }
+  }, [_vm._v("Reunion")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Romania"
+    }
+  }, [_vm._v("Romania")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Russia"
+    }
+  }, [_vm._v("Russia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Rwanda"
+    }
+  }, [_vm._v("Rwanda")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "St Barthelemy"
+    }
+  }, [_vm._v("St Barthelemy")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "St Eustatius"
+    }
+  }, [_vm._v("St Eustatius")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "St Helena"
+    }
+  }, [_vm._v("St Helena")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "St Kitts-Nevis"
+    }
+  }, [_vm._v("St Kitts-Nevis")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "St Lucia"
+    }
+  }, [_vm._v("St Lucia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "St Maarten"
+    }
+  }, [_vm._v("St Maarten")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "St Pierre & Miquelon"
+    }
+  }, [_vm._v("St Pierre & Miquelon")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "St Vincent & Grenadines"
+    }
+  }, [_vm._v("St Vincent & Grenadines")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Saipan"
+    }
+  }, [_vm._v("Saipan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Samoa"
+    }
+  }, [_vm._v("Samoa")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Samoa American"
+    }
+  }, [_vm._v("Samoa American")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "San Marino"
+    }
+  }, [_vm._v("San Marino")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Sao Tome & Principe"
+    }
+  }, [_vm._v("Sao Tome & Principe")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Saudi Arabia"
+    }
+  }, [_vm._v("Saudi Arabia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Senegal"
+    }
+  }, [_vm._v("Senegal")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Serbia"
+    }
+  }, [_vm._v("Serbia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Seychelles"
+    }
+  }, [_vm._v("Seychelles")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Sierra Leone"
+    }
+  }, [_vm._v("Sierra Leone")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Singapore"
+    }
+  }, [_vm._v("Singapore")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Slovakia"
+    }
+  }, [_vm._v("Slovakia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Slovenia"
+    }
+  }, [_vm._v("Slovenia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Solomon Islands"
+    }
+  }, [_vm._v("Solomon Islands")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Somalia"
+    }
+  }, [_vm._v("Somalia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "South Africa"
+    }
+  }, [_vm._v("South Africa")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Spain"
+    }
+  }, [_vm._v("Spain")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Sri Lanka"
+    }
+  }, [_vm._v("Sri Lanka")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Sudan"
+    }
+  }, [_vm._v("Sudan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Suriname"
+    }
+  }, [_vm._v("Suriname")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Swaziland"
+    }
+  }, [_vm._v("Swaziland")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Sweden"
+    }
+  }, [_vm._v("Sweden")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Switzerland"
+    }
+  }, [_vm._v("Switzerland")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Syria"
+    }
+  }, [_vm._v("Syria")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Tahiti"
+    }
+  }, [_vm._v("Tahiti")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Taiwan"
+    }
+  }, [_vm._v("Taiwan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Tajikistan"
+    }
+  }, [_vm._v("Tajikistan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Tanzania"
+    }
+  }, [_vm._v("Tanzania")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Thailand"
+    }
+  }, [_vm._v("Thailand")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Togo"
+    }
+  }, [_vm._v("Togo")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Tokelau"
+    }
+  }, [_vm._v("Tokelau")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Tonga"
+    }
+  }, [_vm._v("Tonga")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Trinidad & Tobago"
+    }
+  }, [_vm._v("Trinidad & Tobago")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Tunisia"
+    }
+  }, [_vm._v("Tunisia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Turkey"
+    }
+  }, [_vm._v("Turkey")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Turkmenistan"
+    }
+  }, [_vm._v("Turkmenistan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Turks & Caicos Is"
+    }
+  }, [_vm._v("Turks & Caicos Is")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Tuvalu"
+    }
+  }, [_vm._v("Tuvalu")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Uganda"
+    }
+  }, [_vm._v("Uganda")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Ukraine"
+    }
+  }, [_vm._v("Ukraine")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "United Arab Erimates"
+    }
+  }, [_vm._v("United Arab Emirates")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "United Kingdom"
+    }
+  }, [_vm._v("United Kingdom")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "United States of America"
+    }
+  }, [_vm._v("United States of America")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Uraguay"
+    }
+  }, [_vm._v("Uruguay")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Uzbekistan"
+    }
+  }, [_vm._v("Uzbekistan")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Vanuatu"
+    }
+  }, [_vm._v("Vanuatu")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Vatican City State"
+    }
+  }, [_vm._v("Vatican City State")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Venezuela"
+    }
+  }, [_vm._v("Venezuela")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Vietnam"
+    }
+  }, [_vm._v("Vietnam")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Virgin Islands (Brit)"
+    }
+  }, [_vm._v("Virgin Islands (Brit)")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Virgin Islands (USA)"
+    }
+  }, [_vm._v("Virgin Islands (USA)")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Wake Island"
+    }
+  }, [_vm._v("Wake Island")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Wallis & Futana Is"
+    }
+  }, [_vm._v("Wallis & Futana Is")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Yemen"
+    }
+  }, [_vm._v("Yemen")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Zaire"
+    }
+  }, [_vm._v("Zaire")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Zambia"
+    }
+  }, [_vm._v("Zambia")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Zimbabwe"
+    }
+  }, [_vm._v("Zimbabwe")])])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-2caafd54", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-96c34c00", module.exports)
   }
 }
 
 /***/ }),
 /* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(54)
+}
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(56),
+  /* template */
+  __webpack_require__(57),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/UserRegister.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] UserRegister.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5737681c", Component.options)
+  } else {
+    hotAPI.reload("data-v-5737681c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(55);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("33bbb450", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5737681c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UserRegister.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5737681c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UserRegister.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            userSection: true,
+            addressSection: false,
+            planSection: false,
+            buttonName: 'Next',
+            backButton: false,
+            user: {
+                name: '',
+                country: '',
+                address: {
+                    addressLabel: '',
+                    name: '',
+                    surname: '',
+                    phone: '',
+                    company: '',
+                    address: '',
+                    city: '',
+                    state: '',
+                    postalCode: '',
+                    country: ''
+                }
+            }
+
+        };
+    },
+
+    methods: {
+        changeSections: function changeSections() {
+            if (this.userSection) {
+                this.userSection = false;
+                this.addressSection = true;
+                this.backButton = true;
+                return;
+            }
+
+            if (this.addressSection) {
+                this.planSection = true;
+                this.addressSection = false;
+                this.buttonName = 'Register';
+                this.backButton = false;
+                $('#clickAddress').click();
+                return;
+            }
+
+            if (this.planSection) {
+                alert('test');
+            }
+        },
+
+        backSections: function backSections() {
+            if (this.addressSection) {
+                this.planSection = false;
+                this.userSection = true;
+                this.addressSection = false;
+                this.backButton = false;
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-10 col-md-offset-1"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Register")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('section', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.userSection),
+      expression: "userSection"
+    }]
+  }, [_c('div', {
+    staticClass: "col-sm-6",
+    class: {
+      'has-error': 'errorsName'
+    }
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("Name")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "id": "name",
+      "type": "text",
+      "name": "name"
+    }
+  }), _vm._v(" "), (_vm.errorsName) ? _c('span', {
+    staticClass: "help-block"
+  }, [_c('strong', [_vm._v(_vm._s(_vm.errorsName))])]) : _vm._e()]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-6"
+  }, [_c('label', {
+    staticClass: "control-label"
+  }, [_vm._v("Country")]), _vm._v(" "), _c('countries-list', {
+    attrs: {
+      "id": "country"
+    },
+    on: {
+      "selectedCountry": function($event) {
+        _vm.user.country = $event
+      }
+    }
+  })], 1), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4)]), _vm._v(" "), _c('section', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.addressSection),
+      expression: "addressSection"
+    }]
+  }, [_c('address-form', {
+    on: {
+      "filledAddress": function($event) {
+        _vm.user.address = $event
+      }
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-success pull-right",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.changeSections
+    }
+  }, [_vm._v("\n                        " + _vm._s(_vm.buttonName) + "\n                        "), _c('span', {
+    staticClass: "glyphicon glyphicon-arrow-right"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2  pull-right"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.backButton),
+      expression: "backButton"
+    }],
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.backSections
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-arrow-left"
+  }), _vm._v("\n                            Back\n                        ")])]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-6"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "surname"
+    }
+  }, [_vm._v("Surname")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "id": "surname",
+      "type": "text",
+      "name": "surname"
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-6"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "phone"
+    }
+  }, [_vm._v("Phone")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "id": "phone",
+      "type": "text",
+      "name": "phone"
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-12"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("E-Mail Address")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "id": "email",
+      "type": "email",
+      "name": "email"
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-6"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "password"
+    }
+  }, [_vm._v("Password")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "id": "password",
+      "type": "password",
+      "name": "password"
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-6"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "password-confirm"
+    }
+  }, [_vm._v("Confirm Password")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "id": "password-confirm",
+      "type": "password",
+      "name": "password_confirmation"
+    }
+  })])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5737681c", module.exports)
+  }
+}
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(59)
+}
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(61),
+  /* template */
+  __webpack_require__(62),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/Address.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Address.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-8f644f80", Component.options)
+  } else {
+    hotAPI.reload("data-v-8f644f80", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(60);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("33fc4cf6", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8f644f80\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Address.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8f644f80\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Address.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    propos: ['msg'],
+    data: function data() {
+        return {
+            address: {
+                addressLabel: '',
+                name: '',
+                surname: '',
+                phone: '',
+                company: '',
+                address: '',
+                city: '',
+                state: '',
+                postalCode: '',
+                country: ''
+            }
+        };
+    },
+
+
+    methods: {
+        filledAddress: function filledAddress() {
+            this.$emit('filledAddress', this.address);
+            alert('test');
+        }
+    }
+});
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('section', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-sm-5"
+  }, [_c('label', [_vm._v("Name for address")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.address.addressLabel),
+      expression: "address.addressLabel"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.address.addressLabel)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.address.addressLabel = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-4"
+  }, [_c('label', [_vm._v("First Name")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.address.name),
+      expression: "address.name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.address.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.address.name = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('label', [_vm._v("Surname")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.address.surname),
+      expression: "address.surname"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.address.surname)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.address.surname = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('label', [_vm._v("Phone")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.address.phone),
+      expression: "address.phone"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.address.phone)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.address.phone = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('label', [_vm._v("Company Name")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.address.company),
+      expression: "address.company"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.address.company)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.address.company = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-6"
+  }, [_c('label', [_vm._v("Address")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.address.address),
+      expression: "address.address"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.address.address)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.address.address = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-sm-4"
+  }, [_c('label', [_vm._v("City")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.address.city),
+      expression: "address.city"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.address.city)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.address.city = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('label', [_vm._v("State")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.address.state),
+      expression: "address.state"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.address.state)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.address.state = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('label', [_vm._v("Postal Code")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.address.postalCode),
+      expression: "address.postalCode"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.address.postalCode)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.address.postalCode = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('label', [_vm._v("Country")]), _vm._v(" "), _c('countries-list', {
+    on: {
+      "selectedCountry": function($event) {
+        _vm.address.country = $event
+      }
+    }
+  })], 1), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (false),
+      expression: "false"
+    }],
+    attrs: {
+      "type": "button",
+      "id": "clickAddress"
+    },
+    on: {
+      "click": _vm.filledAddress
+    }
+  })])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-8f644f80", module.exports)
+  }
+}
+
+/***/ }),
+/* 63 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

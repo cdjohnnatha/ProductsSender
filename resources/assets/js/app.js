@@ -17,7 +17,9 @@ window.Vue = require('vue');
 
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('login-admin', require('./components/LoginAdmin.vue'));
-Vue.component('users', require('./components/Users.vue'));
+Vue.component('countries-list', require('./components/Countries.vue'));
+Vue.component('user-register', require('./components/UserRegister.vue'));
+Vue.component('address-form', require('./components/Address.vue'));
 
 const app = new Vue({
     el: '#app'
