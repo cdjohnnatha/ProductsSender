@@ -3,59 +3,94 @@
     <div class="row">
         <div class="col-sm-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+                <div class="panel-heading">{{nameForm}}</div>
                 <div class="panel-body">
-                    <section v-show="userSection">
-                        <div class="col-sm-6" :class="{'has-error' : 'errorsName'}">
-                            <label for="name" class="control-label">Name</label>
-                            <input id="name" type="text" class="form-control" name="name">
-                            <span v-if="errorsName" class="help-block">
-                                <strong>{{errorsName}}</strong>
-                            </span>
+                    <!--<form>-->
+                    <section v-show="userSection" data-vv-scope="user-form">
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-6" :class="{'has-error': errors.has('name') }" >
+                                <label for="name" class="control-label">Name</label>
+                                <input id="name" type="text" class="form-control" name="name" v-validate="'required'"
+                                    v-model="user.name">
+                                <span class="text-danger" v-if="errors.has('name')">
+                                    <strong>{{ errors.first('name') }}</strong>
+                                </span>
+                            </div>
+                            <div class="col-sm-6" :class="{'has-error': errors.has('surname') }" >
+                                <label for="surname" class="control-label">Surname</label>
+                                <input id="surname" type="text" class="form-control" name="surname"
+                                       v-validate="'required'" v-model="user.surname">
+                                <span class="text-danger" v-if="errors.has('surname')">
+                                    <strong>{{ errors.first('surname') }}</strong>
+                                </span>
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <label for="surname" class="control-label">Surname</label>
-                            <input id="surname" type="text" class="form-control" name="surname">
-                        </div>
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-6" :class="{'has-error': errors.has('phone') }">
+                                <label for="phone" class="control-label">Phone</label>
+                                <input id="phone" type="text" class="form-control" name="phone"
+                                       v-validate="'required|numeric|min:10'" v-model="user.phone">
+                                <span class="text-danger" v-if="errors.has('phone')">
+                                    <strong>{{ errors.first('phone') }}</strong>
+                                </span>
+                            </div>
 
-                        <div class="col-sm-6">
-                            <label for="phone" class="control-label">Phone</label>
-                            <input id="phone" type="text" class="form-control" name="phone">
-                        </div>
-
-                        <div class="col-sm-6">
-                            <label class="control-label" >Country</label>
-                            <countries-list id="country" @selectedCountry="user.country = $event"></countries-list>
-                        </div>
-
-                        <div class="col-sm-12">
-                            <label for="email" class="control-label">E-Mail Address</label>
-                            <input id="email" type="email" class="form-control" name="email">
-                        </div>
-
-
-
-                        <div class="col-sm-6">
-                            <label for="password" class="control-label">Password</label>
-                            <input id="password" type="password" class="form-control" name="password">
-                        </div>
-
-                        <div class="col-sm-6">
-                            <label for="password-confirm" class="control-label">Confirm Password</label>
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
+                            <div class="col-sm-6">
+                                <label class="control-label" >Country</label>
+                                <countries-list id="country" @selectedCountry="user.country = $event"></countries-list>
+                            </div>
                         </div>
 
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-12" :class="{'has-error': errors.has('email') }">
+                                <label for="email" class="control-label">E-Mail Address</label>
+                                <input id="email" type="email" class="form-control" name="email"
+                                       v-validate="'required|email'" v-model="user.email">
+                                <span class="text-danger" v-if="errors.has('email')">
+                                    <strong>{{ errors.first('email') }}</strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-12">
+
+                            <div class="col-sm-6" :class="{'has-error': errors.has('password') }">
+                                <label for="password" class="control-label">Password</label>
+                                <input id="password" type="password" class="form-control" name="password"
+                                       v-validate="'required|min:6|confirmed:password_confirmation'"
+                                       v-model="user.password">
+                                <span class="text-danger" v-if="errors.has('password')">
+                                    <strong>{{ errors.first('password') }}</strong>
+                                </span>
+                            </div>
+
+                            <div class="col-sm-6" :class="{'has-error': errors.has('password_confirmation') }">
+                                <label for="password-confirm" class="control-label">Confirm Password</label>
+                                <input id="password-confirm" type="password" class="form-control"
+                                       name="password_confirmation" v-validate="'required|confirmed:password'">
+                                <span class="text-danger" v-if="errors.has('password_confirmation')">
+                                    <strong>{{ errors.first('password_confirmation') }}</strong>
+                                </span>
+                            </div>
+                        </div>
 
                     </section>
 
                     <section v-show="addressSection">
-                        <address-form @filledAddress="user.address = $event"></address-form>
+                        <address-form @filledAddress="user.address = $event"
+                                      @addressStatus="buttonStatus = $event"></address-form>
                     </section>
 
+                    <section v-show="subscriptionSection">
+                        <subscriptions @allowRegister="buttonStatus = $event"
+                                       @subscription="user.subscriptions = $event"></subscriptions>
+                    </section>
 
+                    <!--</form>-->
                 </div><!-- panel-body -->
                 <div class="panel-footer">
-                    <button type="button" @click="changeSections" class="btn btn-success pull-right">
+                    <button type="submit" @click="actionButton" v-bind:disabled="changeButtonStatus"
+                            class="btn btn-success pull-right" id="submit-button">
                         {{buttonName}}
                         <span class="glyphicon glyphicon-arrow-right"></span>
                     </button>
@@ -79,12 +114,19 @@
             return {
                 userSection: true,
                 addressSection: false,
-                planSection: false,
+                subscriptionSection: false,
                 buttonName: 'Next',
                 backButton: false,
+                buttonStatus: false,
+                nameForm: 'Register User',
+                actionButton: this.validateUserSection,
                 user: {
                     name: '',
+                    surname: '',
                     country: '',
+                    password: '',
+                    subscriptions: '',
+                    phone: '',
                     address:{
                         addressLabel: '',
                         name: '',
@@ -95,7 +137,8 @@
                         city: '',
                         state: '',
                         postalCode: '',
-                        country: ''
+                        country: '',
+                        addressStatus: false
                     }
                 },
 
@@ -107,29 +150,83 @@
                     this.userSection = false;
                     this.addressSection = true;
                     this.backButton = true;
+                    this.nameForm = 'Register Address';
                     return;
                 }
 
                 if(this.addressSection){
-                    this.planSection = true;
+                    this.subscriptionSection = true;
                     this.addressSection = false;
                     this.buttonName = 'Register';
                     this.backButton = false;
-                    $('#clickAddress').click();
+                    this.buttonStatus = true;
+                    this.nameForm = 'Select Subscription';
+                    this.changeSections();
                     return;
                 }
 
-                if(this.planSection){
-                    alert('test');
+
+                if(this.subscriptionSection){
+                    this.actionButton = this.actionRegister;
                 }
+
+
             },
 
             backSections: function(){
                 if(this.addressSection){
-                    this.planSection = false;
+                    this.subscriptionSection = false;
                     this.userSection = true;
                     this.addressSection = false;
                     this.backButton = false;
+                }
+            },
+
+            validateUserSection: function(){
+                this.$validator.validateAll().then((result) => {
+                    if(result) {
+                        this.changeSections();
+                        this.actionButton = this.addressAction;
+                    }
+                });
+            },
+
+            addressAction: function() {
+                $('#clickAddress').click();
+                this.changeSections();
+            },
+
+            registerUser: function(){
+              return true;
+            },
+
+            actionRegister: function(){
+                console.log('sending');
+                axios.post('/register', {
+                    user: this.user
+                }).then( response => {
+                    if( response.status === 201){
+                        location.href = 'login';
+                    }
+                }).catch(function (error) {
+                    location.reload(true);
+                    console.log(error);
+                });
+            }
+        },
+        computed:{
+            changeButtonStatus(){
+                if(this.buttonStatus && !this.subscriptionSection){
+                    this.changeSections();
+                    this.actionButton = this.registerUser;
+                }else{
+                    return this.errors.any();
+                }
+
+                if(this.subscriptionSection){
+                    this.actionButton = this.actionRegister;
+                    return this.buttonStatus;
+
                 }
             }
         }

@@ -119,6 +119,6 @@
         {{--</div>--}}
     {{--</div>--}}
 {{--</div>--}}
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <user-register></user-register>
 @endsection

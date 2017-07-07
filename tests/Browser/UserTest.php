@@ -24,30 +24,32 @@ class UserTest extends DuskTestCase
         });
     }
 
-    public function testEditUser()
-    {
-        $this->browse(function (Browser $browser) {
-            $user = User::find(1);
-            $browser->loginAs($user)
-                ->visit('/home/'.$user->id)
-                ->click('.dropdown')
-                ->click('#edit')
-                ->waitForLocation('/home/'.$user->id.'/edit')
-                ->type('surname', 'Duarte')
-                ->click('#save')
-                ->waitForLocation('/home/'.$user->id);
-        });
-    }
+//    public function testEditUser()
+//    {
+//        $this->browse(function (Browser $browser) {
+//            $user = User::find(1);
+//            $browser->loginAs($user)
+//                ->visit('/home/'.$user->id)
+//                ->click('.dropdown')
+//                ->click('#edit')
+//                ->waitForLocation('/home/'.$user->id.'/edit')
+//                ->type('surname', 'Duarte')
+//                ->click('#save')
+//                ->waitForLocation('/home/'.$user->id);
+//        });
+//    }
 
-    public function testDeleteUser()
-    {
-        $this->browse(function (Browser $browser) {
-            $user = factory(\App\User::class)->create();
-            $browser->loginAs($user)
-                ->visit('/home/'.$user->id)
-                ->click('.dropdown')
-                ->click('#delete')
-                ->waitForLocation('/');
-        });
-    }
+//    public function testDeleteUser()
+//    {
+//        $this->browse(function (Browser $browser) {
+//            $user = factory(\App\User::class)->create();
+//            $browser->loginAs($user)
+//                ->visit('/home/'.$user->id)
+//                ->click('.dropdown')
+//                ->click('#delete')
+//                ->waitForLocation('/');
+//        });
+//    }
+
+
 }

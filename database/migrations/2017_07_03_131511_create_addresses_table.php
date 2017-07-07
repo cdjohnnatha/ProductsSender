@@ -25,8 +25,8 @@ class CreateAddressesTable extends Migration
             $table->string('state');
             $table->string('postal_code');
             $table->string('phone');
-            $table->string('user_id');
-            $table->string('user_type');
+            $table->string('addressable_id');
+            $table->string('addressable_type');
             $table->boolean('default_address');
             $table->timestamps();
             $table->softDeletes();

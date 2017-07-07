@@ -21,13 +21,14 @@ Auth::routes();
 
 
 Route::prefix('/register')->group(function() {
+    Route::post('/', 'UserController@store')->name('register.submit');
     Route::get('/form', 'Auth\RegisterController@registerForm')->name('register.form');
     Route::post('/user', 'Auth\RegisterController@registerUser')->name('register.user');
     Route::get('/address', 'Auth\RegisterController@addressForm')->name('register.address.form');
     Route::post('/address', 'Auth\RegisterController@registerAddress')->name('register.address');
     Route::get('/plan', 'Auth\RegisterController@showPlans')->name('register.plan');
     Route::post('/plan', 'Auth\RegisterController@registerAccount')->name('register.account');
-
+    Route::get('/subscriptions', 'SubscriptionController@index')->name('subscriptions.all');
 });
 
 

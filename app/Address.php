@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 Relation::morphMap([
    'user' => 'App\User',
-    'admin' => 'App\Admin'
+    'admin' => 'App\Admin',
+    'warehouse' => 'App\Warehouse',
 ]);
 
 class Address extends Model
@@ -20,12 +21,15 @@ class Address extends Model
 
     protected $fillable = [
         'label','owner_name', 'owner_surname', 'company_name', 'country',
-        'address', 'city', 'state', 'postal_code', 'phone', 'default_address'
+        'address', 'city', 'state', 'postal_code', 'phone', 'default_address', 'addressable_type',
+        'addressable_id'
     ];
 
     public function addressable()
     {
         return $this->morphTo();
     }
+
+
 
 }
