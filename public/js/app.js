@@ -45567,7 +45567,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -45634,16 +45634,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            admin: {
+                email: '',
+                password: '',
+                remember: false
+            }
+
+        };
+    },
+
+
+    methods: {
+        submitLogin: function submitLogin() {
+            console.log('sending');
+            axios.post('/admin/login', this.admin).then(function (response) {
+                if (response.status === 202) location.href = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+
+});
 
 /***/ }),
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('section', {
     staticClass: "container col-sm-6 col-sm-offset-3",
     attrs: {
@@ -45659,33 +45689,84 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-body"
   }, [_c('form', {
     attrs: {
-      "action": ""
+      "role": "form"
     }
   }, [_c('div', {
-    staticClass: "form-group"
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.errors.has('email')
+    }
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.admin.email),
+      expression: "admin.email"
+    }, {
+      name: "validate",
+      rawName: "v-validate",
+      value: ('required|email'),
+      expression: "'required|email'"
+    }],
     staticClass: "form-control",
     attrs: {
-      "name": "login",
+      "name": "email",
       "type": "text",
       "placeholder": "Login"
+    },
+    domProps: {
+      "value": (_vm.admin.email)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.admin.email = $event.target.value
+      }
     }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
+  }), _vm._v(" "), (_vm.errors.has('email')) ? _c('span', {
+    staticClass: "text-danger"
+  }, [_c('strong', [_vm._v(_vm._s(_vm.errors.first('email')))])]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.errors.has('password')
+    }
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.admin.password),
+      expression: "admin.password"
+    }],
     staticClass: "form-control",
     attrs: {
-      "name": "login",
+      "name": "password",
       "type": "password",
       "placeholder": "Password"
+    },
+    domProps: {
+      "value": (_vm.admin.password)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.admin.password = $event.target.value
+      }
     }
-  })]), _vm._v(" "), _c('button', {
+  }), _vm._v(" "), (_vm.errors.has('password')) ? _c('span', {
+    staticClass: "text-danger"
+  }, [_c('strong', [_vm._v(_vm._s(_vm.errors.first('password')))])]) : _vm._e()]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-default pull-right",
     attrs: {
       "type": "submit"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.submitLogin($event)
+      }
     }
   }, [_vm._v("Login")])])])])])])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -47409,10 +47490,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       rawName: "v-show",
       value: (_vm.userSection),
       expression: "userSection"
-    }],
-    attrs: {
-      "data-vv-scope": "user-form"
-    }
+    }]
   }, [_c('div', {
     staticClass: "form-group col-sm-12"
   }, [_c('div', {

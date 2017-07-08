@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -20,7 +21,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin');
+        return Auth::user()->id;
+//        return view('admin');
     }
 
     public function listAll()
@@ -43,7 +45,6 @@ class AdminController extends Controller
         $user->name = $request->input('name');
         $user->surname = $request->input('surname');
         $user->surname = $request->input('email');
-        $user->surname = $request->input('plan');
         $user->surname = $request->input('phone');
 
         if($user->save()){

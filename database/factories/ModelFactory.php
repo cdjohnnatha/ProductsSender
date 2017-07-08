@@ -28,6 +28,20 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Admin::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'name' => $faker->name,
+        'surname' => $faker->lastName,
+        'email' => $faker->unique()->safeEmail,
+        'country' => $faker->country,
+        'phone' => $faker->phoneNumber,
+        'password' => $password ?: $password = bcrypt('secret'),
+        'remember_token' => str_random(10),
+    ];
+});
+
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Warehouse::class, function (Faker\Generator $faker) {

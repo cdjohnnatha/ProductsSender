@@ -6,7 +6,7 @@
                 <div class="panel-heading">{{nameForm}}</div>
                 <div class="panel-body">
                     <!--<form>-->
-                    <section v-show="userSection" data-vv-scope="user-form">
+                    <section v-show="userSection">
                         <div class="form-group col-sm-12">
                             <div class="col-sm-6" :class="{'has-error': errors.has('name') }" >
                                 <label for="name" class="control-label">Name</label>
