@@ -43,6 +43,22 @@ class AdminController extends Controller
         return view('admin.FormAdmin');
     }
 
+    public function register(Request $request)
+    {
+        $admin = new Admin();
+        $admin->name = $request->input('name');
+        $admin->surname = $request->input('surname');
+        $admin->email = $request->input('email');
+        $admin->phone = $request->input('phone');
+        $admin->country = $request->input('country');
+        $admin->password = bcrypt($request->input('password'));
+
+        if( $admin->save() ){
+            return response('created', 201);
+        }
+        return response('bad request',400);
+    }
+
     public function update(Request $request, $id)
     {
         $user = Admin::findOrFail($id);

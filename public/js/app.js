@@ -48855,7 +48855,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48866,9 +48866,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
 //
 //
 //
@@ -48978,87 +48975,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        changeSections: function changeSections() {
-            if (this.userSection) {
-                this.userSection = false;
-                this.addressSection = true;
-                this.backButton = true;
-                this.nameForm = 'Register Address';
-                return;
-            }
-
-            if (this.addressSection) {
-                this.subscriptionSection = true;
-                this.addressSection = false;
-                this.buttonName = 'Register';
-                this.backButton = false;
-                this.buttonStatus = true;
-                this.nameForm = 'Select Subscription';
-                this.changeSections();
-                return;
-            }
-
-            if (this.subscriptionSection) {
-                this.actionButton = this.actionRegister;
-            }
-        },
-
-        backSections: function backSections() {
-            if (this.addressSection) {
-                this.subscriptionSection = false;
-                this.userSection = true;
-                this.addressSection = false;
-                this.backButton = false;
-            }
-        },
-
-        validateUserSection: function validateUserSection() {
+        actionRegister: function actionRegister() {
             var _this = this;
 
             this.$validator.validateAll().then(function (result) {
                 if (result) {
-                    _this.changeSections();
-                    _this.actionButton = _this.addressAction;
+                    console.log('sending');
+
+                    axios.post('/admin/register', _this.admin).then(function (response) {
+                        console.log(response);
+                    }).catch(function (error) {
+
+                        console.log(error);
+                    });
                 }
             });
-        },
-
-        addressAction: function addressAction() {
-            $('#clickAddress').click();
-            this.changeSections();
-        },
-
-        registerUser: function registerUser() {
-            return true;
-        },
-
-        actionRegister: function actionRegister() {
-            console.log('sending');
-            axios.post('/register', {
-                user: this.user
-            }).then(function (response) {
-                if (response.status === 201) {
-                    location.href = 'login';
-                }
-            }).catch(function (error) {
-                location.reload(true);
-                console.log(error);
-            });
-        }
-    },
-    computed: {
-        changeButtonStatus: function changeButtonStatus() {
-            if (this.buttonStatus && !this.subscriptionSection) {
-                this.changeSections();
-                this.actionButton = this.registerUser;
-            } else {
-                return this.errors.any();
-            }
-
-            if (this.subscriptionSection) {
-                this.actionButton = this.actionRegister;
-                return this.buttonStatus;
-            }
         }
     }
 });
@@ -49068,7 +48999,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('article', [_c('div', {
+  return _c('div', {
     staticClass: "container"
   }, [_c('div', {
     staticClass: "row"
@@ -49078,16 +49009,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v(_vm._s(_vm.nameForm))]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Admin")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_c('section', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.userSection),
-      expression: "userSection"
-    }]
-  }, [_c('div', {
+  }, [_c('section', [_c('div', {
     staticClass: "form-group col-sm-12"
   }, [_c('div', {
     staticClass: "col-sm-6",
@@ -49108,8 +49032,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, {
       name: "model",
       rawName: "v-model",
-      value: (_vm.user.name),
-      expression: "user.name"
+      value: (_vm.admin.name),
+      expression: "admin.name"
     }],
     staticClass: "form-control",
     attrs: {
@@ -49118,12 +49042,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "name"
     },
     domProps: {
-      "value": (_vm.user.name)
+      "value": (_vm.admin.name)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.user.name = $event.target.value
+        _vm.admin.name = $event.target.value
       }
     }
   }), _vm._v(" "), (_vm.errors.has('name')) ? _c('span', {
@@ -49147,8 +49071,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, {
       name: "model",
       rawName: "v-model",
-      value: (_vm.user.surname),
-      expression: "user.surname"
+      value: (_vm.admin.surname),
+      expression: "admin.surname"
     }],
     staticClass: "form-control",
     attrs: {
@@ -49157,12 +49081,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "surname"
     },
     domProps: {
-      "value": (_vm.user.surname)
+      "value": (_vm.admin.surname)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.user.surname = $event.target.value
+        _vm.admin.surname = $event.target.value
       }
     }
   }), _vm._v(" "), (_vm.errors.has('surname')) ? _c('span', {
@@ -49188,8 +49112,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, {
       name: "model",
       rawName: "v-model",
-      value: (_vm.user.phone),
-      expression: "user.phone"
+      value: (_vm.admin.phone),
+      expression: "admin.phone"
     }],
     staticClass: "form-control",
     attrs: {
@@ -49198,12 +49122,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "phone"
     },
     domProps: {
-      "value": (_vm.user.phone)
+      "value": (_vm.admin.phone)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.user.phone = $event.target.value
+        _vm.admin.phone = $event.target.value
       }
     }
   }), _vm._v(" "), (_vm.errors.has('phone')) ? _c('span', {
@@ -49218,7 +49142,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "selectedCountry": function($event) {
-        _vm.user.country = $event
+        _vm.admin.country = $event
       }
     }
   })], 1)]), _vm._v(" "), _c('div', {
@@ -49242,8 +49166,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, {
       name: "model",
       rawName: "v-model",
-      value: (_vm.user.email),
-      expression: "user.email"
+      value: (_vm.admin.email),
+      expression: "admin.email"
     }],
     staticClass: "form-control",
     attrs: {
@@ -49252,12 +49176,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "email"
     },
     domProps: {
-      "value": (_vm.user.email)
+      "value": (_vm.admin.email)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.user.email = $event.target.value
+        _vm.admin.email = $event.target.value
       }
     }
   }), _vm._v(" "), (_vm.errors.has('email')) ? _c('span', {
@@ -49283,8 +49207,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, {
       name: "model",
       rawName: "v-model",
-      value: (_vm.user.password),
-      expression: "user.password"
+      value: (_vm.admin.password),
+      expression: "admin.password"
     }],
     staticClass: "form-control",
     attrs: {
@@ -49293,12 +49217,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "password"
     },
     domProps: {
-      "value": (_vm.user.password)
+      "value": (_vm.admin.password)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.user.password = $event.target.value
+        _vm.admin.password = $event.target.value
       }
     }
   }), _vm._v(" "), (_vm.errors.has('password')) ? _c('span', {
@@ -49334,17 +49258,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "btn btn-success pull-right",
     attrs: {
       "type": "submit",
-      "disabled": _vm.changeButtonStatus,
       "id": "submit-button"
     },
     on: {
-      "click": _vm.actionButton
+      "click": _vm.actionRegister
     }
-  }, [_vm._v("\n                            " + _vm._s(_vm.buttonName) + "\n                            "), _c('span', {
-    staticClass: "glyphicon glyphicon-arrow-right"
-  })]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                        Create\n                    ")]), _vm._v(" "), _c('div', {
     staticClass: "clearfix"
-  })])])])])])])
+  })])])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

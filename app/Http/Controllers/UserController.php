@@ -37,6 +37,7 @@ class UserController extends Controller
         $address->owner_name = $request->input('user.address.owner_name');
         $address->owner_surname = $request->input('user.address.owner_surname');
         $address->company_name = $request->input('user.address.company');
+
         if(is_null($address->company_name))
             $address->company_name = '';
         $address->country = $request->input('user.address.country');
@@ -47,6 +48,7 @@ class UserController extends Controller
         $address->phone = ''.$request->input('user.address.phone');
         $address->default_address = true;
         $user = User::find(13);
+
         if($user->save()){
             if( $user->address()->save($address) ){
                 return response('created', 201);

@@ -1,18 +1,17 @@
 <template>
-    <article>
         <div class="container">
             <div class="row">
                 <div class="col-sm-10 col-md-offset-1">
                     <div class="panel panel-default">
-                        <div class="panel-heading">{{nameForm}}</div>
+                        <div class="panel-heading">Admin</div>
                         <div class="panel-body">
                             <!--<form>-->
-                            <section v-show="userSection">
+                            <section>
                                 <div class="form-group col-sm-12">
                                     <div class="col-sm-6" :class="{'has-error': errors.has('name') }" >
                                         <label for="name" class="control-label">Name</label>
                                         <input id="name" type="text" class="form-control" name="name" v-validate="'required'"
-                                               v-model="user.name">
+                                               v-model="admin.name">
                                         <span class="text-danger" v-if="errors.has('name')">
                                         <strong>{{ errors.first('name') }}</strong>
                                     </span>
@@ -20,7 +19,7 @@
                                     <div class="col-sm-6" :class="{'has-error': errors.has('surname') }" >
                                         <label for="surname" class="control-label">Surname</label>
                                         <input id="surname" type="text" class="form-control" name="surname"
-                                               v-validate="'required'" v-model="user.surname">
+                                               v-validate="'required'" v-model="admin.surname">
                                         <span class="text-danger" v-if="errors.has('surname')">
                                         <strong>{{ errors.first('surname') }}</strong>
                                     </span>
@@ -30,7 +29,7 @@
                                     <div class="col-sm-6" :class="{'has-error': errors.has('phone') }">
                                         <label for="phone" class="control-label">Phone</label>
                                         <input id="phone" type="text" class="form-control" name="phone"
-                                               v-validate="'required|numeric|min:10'" v-model="user.phone">
+                                               v-validate="'required|numeric|min:10'" v-model="admin.phone">
                                         <span class="text-danger" v-if="errors.has('phone')">
                                         <strong>{{ errors.first('phone') }}</strong>
                                     </span>
@@ -38,7 +37,7 @@
 
                                     <div class="col-sm-6">
                                         <label class="control-label" >Country</label>
-                                        <countries-list id="country" @selectedCountry="user.country = $event"></countries-list>
+                                        <countries-list id="country" @selectedCountry="admin.country = $event"></countries-list>
                                     </div>
                                 </div>
 
@@ -46,7 +45,7 @@
                                     <div class="col-sm-12" :class="{'has-error': errors.has('email') }">
                                         <label for="email" class="control-label">E-Mail Address</label>
                                         <input id="email" type="email" class="form-control" name="email"
-                                               v-validate="'required|email'" v-model="user.email">
+                                               v-validate="'required|email'" v-model="admin.email">
                                         <span class="text-danger" v-if="errors.has('email')">
                                         <strong>{{ errors.first('email') }}</strong>
                                     </span>
@@ -59,7 +58,7 @@
                                         <label for="password" class="control-label">Password</label>
                                         <input id="password" type="password" class="form-control" name="password"
                                                v-validate="'required|min:6|confirmed:password_confirmation'"
-                                               v-model="user.password">
+                                               v-model="admin.password">
                                         <span class="text-danger" v-if="errors.has('password')">
                                         <strong>{{ errors.first('password') }}</strong>
                                     </span>
@@ -80,10 +79,9 @@
                             <!--</form>-->
                         </div><!-- panel-body -->
                         <div class="panel-footer">
-                            <button type="submit" @click="actionButton" v-bind:disabled="changeButtonStatus"
-                                    class="btn btn-success pull-right" id="submit-button">
-                                {{buttonName}}
-                                <span class="glyphicon glyphicon-arrow-right"></span>
+                            <button type="submit" @click="actionRegister" class="btn btn-success pull-right"
+                                    id="submit-button">
+                                Create
                             </button>
                             <div class="clearfix"></div>
                         </div>
@@ -91,7 +89,6 @@
                 </div>
             </div>
         </div>
-    </article>
 </template>
 
 <script>
@@ -109,89 +106,20 @@
             }
         },
         methods:{
-            changeSections: function(){
-                if(this.userSection){
-                    this.userSection = false;
-                    this.addressSection = true;
-                    this.backButton = true;
-                    this.nameForm = 'Register Address';
-                    return;
-                }
-
-                if(this.addressSection){
-                    this.subscriptionSection = true;
-                    this.addressSection = false;
-                    this.buttonName = 'Register';
-                    this.backButton = false;
-                    this.buttonStatus = true;
-                    this.nameForm = 'Select Subscription';
-                    this.changeSections();
-                    return;
-                }
-
-
-                if(this.subscriptionSection){
-                    this.actionButton = this.actionRegister;
-                }
-
-
-            },
-
-            backSections: function(){
-                if(this.addressSection){
-                    this.subscriptionSection = false;
-                    this.userSection = true;
-                    this.addressSection = false;
-                    this.backButton = false;
-                }
-            },
-
-            validateUserSection: function(){
+            actionRegister: function(){
                 this.$validator.validateAll().then((result) => {
                     if(result) {
-                        this.changeSections();
-                        this.actionButton = this.addressAction;
+                        console.log('sending');
+
+                        axios.post('/admin/register', this.admin
+                        ).then( response => {
+                            console.log(response);
+                        }).catch(function (error) {
+
+                            console.log(error);
+                        });
                     }
                 });
-            },
-
-            addressAction: function() {
-                $('#clickAddress').click();
-                this.changeSections();
-            },
-
-            registerUser: function(){
-                return true;
-            },
-
-            actionRegister: function(){
-                console.log('sending');
-                axios.post('/register', {
-                    user: this.user
-                }).then( response => {
-                    if( response.status === 201){
-                        location.href = 'login';
-                    }
-                }).catch(function (error) {
-                    location.reload(true);
-                    console.log(error);
-                });
-            }
-        },
-        computed:{
-            changeButtonStatus(){
-                if(this.buttonStatus && !this.subscriptionSection){
-                    this.changeSections();
-                    this.actionButton = this.registerUser;
-                }else{
-                    return this.errors.any();
-                }
-
-                if(this.subscriptionSection){
-                    this.actionButton = this.actionRegister;
-                    return this.buttonStatus;
-
-                }
             }
         }
     }

@@ -60,6 +60,7 @@ Route::prefix('/admin')->group(function() {
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
     Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard');
     Route::get('/form', 'AdminController@create')->name('admin.form.create');
+    Route::post('/register', 'AdminController@register')->name('admin.form.register');
     /**
      * Route for admin/users;
      */
