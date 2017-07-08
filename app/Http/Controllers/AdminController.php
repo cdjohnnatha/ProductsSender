@@ -21,8 +21,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return Auth::user()->id;
-//        return view('admin');
+        return view('admin');
     }
 
     public function listAll()
@@ -37,6 +36,11 @@ class AdminController extends Controller
         return response()->json([
             'user' => Admin::findOrFail($id)
         ]);
+    }
+
+    public function create()
+    {
+        return view('admin.FormAdmin');
     }
 
     public function update(Request $request, $id)

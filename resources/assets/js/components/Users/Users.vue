@@ -19,7 +19,7 @@
             <td>{{ user.name }}</td>
             <td>{{ user.surname }}</td>
             <td>{{ user.email }}</td>
-            <td>{{ user.plan }}</td>
+            <td>{{ user.subscription }}</td>
             <td>{{ user.phone }}</td>
             <td>
               <button class="edit-modal btn btn-warning"  @click.prevent="editUser(user)">

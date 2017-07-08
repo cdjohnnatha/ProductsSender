@@ -1,0 +1,10 @@
+article{
+    margin-left: 10em;
+}
+
+@media only screen and (max-width: 950px){
+    article{
+        margin-left: 4em;
+        width: 100%;
+    }
+}

@@ -42,7 +42,6 @@ Route::prefix('/home/{id}')->group(function() {
 });
 
 Route::prefix('/user')->group(function() {
-    Route::get('/', 'UserController@listAll')->name('users');
 
     Route::prefix('/{id}')->group(function() {
         Route::get('/', 'UserController@show')->name('user.id');
@@ -60,6 +59,18 @@ Route::prefix('/admin')->group(function() {
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
     Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard');
-
+    Route::get('/form', 'AdminController@create')->name('admin.form.create');
+    /**
+     * Route for admin/users;
+     */
+    Route::prefix('/users')->group(function(){
+        Route::get('/', 'UserController@listAll')->name('admin.users.list');
+        Route::prefix('/{id}')->group(function() {
+            Route::get('/', 'UserController@show')->name('admin.user.show');
+            Route::get('/edit', 'UserController@edit')->name('admin.user.edit');
+            Route::patch('/', 'UserController@update')->name('user.update');
+            Route::delete('/', 'UserController@destroy')->name('user.destroy');
+        });
+    });
 
 });

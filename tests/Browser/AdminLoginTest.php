@@ -13,7 +13,7 @@ class AdminLoginTest extends DuskTestCase
     /**
      * @group admin
      */
-    public function testExample()
+    public function testLogin()
     {
         $this->browse(function (Browser $browser) {
             $admin = Admin::find(1);
@@ -23,7 +23,7 @@ class AdminLoginTest extends DuskTestCase
                 ->type('password', '123456')
                 ->press('Login')
                 ->pause(10000)
-                ->waitForLocation('/admin/'.$admin->id)
+                ->waitForLocation('/admin/dashboard')
                 ->assertSee('Dashboard');
         });
     }

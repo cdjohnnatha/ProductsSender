@@ -19,8 +19,7 @@
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
+                <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                         <span class="sr-only">Toggle Navigation</span>
                         <span class="icon-bar"></span>
@@ -79,9 +78,10 @@
                 </div>
             </div>
         </nav>
-        {{--@if(auth()->guard('admin')->user())--}}
-            {{--@include('layouts._lateral_nav')--}}
-        {{--@endif--}}
+        @if(auth()->guard('admin')->user())
+            <link href="{{ asset('css/layout/admin-layout.css') }}" rel="stylesheet">
+            <vertical-menu></vertical-menu>
+        @endif
         @yield('content')
     </div>
 
