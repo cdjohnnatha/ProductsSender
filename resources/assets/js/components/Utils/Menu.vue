@@ -18,7 +18,7 @@
                 </ul>
             </li>
             <li><a href="/admin/users">Users</a></li>
-            <li><a href="#">Warehouses</a></li>
+            <li><a href="/admin/warehouses/show-list">Warehouses</a></li>
         </ul>
     </nav>
 </template>

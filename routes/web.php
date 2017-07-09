@@ -87,7 +87,8 @@ Route::prefix('/admin')->group(function() {
     /**
      * Route for admin/warehouse
      */
-    Route::prefix('/warehouse')->group(function(){
+    Route::prefix('/warehouses')->group(function(){
+        Route::get('/show-list', 'WarehouseController@showList')->name('warehouses.show.list');
         Route::get('/', 'WarehouseController@listAll')->name('warehouses.all');
         Route::get('/register', 'WarehouseController@register')->name('warehouses.register');
         Route::get('/create', 'WarehouseController@create')->name('warehouses.create');
@@ -99,7 +100,6 @@ Route::prefix('/admin')->group(function() {
             Route::post('/', 'WarehouseController@destroy')->name('user.destroy');
         });
     });
-
 
 });
 

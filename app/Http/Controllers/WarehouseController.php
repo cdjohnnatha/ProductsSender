@@ -16,11 +16,14 @@ class WarehouseController extends Controller
     {
         return view('warehouse.register');
     }
-
+    public function showList()
+    {
+        return view('warehouse.list');
+    }
     public function listAll()
     {
         return response()->json([
-            'warehouses' => Warehouse::paginate(15),
+            'warehouses' => Warehouse::with('address')->get(),
         ])->setStatusCode(200);
     }
 
