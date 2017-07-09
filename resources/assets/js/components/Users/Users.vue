@@ -1,40 +1,46 @@
 <template>
-  <section class="container col-sm-10 col-sm-offset-1">
-    <div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Email</th>
-            <th>Plan</th>
-            <th>Phone</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr >
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.surname }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.subscription }}</td>
-            <td>{{ user.phone }}</td>
-            <td>
-              <button class="edit-modal btn btn-warning"  @click.prevent="editUser(user)">
-                <span class="glyphicon glyphicon-edit"></span>
-                Edit
-              </button>
-              <button class="edit-modal btn btn-error"  @click.prevent="deleteUser(user)">
-                <span class="glyphicon glyphicon-trash"></span>
-                Delete
-              </button>
-            </td>
-          </tr>
+  <section class="container col-sm-offset-1">
+    <div class="row col-sm-11 col-sm-offset-1">
+      <div class="panel panel-default">
+        <div class="panel-heading">Users</div>
+        <div class="panel-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Email</th>
+                <th>Subscription</th>
+                <th>Phone</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="user in users">
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.surname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.subscription.name }}</td>
+                <td>{{ user.phone }}</td>
+                <td>
+                  <a class="edit-modal btn btn-warning"
+                     v-bind:href="'/admin/users/' + user.id + '/edit' ">
+                    <span class="glyphicon glyphicon-edit"></span>
+                    Edit
+                  </a>
+                  <button class="edit-modal btn btn-error"  @click="deleteUser(user.id)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    Delete
+                  </button>
+                </td>
+              </tr>
 
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -43,25 +49,24 @@
     export default {
         data() {
             return {
-                user:{
-                        id: 1,
-                        name: 'Claudio',
-                        surname: 'Djohnnatha',
-                        email: 'claudio@example.com',
-                        plan: 'free',
-                        phone: '83998000802'
-                }
+                users:[]
             }
         },
-
-        methods:{
-            showUsers() {
-              axios.get('user/').then(function (response){
-                 console.log(response);
-              });
+        created() {
+            axios.get('users/all').then( response => {
+                console.log(response);
+              this.users = response.data.users;
+            });
+        },
+        methods: {
+            deleteUser: function (id) {
+                axios.post('/admin/users/'+id).then(response => {
+                    if (response.status === 200)
+                        location.href = response.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
-
-
         }
     }
 </script>

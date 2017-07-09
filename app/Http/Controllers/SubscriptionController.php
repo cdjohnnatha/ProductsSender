@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class SubscriptionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:admin', 'auth']);
+    }
+
     public function index()
     {
         return response()->json([

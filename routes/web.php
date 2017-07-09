@@ -76,12 +76,14 @@ Route::prefix('/admin')->group(function() {
      * Route for admin/users;
      */
     Route::prefix('/users')->group(function(){
-        Route::get('/', 'UserController@listAll')->name('admin.users.list');
+        Route::get('/', 'UserController@viewUsers')->name('admin.users.list.view');
+        Route::get('/all', 'UserController@users')->name('admin.users.list');
+
         Route::prefix('/{id}')->group(function() {
             Route::get('/', 'UserController@show')->name('admin.user.show');
             Route::get('/edit', 'UserController@edit')->name('admin.user.edit');
             Route::patch('/', 'UserController@update')->name('user.update');
-            Route::delete('/', 'UserController@destroy')->name('user.destroy');
+            Route::post('/', 'UserController@destroy')->name('user.destroy');
         });
     });
 

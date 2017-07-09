@@ -5,13 +5,27 @@ namespace App\Http\Controllers;
 use App\Address;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-
-    public function listAll()
+    public function __construct()
     {
-        return view('user.all')->with('users', User::all());
+        $this->middleware(['auth:admin', 'auth']);
+    }
+
+    public function viewUsers()
+    {
+        return view('user.all');
+    }
+
+    public function users()
+    {
+        $users = User::with('subscription')->get();
+
+        return response()->json([
+            'users' => $users
+        ]);
     }
 
     public function show($id)
@@ -93,7 +107,7 @@ class UserController extends Controller
         $user->delete();
 
         if(auth()->guard('admin')->user()){
-            return redirect('admin/users');
+            return response('/admin/users', 200);
         }else {
             return redirect('/');
         }

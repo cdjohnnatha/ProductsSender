@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:admin', 'auth']);
+    }
+
+
     public function listAll()
     {
         return response()->json([
