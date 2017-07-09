@@ -1,12 +1,20 @@
 <template>
     <nav id="aside-menu">
         <ul class="nav">
-            <li><a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu1"
-                   aria-expanded="false">Admin</a>
-                <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
-                    <li><a href="/admin/form">New Admin</a></li>
-                    <li><a href="#">Link 2.2</a></li>
-                    <li><a href="#">Link 2.3</a></li>
+            <li>
+                <a href="#" id="btn-1" data-toggle="collapse" data-target="#admin-menu"
+                   aria-expanded="false">
+                    <label>Admin</label>
+
+                </a>
+                <ul class="nav collapse col-sm-offset-1" id="admin-menu" role="menu" aria-labelledby="btn-1">
+                    <li><a href="/admin/form">
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                        New</a>
+                    </li>
+                    <li><a href="/admin/show-list">
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                        List</a></li>
                 </ul>
             </li>
             <li><a href="/admin/users">Users</a></li>
@@ -38,6 +46,10 @@
         color: #818181;
         display: block;
         transition: 0.3s
+    }
+
+    #admin-menu li{
+        font-size: .9em;
     }
 
 </style>

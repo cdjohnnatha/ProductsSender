@@ -79,7 +79,6 @@
             </div>
         </nav>
         @if(auth()->guard('admin')->user())
-            <link href="{{ asset('css/layout/admin-layout.css') }}" rel="stylesheet">
             <vertical-menu></vertical-menu>
         @endif
         @yield('content')

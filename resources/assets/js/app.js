@@ -25,6 +25,7 @@ Vue.component('subscriptions', require('./components/Utils/Subscriptions.vue'));
 Vue.component('vertical-menu', require('./components/Utils/Menu.vue'));
 Vue.component('admin-form', require('./components/Admins/FormAdmin.vue'));
 Vue.component('wareouse-form', require('./components/Warehouse/WarehouseForm.vue'));
+Vue.component('admin-list', require('./components/Admins/List.vue'));
 
 const app = new Vue({
     el: '#app'

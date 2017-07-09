@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -24,10 +25,18 @@ class AdminController extends Controller
         return view('admin');
     }
 
-    public function listAll()
+    public function showAll()
     {
+        return view('admin.showAll');
+    }
+
+    public function getAll()
+    {
+        $admins = DB::table('admins')
+            ->select('id', 'name', 'surname', 'email', 'phone', 'country')
+            ->where('id', '!=', Auth::user()->id)->get();
         return response()->json([
-            'users' => Admin::paginate(15)
+            'admins' => $admins
         ]);
     }
 

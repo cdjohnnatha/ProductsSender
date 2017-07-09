@@ -61,6 +61,8 @@ Route::prefix('/admin')->group(function() {
     Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard');
     Route::get('/form', 'AdminController@create')->name('admin.form.create');
     Route::post('/register', 'AdminController@register')->name('admin.form.register');
+    Route::get('/list', 'AdminController@getAll')->name('admin.list');
+    Route::get('/show-list', 'AdminController@showAll')->name('admin.list.show');
     /**
      * Route for admin/users;
      */
