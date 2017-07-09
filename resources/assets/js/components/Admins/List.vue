@@ -25,7 +25,7 @@
                                 <td>{{admin.email}}</td>
                                 <td>{{admin.phone}}</td>
                                 <td>
-                                    <a href="" class="edit-modal btn btn-warning">
+                                    <a v-bind:href="'/admin/'+admin.id+'/edit'" class="edit-modal btn btn-warning">
                                         <span class="glyphicon glyphicon-edit"></span>
                                         Edit
                                     </a>
@@ -55,6 +55,7 @@
                 this.admins = response.data.admins;
                 console.log(this.admins);
             });
+
         },
 
         methods: {

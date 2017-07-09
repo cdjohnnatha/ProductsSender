@@ -43,7 +43,7 @@ class AdminController extends Controller
     public function show($id)
     {
         return response()->json([
-            'user' => Admin::findOrFail($id)
+            'admin' => Admin::findOrFail($id)
         ]);
     }
 
@@ -68,20 +68,23 @@ class AdminController extends Controller
         return response('bad request',400);
     }
 
+    public function edit(){
+        return view('admin.FormAdmin');
+    }
+
     public function update(Request $request, $id)
     {
-        $user = Admin::findOrFail($id);
-        $user->name = $request->input('name');
-        $user->surname = $request->input('surname');
-        $user->surname = $request->input('email');
-        $user->surname = $request->input('phone');
+        $admin = Admin::findOrFail($id);
+        $admin->name = $request->input('name');
+        $admin->surname = $request->input('surname');
+        $admin->email = $request->input('email');
+        $admin->country = $request->input('country');
 
-        if($user->save()){
+        if($admin->save()){
             return response()->json([
-                'user' => $user
+                'admin' => $admin
             ])->setStatusCode(201);
         }
-
         return response()->setStatusCode(406);
 
     }
