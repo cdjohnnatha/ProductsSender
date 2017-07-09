@@ -63,10 +63,13 @@ Route::prefix('/admin')->group(function() {
     Route::post('/register', 'AdminController@register')->name('admin.form.register');
     Route::get('/list', 'AdminController@getAll')->name('admin.list');
     Route::get('/show-list', 'AdminController@showAll')->name('admin.list.show');
+
+
     Route::prefix('{id}')->group(function(){
         Route::get('/edit', 'AdminController@edit')->name('admin.edit');
         Route::post('/update', 'AdminController@update')->name('admin.update');
         Route::get('/show', 'AdminController@show')->name('admin.show');
+        Route::delete('/delete', 'AdminController@destroy')->name('admin.delete');
 
     });
     /**

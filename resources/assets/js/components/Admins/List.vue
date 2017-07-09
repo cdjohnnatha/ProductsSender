@@ -29,7 +29,7 @@
                                         <span class="glyphicon glyphicon-edit"></span>
                                         Edit
                                     </a>
-                                    <button type="submit" class="btn btn-danger">
+                                    <button @click="deleteAdmin(admin.id)" type="submit" class="btn btn-danger">
                                         <span class="glyphicon glyphicon-trash"></span> Delete</button>
                                 </td>
                             </tr>
@@ -60,7 +60,6 @@
 
         methods: {
             submitLogin: function(){
-                console.log('sending');
                 axios.post('/admin/login', this.admin ).then( response => {
                     if( response.status === 202)
                         location.href = response.data;
@@ -68,6 +67,18 @@
                     console.log(error);
                 });
             },
+
+            deleteAdmin: function(id){
+                console.log("calling");
+                axios.delete('/admin/' + id + '/delete').then( response => {
+                    if( response.status === 201)
+                        console.log('worked');
+                    console.log(response);
+//                        location.href = response.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
         }
 
     }

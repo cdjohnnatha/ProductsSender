@@ -49613,7 +49613,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49687,9 +49687,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         submitLogin: function submitLogin() {
-            console.log('sending');
             axios.post('/admin/login', this.admin).then(function (response) {
                 if (response.status === 202) location.href = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+
+        deleteAdmin: function deleteAdmin(id) {
+            console.log("calling");
+            axios.delete('/admin/' + id + '/delete').then(function (response) {
+                if (response.status === 201) console.log('worked');
+                console.log(response);
+                //                        location.href = response.data;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -49723,19 +49733,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('span', {
       staticClass: "glyphicon glyphicon-edit"
-    }), _vm._v("\n                                    Edit\n                                ")]), _vm._v(" "), _vm._m(1, true)])])
+    }), _vm._v("\n                                    Edit\n                                ")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger",
+      attrs: {
+        "type": "submit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.deleteAdmin(admin.id)
+        }
+      }
+    }, [_c('span', {
+      staticClass: "glyphicon glyphicon-trash"
+    }), _vm._v(" Delete")])])])
   }))])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Id")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Surname")]), _vm._v(" "), _c('th', [_vm._v("Country")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Phone")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('button', {
-    staticClass: "btn btn-danger",
-    attrs: {
-      "type": "submit"
-    }
-  }, [_c('span', {
-    staticClass: "glyphicon glyphicon-trash"
-  }), _vm._v(" Delete")])
 }]}
 module.exports.render._withStripped = true
 if (false) {

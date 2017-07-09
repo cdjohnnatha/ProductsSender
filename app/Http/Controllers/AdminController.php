@@ -34,7 +34,9 @@ class AdminController extends Controller
     {
         $admins = DB::table('admins')
             ->select('id', 'name', 'surname', 'email', 'phone', 'country')
-            ->where('id', '!=', Auth::user()->id)->get();
+            ->where('id', '!=', Auth::user()->id)
+            ->where('deleted_at', ' =', null)->get();
+
         return response()->json([
             'admins' => $admins
         ]);
@@ -91,11 +93,13 @@ class AdminController extends Controller
 
     public function destroy($id)
     {
-        $user = Admin::findOrFail($id);
-        if ($user->trashed()) {
+        $admin = Admin::findOrFail($id);
+//        $admin->delete();
+        if ($admin->trashed()) {
             return response()->setStatusCode(200);
         }
 
         return response()->setStatusCode(406);
+//        return $admin;
     }
 }
