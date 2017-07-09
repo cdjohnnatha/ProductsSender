@@ -31,9 +31,6 @@ Route::prefix('/register')->group(function() {
     Route::get('/subscriptions', 'SubscriptionController@index')->name('subscriptions.all');
 });
 
-
-
-
 Route::get('/home/all', 'HomeController@showall')->name('home.all');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('/home/{id}')->group(function() {
@@ -87,4 +84,23 @@ Route::prefix('/admin')->group(function() {
         });
     });
 
+    /**
+     * Route for admin/warehouse
+     */
+    Route::prefix('/warehouse')->group(function(){
+        Route::get('/', 'WarehouseController@listAll')->name('warehouses.all');
+        Route::get('/register', 'WarehouseController@register')->name('warehouses.register');
+        Route::get('/create', 'WarehouseController@create')->name('warehouses.create');
+
+        Route::prefix('/{id}')->group(function() {
+            Route::get('/', 'WarehouseController@show')->name('admin.user.show');
+            Route::get('/edit', 'WarehouseController@edit')->name('admin.user.edit');
+            Route::patch('/', 'WarehouseController@update')->name('user.update');
+            Route::post('/', 'WarehouseController@destroy')->name('user.destroy');
+        });
+    });
+
+
 });
+
+Route::get('/warehouse', 'WarehouseController@listAll')->name('warehouses.all');

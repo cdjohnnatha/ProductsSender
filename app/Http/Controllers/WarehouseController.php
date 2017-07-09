@@ -12,6 +12,10 @@ class WarehouseController extends Controller
         $this->middleware(['auth:admin', 'auth']);
     }
 
+    public function create()
+    {
+        return view('warehouse.register');
+    }
 
     public function listAll()
     {
