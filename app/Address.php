@@ -30,6 +30,11 @@ class Address extends Model
         return $this->morphTo();
     }
 
+    protected $hidden = [
+        'created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'addressable_type',
+        'addressable_id'
+    ];
+
 
 
 }

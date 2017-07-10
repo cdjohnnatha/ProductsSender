@@ -31,9 +31,6 @@ Route::prefix('/register')->group(function() {
     Route::get('/subscriptions', 'SubscriptionController@index')->name('subscriptions.all');
 });
 
-
-
-
 Route::get('/home/all', 'HomeController@showall')->name('home.all');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('/home/{id}')->group(function() {
@@ -42,7 +39,6 @@ Route::prefix('/home/{id}')->group(function() {
 });
 
 Route::prefix('/user')->group(function() {
-    Route::get('/', 'UserController@listAll')->name('users');
 
     Route::prefix('/{id}')->group(function() {
         Route::get('/', 'UserController@show')->name('user.id');
@@ -60,6 +56,51 @@ Route::prefix('/admin')->group(function() {
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
     Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard');
+    Route::get('/form', 'AdminController@create')->name('admin.form.create');
+    Route::post('/register', 'AdminController@register')->name('admin.form.register');
+    Route::get('/list', 'AdminController@getAll')->name('admin.list');
+    Route::get('/show-list', 'AdminController@showAll')->name('admin.list.show');
 
+
+    Route::prefix('{id}')->group(function(){
+        Route::get('/edit', 'AdminController@edit')->name('admin.edit');
+        Route::post('/update', 'AdminController@update')->name('admin.update');
+        Route::get('/show', 'AdminController@show')->name('admin.show');
+        Route::delete('/delete', 'AdminController@destroy')->name('admin.delete');
+
+    });
+    /**
+     * Route for admin/users;
+     */
+    Route::prefix('/users')->group(function(){
+        Route::get('/', 'UserController@viewUsers')->name('admin.users.list.view');
+        Route::get('/all', 'UserController@users')->name('admin.users.list');
+
+        Route::prefix('/{id}')->group(function() {
+            Route::get('/', 'UserController@show')->name('admin.user.show');
+            Route::get('/edit', 'UserController@edit')->name('admin.user.edit');
+            Route::patch('/', 'UserController@update')->name('user.update');
+            Route::post('/', 'UserController@destroy')->name('user.destroy');
+        });
+    });
+
+    /**
+     * Route for admin/warehouse
+     */
+    Route::prefix('/warehouses')->group(function(){
+        Route::get('/show-list', 'WarehouseController@showList')->name('warehouses.show.list');
+        Route::get('/', 'WarehouseController@listAll')->name('warehouses.all');
+        Route::get('/create', 'WarehouseController@create')->name('warehouses.create');
+        Route::post('/register', 'WarehouseController@register')->name('warehouses.register');
+
+        Route::prefix('/{id}')->group(function() {
+            Route::get('/', 'WarehouseController@show')->name('admin.user.show');
+            Route::get('/edit', 'WarehouseController@edit')->name('admin.user.edit');
+            Route::patch('/', 'WarehouseController@update')->name('user.update');
+            Route::post('/', 'WarehouseController@destroy')->name('user.destroy');
+        });
+    });
 
 });
+
+Route::get('/warehouse', 'WarehouseController@listAll')->name('warehouses.all');

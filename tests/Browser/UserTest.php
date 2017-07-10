@@ -15,7 +15,7 @@ class UserTest extends DuskTestCase
     {
 
         $this->browse(function (Browser $browser) {
-            $faker = Faker::create();
+            $faker = \Faker\Factory::create();
             $browser->visit('/register')
                 ->assertSee('Register User')
                 ->type('name', $faker->firstName)

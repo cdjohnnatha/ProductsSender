@@ -1,5 +1,5 @@
 <template>
-    <select class="form-control" @change="selectingCountry">
+    <select class="form-control" @change="selectingCountry" v-bind:value="setCountry">
         <option value="Afganistan">Afghanistan</option>
         <option value="Albania">Albania</option>
         <option value="Algeria">Algeria</option>
@@ -252,21 +252,19 @@
 
 <script>
     export default {
+        props: ['setCountry'],
         data() {
             return {
                 selectedCountry: ''
                 }
         },
-
         methods:{
             selectingCountry: function(event){
                 this.selectedCountry = event.target.value;
                 this.$emit('selectedCountry', this.selectedCountry);
                 console.log(this.selectedCountry);
             }
-
-
-        }
+        },
     }
 </script>
 

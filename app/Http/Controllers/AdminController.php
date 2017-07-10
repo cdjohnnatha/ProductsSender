@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -21,46 +22,77 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return Auth::user()->id;
-//        return view('admin');
+        return view('admin');
     }
 
-    public function listAll()
+    public function showAll()
     {
+        return view('admin.showAll');
+    }
+
+    public function getAll()
+    {
+        $admins = Admin::where('id', '!=', Auth::user()->id);
+
         return response()->json([
-            'users' => Admin::paginate(15)
+            'admins' => $admins
         ]);
     }
 
     public function show($id)
     {
         return response()->json([
-            'user' => Admin::findOrFail($id)
+            'admin' => Admin::findOrFail($id)
         ]);
+    }
+
+    public function create()
+    {
+        return view('admin.FormAdmin');
+    }
+
+    public function register(Request $request)
+    {
+        $admin = new Admin();
+        $admin->name = $request->input('name');
+        $admin->surname = $request->input('surname');
+        $admin->email = $request->input('email');
+        $admin->phone = $request->input('phone');
+        $admin->country = $request->input('country');
+        $admin->password = bcrypt($request->input('password'));
+
+        if( $admin->save() ){
+            return response('created', 201);
+        }
+        return response('bad request',400);
+    }
+
+    public function edit(){
+        return view('admin.FormAdmin');
     }
 
     public function update(Request $request, $id)
     {
-        $user = Admin::findOrFail($id);
-        $user->name = $request->input('name');
-        $user->surname = $request->input('surname');
-        $user->surname = $request->input('email');
-        $user->surname = $request->input('phone');
+        $admin = Admin::findOrFail($id);
+        $admin->name = $request->input('name');
+        $admin->surname = $request->input('surname');
+        $admin->email = $request->input('email');
+        $admin->country = $request->input('country');
 
-        if($user->save()){
+        if($admin->save()){
             return response()->json([
-                'user' => $user
+                'admin' => $admin
             ])->setStatusCode(201);
         }
-
         return response()->setStatusCode(406);
 
     }
 
     public function destroy($id)
     {
-        $user = Admin::findOrFail($id);
-        if ($user->trashed()) {
+        $admin = Admin::findOrFail($id);
+        $admin->delete();
+        if ($admin->trashed()) {
             return response()->setStatusCode(200);
         }
 

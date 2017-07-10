@@ -16,13 +16,21 @@ window.Vue.use(VeeValidate);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+Vue.component('admin-list', require('./components/Admins/List.vue'));
+Vue.component('login-admin', require('./components/Admins/LoginAdmin.vue'));
+Vue.component('admin-form', require('./components/Admins/FormAdmin.vue'));
 
-Vue.component('login-admin', require('./components/LoginAdmin.vue'));
-Vue.component('countries-list', require('./components/Countries.vue'));
-Vue.component('user-register', require('./components/UserRegister.vue'));
-Vue.component('address-form', require('./components/Address.vue'));
-Vue.component('subscriptions', require('./components/Subscriptions.vue'));
+Vue.component('countries-list', require('./components/Utils/Countries.vue'));
+Vue.component('address-form', require('./components/Utils/Address.vue'));
+Vue.component('subscriptions', require('./components/Utils/Subscriptions.vue'));
+Vue.component('vertical-menu', require('./components/Utils/Menu.vue'));
 
+Vue.component('wareouse-form', require('./components/Warehouse/WarehouseForm.vue'));
+Vue.component('wareouses-list', require('./components/Warehouse/WarehousesList.vue'));
+
+Vue.component('user-register', require('./components/Users/UserRegister.vue'));
+Vue.component('user-form', require('./components/Users/UserRegister.vue'));
+Vue.component('user-list', require('./components/Users/Users.vue'));
 const app = new Vue({
     el: '#app'
 });

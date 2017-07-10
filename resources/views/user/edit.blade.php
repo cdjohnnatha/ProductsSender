@@ -41,7 +41,7 @@
                 <div class="form-group">
                     <div class="form-group pull-right">
                         @if(auth()->guard('admin')->user())
-                            <a href="/home/all" class="btn btn-danger">
+                            <a href="/admin/users" class="btn btn-danger">
                         @else
                             <a href="/home/{{$user->id}}" class="btn btn-danger">
                         @endif
