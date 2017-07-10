@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','name','surname','country','email','plan','phone'
+        'name', 'email', 'password','name','surname','country','email','subscriptions_id','phone'
     ];
 
     /**
@@ -28,4 +28,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function address()
+    {
+        return $this->morphMany('App\Address', 'addressable');
+    }
+
+    public function subscription()
+    {
+        return $this->hasOne(Subscription::class, 'id', 'subscriptions_id');
+    }
 }

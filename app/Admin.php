@@ -11,16 +11,15 @@ class Admin extends Authenticatable
     use Notifiable;
     use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
-
     protected $guard = 'admin';
+    protected $dates = ['deleted_at'];
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','name','surname','country','email','plan','phone'
+        'name', 'email', 'password', 'name', 'surname', 'country', 'email', 'phone'
     ];
 
     /**

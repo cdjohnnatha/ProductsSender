@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
-class UsersTableSeeder extends Seeder
+class AdminTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,16 +11,13 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-
-        DB::table('users')->insert([
+        DB::table('admins')->insert([
             'name' => 'Claudio',
             'surname' => 'Djohnnatha',
-            'email' => 'claudio@example.com',
+            'email' => 'claudio@admin.com',
             'country' => 'Brasil',
-            'subscription' => 1,
-            'phone' => '98000802',
+            'phone' => '8398000802',
             'password' => Hash::make('123456')
         ]);
-        factory(App\User::class, 10)->create();
     }
 }

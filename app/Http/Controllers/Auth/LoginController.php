@@ -35,7 +35,7 @@ class LoginController extends Controller
             return 'admin/'.Auth::user()->id;
         }
         else{
-            return '/home/'.Auth::user()->id;
+            return 'home/'.Auth::user()->id;
         }
     }
 

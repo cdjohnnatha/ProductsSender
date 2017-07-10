@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class AdminsTableSeeder extends Seeder
+class WarehousesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class AdminsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(App\Warehouse::class, 2)->create();
     }
 }
