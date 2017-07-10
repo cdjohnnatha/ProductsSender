@@ -76,7 +76,7 @@
                 console.log("calling");
                 axios.delete('/admin/' + id + '/delete').then( response => {
                     if( response.status === 201)
-                        console.log('worked');
+                        console.log(console.log);
                     console.log(response);
 //                        location.href = response.data;
                 }).catch(function (error) {

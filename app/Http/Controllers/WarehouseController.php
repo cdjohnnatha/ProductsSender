@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Address;
 use App\Warehouse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WarehouseController extends Controller
 {
@@ -14,8 +16,41 @@ class WarehouseController extends Controller
 
     public function create()
     {
-        return view('warehouse.register');
+        return view('warehouse.create');
     }
+
+    public function register(Request $request)
+    {   $warehouse = new Warehouse();
+        $warehouse->name = $request->input('nameWarehouse');
+        $warehouse->storage_time = $request->input('storageTime');
+        $warehouse->box_price = $request->input('boxPrice');
+        $warehouse->updated_by = Auth::user()->id;
+        $warehouse->created_by = Auth::user()->id;
+
+        $address = new Address();
+        $address->label = $request->input('address.addressLabel');
+        $address->owner_name = $request->input('address.owner_name');
+        $address->owner_surname = $request->input('address.owner_surname');
+        $address->company_name = $request->input('address.company');
+
+        if(is_null($address->company_name))
+            $address->company_name = '';
+        $address->country = $request->input('address.country');
+        $address->address = $request->input('address.address');
+        $address->city = $request->input('address.city');
+        $address->state = $request->input('address.state');
+        $address->postal_code = $request->input('address.postalCode');
+        $address->phone = ''.$request->input('address.phone');
+        $address->default_address = true;
+
+        if($warehouse->save()){
+            if( $warehouse->address()->save($address) ){
+                return response('/admin/warehouses/show-list', 201);
+            }
+        }
+        return $warehouse;
+    }
+
     public function showList()
     {
         return view('warehouse.list');

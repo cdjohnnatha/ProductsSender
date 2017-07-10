@@ -18,7 +18,21 @@
                 </ul>
             </li>
             <li><a href="/admin/users">Users</a></li>
-            <li><a href="/admin/warehouses/show-list">Warehouses</a></li>
+            <li>
+                <a href="#" id="btn-2" data-toggle="collapse" data-target="#warehouse-menu"
+                   aria-expanded="false">
+                    <label>Warehouses</label>
+                </a>
+                <ul class="nav collapse col-sm-offset-1" id="warehouse-menu" role="menu" aria-labelledby="btn-1">
+                    <li><a href="/admin/warehouses/create">
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                        New</a>
+                    </li>
+                    <li><a href="/admin/warehouses/show-list">
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                        List</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
 </template>

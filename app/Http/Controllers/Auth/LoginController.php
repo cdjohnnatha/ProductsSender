@@ -32,7 +32,7 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         if(auth()->guard('admin')->user()){
-            return 'admin/'.Auth::user()->id;
+            return 'admin/dashboard';
         }
         else{
             return 'home/'.Auth::user()->id;

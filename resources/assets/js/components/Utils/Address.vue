@@ -79,9 +79,11 @@
             </div>
             <div class="col-sm-3">
                 <label>Country</label>
-                <countries-list name="country-address" @selectedCountry="address.country = $event"></countries-list>
+                <countries-list name="country-address" @selectedCountry="address.country = $event">
+                </countries-list>
             </div>
-                <button type="button" v-show="false" @click="filledAddress" id="clickAddress"></button>
+                <button type="button" v-show="false" @click="filledAddress"
+                        id="clickAddress"></button>
         </div>
     </section>
 </template>

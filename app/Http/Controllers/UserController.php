@@ -61,7 +61,6 @@ class UserController extends Controller
         $address->postal_code = $request->input('user.address.postalCode');
         $address->phone = ''.$request->input('user.address.phone');
         $address->default_address = true;
-        $user = User::find(13);
 
         if($user->save()){
             if( $user->address()->save($address) ){
