@@ -28,6 +28,11 @@ Vue.component('vertical-menu', require('./components/Utils/Menu.vue'));
 Vue.component('wareouse-form', require('./components/Warehouse/WarehouseForm.vue'));
 Vue.component('wareouses-list', require('./components/Warehouse/WarehousesList.vue'));
 
+Vue.component('subscription-form', require('./components/Subscriptions/Form.vue'));
+Vue.component('subscription-list', require('./components/Subscriptions/Listing.vue'));
+
+
+
 Vue.component('user-register', require('./components/Users/UserRegister.vue'));
 Vue.component('user-form', require('./components/Users/UserRegister.vue'));
 Vue.component('user-list', require('./components/Users/Users.vue'));

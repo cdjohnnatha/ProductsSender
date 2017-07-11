@@ -1,12 +1,12 @@
 <template>
     <section class="panel-body">
         <div class="form-group col-sm-12" >
-            <div class="col-sm-5" :class="{'has-error': errors.has('addressLabel') }">
+            <div class="col-sm-5" :class="{'has-error': errors.has('label') }">
                 <label>Name for address</label>
-                <input type="text" class="form-control" v-model="address.addressLabel"
-                       name="addressLabel" id="addressLabel" v-validate="'required'">
-                <span class="text-danger" v-if="errors.has('addressLabel')">
-                    <strong>{{ errors.first('addressLabel') }}</strong>
+                <input type="text" class="form-control" v-model="address.label"
+                       name="label" id="label" v-validate="'required'">
+                <span class="text-danger" v-if="errors.has('label')">
+                    <strong>{{ errors.first('label') }}</strong>
                 </span>
             </div>
             <div class="col-sm-4" :class="{'has-error': errors.has('owner_name') }">
@@ -69,17 +69,18 @@
                     <strong>{{ errors.first('state') }}</strong>
                 </span>
             </div>
-            <div class="col-sm-2" :class="{'has-error': errors.has('postalCode') }">
+            <div class="col-sm-2" :class="{'has-error': errors.has('postal_code') }">
                 <label>Postal Code</label>
                 <input type="text" class="form-control"
-                       v-model="address.postalCode" name="postalCode" v-validate="'required'">
-                <span class="text-danger" v-if="errors.has('postalCode')">
-                    <strong>{{ errors.first('postalCode') }}</strong>
+                       v-model="address.postal_code" name="postal_code" v-validate="'required'">
+                <span class="text-danger" v-if="errors.has('postal_code')">
+                    <strong>{{ errors.first('postal_code') }}</strong>
                 </span>
             </div>
             <div class="col-sm-3">
                 <label>Country</label>
-                <countries-list name="country-address" @selectedCountry="address.country = $event">
+                <countries-list name="country-address" @selectedCountry="address.country = $event"
+                    :setCountry="address.country">
                 </countries-list>
             </div>
                 <button type="button" v-show="false" @click="filledAddress"
@@ -90,24 +91,39 @@
 
 <script>
     export default {
-        propos: ['msg'],
-        data() {
-            return {
-                address:{
-                    addressLabel: '',
-                    owner_name: '',
-                    owner_surname: '',
-                    phone: '',
-                    company: '',
-                    address: '',
-                    city: '',
-                    state: '',
-                    postalCode: '',
-                    country: '',
-                    addressStatus: false
-                },
+        props: {
+            address:{
+                label: '',
+                owner_name: '',
+                owner_surname: '',
+                phone: '',
+                company: '',
+                address: '',
+                city: '',
+                state: '',
+                postal_code: '',
+                country: '',
+                addressStatus: false
             }
         },
+        data() {
+            return {
+//                address:{
+//                    label: '',
+//                    owner_name: '',
+//                    owner_surname: '',
+//                    phone: '',
+//                    company: '',
+//                    address: '',
+//                    city: '',
+//                    state: '',
+//                    postal_code: '',
+//                    country: '',
+//                    addressStatus: false
+//                },
+            }
+        },
+
 
         methods:{
             filledAddress: function(){

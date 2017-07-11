@@ -33,7 +33,7 @@
                                     <span class="glyphicon glyphicon-edit"></span>
                                     Edit
                                 </a>
-                                <button @click="deleteAdmin(warehouse.id)" type="submit" class="btn btn-danger">
+                                <button @click="deleting(warehouse.id)" type="submit" class="btn btn-danger">
                                     <span class="glyphicon glyphicon-trash"></span> Delete</button>
                             </td>
                         </tr>
@@ -63,22 +63,11 @@
         },
 
         methods: {
-            submitLogin: function(){
-//                axios.post('/admin/login', this.admin ).then( response => {
-//                    if( response.status === 202)
-//                        location.href = response.data;
-//                }).catch(function (error) {
-//                    console.log(error);
-//                });
-            },
-
-            deleteAdmin: function(id){
+            deleting: function(id){
                 console.log("calling");
-                axios.delete('/admin/' + id + '/delete').then( response => {
+                axios.delete('admin/warehouses/' + id + '/delete').then( response => {
                     if( response.status === 201)
-                        console.log(console.log);
-                    console.log(response);
-//                        location.href = response.data;
+                        location.href = response.data;
                 }).catch(function (error) {
                     console.log(error);
                 });

@@ -43,7 +43,7 @@
                         @if(auth()->guard('admin')->user())
                             <a href="/admin/users" class="btn btn-danger">
                         @else
-                            <a href="/home/{{$user->id}}" class="btn btn-danger">
+                            <a href="{{'home/'.$user->id}}" class="btn btn-danger">
                         @endif
                             <span class="glyphicon glyphicon-trash"></span>
                             Cancel

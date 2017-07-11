@@ -33,6 +33,22 @@
                         List</a></li>
                 </ul>
             </li>
+
+            <li>
+                <a href="#" id="btn-subscription" data-toggle="collapse" data-target="#subscriptions-menu"
+                   aria-expanded="false">
+                    <label>Subscriptions</label>
+                </a>
+                <ul class="nav collapse col-sm-offset-1" id="subscriptions-menu" role="menu" aria-labelledby="btn-1">
+                    <li id="create-subscription"><a href="/admin/subscriptions/create">
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                        New</a>
+                    </li>
+                    <li id="list-subscriptions"><a href="/admin/subscriptions/show-list">
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                        List</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
 </template>
