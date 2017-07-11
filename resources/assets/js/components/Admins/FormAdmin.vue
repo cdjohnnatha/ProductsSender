@@ -114,8 +114,8 @@
         created() {
             let url = window.location.href;
             if(url.indexOf('edit') !== -1){
-                var id = url.substr(url.lastIndexOf("/")-1, url.lastIndexOf("/"));
-                this.admin.id = id.match(/\d+/)[0];
+                var id = url.match(/\/([0-9]+)\/edit/)[1];
+                this.admin.id = id;
                 this.urlForm = '/admin/' + this.admin.id + '/update';
                 this.showPassword = false;
                 this.getAdmin();

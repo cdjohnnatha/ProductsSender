@@ -78,7 +78,8 @@
 
                     <section v-show="addressSection">
                         <address-form @filledAddress="user.address = $event"
-                                      @addressStatus="buttonStatus = $event"></address-form>
+                                      @addressStatus="buttonStatus = $event"
+                                      :address="user.address"></address-form>
                     </section>
 
                     <section v-show="subscriptionSection">
@@ -128,7 +129,7 @@
                     subscriptions: '',
                     phone: '',
                     address:{
-                        addressLabel: '',
+                        label: '',
                         name: '',
                         surname: '',
                         phone: '',
@@ -136,7 +137,7 @@
                         address: '',
                         city: '',
                         state: '',
-                        postalCode: '',
+                        postal_code: '',
                         country: '',
                         addressStatus: false
                     }
@@ -201,7 +202,6 @@
             },
 
             actionRegister: function(){
-                console.log('sending');
                 axios.post('/register', {
                     user: this.user
                 }).then( response => {
@@ -209,8 +209,8 @@
                         location.href = 'login';
                     }
                 }).catch(function (error) {
-                    location.reload(true);
                     console.log(error);
+//                    location.reload(true);
                 });
             }
         },

@@ -1,5 +1,5 @@
 <template>
-    <select class="form-control" @change="selectingCountry" v-bind:value="setCountry">
+    <select class="form-control" @change="selectingCountry" v-bind:value="setCountry" id="countries-selector">
         <option value="Afganistan">Afghanistan</option>
         <option value="Albania">Albania</option>
         <option value="Algeria">Algeria</option>

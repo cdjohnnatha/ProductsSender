@@ -18,16 +18,13 @@ Route::get('/', function () {
 
 
 Auth::routes();
+Route::get('/warehouse', 'WarehouseController@listAll')->name('warehouses.all');
+
 
 
 Route::prefix('/register')->group(function() {
-    Route::post('/', 'UserController@store')->name('register.submit');
+    Route::post('/', 'Auth\RegisterController@store')->name('register.submit');
     Route::get('/form', 'Auth\RegisterController@registerForm')->name('register.form');
-    Route::post('/user', 'Auth\RegisterController@registerUser')->name('register.user');
-    Route::get('/address', 'Auth\RegisterController@addressForm')->name('register.address.form');
-    Route::post('/address', 'Auth\RegisterController@registerAddress')->name('register.address');
-    Route::get('/plan', 'Auth\RegisterController@showPlans')->name('register.plan');
-    Route::post('/plan', 'Auth\RegisterController@registerAccount')->name('register.account');
     Route::get('/subscriptions', 'SubscriptionController@index')->name('subscriptions.all');
 });
 
@@ -35,21 +32,15 @@ Route::get('/home/all', 'HomeController@showall')->name('home.all');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('/home/{id}')->group(function() {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/edit', 'HomeController@edit')->name('user.edit');
+    Route::get('/edit', 'UserController@edit')->name('user.edit');
+    Route::get('/warehouses', 'WarehouseController@listAll')->name('user.warehouses');
 });
 
-Route::prefix('/user')->group(function() {
-
-    Route::prefix('/{id}')->group(function() {
+Route::prefix('/user/{id}')->group(function() {
         Route::get('/', 'UserController@show')->name('user.id');
         Route::patch('/', 'UserController@update')->name('user.update');
         Route::delete('/', 'UserController@destroy')->name('user.destroy');
-
-        Route::prefix('/address')->group(function() {
-            Route::get('/', 'AddressController@create')->name('user.address.create');
-            Route::post('/', 'AddressController@register')->name('user.address.register');
-        });
-    });
+        Route::get('/warehouses', 'WarehouseController@listAll');
 });
 
 Route::prefix('/admin')->group(function() {
@@ -94,13 +85,28 @@ Route::prefix('/admin')->group(function() {
         Route::post('/register', 'WarehouseController@register')->name('warehouses.register');
 
         Route::prefix('/{id}')->group(function() {
-            Route::get('/', 'WarehouseController@show')->name('admin.user.show');
-            Route::get('/edit', 'WarehouseController@edit')->name('admin.user.edit');
-            Route::patch('/', 'WarehouseController@update')->name('user.update');
-            Route::post('/', 'WarehouseController@destroy')->name('user.destroy');
+            Route::get('/show', 'WarehouseController@show')->name('admin.warehouses.show');
+            Route::get('/edit', 'WarehouseController@edit')->name('admin.warehouses.edit');
+            Route::post('/update', 'WarehouseController@update')->name('warehouses.update');
+            Route::delete('/delete', 'WarehouseController@destroy')->name('warehouses.destroy');
+        });
+    });
+
+    Route::prefix('/subscriptions')->group(function(){
+        Route::get('/show-list', 'SubscriptionController@showList')->name('subscriptions.show.list');
+        Route::get('/', 'SubscriptionController@subscriptions')->name('subscriptions.all');
+        Route::get('/create', 'SubscriptionController@subscriptionForm')->name('subscriptions.create');
+        Route::post('/register', 'SubscriptionController@register')->name('subscriptions.register');
+
+        Route::prefix('/{id}')->group(function() {
+            Route::get('/show', 'SubscriptionController@show')->name('admin.subscriptions.show');
+            Route::get('/show-form', 'SubscriptionController@subscriptionForm')->name('admin.subscriptions.show');
+            Route::get('/edit', 'SubscriptionController@edit')->name('admin.subscriptions.edit');
+            Route::post('/update', 'SubscriptionController@update')->name('subscriptions.update');
+            Route::delete('/delete', 'SubscriptionController@destroy')->name('subscriptions.destroy');
         });
     });
 
 });
 
-Route::get('/warehouse', 'WarehouseController@listAll')->name('warehouses.all');
+

@@ -1,39 +1,35 @@
 <template>
     <section class="container col-sm-offset-1">
-        <div class="row col-sm-12 col-sm-offset-1">
+        <div class="row col-sm-10 col-sm-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Warehouses</div>
+                <div class="panel-heading">Subscriptions List</div>
                 <div class="panel-body">
                     <table class="table">
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Name</th>
-                            <th>Box Price</th>
-                            <th>Address</th>
-                            <th>City</th>
-                            <th>Country</th>
-                            <th>State</th>
-                            <th>Postal Code</th>
+                            <th>Title</th>
+                            <th>Amount</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="warehouse in warehouses">
-                            <td>{{warehouse.id}}</td>
-                            <td>{{warehouse.name}}</td>
-                            <td>{{warehouse.box_price}}</td>
-                            <td>{{warehouse.address.address}}</td>
-                            <td>{{warehouse.address.city}}</td>
-                            <td>{{warehouse.address.country}}</td>
-                            <td>{{warehouse.address.state}}</td>
-                            <td>{{warehouse.address.postal_code}}</td>
+                        <tr v-for="subscription in subscriptions">
+                            <td>{{subscription.id}}</td>
+                            <td>{{subscription.title}}</td>
+                            <td>{{subscription.amount}}</td>
                             <td>
-                                <a v-bind:href="'/admin/warehouses/'+warehouse.id+'/edit'" class="edit-modal btn btn-warning">
+                                <a v-bind:href="'/admin/subscriptions/' + subscription.id + '/show-form'"
+                                   class="edit-modal btn btn-info">
+                                    <span class="glyphicon glyphicon-zoom-in"></span>
+                                    Show
+                                </a>
+                                <a v-bind:href="'/admin/subscriptions/' + subscription.id + '/edit'"
+                                   class="edit-modal btn btn-warning">
                                     <span class="glyphicon glyphicon-edit"></span>
                                     Edit
                                 </a>
-                                <button @click="deleting(warehouse.id)" type="submit" class="btn btn-danger">
+                                <button @click="deleting(subscription.id)" type="submit" class="btn btn-danger">
                                     <span class="glyphicon glyphicon-trash"></span> Delete</button>
                             </td>
                         </tr>
@@ -49,15 +45,21 @@
     export default {
         data(){
             return {
-                warehouses:[]
+                subscriptions:[
+                    {
+                        id: '',
+                        title: '',
+                        amount: ''
+                    }
+                ]
 
             }
         },
 
         created() {
-            axios.get('/admin/warehouses/').then( response => {
-                this.warehouses = response.data.warehouses;
-                console.log(this.warehouses);
+            axios.get('/admin/subscriptions/').then( response => {
+                this.subscriptions = response.data.subscriptions;
+                console.log(this.subscriptions);
             });
 
         },

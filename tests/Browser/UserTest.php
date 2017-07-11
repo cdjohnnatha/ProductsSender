@@ -8,6 +8,8 @@ use Laravel\Dusk\Browser;
 
 class UserTest extends DuskTestCase
 {
+
+
     /**
      * @group user
      */
@@ -16,7 +18,9 @@ class UserTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) {
             $faker = \Faker\Factory::create();
+            $country = $faker->country;
             $browser->visit('/register')
+                ->pause(1000)
                 ->assertSee('Register User')
                 ->type('name', $faker->firstName)
                 ->type('surname', $faker->lastName)
@@ -28,7 +32,9 @@ class UserTest extends DuskTestCase
                 ->click('#submit-button')
                 //Address form
                 ->assertSee('Register Address')
-                ->type('addressLabel', 'Default Address')
+                ->select('country-address', $country)
+                ->assertSelected('country-address', $country)
+                ->type('#label', 'Default Address')
                 ->type('owner_name', 'Craudio')
                 ->type('owner_surname', 'Duarte')
                 ->type('phone-address', 83998000802)
@@ -36,8 +42,7 @@ class UserTest extends DuskTestCase
                 ->type('address', $faker->address)
                 ->type('city', $faker->city)
                 ->type('state', 'Paraiba')
-                ->type('postalCode', $faker->postcode)
-                ->select('country-address', $faker->country)
+                ->type('postal_code', $faker->postcode)
                 ->click('#submit-button')
                 //Subscription
                 ->assertSee('Select Subscription')
@@ -46,6 +51,34 @@ class UserTest extends DuskTestCase
                 ->click('#submit-button')
                 ->waitForLocation('/login');
 
+        });
+    }
+
+
+    public function testEditUser()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = User::first();
+            $browser->loginAs($user)
+                ->visit('/home/'.$user->id)
+                ->click('.dropdown')
+                ->click('#edit')
+                ->waitForLocation('/home/'.$user->id.'/edit')
+                ->type('surname', 'Duarte')
+                ->click('#save')
+                ->waitForLocation('/home');
+        });
+    }
+
+    public function testDeleteUser()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = factory(\App\User::class)->create();
+            $browser->loginAs($user)
+                ->visit('/home/'.$user->id)
+                ->click('.dropdown')
+                ->click('#delete')
+                ->waitForLocation('/');
         });
     }
 
@@ -58,41 +91,12 @@ class UserTest extends DuskTestCase
             $user = User::find(1);
             $browser->visit('/login')
                 ->assertSee('Login')
-                ->type('login', $user->email)
+                ->type('email', $user->email)
                 ->type('password', '123456')
                 ->press('Login')
-                ->waitForLocation('/home/'.$user->id)
-                ->assertSee('Dashboard');
+                ->waitForLocation('/home/'.$user->id);
         });
     }
-
-
-//    public function testEditUser()
-//    {
-//        $this->browse(function (Browser $browser) {
-//            $user = User::find(1);
-//            $browser->loginAs($user)
-//                ->visit('/home/'.$user->id)
-//                ->click('.dropdown')
-//                ->click('#edit')
-//                ->waitForLocation('/home/'.$user->id.'/edit')
-//                ->type('surname', 'Duarte')
-//                ->click('#save')
-//                ->waitForLocation('/home/'.$user->id);
-//        });
-//    }
-
-//    public function testDeleteUser()
-//    {
-//        $this->browse(function (Browser $browser) {
-//            $user = factory(\App\User::class)->create();
-//            $browser->loginAs($user)
-//                ->visit('/home/'.$user->id)
-//                ->click('.dropdown')
-//                ->click('#delete')
-//                ->waitForLocation('/');
-//        });
-//    }
 
 
 }
