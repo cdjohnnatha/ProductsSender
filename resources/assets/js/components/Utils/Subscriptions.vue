@@ -34,7 +34,6 @@
         created() {
             axios.get('/register/subscriptions').then( response => {
               this.subscriptions = response.data.subscriptions;
-              console.log(this.subscriptions[0].benefits);
             });
         },
         methods: {

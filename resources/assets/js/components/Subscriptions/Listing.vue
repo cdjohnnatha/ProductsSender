@@ -66,9 +66,9 @@
 
         methods: {
             deleting: function(id){
-                console.log("calling");
-                axios.delete('admin/warehouses/' + id + '/delete').then( response => {
-                    if( response.status === 201)
+                axios.delete('/admin/subscriptions/' + id + '/delete').then( response => {
+                console.log(response.data);
+                 if( response.status === 200)
                         location.href = response.data;
                 }).catch(function (error) {
                     console.log(error);

@@ -101,7 +101,7 @@ Route::prefix('/admin')->group(function() {
         Route::prefix('/{id}')->group(function() {
             Route::get('/show', 'SubscriptionController@show')->name('admin.subscriptions.show');
             Route::get('/show-form', 'SubscriptionController@subscriptionForm')->name('admin.subscriptions.show');
-            Route::get('/edit', 'SubscriptionController@edit')->name('admin.subscriptions.edit');
+            Route::get('/edit', 'SubscriptionController@subscriptionForm')->name('admin.subscriptions.edit');
             Route::post('/update', 'SubscriptionController@update')->name('subscriptions.update');
             Route::delete('/delete', 'SubscriptionController@destroy')->name('subscriptions.destroy');
         });

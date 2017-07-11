@@ -33,4 +33,14 @@ class Subscription extends Model
         'created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by'
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function ($subscription) {
+            foreach($subscription->benefits()->get() as $benefit){
+                $benefit->delete();
+            }
+        });
+    }
+
 }

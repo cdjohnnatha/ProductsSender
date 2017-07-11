@@ -78,6 +78,18 @@ class SubscriptionController extends Controller
             return response('/admin/subscriptions/show-list', 201);
         }
         return response('', 406);
+    }
+
+    public function destroy($id)
+    {
+        $subscription = Subscription::findOrFail($id);
+        $subscription->delete();
+        if( $subscription->trashed())
+        {
+            return response('/admin/subscriptions/show-list', 200);
+        }
+
+        return response('', 406);
 
     }
 }
