@@ -75,8 +75,9 @@ class UserController extends Controller
 
     public function subscriptions()
     {
+        $subscriptions = Subscription::with('benefits')->get();
         return response()->json([
-            'subscriptions' => Subscription::all(),
+            'subscriptions' => $subscriptions,
         ])->setStatusCode(200);
     }
 }

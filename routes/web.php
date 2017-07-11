@@ -25,7 +25,7 @@ Route::get('/warehouse', 'WarehouseController@listAll')->name('warehouses.all');
 Route::prefix('/register')->group(function() {
     Route::post('/', 'Auth\RegisterController@store')->name('register.submit');
     Route::get('/form', 'Auth\RegisterController@registerForm')->name('register.form');
-    Route::get('/subscriptions', 'SubscriptionController@index')->name('subscriptions.all');
+    Route::get('/subscriptions', 'UserController@subscriptions')->name('subscriptions.all');
 });
 
 Route::get('/home/all', 'HomeController@showall')->name('home.all');

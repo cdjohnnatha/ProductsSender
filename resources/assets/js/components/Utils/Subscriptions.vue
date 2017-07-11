@@ -1,15 +1,12 @@
 <template>
 
   <section id="lists">
-    <div class="columns" v-for="subscription in subscriptions">
+    <div class="columns" v-for="(subscription, index) in subscriptions">
       <ul class="price"
           @click="selectSubscription(subscription.id, $event)">
-        <li class="header">{{subscription.name}}</li>
+        <li class="header">{{subscription.title}}</li>
         <li class="grey">$ {{subscription.amount}} / month</li>
-        <li>1 packet at warehouse per time</li>
-        <li>Your address in USA</li>
-        <li>Free storage for 30 days</li>
-        <li>$2 per box</li>
+        <li v-for="benefit in subscriptions[index].benefits">{{benefit.message}}</li>
         <li class="grey">
             <input type="hidden" name="subscription_id" v-bind:value="subscription.id">
         </li>
@@ -24,7 +21,12 @@
         data() {
             return {
                 isActive: true,
-                subscriptions:[],
+                subscriptions:{
+                    id: '',
+                    title: '',
+                    amount: '',
+                    benefits: [ { message: ''} ]
+                },
                 selectedId: 0
             }
         },
@@ -32,6 +34,7 @@
         created() {
             axios.get('/register/subscriptions').then( response => {
               this.subscriptions = response.data.subscriptions;
+              console.log(this.subscriptions[0].benefits);
             });
         },
         methods: {

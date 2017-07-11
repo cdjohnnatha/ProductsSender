@@ -48642,15 +48642,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             isActive: true,
-            subscriptions: [],
+            subscriptions: {
+                id: '',
+                title: '',
+                amount: '',
+                benefits: [{ message: '' }]
+            },
             selectedId: 0
         };
     },
@@ -48659,6 +48661,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         axios.get('/register/subscriptions').then(function (response) {
             _this.subscriptions = response.data.subscriptions;
+            console.log(_this.subscriptions[0].benefits);
         });
     },
 
@@ -48694,7 +48697,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "lists"
     }
-  }, _vm._l((_vm.subscriptions), function(subscription) {
+  }, _vm._l((_vm.subscriptions), function(subscription, index) {
     return _c('div', {
       staticClass: "columns"
     }, [_c('ul', {
@@ -48706,9 +48709,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('li', {
       staticClass: "header"
-    }, [_vm._v(_vm._s(subscription.name))]), _vm._v(" "), _c('li', {
+    }, [_vm._v(_vm._s(subscription.title))]), _vm._v(" "), _c('li', {
       staticClass: "grey"
-    }, [_vm._v("$ " + _vm._s(subscription.amount) + " / month")]), _vm._v(" "), _c('li', [_vm._v("1 packet at warehouse per time")]), _vm._v(" "), _c('li', [_vm._v("Your address in USA")]), _vm._v(" "), _c('li', [_vm._v("Free storage for 30 days")]), _vm._v(" "), _c('li', [_vm._v("$2 per box")]), _vm._v(" "), _c('li', {
+    }, [_vm._v("$ " + _vm._s(subscription.amount) + " / month")]), _vm._v(" "), _vm._l((_vm.subscriptions[index].benefits), function(benefit) {
+      return _c('li', [_vm._v(_vm._s(benefit.message))])
+    }), _vm._v(" "), _c('li', {
       staticClass: "grey"
     }, [_c('input', {
       attrs: {
@@ -48718,7 +48723,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": subscription.id
       }
-    })])])])
+    })])], 2)])
   }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true
@@ -49992,7 +49997,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -50003,6 +50008,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -50247,6 +50254,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-sm-10 col-md-offset-1"
+  }, [_c('div', {
+    staticClass: "col-sm-12 col-md-offset-1"
   }, [_c('div', {
     staticClass: "panel panel-default"
   }, [_c('div', {
@@ -50548,7 +50557,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.actionButton
     }
-  }, [_vm._v("\n                        " + _vm._s(_vm.buttonName) + "\n                        "), _c('span', {
+  }, [_vm._v("\n                            " + _vm._s(_vm.buttonName) + "\n                            "), _c('span', {
     staticClass: "glyphicon glyphicon-arrow-right"
   })]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-2  pull-right"
@@ -50568,9 +50577,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('span', {
     staticClass: "glyphicon glyphicon-arrow-left"
-  }), _vm._v("\n                            Back\n                        ")])]), _vm._v(" "), _c('div', {
+  }), _vm._v("\n                                Back\n                            ")])]), _vm._v(" "), _c('div', {
     staticClass: "clearfix"
-  })])])])])])
+  })])])])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
