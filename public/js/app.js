@@ -49676,7 +49676,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49749,7 +49749,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             urlForm: '/admin/subscriptions/register',
-            disabled: true,
+            disabled: false,
             buttonName: 'Register',
             submitAction: this.submitForm,
             subscription: {
@@ -49772,7 +49772,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             if (url.indexOf('show') !== -1) {
                 this.buttonName = 'Edit';
+                this.disabled = true;
                 this.submitAction = this.changeForEdit;
+            } else {
+                this.buttonName = 'Register';
             }
         }
 
@@ -50991,7 +50994,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         deleteUser: function deleteUser(id) {
-            axios.post('/admin/users/' + id).then(function (response) {
+            axios.delete('/users/' + id).then(function (response) {
                 if (response.status === 200) location.href = response.data;
             }).catch(function (error) {
                 console.log(error);
@@ -51021,7 +51024,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('tr', [_c('td', [_vm._v(_vm._s(user.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.surname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.subscription.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.phone))]), _vm._v(" "), _c('td', [_c('a', {
       staticClass: "edit-modal btn btn-warning",
       attrs: {
-        "href": '/admin/users/' + user.id + '/edit'
+        "href": '/users/' + user.id + '/edit'
       }
     }, [_c('span', {
       staticClass: "glyphicon glyphicon-edit"

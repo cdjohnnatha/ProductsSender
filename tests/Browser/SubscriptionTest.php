@@ -44,7 +44,7 @@ class SubscriptionTest extends DuskTestCase
     }
 
     /**
-     * @group subscriptionRegister
+     * @group subscriptions
      */
     public function testRegisterSubscription()
     {

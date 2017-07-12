@@ -38,4 +38,17 @@ class User extends Authenticatable
     {
         return $this->hasOne(Subscription::class, 'id', 'subscriptions_id');
     }
+
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class, 'user_id');
+    }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $user->wallet()->delete();
+        });
+    }
 }
