@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Address;
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -113,9 +114,10 @@ class RegisterController extends Controller
         $address->default_address = true;
 
         if($user->save()){
-            if( $user->address()->save($address) ){
+            if( $user->address()->save($address) && $user->wallet()->save(new Wallet())){
                 return response('created', 201);
             }
+
         }
 
         return response('bad request',400);

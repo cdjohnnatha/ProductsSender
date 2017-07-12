@@ -60,7 +60,7 @@
         data(){
             return {
                 urlForm: '/admin/subscriptions/register',
-                disabled: true,
+                disabled: false,
                 buttonName: 'Register',
                 submitAction: this.submitForm,
                 subscription:{
@@ -86,7 +86,11 @@
 
                 if(url.indexOf('show') !== -1) {
                     this.buttonName = 'Edit';
+                    this.disabled = true;
                     this.submitAction = this.changeForEdit;
+                }
+                else{
+                    this.buttonName = 'Register'
                 }
             }
 

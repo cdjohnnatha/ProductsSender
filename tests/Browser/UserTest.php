@@ -3,6 +3,7 @@
 namespace Tests\Browser;
 
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\DB;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 
@@ -11,7 +12,7 @@ class UserTest extends DuskTestCase
 
 
     /**
-     * @group user
+     * @group userRegister
      */
     public function testRegister()
     {
@@ -49,12 +50,15 @@ class UserTest extends DuskTestCase
                 ->mouseover('.columns')
                 ->click('.columns')
                 ->click('#submit-button')
+                ->pause(6000)
                 ->waitForLocation('/login');
 
         });
     }
 
-
+    /**
+     * @group user
+     */
     public function testEditUser()
     {
         $this->browse(function (Browser $browser) {
@@ -70,13 +74,17 @@ class UserTest extends DuskTestCase
         });
     }
 
+
+    /**
+     * @group user
+     */
     public function testDeleteUser()
     {
         $this->browse(function (Browser $browser) {
-            $user = factory(\App\User::class)->create();
+            $user = User::all()->last();
             $browser->loginAs($user)
                 ->visit('/home/'.$user->id)
-                ->click('.dropdown')
+                ->click('.dropdown-toggle')
                 ->click('#delete')
                 ->waitForLocation('/');
         });

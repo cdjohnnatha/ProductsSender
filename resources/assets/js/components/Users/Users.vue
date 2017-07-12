@@ -26,7 +26,7 @@
                 <td>{{ user.phone }}</td>
                 <td>
                   <a class="edit-modal btn btn-warning"
-                     v-bind:href="'/admin/users/' + user.id + '/edit' ">
+                     v-bind:href="'/users/' + user.id + '/edit' ">
                     <span class="glyphicon glyphicon-edit"></span>
                     Edit
                   </a>
@@ -60,7 +60,7 @@
         },
         methods: {
             deleteUser: function (id) {
-                axios.post('/admin/users/'+id).then(response => {
+                axios.delete('/users/'+id).then(response => {
                     if (response.status === 200)
                         location.href = response.data;
                 }).catch(function (error) {

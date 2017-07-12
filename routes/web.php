@@ -71,7 +71,7 @@ Route::prefix('/admin')->group(function() {
             Route::get('/', 'UserController@show')->name('admin.user.show');
             Route::get('/edit', 'UserController@edit')->name('admin.user.edit');
             Route::patch('/', 'UserController@update')->name('user.update');
-            Route::post('/', 'UserController@destroy')->name('user.destroy');
+            Route::delete('/', 'UserController@destroy')->name('user.destroy');
         });
     });
 
