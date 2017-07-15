@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Warehouse extends Model
 {
+    protected $attributes = array('note' => '');
+
     protected $fillable = [
         'name', 'storage_time', 'box_price', 'created_by', 'updated_by'
     ];

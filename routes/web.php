@@ -25,7 +25,7 @@ Route::get('/warehouse', 'WarehouseController@listAll')->name('warehouses.all');
 Route::prefix('/register')->group(function() {
     Route::post('/', 'Auth\RegisterController@store')->name('register.submit');
     Route::get('/form', 'Auth\RegisterController@registerForm')->name('register.form');
-    Route::get('/subscriptions', 'UserController@subscriptions')->name('subscriptions.all');
+    Route::get('/subscriptions', 'SubscriptionController@subscriptions')->name('subscriptions.all');
 });
 
 Route::get('/home/all', 'HomeController@showall')->name('home.all');
@@ -105,6 +105,31 @@ Route::prefix('/admin')->group(function() {
             Route::post('/update', 'SubscriptionController@update')->name('subscriptions.update');
             Route::delete('/delete', 'SubscriptionController@destroy')->name('subscriptions.destroy');
         });
+    });
+
+    Route::prefix('/status')->group(function(){
+        Route::get('/', 'StatusController@showStatus')->name('status.all');
+        Route::get('/warehouses', 'StatusController@warehouseStatus')->name('status.warehouse.all');
+
+        Route::prefix('/{id}')->group(function(){
+            Route::post('/', 'StatusController@update')->name('status.update');
+            Route::delete('/', 'StatusController@destroy')->name('status.destroy');
+        });
+    });
+
+    Route::prefix('/packages')->group(function(){
+//        Route::get('/show-list', 'PackageController@showList')->name('packages.show.list');
+//        Route::get('/', 'PackageController@subscriptions')->name('packages.all');
+        Route::get('/form', 'PackageController@form')->name('packages.create');
+        Route::post('/register', 'PackageController@register')->name('packages.register');
+
+//        Route::prefix('/{id}')->group(function() {
+//            Route::get('/show', 'PackageController@show')->name('admin.packages.show');
+//            Route::get('/form', 'PackageController@subscriptionForm')->name('admin.packages.form');
+//            Route::get('/edit', 'PackageController@subscriptionForm')->name('admin.packages.edit');
+//            Route::post('/update', 'PackageController@update')->name('packages.update');
+//            Route::delete('/delete', 'PackageController@destroy')->name('packages.destroy');
+//        });
     });
 
 });

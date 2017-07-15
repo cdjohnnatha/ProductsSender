@@ -71,13 +71,4 @@ class UserController extends Controller
             return redirect('/');
         }
     }
-
-
-    public function subscriptions()
-    {
-        $subscriptions = Subscription::with('benefits')->get();
-        return response()->json([
-            'subscriptions' => $subscriptions,
-        ])->setStatusCode(200);
-    }
 }

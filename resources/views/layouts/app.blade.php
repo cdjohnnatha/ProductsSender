@@ -47,8 +47,23 @@
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
                             <li class="dropdown">
+                                <a href="#" class="btn-lg dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="">Notifications</a></li>
+                                    <li><a id="edit" href="#">Edit</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-lg">
+                                    <span class="glyphicon  glyphicon-question-sign"></span>
+                                </a>
+                            </li>
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    <span class="glyphicon glyphicon-triangle-bottom"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
