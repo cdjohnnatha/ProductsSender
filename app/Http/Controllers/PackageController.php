@@ -3,11 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Package;
+use App\PackageFiles;
 use App\Status;
+use Faker\Provider\File;
+use Faker\Provider\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class PackageController extends Controller
 {
+
+    private $path;
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+        $this->path = 'public/PackagePictures/';
+    }
+
     public function form()
     {
         return view('package.form');
@@ -30,9 +44,39 @@ class PackageController extends Controller
         $package->warehouse_id = $request->input('warehouse_id');
 
         if($package->save()){
+
+            $files = $request->input('pictures');
+            $fileName =  $package->id . date("dmY");
+            if(!is_null($files)) {
+                foreach ($files as $file) {
+                    $exploded = explode(',', $file);
+                    $decoded = base64_decode($exploded[1]);
+                    if (str_contains($exploded[0], 'jpg')) {
+                        $extension = 'jpg';
+                    }
+
+                    if (str_contains($exploded[0], 'jpeg')) {
+                        $extension = 'jpeg';
+                    }
+
+                    if (str_contains($exploded[0], 'png')) {
+                        $extension = 'png';
+                    } else {
+                        return response('Format not accepted', 405);
+                    }
+                    $name = $fileName.'.'.$extension;
+                    Storage::put($this->path.$name, $decoded);
+                    $picture = new PackageFiles();
+                    $picture->name = $name;
+                    $picture->type = $extension;
+                    $picture->path = $this->path;
+
+                    $package->pictures()->save($picture);
+
+                }
+            }
             return response('created',201);
         }
-
-        return response('', 406);
+        return response()->setStatusCode(406);
     }
 }

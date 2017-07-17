@@ -28,4 +28,9 @@ class Package extends Model
     {
         return $this->belongsTo(Warehouse::class, 'warehouse_id');
     }
+
+    public function pictures()
+    {
+        return $this->hasMany(PackageFiles::class, 'package_id');
+    }
 }

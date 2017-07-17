@@ -89,6 +89,13 @@
                                 </section>
 
                             </div>
+                            <section class="col-sm-12 form-group">
+                                <div class="col-sm-12">
+                                    <label>Upload Pictures</label>
+                                    <input type="file" class="form-control" multiple @change="prepareFiles"
+                                           accept="image/*">
+                                </div>
+                            </section>
                             <section class="col-sm-12">
                                 <div class="col-sm-12">
                                     <label>Quote</label>
@@ -137,6 +144,7 @@
                     status_id: '',
                     object_owner: '',
                     warehouse_id: '',
+                    pictures: []
                 },
 
             }
@@ -170,10 +178,12 @@
 
         methods: {
             submitForm: function(){
+                console.log(this.objectPackage.pictures);
                 this.$validator.validateAll().then((result) => {
                     if (result && this.objectPackage.warehouse_id !== -1 ) {
-                        axios.post(this.urlForm, this.objectPackage ).then( response => {
-                            location.href= '/admin/packages/form';
+                        axios.post(this.urlForm, this.objectPackage).then( response => {
+//                            location.href= '/admin/packages/form';
+                            console.log(response);
                         }).catch(function (error) {
                             console.log(error);
                         });
@@ -197,6 +207,19 @@
                     console.log(error);
                 });
             },
+
+            prepareFiles: function(files) {
+                var count;
+
+                for(count = 0; count < files.target.files.length; count++){
+                    var fileReader = new FileReader();
+                    fileReader.readAsDataURL(files.target.files[count]);
+                    fileReader.onload = (e) => {
+                        this.objectPackage.pictures.push(e.target.result);
+                    }
+                }
+
+            }
 
         }
 

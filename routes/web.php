@@ -81,6 +81,7 @@ Route::prefix('/admin')->group(function() {
     Route::prefix('/warehouses')->group(function(){
         Route::get('/show-list', 'WarehouseController@showList')->name('warehouses.show.list');
         Route::get('/', 'WarehouseController@listAll')->name('warehouses.all');
+        Route::get('/names', 'WarehouseController@listNames')->name('warehouses.all.names');
         Route::get('/create', 'WarehouseController@create')->name('warehouses.create');
         Route::post('/register', 'WarehouseController@register')->name('warehouses.register');
 
