@@ -51978,7 +51978,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.remove-file{\n    color:red;\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -51989,6 +51989,11 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -52123,6 +52128,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             submitAction: this.submitForm,
             timeout: '',
             user: 'not found',
+            filesName: [],
             objectPackage: {
                 id: '',
                 name: '',
@@ -52207,14 +52213,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this3 = this;
 
             var count;
-
             for (count = 0; count < files.target.files.length; count++) {
                 var fileReader = new FileReader();
+                this.filesName.push(files.target.files[count].name);
                 fileReader.readAsDataURL(files.target.files[count]);
                 fileReader.onload = function (e) {
                     _this3.objectPackage.pictures.push(e.target.result);
                 };
             }
+        },
+
+        removeFileList: function removeFileList(index) {
+            this.filesName.splice(index, 1);
         }
 
     }
@@ -52551,7 +52561,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "change": _vm.prepareFiles
     }
-  })])]), _vm._v(" "), _c('section', {
+  }), _vm._v(" "), _c('ul', _vm._l((_vm.filesName), function(file, key) {
+    return _c('li', {
+      on: {
+        "click": function($event) {
+          _vm.removeFileList(key)
+        }
+      }
+    }, [_vm._v(_vm._s(file) + "\n                                        "), _c('span', {
+      staticClass: "glyphicon glyphicon-remove remove-file"
+    })])
+  }))])]), _vm._v(" "), _c('section', {
     staticClass: "col-sm-12"
   }, [_c('div', {
     staticClass: "col-sm-12"

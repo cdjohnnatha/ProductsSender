@@ -94,6 +94,11 @@
                                     <label>Upload Pictures</label>
                                     <input type="file" class="form-control" multiple @change="prepareFiles"
                                            accept="image/*">
+                                    <ul>
+                                        <li v-for="(file, key) in filesName" @click="removeFileList(key)">{{file}}
+                                            <span class="glyphicon glyphicon-remove remove-file"></span>
+                                        </li>
+                                    </ul>
                                 </div>
                             </section>
                             <section class="col-sm-12">
@@ -132,6 +137,7 @@
                 submitAction: this.submitForm,
                 timeout: '',
                 user: 'not found',
+                filesName: [],
                 objectPackage:{
                     id: '',
                     name: '',
@@ -210,15 +216,18 @@
 
             prepareFiles: function(files) {
                 var count;
-
                 for(count = 0; count < files.target.files.length; count++){
                     var fileReader = new FileReader();
+                    this.filesName.push(files.target.files[count].name);
                     fileReader.readAsDataURL(files.target.files[count]);
                     fileReader.onload = (e) => {
                         this.objectPackage.pictures.push(e.target.result);
                     }
                 }
+            },
 
+            removeFileList: function(index){
+                    this.filesName.splice(index, 1);
             }
 
         }
@@ -227,4 +236,9 @@
 </script>
 
 <style lang="css">
+
+    .remove-file{
+        color:red;
+        cursor: pointer;
+    }
 </style>
