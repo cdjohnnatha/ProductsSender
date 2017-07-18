@@ -43,6 +43,8 @@ Vue.component('user-list', require('./components/Users/Users.vue'));
 Vue.component('user-menu', require('./components/Users/Menu.vue'));
 
 Vue.component('package-form', require('./components/Packages/Form.vue'));
+Vue.component('package-table', require('./components/Packages/Table.vue'));
+Vue.component('package-show', require('./components/Packages/Table.vue'));
 
 
 const app = new Vue({

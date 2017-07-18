@@ -8,6 +8,7 @@ use App\Status;
 use Faker\Provider\File;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -54,11 +55,9 @@ class PackageController extends Controller
                     if (str_contains($exploded[0], 'jpg')) {
                         $extension = 'jpg';
                     }
-
                     if (str_contains($exploded[0], 'jpeg')) {
                         $extension = 'jpeg';
                     }
-
                     if (str_contains($exploded[0], 'png')) {
                         $extension = 'png';
                     } else {
@@ -78,5 +77,24 @@ class PackageController extends Controller
             return response('created',201);
         }
         return response()->setStatusCode(406);
+    }
+
+    public function showList()
+    {
+        return view('package.list');
+    }
+
+    public function warehousePackages()
+    {
+        $packages = Package::with(['status' => function($query){
+            $query->where([
+            ['status', 'like', 'WAREHOUSE%'],
+            ['status', '!=', 'WAREHOUSE_SENT'],
+            ]);
+        }])->where('warehouse_id', '=', Auth::user()->default_warehouse_id)->get();
+        return response()->json([
+           'packages' => $packages
+        ]);
+
     }
 }

@@ -119,8 +119,8 @@ Route::prefix('/admin')->group(function() {
     });
 
     Route::prefix('/packages')->group(function(){
-//        Route::get('/show-list', 'PackageController@showList')->name('packages.show.list');
-//        Route::get('/', 'PackageController@subscriptions')->name('packages.all');
+        Route::get('/show-list', 'PackageController@showList')->name('packages.show.list');
+        Route::get('/', 'PackageController@warehousePackages')->name('packages.all');
         Route::get('/form', 'PackageController@form')->name('packages.create');
         Route::post('/register', 'PackageController@register')->name('packages.register');
 
