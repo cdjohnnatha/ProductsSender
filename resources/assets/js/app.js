@@ -11,8 +11,14 @@ window.Vue = require('vue');
 
 import VeeValidate from 'vee-validate';
 window.Vue.use(VeeValidate);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
+
+import VueLazyLoad from 'vue-lazyload';
+import VueTouch from 'vue-touch';
+
+window.Vue.use(VueLazyLoad)
+window.Vue.use(VueTouch, { name: 'v-touch' })
+
+ /* Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
@@ -44,9 +50,10 @@ Vue.component('user-menu', require('./components/Users/Menu.vue'));
 
 Vue.component('package-form', require('./components/Packages/Form.vue'));
 Vue.component('package-table', require('./components/Packages/Table.vue'));
-Vue.component('package-show', require('./components/Packages/Table.vue'));
+Vue.component('package-show', require('./components/Packages/Show.vue'));
 
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+
 });

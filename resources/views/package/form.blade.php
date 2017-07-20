@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <package-form></package-form>
+    <package-form :data_id="{{$id}}"></package-form>
 @endsection

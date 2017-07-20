@@ -156,40 +156,44 @@
             }
         },
 
-//        created() {
-//            if(this.data_id !== 0) {
-//                let url = window.location.href;
-//                if (url.indexOf('edit') !== -1) {
-//                    this.changeForEdit();
-//                }
-//
-//                if (url.indexOf('show') !== -1) {
-//                    this.buttonName = 'Edit';
-//                    this.disabled = true;
-//                    this.submitAction = this.changeForEdit;
-//                }
-//                else {
-//                    this.buttonName = 'Register'
-//                }
-//
-//                axios.get('/admin/packages/' + this.data_id + '/show').then(response => {
-//                    this.objectPackage = response.data.package;
-//                    console.log(this.objectPackage);
-//                }).catch(function (error) {
-//                    console.log(error);
-//                });
-//            }
+        created() {
+            if(this.data_id !== 0) {
+                let url = window.location.href;
+                if (url.indexOf('edit') !== -1 && url.indexOf('admin') !== -1) {
+                    this.changeForEdit();
 
-//        }
+                    axios.get('/admin/packages/' + this.data_id + '/show').then(response => {
+                        this.objectPackage = response.data.package;
+                        this.objectPackage.object_owner = this.objectPackage.user.id;
+                        this.findUser();
+                        for(var index in this.objectPackage.pictures){
+                            this.filesName.push(this.objectPackage.pictures[index].name);
+                        }
+
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            }
+
+        },
 
         methods: {
             submitForm: function(){
-                console.log(this.objectPackage.pictures);
+                //Remove existent image objects before send to update
+                if(this.data_id !== 0) {
+                    for(var index in this.objectPackage.pictures){
+                        if(typeof(this.objectPackage.pictures[index]) === 'object'){
+                            this.objectPackage.pictures.splice(index, 1);
+                        }
+                    }
+                }
                 this.$validator.validateAll().then((result) => {
                     if (result && this.objectPackage.warehouse_id !== -1 ) {
+                        console.log(this.objectPackage);
                         axios.post(this.urlForm, this.objectPackage).then( response => {
-//                            location.href= '/admin/packages/form';
-                            console.log(response);
+                            if(response.status === 201)
+                                location.href= '/admin/packages/show-list';
                         }).catch(function (error) {
                             console.log(error);
                         });
@@ -227,8 +231,22 @@
             },
 
             removeFileList: function(index){
-                    this.filesName.splice(index, 1);
+                this.filesName.splice(index, 1);
+                if(typeof(this.objectPackage.pictures[index]) === 'object'){
+                    axios.delete('/admin/packages/' + this.objectPackage.id + '/file/' +
+                        this.objectPackage.pictures[index].id +'/delete' ).then(response => {
+                        console.log('ok');
+                    }).catch(error => {
+                        this.user = 'not found ';
+                        console.log(error);
+                    });
+                    this.objectPackage.pictures.splice(index, 1);
+                }
+
             }
+//
+
+
 
         }
 

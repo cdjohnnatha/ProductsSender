@@ -26,7 +26,7 @@
                             <td>{{package.weight_measure}}</td>
                             <td><span class="label label-default">{{package.status.status}}</span></td>
                             <td>
-                                <a v-bind:href="'/admin/packages/' + package.id + '/show-form'"
+                                <a v-bind:href="'/admin/packages/' + package.id + '/show-view'"
                                    class="edit-modal btn btn-info">
                                     <span class="glyphicon glyphicon-zoom-in"></span>
                                     Show
@@ -37,7 +37,9 @@
                                     Edit
                                 </a>
                                 <button @click="deleting(package.id)" type="submit" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-trash"></span> Delete</button>
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                         </tbody>

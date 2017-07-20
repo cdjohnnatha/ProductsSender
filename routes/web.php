@@ -124,13 +124,15 @@ Route::prefix('/admin')->group(function() {
         Route::get('/form', 'PackageController@form')->name('packages.create');
         Route::post('/register', 'PackageController@register')->name('packages.register');
 
-//        Route::prefix('/{id}')->group(function() {
-//            Route::get('/show', 'PackageController@show')->name('admin.packages.show');
-//            Route::get('/form', 'PackageController@subscriptionForm')->name('admin.packages.form');
-//            Route::get('/edit', 'PackageController@subscriptionForm')->name('admin.packages.edit');
-//            Route::post('/update', 'PackageController@update')->name('packages.update');
-//            Route::delete('/delete', 'PackageController@destroy')->name('packages.destroy');
-//        });
+        Route::prefix('/{id}')->group(function() {
+            Route::get('/show-view', 'PackageController@showView')->name('admin.packages.showView');
+            Route::get('/show', 'PackageController@show')->name('admin.packages.show');
+//          Route::get('/form', 'PackageController@subscriptionForm')->name('admin.packages.form');
+            Route::get('/edit', 'PackageController@form')->name('admin.packages.edit');
+            Route::post('/update', 'PackageController@update')->name('packages.update');
+            Route::delete('/file/{fileId}/delete', 'PackageFilesController@delete');
+            Route::delete('/delete', 'PackageController@destroy')->name('packages.destroy');
+        });
     });
 
 });
