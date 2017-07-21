@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Activitylog\Models\Activity;
 
 class PackageController extends Controller
 {
@@ -20,7 +21,6 @@ class PackageController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');
-        $this->path = 'public/PackagePictures/';
     }
 
     public function form($id = 0)
@@ -43,9 +43,13 @@ class PackageController extends Controller
         $package->status_id = $request->input('status_id');
         $package->object_owner = $request->input('object_owner');
         $package->warehouse_id = $request->input('warehouse_id');
-
         if($package->save()){
-
+            activity()
+                ->performedOn($package)
+                ->causedBy(Auth::user())
+                ->withProperty('package_id', $package->id)
+                ->log('The package id is :properties.package_id, the causer name 
+                    is :causer.name');
             $files = $request->input('pictures');
             if(!is_null($files)) {
                 foreach ($files as $file) {
@@ -53,26 +57,37 @@ class PackageController extends Controller
                     $fileName = md5($fileName);
                     $exploded = explode(',', $file);
                     $decoded = base64_decode($exploded[1]);
+                    $extension = '';
                     if (str_contains($exploded[0], 'jpg')) {
                         $extension = 'jpg';
                     }
-                    if (str_contains($exploded[0], 'jpeg')) {
+                    else if (str_contains($exploded[0], 'jpeg')) {
                         $extension = 'jpeg';
                     }
-                    if (str_contains($exploded[0], 'png')) {
+                    else if (str_contains($exploded[0], 'png')) {
                         $extension = 'png';
-                    } else {
+                    }
+                    else {
                         return response('Format not accepted', 405);
                     }
                     $name = $fileName.'.'.$extension;
-                    Storage::put($this->path.$name, $decoded);
+                    Storage::put(config('files.full_public_path').$name,
+                        $decoded
+                    );
                     $picture = new PackageFiles();
                     $picture->name = $name;
                     $picture->type = $extension;
-                    $picture->path = $this->path;
-
-                    $package->pictures()->save($picture);
-
+                    $picture->path = config('files.full_default_folder');
+                    if($package->pictures()->save($picture)){
+                        activity()
+                            ->performedOn($package)
+                            ->causedBy(Auth::user())
+                            ->withProperty('package_id', $package->id)
+                            ->withProperty('file_name', $name)
+                            ->log('The package id is :properties.package_id, 
+                            the causer name is :causer.name and it was uploaded a file which is :properties.file_name 
+                            with id:');
+                    }
                 }
             }
             return response('created',201);
@@ -106,14 +121,11 @@ class PackageController extends Controller
 
     public function show($id)
     {
-        $contents = Storage::url($this->path.'3919072017020756.jpeg');
-        Log::info($contents);
         $package = Package::find($id);
         $package->load('pictures');
         $package->load('warehouse');
         $package->load('status');
         $package->load('user');
-        Storage::delete('public/PackagePictures/3917072017.png');
         return response()->json([
            'package' => $package
         ]);
@@ -135,6 +147,14 @@ class PackageController extends Controller
         $package->object_owner = $request->input('object_owner');
         $package->warehouse_id = $request->input('warehouse.id');
         if($package->save()){
+
+            activity()
+                ->performedOn($package)
+                ->causedBy(Auth::user())
+                ->withProperty('package_id', $package->id)
+                ->log('The package id is :properties.package_id, the causer name 
+                    is :causer.name');
+
             $files = $request->input('pictures');
             if(!is_null($files)) {
                 foreach ($files as $file) {
@@ -156,12 +176,24 @@ class PackageController extends Controller
                         return response('Format not accepted', 405);
                     }
                     $name = $fileName.'.'.$extension;
-                    Storage::put($this->path.$name, $decoded);
+                    Storage::put(
+                        config('files.full_public_path').$name,
+                        $decoded
+                    );
                     $picture = new PackageFiles();
                     $picture->name = $name;
                     $picture->type = $extension;
                     $picture->path = 'storage/PackagePictures/';
-                    $package->pictures()->save($picture);
+                    if($package->pictures()->save($picture)){
+                        activity()
+                            ->performedOn($package)
+                            ->causedBy(Auth::user())
+                            ->withProperty('package_id', $package->id)
+                            ->withProperty('file_name', $name)
+                            ->log('The package id is :properties.package_id, 
+                            the causer name is :causer.name and it was uploaded a file which is :properties.file_name 
+                            with id:');
+                    }
                 }
             }
             return response('created',201);
@@ -173,15 +205,28 @@ class PackageController extends Controller
     {
         $package = Package::findOrFail($id);
         $package->load('pictures');
-        Log::info($package);
         if(!is_null($package->pictures)){
             foreach($package->pictures as $picture){
-                Storage::delete('public/PackagePictures/'.$picture->name);;
+                Storage::delete('public/PackagePictures/'.$picture->name);
+                activity()
+                    ->performedOn($picture)
+                    ->causedBy(Auth::user())
+                    ->withProperty('package_id', $id)
+                    ->withProperty('file_name', $picture->name)
+                    ->log('The package id is :properties.package_id, 
+                            the causer name is :causer.name and removing the file :properties.file_name 
+                            with id:');
             }
         }
         $package->delete();
         if($package->trashed()){
-            return response('public/PackagePictures/show-list', 200);
+            activity()
+                ->performedOn($package)
+                ->causedBy(Auth::user())
+                ->withProperty('package_id', $id)
+                ->log('The package id is :properties.package_id, the causer name 
+                    is :causer.name');
+            return response('/admin/packages/show-list', 200);
         }
 
         return response('error while deleting at database', 417);
