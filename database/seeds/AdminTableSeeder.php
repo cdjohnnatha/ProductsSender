@@ -17,7 +17,8 @@ class AdminTableSeeder extends Seeder
             'email' => 'claudio@admin.com',
             'country' => 'Brasil',
             'phone' => '8398000802',
-            'password' => Hash::make('123456')
+            'password' => Hash::make('123456'),
+            'default_warehouse_id' => 1
         ]);
     }
 }

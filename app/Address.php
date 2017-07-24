@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 Relation::morphMap([
@@ -16,6 +17,7 @@ Relation::morphMap([
 class Address extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     protected $dates = ['deleted_at'];
 

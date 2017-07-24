@@ -15,8 +15,8 @@ window.Vue.use(VeeValidate);
 import VueLazyLoad from 'vue-lazyload';
 import VueTouch from 'vue-touch';
 
-window.Vue.use(VueLazyLoad)
-window.Vue.use(VueTouch, { name: 'v-touch' })
+window.Vue.use(VueLazyLoad);
+window.Vue.use(VueTouch, { name: 'v-touch' });
 
  /* Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

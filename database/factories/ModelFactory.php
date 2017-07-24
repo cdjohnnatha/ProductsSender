@@ -21,7 +21,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'surname' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'country' => $faker->country,
-        'subscription' => $faker->numberBetween($min = 1, $max = 2),
+        'subscription_id' => $faker->numberBetween($min = 1, $max = 2),
         'phone' => $faker->phoneNumber,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
@@ -39,6 +39,7 @@ $factory->define(App\Admin::class, function (Faker\Generator $faker) {
         'phone' => $faker->phoneNumber,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+        'default_warehouse_id' => 1
     ];
 });
 
@@ -51,8 +52,7 @@ $factory->define(App\Warehouse::class, function (Faker\Generator $faker) {
         'storage_time' => $faker->numberBetween($min = 30, $max = 60),
         'created_by' => 1,
         'updated_by' => 1,
-        'box_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 5),
-        'address_id' => $faker->numberBetween($min = 1, $max = 5),
+        'box_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 5)
     ];
 });
 
@@ -92,9 +92,8 @@ $factory->define(App\Address::class, function (Faker\Generator $faker) {
 $factory->define(App\Subscription::class, function (Faker\Generator $faker) {
 
     return [
-        'name' => $faker->company,
+        'title' => $faker->company,
         'amount' => $faker->randomFloat($nbMaxDecimals = 2, $min = 1, $max = 6),
-        'currency' => 'usd',
         'created_by' => 1,
         'updated_by' => 1,
     ];
