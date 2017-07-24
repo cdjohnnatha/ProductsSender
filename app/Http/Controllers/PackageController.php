@@ -44,12 +44,6 @@ class PackageController extends Controller
         $package->object_owner = $request->input('object_owner');
         $package->warehouse_id = $request->input('warehouse_id');
         if($package->save()){
-            activity()
-                ->performedOn($package)
-                ->causedBy(Auth::user())
-                ->withProperty('package_id', $package->id)
-                ->log('The package id is :properties.package_id, the causer name 
-                    is :causer.name');
             $files = $request->input('pictures');
             if(!is_null($files)) {
                 foreach ($files as $file) {
@@ -71,21 +65,21 @@ class PackageController extends Controller
                         return response('Format not accepted', 405);
                     }
                     $name = $fileName.'.'.$extension;
-                    Storage::put(config('files.full_public_path').$name,
+                    Storage::put(config('constants.files.full_public_path').$name,
                         $decoded
                     );
                     $picture = new PackageFiles();
                     $picture->name = $name;
                     $picture->type = $extension;
-                    $picture->path = config('files.full_default_folder');
+                    $picture->path = config('constants.files.full_default_folder');
                     if($package->pictures()->save($picture)){
                         activity()
                             ->performedOn($package)
                             ->causedBy(Auth::user())
                             ->withProperty('package_id', $package->id)
                             ->withProperty('file_name', $name)
-                            ->log('The package id is :properties.package_id, 
-                            the causer name is :causer.name and it was uploaded a file which is :properties.file_name 
+                            ->log('The package id is :properties.package_id,
+                            the causer name is :causer.name and it was uploaded a file which is :properties.file_name
                             with id:');
                     }
                 }
@@ -147,14 +141,6 @@ class PackageController extends Controller
         $package->object_owner = $request->input('object_owner');
         $package->warehouse_id = $request->input('warehouse.id');
         if($package->save()){
-
-            activity()
-                ->performedOn($package)
-                ->causedBy(Auth::user())
-                ->withProperty('package_id', $package->id)
-                ->log('The package id is :properties.package_id, the causer name 
-                    is :causer.name');
-
             $files = $request->input('pictures');
             if(!is_null($files)) {
                 foreach ($files as $file) {
@@ -177,13 +163,13 @@ class PackageController extends Controller
                     }
                     $name = $fileName.'.'.$extension;
                     Storage::put(
-                        config('files.full_public_path').$name,
+                        config('constants.files.full_public_path').$name,
                         $decoded
                     );
                     $picture = new PackageFiles();
                     $picture->name = $name;
                     $picture->type = $extension;
-                    $picture->path = 'storage/PackagePictures/';
+                    $picture->path = config('constants.files.full_default_folder');
                     if($package->pictures()->save($picture)){
                         activity()
                             ->performedOn($package)
@@ -207,25 +193,17 @@ class PackageController extends Controller
         $package->load('pictures');
         if(!is_null($package->pictures)){
             foreach($package->pictures as $picture){
-                Storage::delete('public/PackagePictures/'.$picture->name);
+                Storage::delete(config('constants.files.full_public_path').$picture->name);
                 activity()
                     ->performedOn($picture)
-                    ->causedBy(Auth::user())
                     ->withProperty('package_id', $id)
                     ->withProperty('file_name', $picture->name)
                     ->log('The package id is :properties.package_id, 
-                            the causer name is :causer.name and removing the file :properties.file_name 
-                            with id:');
+                            removing filename :properties.file_name');
             }
         }
         $package->delete();
         if($package->trashed()){
-            activity()
-                ->performedOn($package)
-                ->causedBy(Auth::user())
-                ->withProperty('package_id', $id)
-                ->log('The package id is :properties.package_id, the causer name 
-                    is :causer.name');
             return response('/admin/packages/show-list', 200);
         }
 

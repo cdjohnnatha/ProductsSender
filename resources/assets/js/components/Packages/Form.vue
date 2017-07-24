@@ -190,7 +190,6 @@
                 }
                 this.$validator.validateAll().then((result) => {
                     if (result && this.objectPackage.warehouse_id !== -1 ) {
-                        console.log(this.objectPackage);
                         axios.post(this.urlForm, this.objectPackage).then( response => {
                             if(response.status === 201)
                                 location.href= '/admin/packages/show-list';

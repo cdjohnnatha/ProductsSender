@@ -21,14 +21,6 @@ class PackageFilesController extends Controller
         Storage::delete(config('full_public_path').$file->name);
         $file->delete();
         if($file->trashed()){
-            activity()
-                ->performedOn($file)
-                ->causedBy(Auth::user())
-                ->withProperty('package_id', $idPackage)
-                ->withProperty('file_name', $file->name)
-                ->log('The package id is :properties.package_id, 
-                            the causer name is :causer.name and removing the file :properties.file_name 
-                            with id:');
             return response('removed', 200);
 
         }

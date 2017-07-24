@@ -55130,7 +55130,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
             this.$validator.validateAll().then(function (result) {
                 if (result && _this2.objectPackage.warehouse_id !== -1) {
-                    console.log(_this2.objectPackage);
                     axios.post(_this2.urlForm, _this2.objectPackage).then(function (response) {
                         if (response.status === 201) location.href = '/admin/packages/show-list';
                     }).catch(function (error) {
