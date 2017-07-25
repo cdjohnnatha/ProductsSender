@@ -46,16 +46,7 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
-                            <li class="dropdown">
-                                <a href="#" class="btn-lg dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="">Notifications</a></li>
-                                    <li><a id="edit" href="#">Edit</a></li>
-                                </ul>
-                            </li>
+                            <user-notifications></user-notifications>
                             <li>
                                 <a href="#" class="btn-lg">
                                     <span class="glyphicon  glyphicon-question-sign"></span>
@@ -95,6 +86,8 @@
         </nav>
         @if(auth()->guard('admin')->user())
             <vertical-menu></vertical-menu>
+        @elseif(auth()->guard('web')->user())
+            <user-menu :data_id="{{Auth::user()->id}}"></user-menu>
         @endif
         @yield('content')
     </div>

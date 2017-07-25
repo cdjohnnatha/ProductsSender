@@ -2,44 +2,30 @@
     <nav id="aside-menu">
         <ul class="nav">
             <li>
-                <a href="#" id="btn-1" data-toggle="collapse" data-target="#warehouse-menu"
-                   aria-expanded="false">
-                    <label>
-                        <span class="glyphicon glyphicon-home"></span>
-                        Warehouse
-                    </label>
-
-                </a>
-                <ul class="nav collapse col-sm-offset-1" id="warehouse-menu" role="menu" aria-labelledby="btn-1">
-                    <li>
-                        <a href="/admin/form">
-                            <span class="glyphicon glyphicon-menu-right"></span>
-                            New
-                        </a>
-                    </li>
-                    <li><a href="/admin/show-list">
-                        <span class="glyphicon glyphicon-menu-right"></span>
-                        List</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" id="btn-2" data-toggle="collapse" data-target="#packages-menu"
+                <a href="#" id="packagesLabel" data-toggle="collapse" data-target="#packages-menu"
                    aria-expanded="false">
                     <label>
                         <span class="glyphicon glyphicon-gift"></span>
                         Packages
                     </label>
                 </a>
-                <ul class="nav collapse col-sm-offset-1" id="packages-menu" role="menu" aria-labelledby="btn-1">
-                    <li id="create-one"><a href="/admin/subscriptions/create">
+                <ul class="nav collapse col-sm-offset-1" id="packages-menu" role="menu" aria-labelledby="packagesLabel">
+                    <li id="create-one">
+                        <a v-bind:href="prefixUrl">
                         <span class="glyphicon glyphicon-menu-right"></span>
                         Select
                     </a>
                     </li>
                     <li id="join-many">
-                        <a href="/admin/subscriptions/show-list">
+                        <a v-bind:href="prefixUrl">
                             <span class="glyphicon glyphicon-menu-right"></span>
                             Join
+                        </a>
+                    </li>
+                    <li id="list">
+                        <a v-bind:href="'packages/show-list'">
+                            <span class="glyphicon glyphicon-menu-right"></span>
+                            List
                         </a>
                     </li>
                 </ul>
@@ -55,7 +41,7 @@
                 </a>
                 <ul class="nav collapse col-sm-offset-1" id="user-menu" role="menu" aria-labelledby="btn-1">
                     <li id="create-subscription">
-                        <a href="/admin/subscriptions/create">
+                        <a v-bind:href="prefixUrl">
                             <span class="glyphicon glyphicon-menu-right"></span>
                             Perfil
                         </a>
@@ -67,7 +53,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/user/packages/history">
+                        <a v-bind:href="prefixUrl">
                             <span class="glyphicon glyphicon-menu-right"></span>
                             History
                         </a>
@@ -79,7 +65,14 @@
 </template>
 <script>
     export default {
-
+        props: {
+            data_id: 0
+        },
+        data(){
+            return {
+                prefixUrl: '/home/' + this.data_id + '/' ,
+            }
+        }
 
     }
 </script>

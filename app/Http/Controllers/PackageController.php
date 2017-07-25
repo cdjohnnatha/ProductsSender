@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Package;
 use App\PackageFiles;
 use App\Status;
+use App\User;
 use Faker\Provider\File;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class PackageController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth:admin')->except('showView','show', 'userListPackages', 'userPackages');
     }
 
     public function form($id = 0)
@@ -92,6 +93,11 @@ class PackageController extends Controller
     public function showList()
     {
         return view('package.list');
+    }
+
+    public function userListPackages()
+    {
+        return view('package.packagesUser');
     }
 
     public function warehousePackages()
@@ -182,6 +188,7 @@ class PackageController extends Controller
                     }
                 }
             }
+            
             return response('created',201);
         }
         return response()->setStatusCode(406);
@@ -209,4 +216,6 @@ class PackageController extends Controller
 
         return response('error while deleting at database', 417);
     }
+
+
 }

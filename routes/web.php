@@ -31,17 +31,19 @@ Route::prefix('/register')->group(function() {
 Route::get('/home/all', 'HomeController@showall')->name('home.all');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('/home/{id}')->group(function() {
+
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/edit', 'UserController@edit')->name('user.edit');
     Route::get('/warehouses', 'WarehouseController@listAll')->name('user.warehouses');
+
+    Route::prefix('/packages')->group(function(){
+        Route::get('/', 'UserPackageHandleController@userDefaultPackages')->name('home.get.packages');
+        Route::get('/show-list', 'UserPackageHandleController@table')->name('home.packages');
+        Route::get('/{packageId}', 'PackageController@showView')->name('home.package');
+
+    });
 });
 
-Route::prefix('/user/{id}')->group(function() {
-        Route::get('/', 'UserController@show')->name('user.id');
-        Route::patch('/', 'UserController@update')->name('user.update');
-        Route::delete('/', 'UserController@destroy')->name('user.destroy');
-        Route::get('/warehouses', 'WarehouseController@listAll');
-});
 
 Route::prefix('/admin')->group(function() {
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');

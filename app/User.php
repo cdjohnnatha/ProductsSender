@@ -46,6 +46,12 @@ class User extends Authenticatable
         return $this->hasOne(Wallet::class, 'user_id');
     }
 
+
+    public function packages()
+    {
+        return $this->hasMany(Package::class, 'object_owner');
+    }
+
     protected static function boot() {
         parent::boot();
 

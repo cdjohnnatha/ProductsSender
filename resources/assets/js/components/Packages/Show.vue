@@ -77,9 +77,10 @@
                     </section>
                 </div> <!-- panel body -->
                 <footer class="panel-footer">
-                    <a v-bind:href="'/admin/packages/' + objectPackage.id + '/edit'" class="btn btn-primary pull-right">Edit</a>
+                    <a v-bind:href="'/admin/packages/' + objectPackage.id + '/edit'"
+                       class="btn btn-primary pull-right" v-if="permission">Edit</a>
                     <div class="col-sm-11">
-                        <a href="/admin/dashboard" id="cancel-button" class="btn btn-danger pull-right">Cancel</a>
+                        <a v-bind:href="prefixUrl + 'packages/show-list'" id="cancel-button" class="btn btn-danger pull-right">Cancel</a>
                     </div>
                     <div class="clearfix" v-bind:id="data_id"></div>
                 </footer>
@@ -93,11 +94,13 @@
     require('vue-image-lightbox/dist/vue-image-lightbox.min.css');
     export default {
         props: {
-            data_id: 0
+            data_id: 0,
+            permission: true
         },
 
         data(){
             return {
+                prefixUrl: '/admin/',
                 objectPackage:{
                     id: '',
                     name: '',
@@ -138,7 +141,6 @@
 
 
         created() {
-            console.log(this.data_id);
                 axios.get('/admin/packages/' + this.data_id + '/show').then(response => {
                     this.objectPackage = response.data.package;
                     if(this.objectPackage.pictures.length >= 0) {
@@ -151,8 +153,9 @@
                             pics.caption = this.objectPackage.pictures[picture].id;
                             this.images.push(pics);
                         }
-                    }else{
-
+                    }
+                    if(! this.permission){
+                        this.prefixUrl = '/home/' + this.data_id + '/';
                     }
                 }).catch(function (error) {
                     console.log(error);

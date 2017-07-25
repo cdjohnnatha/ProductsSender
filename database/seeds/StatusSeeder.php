@@ -53,6 +53,9 @@ class StatusSeeder extends Seeder
             'status' => 'WAREHOUSE_WAITING_USER',
         ]);
 
+        DB::table('status')->insert([
+            'status' => 'WAREHOUSE_NOTIFY_USER',
+        ]);
 
 
 

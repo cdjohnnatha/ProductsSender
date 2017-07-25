@@ -13,7 +13,7 @@ class Package extends Model
     protected $dates = ['deleted_at'];
 
     protected $hidden = [
-        'created_at', 'updated_at', 'deleted_at', 'status_id', 'object_owner', 'warehouse_id'
+        'updated_at', 'deleted_at', 'status_id', 'object_owner', 'warehouse_id'
     ];
     protected static $logAttributes = [
         'width', 'height', 'depth','weight','unit_measure', 'weight_measure',
