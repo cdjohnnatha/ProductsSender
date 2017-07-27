@@ -76,7 +76,6 @@
         created() {
             axios.get('/admin/packages/').then( response => {
                 this.packages = response.data.packages;
-                console.log(this.packages);
             });
 
         },

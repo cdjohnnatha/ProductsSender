@@ -12,8 +12,10 @@ class Package extends Model
     use LogsActivity;
     protected $dates = ['deleted_at'];
 
+    protected $attributes = ['read' => false];
+
     protected $hidden = [
-        'updated_at', 'deleted_at', 'status_id', 'object_owner', 'warehouse_id'
+        'updated_at', 'deleted_at', 'status_id'
     ];
     protected static $logAttributes = [
         'width', 'height', 'depth','weight','unit_measure', 'weight_measure',

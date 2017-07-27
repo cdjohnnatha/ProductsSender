@@ -23,7 +23,7 @@
                         </a>
                     </li>
                     <li id="list">
-                        <a v-bind:href="'packages/show-list'">
+                        <a v-bind:href="prefixUrl + 'packages/show-list'">
                             <span class="glyphicon glyphicon-menu-right"></span>
                             List
                         </a>

@@ -46,7 +46,9 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
-                            <user-notifications></user-notifications>
+                            @if(auth()->guard('web')->user())
+                                <notification :data_id="{{Auth::user()->id}}"></notification>
+                            @endif
                             <li>
                                 <a href="#" class="btn-lg">
                                     <span class="glyphicon  glyphicon-question-sign"></span>

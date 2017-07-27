@@ -1280,7 +1280,7 @@ Vue.component('user-form', __webpack_require__(11));
 Vue.component('user-list', __webpack_require__(121));
 Vue.component('user-menu', __webpack_require__(126));
 Vue.component('user-packages', __webpack_require__(131));
-Vue.component('user-notifications', __webpack_require__(136));
+Vue.component('notification', __webpack_require__(136));
 
 Vue.component('package-form', __webpack_require__(141));
 Vue.component('package-table', __webpack_require__(146));
@@ -1309,9 +1309,9 @@ window._ = __webpack_require__(15);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(17);
+    window.$ = window.jQuery = __webpack_require__(17);
 
-  __webpack_require__(18);
+    __webpack_require__(18);
 } catch (e) {}
 
 /**
@@ -1333,9 +1333,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -1349,9 +1349,15 @@ if (token) {
 window.Pusher = __webpack_require__(40);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
-  broadcaster: 'pusher',
-  key: '4cecaa0aa6bb998230f4'
+    broadcaster: 'pusher',
+    key: '4cecaa0aa6bb998230f4',
+    cluster: 'eu',
+    encrypted: true
 });
+
+Pusher.log = function (message) {
+    window.console.log(message);
+};
 
 /***/ }),
 /* 15 */
@@ -32433,12 +32439,10 @@ var EventFormatter = function () {
     createClass(EventFormatter, [{
         key: 'format',
         value: function format(event) {
-            if (this.namespace) {
-                if (event.charAt(0) != '\\' && event.charAt(0) != '.') {
-                    event = this.namespace + '.' + event;
-                } else {
-                    event = event.substr(1);
-                }
+            if (event.charAt(0) === '.' || event.charAt(0) === '\\') {
+                return event.substr(1);
+            } else if (this.namespace) {
+                event = this.namespace + '.' + event;
             }
             return event.replace(/\./g, '\\');
         }
@@ -32778,6 +32782,11 @@ var PusherConnector = function (_Connector) {
         value: function socketId() {
             return this.pusher.connection.socket_id;
         }
+    }, {
+        key: 'disconnect',
+        value: function disconnect() {
+            this.pusher.disconnect();
+        }
     }]);
     return PusherConnector;
 }(Connector);
@@ -32852,6 +32861,11 @@ var SocketIoConnector = function (_Connector) {
         key: 'socketId',
         value: function socketId() {
             return this.socket.id;
+        }
+    }, {
+        key: 'disconnect',
+        value: function disconnect() {
+            this.socket.disconnect();
         }
     }]);
     return SocketIoConnector;
@@ -32946,6 +32960,11 @@ var Echo = function () {
         key: 'socketId',
         value: function socketId() {
             return this.connector.socketId();
+        }
+    }, {
+        key: 'disconnect',
+        value: function disconnect() {
+            this.connector.disconnect();
         }
     }]);
     return Echo;
@@ -60037,7 +60056,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('a', {
     attrs: {
-      "href": 'packages/show-list'
+      "href": _vm.prefixUrl + 'packages/show-list'
     }
   }, [_c('span', {
     staticClass: "glyphicon glyphicon-menu-right"
@@ -60238,6 +60257,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -60319,14 +60339,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "col-sm-3"
     }, [_vm._v("Action ")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', {
       staticClass: "col-sm-4"
-    }, [_c('img', {
+    }, [(package.pictures.length ? true : false) ? _c('img', {
       attrs: {
         "id": "picture",
         "src": '/' + package.pictures[0].path + '/' +
           package.pictures[0].name,
         "alt": ""
       }
-    })]), _vm._v(" "), _c('td', [_vm._v(_vm._s(package.note))]), _vm._v(" "), _c('td', [_c('label', [_vm._v(_vm._s(package.created_at))])]), _vm._v(" "), _c('td', [_c('a', {
+    }) : _vm._e()]), _vm._v(" "), _c('td', [_vm._v(_vm._s(package.note))]), _vm._v(" "), _c('td', [_c('label', [_vm._v(_vm._s(package.created_at))])]), _vm._v(" "), _c('td', [_c('a', {
       attrs: {
         "href": package.id
       }
@@ -60420,7 +60440,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n#badge{\n    font-size: 60%;\n    position:absolute;\n    top: .6em;\n    right: .3em;\n    z-index: 99;\n}\n\n", ""]);
 
 // exports
 
@@ -60446,16 +60466,61 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         data_id: 0
     },
+
     data: function data() {
         return {
-            prefixUrl: '/home/' + this.data_id + '/'
+            prefixUrl: '/home/' + this.data_id + '/',
+            unread: []
         };
+    },
+    mounted: function mounted() {
+        this.listen();
+        //            console.log("here are");
+        //
+    },
+    created: function created() {
+        //            alert('testing');
+        //            axios.get(this.prefixUrl+'packages/unread').then( response => {
+        //                this.unread = response.data.unread;
+        //                console.log(this.unread);
+        //            });
+    },
+
+
+    computed: {
+        notifications: function notifications() {
+            if (typeof this.unread === 'undefined' || this.unread === null || this.unread < 0) {
+                return 0;
+            } else {
+                return this.unread.length;
+            }
+        }
+    },
+
+    methods: {
+        listen: function listen() {
+            var _this = this;
+
+            window.Echo.private('App.User.' + this.data_id).listen('PackageNotification', function (e) {
+                console.log(e.package);
+                _this.unread.push(e.package);
+            });
+        }
     }
+
 });
 
 /***/ }),
@@ -60463,8 +60528,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('li', {
     staticClass: "dropdown"
   }, [_c('a', {
@@ -60480,28 +60543,38 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  })]), _vm._v(" "), _c('ul', {
+  }), _vm._v(" "), _c('span', {
+    staticClass: "badge",
+    attrs: {
+      "aria-hidden": "true",
+      "id": "badge"
+    }
+  }, [_vm._v(_vm._s(_vm.notifications))])]), _vm._v(" "), _c('ul', {
     staticClass: "dropdown-menu",
     attrs: {
       "role": "menu"
     }
   }, [_c('li', {
     staticClass: "dropdown-header"
-  }, [_vm._v("Notifications ")]), _vm._v(" "), _c('li', [_c('a', {
-    attrs: {
-      "href": ""
-    }
-  }, [_vm._v("Actions")])]), _vm._v(" "), _c('li', {
+  }, [_vm._v("Notifications ")]), _vm._v(" "), _vm._l((_vm.unread), function(notify) {
+    return _c('li', [_c('a', {
+      attrs: {
+        "href": _vm.prefixUrl + 'packages/' + notify.id
+      }
+    }, [_vm._v("\n                You have a new package name\n                "), _c('label', [_vm._v("#" + _vm._s(notify.id))])])])
+  }), _vm._v(" "), _c('li', {
     staticClass: "divider",
     attrs: {
       "role": "separator"
     }
-  }), _vm._v(" "), _c('li', [_c('a', {
+  }), _vm._v(" "), _vm._m(0)], 2)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('a', {
     staticClass: "dropdown-header",
     attrs: {
       "href": ""
     }
-  }, [_vm._v("Show all")])])])])
+  }, [_vm._v("Show all")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -60732,7 +60805,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        data_id: 0
+        data_id: 0,
+        user_id: 0
     },
     data: function data() {
         return {
@@ -60799,6 +60873,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 if (result && _this2.objectPackage.warehouse_id !== -1) {
                     axios.post(_this2.urlForm, _this2.objectPackage).then(function (response) {
                         if (response.status === 201) location.href = '/admin/packages/show-list';
+                        console.log(response);
                     }).catch(function (error) {
                         console.log(error);
                     });
@@ -60852,8 +60927,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 this.objectPackage.pictures.splice(index, 1);
             }
         }
-        //
-
 
     }
 
@@ -61323,7 +61396,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -61411,7 +61484,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         axios.get('/admin/packages/').then(function (response) {
             _this.packages = response.data.packages;
-            console.log(_this.packages);
         });
     },
 
@@ -61677,12 +61749,13 @@ __webpack_require__(156);
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         data_id: 0,
-        permission: true
+        permission: true,
+        user_id: 0
     },
 
     data: function data() {
         return {
-            prefixUrl: '/admin/',
+            prefixUrl: '/admin/packages/',
             objectPackage: {
                 id: '',
                 name: '',
@@ -61694,6 +61767,7 @@ __webpack_require__(156);
                 note: ' ',
                 status_id: '',
                 object_owner: '',
+                read: '',
                 warehouse: {
                     name: ''
                 },
@@ -61725,7 +61799,7 @@ __webpack_require__(156);
     created: function created() {
         var _this = this;
 
-        axios.get('/admin/packages/' + this.data_id + '/show').then(function (response) {
+        axios.get(this.prefixUrl + this.data_id + '/show').then(function (response) {
             _this.objectPackage = response.data.package;
             if (_this.objectPackage.pictures.length >= 0) {
                 for (var picture in _this.objectPackage.pictures) {
@@ -61739,7 +61813,10 @@ __webpack_require__(156);
                 }
             }
             if (!_this.permission) {
-                _this.prefixUrl = '/home/' + _this.data_id + '/';
+                _this.prefixUrl = '/home/' + _this.user_id + '/packages/';
+            }
+            if (!_this.objectPackage.read) {
+                _this.readed();
             }
         }).catch(function (error) {
             console.log(error);
@@ -61749,6 +61826,13 @@ __webpack_require__(156);
     methods: {
         openGallery: function openGallery(index) {
             this.$refs.lightbox.showImage(index);
+        },
+        readed: function readed() {
+            axios.get(this.prefixUrl + this.data_id + '/read').then(function (response) {
+                if (response.status === 200) console.log('read');
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     }
 
@@ -62348,7 +62432,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('a', {
     staticClass: "btn btn-danger pull-right",
     attrs: {
-      "href": _vm.prefixUrl + 'packages/show-list',
+      "href": _vm.prefixUrl + 'show-list',
       "id": "cancel-button"
     }
   }, [_vm._v("Cancel")])]), _vm._v(" "), _c('div', {

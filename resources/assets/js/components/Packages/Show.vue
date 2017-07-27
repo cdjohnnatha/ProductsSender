@@ -80,7 +80,7 @@
                     <a v-bind:href="'/admin/packages/' + objectPackage.id + '/edit'"
                        class="btn btn-primary pull-right" v-if="permission">Edit</a>
                     <div class="col-sm-11">
-                        <a v-bind:href="prefixUrl + 'packages/show-list'" id="cancel-button" class="btn btn-danger pull-right">Cancel</a>
+                        <a v-bind:href="prefixUrl + 'show-list'" id="cancel-button" class="btn btn-danger pull-right">Cancel</a>
                     </div>
                     <div class="clearfix" v-bind:id="data_id"></div>
                 </footer>
@@ -95,12 +95,13 @@
     export default {
         props: {
             data_id: 0,
-            permission: true
+            permission: true,
+            user_id: 0
         },
 
         data(){
             return {
-                prefixUrl: '/admin/',
+                prefixUrl: '/admin/packages/',
                 objectPackage:{
                     id: '',
                     name: '',
@@ -112,6 +113,7 @@
                     note: ' ',
                     status_id: '',
                     object_owner: '',
+                    read: '',
                     warehouse: {
                         name: '',
                     },
@@ -141,7 +143,7 @@
 
 
         created() {
-                axios.get('/admin/packages/' + this.data_id + '/show').then(response => {
+                axios.get(this.prefixUrl + this.data_id + '/show').then(response => {
                     this.objectPackage = response.data.package;
                     if(this.objectPackage.pictures.length >= 0) {
                         for (var picture in this.objectPackage.pictures) {
@@ -155,7 +157,10 @@
                         }
                     }
                     if(! this.permission){
-                        this.prefixUrl = '/home/' + this.data_id + '/';
+                        this.prefixUrl = '/home/' + this.user_id + '/packages/';
+                    }
+                    if(!this.objectPackage.read){
+                        this.readed();
                     }
                 }).catch(function (error) {
                     console.log(error);
@@ -165,6 +170,15 @@
         methods: {
             openGallery(index) {
                 this.$refs.lightbox.showImage(index)
+            },
+
+            readed(){
+                axios.get(this.prefixUrl + this.data_id + '/read').then(response => {
+                  if(response.status === 200)
+                      console.log('read');
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         }
 

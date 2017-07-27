@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PackageNotification;
+use App\Events\PackageNotifications;
+use App\Notifications\packageRequestNotifications;
 use App\Package;
 use App\PackageFiles;
 use App\Status;
@@ -21,7 +24,8 @@ class PackageController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:admin')->except('showView','show', 'userListPackages', 'userPackages');
+        $this->middleware('auth:admin')->except('showView','show',
+            'changeStatus', 'unread');
     }
 
     public function form($id = 0)
@@ -85,6 +89,7 @@ class PackageController extends Controller
                     }
                 }
             }
+            User::find($package->object_owner)->notify(new PackageRequestNotifications($package));
             return response('created',201);
         }
         return response()->setStatusCode(406);
@@ -114,9 +119,9 @@ class PackageController extends Controller
 
     }
 
-    public function showView($id)
+    public function showView($id, $packageId)
     {
-        return view('package.show')->with('id', $id);
+        return view('package.show')->with('id', $packageId);
     }
 
     public function show($id)
@@ -187,11 +192,25 @@ class PackageController extends Controller
                             with id:');
                     }
                 }
+
             }
-            
+            event(new PackageNotification($package));
             return response('created',201);
         }
         return response()->setStatusCode(406);
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $package = Package::findOrFail($request->input('id'));
+        $status = Status::where('status', $request->input('status'));
+        $package->status_id = $status->id;
+
+        if($package->save()){
+            return response('status updated to '.$status->status, '200');
+        }
+
+        return response('Error while update!', 406);
     }
 
     public function destroy($id)

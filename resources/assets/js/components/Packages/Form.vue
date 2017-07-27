@@ -127,7 +127,8 @@
 <script>
     export default {
         props: {
-            data_id: 0
+            data_id: 0,
+            user_id: 0
         },
         data(){
             return {
@@ -193,6 +194,7 @@
                         axios.post(this.urlForm, this.objectPackage).then( response => {
                             if(response.status === 201)
                                 location.href= '/admin/packages/show-list';
+                            console.log(response);
                         }).catch(function (error) {
                             console.log(error);
                         });
@@ -242,8 +244,9 @@
                     this.objectPackage.pictures.splice(index, 1);
                 }
 
-            }
-//
+            },
+
+
 
 
 

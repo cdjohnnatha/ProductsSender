@@ -20,8 +20,9 @@
                         <tbody>
                             <tr>
                                 <td class="col-sm-4">
-                                    <img id="picture" v-bind:src="'/'+package.pictures[0].path + '/'
-                                    + package.pictures[0].name" alt="">
+                                    <img id="picture" v-if="package.pictures.length ? true : false"
+                                         v-bind:src="'/'+package.pictures[0].path + '/'
+                                       + package.pictures[0].name" alt="">
 
                                 </td>
                                 <td>{{package.note}}</td>
