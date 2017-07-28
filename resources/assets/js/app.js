@@ -48,15 +48,17 @@ Vue.component('user-form', require('./components/Users/UserRegister.vue'));
 Vue.component('user-list', require('./components/Users/Users.vue'));
 Vue.component('user-menu', require('./components/Users/Menu.vue'));
 Vue.component('user-packages', require('./components/Packages/UserPackages.vue'));
-Vue.component('notification', require('./components/Users/Notifications.vue'));
+Vue.component('notification-bar', require('./components/Users/NotificationsBar.vue'));
+Vue.component('notifications', require('./components/Utils/Notifications.vue'));
 
 Vue.component('package-form', require('./components/Packages/Form.vue'));
 Vue.component('package-table', require('./components/Packages/Table.vue'));
 Vue.component('package-show', require('./components/Packages/Show.vue'));
 
-
+import { store } from './store'
 
 const app = new Vue({
     el: '#app',
+    store
 
 });

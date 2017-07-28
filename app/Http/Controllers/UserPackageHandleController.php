@@ -33,29 +33,7 @@ class UserPackageHandleController extends Controller
         ]);
     }
 
-    public function unread()
-    {
-        $packages =  Package::select('id', 'warehouse_id', 'object_owner', 'read')
-            ->where('read',true)
-            ->where('object_owner', '=', Auth::user()->id)->get();
 
-        $packages->load( ['warehouse' => function($query){
-            $query->select('name', 'id');
-        }]);
-
-        return response()->json([
-            'unread' => $packages
-        ]);
-    }
-
-    public function read($id, $idPackage)
-    {
-        $package = Package::findOrFail($idPackage);
-        $package->read = true;
-        $package->save();
-
-        return response('read', 200);
-    }
 
 
 }

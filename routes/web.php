@@ -33,14 +33,17 @@ Route::prefix('/home/{id}')->group(function() {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/edit', 'UserController@edit')->name('user.edit');
     Route::get('/warehouses', 'WarehouseController@listAll')->name('user.warehouses');
+    Route::get('/unread', 'HomeController@unread')->name('home.packages.unread');
+    Route::get('/notifications', 'HomeController@notifications')->name('home.notifications.all');
+    Route::get('/show-notifications', 'HomeController@showNotifications')->name('home.notifications.view');
+    Route::get('/mark-read', 'HomeController@markRead')->name('home.notification.markread');
 
     Route::prefix('/packages')->group(function(){
         Route::get('/', 'UserPackageHandleController@userDefaultPackages')->name('home.get.packages');
         Route::get('/show-list', 'UserPackageHandleController@table')->name('home.packages');
-        Route::get('/unread', 'UserPackageHandleController@unread')->name('home.packages.unread');
-        Route::prefix('/{packageId}')->group(function(){
+         Route::prefix('/{packageId}')->group(function(){
             Route::get('/', 'PackageController@showView')->name('home.packages.package');
-            Route::get('/read', 'UserPackageHandleController@read')->name('home.packages.read');
+
 
         });
     });
