@@ -9,15 +9,20 @@
 
         <ul class="dropdown-menu" role="menu">
             <li class="dropdown-header">Notifications </li>
-            <li v-for="notify in all_notifications">
-                <a v-bind:href="prefixUrl + 'packages/' + notify.id">
-                    You have a new package name
-                    <label>#{{notify.id}}</label>
-                </a>
-            </li>
             <li role="separator" class="divider"></li>
-            <li>
-                <a v-bind:href="prefixUrl + 'show-notifications'" class="dropdown-header" id="show-all">
+            <virtual-list role="menu" :size="12" :remain="12"
+                              :rclass="'col-sm-12'" :rtag="'li'" :wtag="'li'">
+                    <li class="item dropdown-header" v-for="(notify, index) in all_notifications"
+                       :key="index">
+                        <a v-bind:href="prefixUrl + 'packages/' + notify.id">
+                            New package: # {{ notify.id }}
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                </virtual-list>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">
+                <a v-bind:href="prefixUrl + 'show-notifications'" id="show-all">
                     Show all
                 </a>
             </li>
@@ -25,7 +30,6 @@
     </li>
 </template>
 <script>
-
     export default {
         props: {
             data_id: 0
@@ -34,6 +38,7 @@
         data(){
             return {
                 prefixUrl: '/home/' + this.data_id + '/' ,
+                notificationsBarSize: 4,
             }
         },
         mounted(){
@@ -47,6 +52,13 @@
 
             all_notifications(){
                 return this.$store.getters.all_notifications;
+            },
+
+            notificationSize(){
+                if (this.notificationsBarSize < 10)
+                    return this.notificationsBarSize * 4;
+                else
+                    return 10 * 2;
             }
         },
 
@@ -60,24 +72,21 @@
 
             unreadNotifications() {
                 axios.get(this.prefixUrl + 'unread').then( response => {
-//                    console.log(response.data.unread);
                     response.data.unread.forEach(notifications => {
                         console.log(notifications.data.package);
                        this.$store.commit('add_notification', notifications.data.package);
 
                     });
+                    this.notificationsBarSize = this.unread_notifications;
+                    console.log(this.notificationSize);
                 }).catch(function (error) {
                     console.log(error);
                 });
             },
-
-
-
         }
 
     }
 </script>
-
 <style lang="css">
     #badge{
         font-size: 60%;
@@ -87,6 +96,13 @@
         z-index: 99;
     }
 
+    #li-sizing{
+        padding-right: 8.5em;
+        padding-left: 8.5em;
+    }
+    .li-list{
+        font-size: 90%;
+    }
 
     #show-all{
         color: blue;

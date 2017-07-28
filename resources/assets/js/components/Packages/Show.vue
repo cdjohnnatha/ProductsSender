@@ -159,9 +159,6 @@
                     if(! this.permission){
                         this.prefixUrl = '/home/' + this.user_id + '/packages/';
                     }
-                    if(!this.objectPackage.read){
-                        this.readed();
-                    }
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -172,14 +169,6 @@
                 this.$refs.lightbox.showImage(index)
             },
 
-            readed(){
-                axios.get(this.prefixUrl + this.data_id + '/read').then(response => {
-                  if(response.status === 200)
-                      console.log('read');
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            }
         }
 
 

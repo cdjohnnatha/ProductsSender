@@ -10,6 +10,12 @@
                     </label>
                 </a>
                 <ul class="nav collapse col-sm-offset-1" id="packages-menu" role="menu" aria-labelledby="packagesLabel">
+                    <li id="new-one">
+                        <a v-bind:href="prefixUrl">
+                            <span class="glyphicon glyphicon-menu-right"></span>
+                            New
+                        </a>
+                    </li>
                     <li id="create-one">
                         <a v-bind:href="prefixUrl">
                         <span class="glyphicon glyphicon-menu-right"></span>
