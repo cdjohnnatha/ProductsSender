@@ -88,18 +88,19 @@
                     this.buttonName = 'Edit';
                     this.disabled = true;
                     this.submitAction = this.changeForEdit;
+
+                    axios.get('/admin/subscriptions/'+ this.data_id + '/show').then( response => {
+                        this.subscription = response.data.subscription;
+                        console.log(this.subscription);
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+
                 }
                 else{
                     this.buttonName = 'Register'
                 }
             }
-
-            axios.get('/admin/subscriptions/'+ this.data_id + '/show').then( response => {
-                this.subscription = response.data.subscription;
-                console.log(this.subscription);
-            }).catch(function (error) {
-                console.log(error);
-            });
 
         },
 

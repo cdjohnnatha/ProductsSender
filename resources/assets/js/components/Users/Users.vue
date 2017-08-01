@@ -26,7 +26,7 @@
                 <td>{{ user.phone }}</td>
                 <td>
                   <a class="edit-modal btn btn-warning"
-                     v-bind:href="'/users/' + user.id + '/edit' ">
+                     v-bind:href="prefixUrl + user.id + '/edit' ">
                     <span class="glyphicon glyphicon-edit"></span>
                     Edit
                   </a>
@@ -49,18 +49,19 @@
     export default {
         data() {
             return {
-                users:[]
+                users:[],
+                prefixUrl: '/users/'
             }
         },
         created() {
-            axios.get('users/all').then( response => {
+            axios.get(this.prefixUrl + 'all').then( response => {
                 console.log(response);
               this.users = response.data.users;
             });
         },
         methods: {
             deleteUser: function (id) {
-                axios.delete('/users/'+id).then(response => {
+                axios.delete(this.prefixUrl + id).then(response => {
                     if (response.status === 200)
                         location.href = response.data;
                 }).catch(function (error) {

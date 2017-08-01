@@ -48,6 +48,7 @@ Vue.component('user-form', require('./components/Users/UserRegister.vue'));
 Vue.component('user-list', require('./components/Users/Users.vue'));
 Vue.component('user-menu', require('./components/Users/Menu.vue'));
 Vue.component('user-packages', require('./components/Packages/UserPackages.vue'));
+Vue.component('additional-names', require('./components/Packages/UserPackages.vue'));
 Vue.component('notification-bar', require('./components/Users/NotificationsBar.vue'));
 Vue.component('notifications', require('./components/Utils/Notifications.vue'));
 
@@ -63,6 +64,5 @@ import { store } from './store'
 
 const app = new Vue({
     el: '#app',
-    store
-
+    store,
 });

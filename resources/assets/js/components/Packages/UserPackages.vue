@@ -71,7 +71,7 @@
         },
 
         created() {
-            axios.get('/home/' + this.data_id + '/packages/').then( response => {
+            axios.get('/user/' + this.data_id + '/packages/').then( response => {
                 this.packages = response.data.packages;
                 console.log(this.packages);
             });

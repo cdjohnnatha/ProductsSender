@@ -88,7 +88,7 @@
         },
         data(){
             return {
-                prefixUrl: '/home/' + this.data_id + '/' ,
+                prefixUrl: '/user/' + this.data_id + '/' ,
             }
         }
 

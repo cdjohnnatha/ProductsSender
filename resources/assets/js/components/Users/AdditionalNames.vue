@@ -1,8 +1,7 @@
 <template>
     <section class="container col-sm-offset-1">
         <div class="col-sm-11 col-sm-offset-1">
-
-                <div class="panel panel-default">
+            <div class="panel panel-default">
                 <div class="panel-heading">Inform New Package</div>
                 <div class="panel-body">
                     <section>
@@ -24,7 +23,7 @@
                         </div>
                     </section>
                     <table class="table">
-                    <thead>
+                        <thead>
                         <tr>
                             <th>Goods Clearance</th>
                         </tr>
@@ -36,8 +35,8 @@
                             <th class="col-sm-2">Total</th>
                             <th><button><span class="glyphicon glyphicon-plus" @click="newGoodsField"></span></button></th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <tr v-for="(goods, index) in customClearances">
                             <td><input type="text" v-model="goods.description" class="form-control"></td>
                             <td><countries-list @selectedCountry="goods.manufacture_country = $event"></countries-list></td>
@@ -46,8 +45,8 @@
                             <td><span><input type="number" disabled class="form-control"></span></td>
                             <th><button><span class="glyphicon glyphicon-minus" @click="removeFieldGoods(index)"></span></button></th>
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -79,14 +78,6 @@
 
         methods: {
             submitForm: function(){
-                //Remove existent image objects before send to update
-                if(this.data_id !== 0) {
-                    for(var index in this.objectPackage.pictures){
-                        if(typeof(this.objectPackage.pictures[index]) === 'object'){
-                            this.objectPackage.pictures.splice(index, 1);
-                        }
-                    }
-                }
                 this.$validator.validateAll().then((result) => {
                     if (result && this.objectPackage.warehouse_id !== -1 ) {
                         axios.post(this.urlForm, this.objectPackage).then( response => {
@@ -115,8 +106,4 @@
 
 <style lang="css">
 
-    .remove-file{
-        color:red;
-        cursor: pointer;
-    }
 </style>

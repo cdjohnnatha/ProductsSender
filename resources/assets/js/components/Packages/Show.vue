@@ -157,7 +157,7 @@
                         }
                     }
                     if(! this.permission){
-                        this.prefixUrl = '/home/' + this.user_id + '/packages/';
+                        this.prefixUrl = '/user/' + this.user_id + '/packages/';
                     }
                 }).catch(function (error) {
                     console.log(error);

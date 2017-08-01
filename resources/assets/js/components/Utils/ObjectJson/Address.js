@@ -10,5 +10,4 @@ export default {
     postal_code: '',
     country: '',
     addressStatus: false
-
 };

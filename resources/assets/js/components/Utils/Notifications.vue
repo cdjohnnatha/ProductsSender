@@ -34,7 +34,7 @@
         },
         data() {
             return {
-                prefixUrl: '/home/' + this.user_id + '/',
+                prefixUrl: '/user/' + this.user_id + '/',
                 notifications: [],
                 unreadNotifications:[],
             }

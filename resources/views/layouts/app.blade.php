@@ -54,7 +54,7 @@
                                     <span class="glyphicon  glyphicon-question-sign"></span>
                                 </a>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown" id="optionsDropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <span class="glyphicon glyphicon-triangle-bottom"></span>
                                 </a>

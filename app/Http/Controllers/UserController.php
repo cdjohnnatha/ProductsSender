@@ -52,7 +52,7 @@ class UserController extends Controller
             if(auth()->guard('admin')->user()){
                 return redirect('admin/users');
             }else {
-                return redirect('home/'.$id);
+                return redirect('user/'.$id);
             }
         }
 

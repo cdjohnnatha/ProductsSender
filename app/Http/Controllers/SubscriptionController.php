@@ -17,7 +17,7 @@ class SubscriptionController extends Controller
     public function show($id)
     {
         $subscription = Subscription::find($id);
-        $subscription->benefits;
+        $subscription->load('benefits');
         return response()->json([
             'subscription' => $subscription,
         ])->setStatusCode(200);
