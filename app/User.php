@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->hasMany(Package::class, 'object_owner');
     }
 
+    public function additionalNames()
+    {
+        return $this->hasMany(AdditionalNames::class);
+    }
+
     protected static function boot() {
         parent::boot();
 
