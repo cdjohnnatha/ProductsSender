@@ -11,7 +11,7 @@
                 </a>
                 <ul class="nav collapse col-sm-offset-1" id="packages-menu" role="menu" aria-labelledby="packagesLabel">
                     <li id="new-one">
-                        <a v-bind:href="prefixUrl">
+                        <a v-bind:href="prefixUrl + 'packages/inform'">
                             <span class="glyphicon glyphicon-menu-right"></span>
                             New
                         </a>

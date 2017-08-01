@@ -13,6 +13,7 @@ class User extends Authenticatable
     use SoftDeletes;
     use LogsActivity;
     protected $dates = ['deleted_at'];
+    protected $guard = 'web';
     /**
      * The attributes that are mass assignable.
      *

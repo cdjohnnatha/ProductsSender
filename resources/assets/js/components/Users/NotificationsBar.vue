@@ -38,7 +38,6 @@
         data(){
             return {
                 prefixUrl: '/home/' + this.data_id + '/' ,
-                notificationsBarSize: 4,
             }
         },
         mounted(){
@@ -53,13 +52,6 @@
             all_notifications(){
                 return this.$store.getters.all_notifications;
             },
-
-            notificationSize(){
-                if (this.notificationsBarSize < 10)
-                    return this.notificationsBarSize * 4;
-                else
-                    return 10 * 2;
-            }
         },
 
         methods: {
@@ -78,7 +70,7 @@
 
                     });
                     this.notificationsBarSize = this.unread_notifications;
-                    console.log(this.notificationSize);
+                    console.log(this.notificationsBarSize);
                 }).catch(function (error) {
                     console.log(error);
                 });

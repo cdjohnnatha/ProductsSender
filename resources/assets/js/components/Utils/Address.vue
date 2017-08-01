@@ -90,7 +90,7 @@
 </template>
 
 <script>
-    import Address from '../ObjectJson/address'
+    import Address from './ObjectJson/Address'
     export default {
         props: {
             address: Address

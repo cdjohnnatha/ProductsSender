@@ -54,6 +54,7 @@ Vue.component('notifications', require('./components/Utils/Notifications.vue'));
 Vue.component('package-form', require('./components/Packages/Form.vue'));
 Vue.component('package-table', require('./components/Packages/Table.vue'));
 Vue.component('package-show', require('./components/Packages/Show.vue'));
+Vue.component('customclearance-form', require('./components/Packages/CustomClearanceForm.vue'));
 
 
 Vue.component('virtualList', require('vue-virtual-scroll-list'));

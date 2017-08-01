@@ -41,6 +41,7 @@ Route::prefix('/home/{id}')->group(function() {
     Route::prefix('/packages')->group(function(){
         Route::get('/', 'UserPackageHandleController@userDefaultPackages')->name('home.get.packages');
         Route::get('/show-list', 'UserPackageHandleController@table')->name('home.packages');
+        Route::get('/inform', 'UserPackageHandleController@informPackage')->name('home.packages.inform');
          Route::prefix('/{packageId}')->group(function(){
             Route::get('/', 'PackageController@showView')->name('home.packages.package');
 
@@ -87,7 +88,7 @@ Route::prefix('/admin')->group(function() {
      */
     Route::prefix('/warehouses')->group(function(){
         Route::get('/show-list', 'WarehouseController@showList')->name('warehouses.show.list');
-        Route::get('/', 'WarehouseController@listAll')->name('warehouses.all');
+        Route::get('/', 'WarehouseController@listAll')->name('warehouses.all')->middleware('auth:admin,web');
         Route::get('/names', 'WarehouseController@listNames')->name('warehouses.all.names');
         Route::get('/create', 'WarehouseController@create')->name('warehouses.create');
         Route::post('/register', 'WarehouseController@register')->name('warehouses.register');

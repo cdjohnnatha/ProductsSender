@@ -33,6 +33,11 @@ class UserPackageHandleController extends Controller
         ]);
     }
 
+    public function informPackage()
+    {
+        return view('package.inform');
+    }
+
 
 
 
