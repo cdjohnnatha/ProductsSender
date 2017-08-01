@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddReadNotificationPackages extends Migration
+class CreateAdditionalNamesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddReadNotificationPackages extends Migration
      */
     public function up()
     {
-        Schema::table('packages', function (Blueprint $table) {
-            $table->boolean('read');
+        Schema::create('additional_names', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 100);
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddReadNotificationPackages extends Migration
      */
     public function down()
     {
-        Schema::table('packages', function (Blueprint $table) {
-            $table->dropColumn('read');
-        });
+        Schema::dropIfExists('additional_names');
     }
 }

@@ -61,7 +61,19 @@
                     <li>
                         <a v-bind:href="prefixUrl">
                             <span class="glyphicon glyphicon-menu-right"></span>
-                            History
+                            Additional Names
+                        </a>
+                    </li>
+                    <li>
+                        <a v-bind:href="prefixUrl">
+                            <span class="glyphicon glyphicon-menu-right"></span>
+                            Preferences
+                        </a>
+                    </li>
+                    <li>
+                        <a v-bind:href="prefixUrl">
+                            <span class="glyphicon glyphicon-menu-right"></span>
+                            Settings
                         </a>
                     </li>
                 </ul>
