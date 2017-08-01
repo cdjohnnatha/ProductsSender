@@ -60167,7 +60167,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('span', {
     staticClass: "glyphicon glyphicon-menu-right"
-  }), _vm._v("\n                        Perfil\n                    ")])]), _vm._v(" "), _vm._m(2), _vm._v(" "), _c('li', [_c('a', {
+  }), _vm._v("\n                        Perfil\n                    ")])]), _vm._v(" "), _c('li', {
+    attrs: {
+      "id": "list-subscriptions"
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": _vm.prefixUrl
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-menu-right"
+  }), _vm._v("\n                        Addresses\n                    ")])]), _vm._v(" "), _c('li', [_c('a', {
     attrs: {
       "href": _vm.prefixUrl
     }
@@ -60210,18 +60220,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('label', [_c('span', {
     staticClass: "glyphicon glyphicon-user"
   }), _vm._v("\n                    User\n                ")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', {
-    attrs: {
-      "id": "list-subscriptions"
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "/admin/subscriptions/show-list"
-    }
-  }, [_c('span', {
-    staticClass: "glyphicon glyphicon-menu-right"
-  }), _vm._v("\n                        Addresses\n                    ")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

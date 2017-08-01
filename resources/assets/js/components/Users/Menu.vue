@@ -53,7 +53,7 @@
                         </a>
                     </li>
                     <li id="list-subscriptions">
-                        <a href="/admin/subscriptions/show-list">
+                        <a v-bind:href="prefixUrl">
                             <span class="glyphicon glyphicon-menu-right"></span>
                             Addresses
                         </a>
