@@ -11,13 +11,13 @@ class SubscriptionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth:admin')->except('subscriptions');
     }
 
     public function show($id)
     {
         $subscription = Subscription::find($id);
-        $subscription->benefits;
+        $subscription->load('benefits');
         return response()->json([
             'subscription' => $subscription,
         ])->setStatusCode(200);
@@ -30,8 +30,9 @@ class SubscriptionController extends Controller
 
     public function subscriptions()
     {
+        $subscriptions = Subscription::with('benefits')->get();
         return response()->json([
-            'subscriptions' => Subscription::with('benefits')->get(),
+            'subscriptions' => $subscriptions,
         ])->setStatusCode(200);
     }
 

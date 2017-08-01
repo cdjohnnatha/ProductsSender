@@ -46,9 +46,17 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
-                            <li class="dropdown">
+                            @if(auth()->guard('web')->user())
+                                <notification-bar :data_id="{{Auth::user()->id}}"></notification-bar>
+                            @endif
+                            <li>
+                                <a href="#" class="btn-lg">
+                                    <span class="glyphicon  glyphicon-question-sign"></span>
+                                </a>
+                            </li>
+                            <li class="dropdown" id="optionsDropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    <span class="glyphicon glyphicon-triangle-bottom"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -80,6 +88,8 @@
         </nav>
         @if(auth()->guard('admin')->user())
             <vertical-menu></vertical-menu>
+        @elseif(auth()->guard('web')->user())
+            <user-menu :data_id="{{Auth::user()->id}}"></user-menu>
         @endif
         @yield('content')
     </div>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <wareouses-list></wareouses-list>
+    <warehouses-list></warehouses-list>
 @endsection

@@ -26,13 +26,14 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
 
+    protected $redirectTo = '/user';
+
+    protected function redirectTo()
+    {
+
+        return '/user/'.Auth::user()->id;
+    }
     /**
      * Create a new controller instance.
      *
@@ -57,29 +58,13 @@ class RegisterController extends Controller
             'surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'country' => 'required|string',
+            'subscription_id' => 'required',
             'phone' => 'required|string',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'surname' => $data['name'],
-            'email' => $data['email'],
-            'country' => $data['country'],
-            'plan' => $data['plan'],
-            'phone' => $data['phone'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
+
     public function registerForm()
     {
         return view('auth.register');
@@ -94,7 +79,7 @@ class RegisterController extends Controller
         $user->surname = $request->input('user.surname');
         $user->country = $request->input('user.country');
         $user->email = $request->input('user.email');
-        $user->subscriptions_id = (int) $request->input('user.subscriptions');
+        $user->subscription_id = (int) $request->input('user.subscription_id');
         $user->phone = ''.$request->input('user.phone');
         $user->password = bcrypt($request->input('user.password'));
 
@@ -102,7 +87,6 @@ class RegisterController extends Controller
         $address->owner_name = $request->input('user.address.owner_name');
         $address->owner_surname = $request->input('user.address.owner_surname');
         $address->company_name = $request->input('user.address.company');
-
         if(is_null($address->company_name))
             $address->company_name = '';
         $address->country = $request->input('user.address.country');

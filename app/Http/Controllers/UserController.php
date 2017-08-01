@@ -52,7 +52,7 @@ class UserController extends Controller
             if(auth()->guard('admin')->user()){
                 return redirect('admin/users');
             }else {
-                return redirect('home/'.$id);
+                return redirect('user/'.$id);
             }
         }
 
@@ -70,14 +70,5 @@ class UserController extends Controller
         }else {
             return redirect('/');
         }
-    }
-
-
-    public function subscriptions()
-    {
-        $subscriptions = Subscription::with('benefits')->get();
-        return response()->json([
-            'subscriptions' => $subscriptions,
-        ])->setStatusCode(200);
     }
 }

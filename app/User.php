@@ -5,17 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
+    use LogsActivity;
     protected $dates = ['deleted_at'];
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+
     protected $fillable = [
         'name', 'email', 'password','name','surname','country','email','subscriptions_id','phone'
     ];
@@ -42,6 +40,17 @@ class User extends Authenticatable
     public function wallet()
     {
         return $this->hasOne(Wallet::class, 'user_id');
+    }
+
+
+    public function packages()
+    {
+        return $this->hasMany(Package::class, 'object_owner');
+    }
+
+    public function additionalNames()
+    {
+        return $this->hasMany(AdditionalNames::class);
     }
 
     protected static function boot() {

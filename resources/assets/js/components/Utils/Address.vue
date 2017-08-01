@@ -90,37 +90,15 @@
 </template>
 
 <script>
+    import Address from './ObjectJson/Address'
     export default {
         props: {
-            address:{
-                label: '',
-                owner_name: '',
-                owner_surname: '',
-                phone: '',
-                company: '',
-                address: '',
-                city: '',
-                state: '',
-                postal_code: '',
-                country: '',
-                addressStatus: false
-            }
+            address: Address
         },
         data() {
             return {
-//                address:{
-//                    label: '',
-//                    owner_name: '',
-//                    owner_surname: '',
-//                    phone: '',
-//                    company: '',
-//                    address: '',
-//                    city: '',
-//                    state: '',
-//                    postal_code: '',
-//                    country: '',
-//                    addressStatus: false
-//                },
+
+
             }
         },
 
@@ -129,6 +107,7 @@
             filledAddress: function(){
                 this.$validator.validateAll().then((result) => {
                     if(result) {
+                        console.log(this.address);
                         this.$emit('filledAddress', this.address);
                     }
                     this.$emit('addressStatus', result);

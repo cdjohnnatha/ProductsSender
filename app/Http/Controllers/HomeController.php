@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Laracasts\Utilities\JavaScript\JavaScriptFacade;
 
 class HomeController extends Controller
@@ -39,8 +40,28 @@ class HomeController extends Controller
         return view('user.edit')->with('user', User::find($id));
     }
 
-    public function update()
+    public function notifications()
     {
-        return true;
+        return response()->json([
+            'notifications' => Auth::user()->notifications,
+            'unreadNotifications' => Auth::user()->unreadNotifications
+        ]);
+    }
+
+    public function unread()
+    {
+        return response()->json([
+            'unread' => Auth::user()->unreadNotifications
+        ]);
+    }
+
+    public function markRead()
+    {
+        Auth::user()->notifications->markAsRead();
+    }
+
+    public function showNotifications()
+    {
+        return view('user.notifications');
     }
 }

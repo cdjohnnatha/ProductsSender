@@ -38,7 +38,7 @@
 
                                 <div class="col-sm-6">
                                     <label class="control-label" >Country</label>
-                                    <countries-list id="country" @selectedCountry="user.country = $event"></countries-list>
+                                    <countries-list id="countryUser" @selectedCountry="user.country = $event"></countries-list>
                                 </div>
                             </div>
 
@@ -85,7 +85,7 @@
 
                         <section v-show="subscriptionSection">
                             <subscriptions @allowRegister="buttonStatus = $event"
-                                           @subscription="user.subscriptions = $event"></subscriptions>
+                                           @subscription="user.subscription_id = $event"></subscriptions>
                         </section>
 
                         <!--</form>-->
@@ -112,6 +112,7 @@
 </template>
 
 <script>
+    import User from '../Utils/ObjectJson/User'
     export default {
         data() {
             return {
@@ -123,27 +124,7 @@
                 buttonStatus: false,
                 nameForm: 'Register User',
                 actionButton: this.validateUserSection,
-                user: {
-                    name: '',
-                    surname: '',
-                    country: '',
-                    password: '',
-                    subscriptions: '',
-                    phone: '',
-                    address:{
-                        label: '',
-                        name: '',
-                        surname: '',
-                        phone: '',
-                        company: '',
-                        address: '',
-                        city: '',
-                        state: '',
-                        postal_code: '',
-                        country: '',
-                        addressStatus: false
-                    }
-                },
+                user: User,
 
             }
         },
@@ -212,7 +193,6 @@
                     }
                 }).catch(function (error) {
                     console.log(error);
-//                    location.reload(true);
                 });
             }
         },

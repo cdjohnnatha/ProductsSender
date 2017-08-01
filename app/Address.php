@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 Relation::morphMap([
@@ -16,12 +17,15 @@ Relation::morphMap([
 class Address extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     protected $dates = ['deleted_at'];
 
+    protected $attributes = array('company_name' => ' ', 'default_address' => false);
+
     protected $fillable = [
-        'label','owner_name', 'owner_surname', 'company_name', 'country',
-        'address', 'city', 'state', 'postal_code', 'phone', 'default_address', 'addressable_type',
+        'label','owner_name', 'owner_surname', 'company_name', 'country', 'address',
+        'city', 'state', 'postal_code', 'phone', 'default_address', 'addressable_type',
         'addressable_id'
     ];
 

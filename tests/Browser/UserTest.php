@@ -10,34 +10,35 @@ use Laravel\Dusk\Browser;
 class UserTest extends DuskTestCase
 {
 
-
+    private $prefixUrl = '/user/';
     /**
      * @group userRegister
+     * @group CRUDS
      */
     public function testRegister()
     {
 
         $this->browse(function (Browser $browser) {
             $faker = \Faker\Factory::create();
-            $country = $faker->country;
+            $country = $faker->countryCode;
             $browser->visit('/register')
                 ->pause(1000)
                 ->assertSee('Register User')
                 ->type('name', $faker->firstName)
                 ->type('surname', $faker->lastName)
                 ->type('phone', 83998000802)
-                ->select('#country', 'Brazil')
+                ->select('#countryUser', $country)
                 ->type('email', $faker->email)
                 ->type('password', '123456')
-                ->type('password_confirmation', '123456')
+                ->type('password_confirmation', $faker->password(6, 10))
                 ->click('#submit-button')
                 //Address form
                 ->assertSee('Register Address')
                 ->select('country-address', $country)
                 ->assertSelected('country-address', $country)
                 ->type('#label', 'Default Address')
-                ->type('owner_name', 'Craudio')
-                ->type('owner_surname', 'Duarte')
+                ->type('owner_name', $faker->firstName)
+                ->type('owner_surname', $faker->lastName)
                 ->type('phone-address', 83998000802)
                 ->type('company', '')
                 ->type('address', $faker->address)
@@ -50,7 +51,7 @@ class UserTest extends DuskTestCase
                 ->mouseover('.columns')
                 ->click('.columns')
                 ->click('#submit-button')
-                ->pause(6000)
+                ->pause(5000)
                 ->waitForLocation('/login');
 
         });
@@ -58,33 +59,35 @@ class UserTest extends DuskTestCase
 
     /**
      * @group user
+     * @group CRUDS
      */
     public function testEditUser()
     {
         $this->browse(function (Browser $browser) {
             $user = User::first();
             $browser->loginAs($user)
-                ->visit('/home/'.$user->id)
-                ->click('.dropdown')
+                ->visit($this->prefixUrl.$user->id)
+                ->click('#optionsDropdown')
                 ->click('#edit')
-                ->waitForLocation('/home/'.$user->id.'/edit')
+                ->waitForLocation($this->prefixUrl.$user->id.'/edit')
                 ->type('surname', 'Duarte')
                 ->click('#save')
-                ->waitForLocation('/home');
+                ->waitForLocation($this->prefixUrl.$user->id);
         });
     }
 
 
     /**
      * @group user
+     * @group CRUDS
      */
     public function testDeleteUser()
     {
         $this->browse(function (Browser $browser) {
             $user = User::all()->last();
             $browser->loginAs($user)
-                ->visit('/home/'.$user->id)
-                ->click('.dropdown-toggle')
+                ->visit($this->prefixUrl.$user->id)
+                ->click('#optionsDropdown')
                 ->click('#delete')
                 ->waitForLocation('/');
         });
@@ -102,7 +105,7 @@ class UserTest extends DuskTestCase
                 ->type('email', $user->email)
                 ->type('password', '123456')
                 ->press('Login')
-                ->waitForLocation('/home/'.$user->id);
+                ->waitForLocation($this->prefixUrl.$user->id);
         });
     }
 
