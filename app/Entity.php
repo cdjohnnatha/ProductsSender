@@ -6,13 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Status extends Entity
+class Entity extends Model
 {
-    protected $table = 'status';
+    use SoftDeletes;
+    use LogsActivity;
 
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
-    ];
+    protected $dates = ['deleted_at'];
 }

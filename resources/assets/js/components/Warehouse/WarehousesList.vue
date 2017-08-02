@@ -46,10 +46,19 @@
 </template>
 
 <script>
+    import Address from '../Utils/ObjectJson/Address';
     export default {
         data(){
             return {
-                warehouses:[]
+                warehouses:[
+                    {
+                        id: 0,
+                        box_price: 0.0,
+                        name: '',
+                        storage_time: 0,
+                        address: Address
+                    }
+                ]
 
             }
         },

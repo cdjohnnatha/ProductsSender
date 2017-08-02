@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Subscription extends Model
+class Subscription extends Entity
 {
-    use SoftDeletes;
-    use LogsActivity;
-    protected $dates = ['deleted_at'];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'created_by',
+        'updated_by'
+    ];
 
     public function users()
     {
@@ -31,9 +36,7 @@ class Subscription extends Model
         return $this->hasMany(Benefit::class);
     }
 
-    protected $hidden = [
-        'created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by'
-    ];
+
 
     protected static function boot() {
         parent::boot();

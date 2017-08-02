@@ -59,7 +59,7 @@
                         </a>
                     </li>
                     <li>
-                        <a v-bind:href="prefixUrl">
+                        <a v-bind:href="prefixUrl + 'additional-names'">
                             <span class="glyphicon glyphicon-menu-right"></span>
                             Additional Names
                         </a>

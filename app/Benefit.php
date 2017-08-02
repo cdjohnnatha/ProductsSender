@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Benefit extends Model
+class Benefit extends Entity
 {
-    use SoftDeletes;
-    use LogsActivity;
-    protected $dates = ['deleted_at'];
+
     protected $hidden = [
-        'created_at', 'updated_at', 'deleted_at', 'subscription_id', 'id'
+        'id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'subscription_id',
     ];
 
     public function subscription()

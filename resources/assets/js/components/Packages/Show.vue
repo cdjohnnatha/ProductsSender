@@ -145,6 +145,7 @@
         created() {
                 axios.get(this.prefixUrl + this.data_id + '/show').then(response => {
                     this.objectPackage = response.data.package;
+                    console.log(this.objectPackage);
                     if(this.objectPackage.pictures.length >= 0) {
                         for (var picture in this.objectPackage.pictures) {
                             console.log("sss" + picture);

@@ -19,17 +19,12 @@ class UserController extends Controller
     public function users()
     {
         $users = User::with('subscription')->get();
-
-        return response()->json([
-            'users' => $users
-        ]);
+        return response()->json(['users' => $users]);
     }
 
     public function show($id)
     {
-        return response()->json([
-            'user' => User::findOrFail($id)
-        ]);
+        return response()->json(['user' => User::findOrFail($id)]);
     }
 
     public function edit($id)

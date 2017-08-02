@@ -31,23 +31,29 @@ Route::get('/home/all', 'HomeController@showall')->name('home.all');
 
 Route::middleware('auth:web')->prefix('/user/{id}')->group(function() {
 
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', 'HomeController@index')->name('user');
     Route::get('/edit', 'UserController@edit')->name('user.edit');
     Route::patch('/', 'UserController@update')->name('user.update');
     Route::get('/warehouses', 'WarehouseController@listAll')->name('user.warehouses');
-    Route::get('/unread', 'HomeController@unread')->name('home.packages.unread');
-    Route::get('/notifications', 'HomeController@notifications')->name('home.notifications.all');
-    Route::get('/show-notifications', 'HomeController@showNotifications')->name('home.notifications.view');
-    Route::get('/mark-read', 'HomeController@markRead')->name('home.notification.markread');
+    Route::get('/unread', 'HomeController@unread')->name('user.packages.unread');
+    Route::get('/notifications', 'HomeController@notifications')->name('user.notifications.all');
+    Route::get('/show-notifications', 'HomeController@showNotifications')->name('user.notifications.view');
+    Route::get('/mark-read', 'HomeController@markRead')->name('user.notification.markread');
 
     //User packages
     Route::prefix('/packages')->group(function(){
-        Route::get('/', 'UserPackageHandleController@userDefaultPackages')->name('home.get.packages');
-        Route::get('/show-list', 'UserPackageHandleController@table')->name('home.packages');
-        Route::get('/inform', 'UserPackageHandleController@informPackage')->name('home.packages.inform');
+        Route::get('/', 'UserPackageHandleController@userDefaultPackages')->name('user.get.packages');
+        Route::get('/show-list', 'UserPackageHandleController@table')->name('user.packages');
+        Route::get('/inform', 'UserPackageHandleController@informPackage')->name('user.packages.inform');
          Route::prefix('/{packageId}')->group(function(){
-            Route::get('/', 'PackageController@showView')->name('home.packages.package');
+            Route::get('/', 'PackageController@showView')->name('user.packages.package');
         });
+    });
+
+    Route::prefix('/additional-names')->group(function(){
+        Route::get('/', 'AdditionalNamesController@create')->name('user.additionaNames.view');
+        Route::get('/names', 'AdditionalNamesController@names')->name('user.additionaNames.all');
+
     });
 });
 

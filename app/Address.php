@@ -16,16 +16,32 @@ Relation::morphMap([
 
 class Address extends Model
 {
-    use SoftDeletes;
-    use LogsActivity;
-
-    protected $dates = ['deleted_at'];
 
     protected $attributes = array('company_name' => ' ', 'default_address' => false);
 
     protected $fillable = [
-        'label','owner_name', 'owner_surname', 'company_name', 'country', 'address',
-        'city', 'state', 'postal_code', 'phone', 'default_address', 'addressable_type',
+        'label',
+        'owner_name',
+        'owner_surname',
+        'company_name',
+        'country',
+        'address',
+        'city',
+        'state',
+        'postal_code',
+        'phone',
+        'default_address',
+        'addressable_type',
+        'addressable_id'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'created_by',
+        'updated_by',
+        'addressable_type',
         'addressable_id'
     ];
 
@@ -33,12 +49,4 @@ class Address extends Model
     {
         return $this->morphTo();
     }
-
-    protected $hidden = [
-        'created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'addressable_type',
-        'addressable_id'
-    ];
-
-
-
 }

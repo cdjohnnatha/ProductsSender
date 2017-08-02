@@ -2,51 +2,30 @@
     <section class="container col-sm-offset-1">
         <div class="col-sm-11 col-sm-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Inform New Package</div>
+                <div class="panel-heading">
+                    <label>
+                        Additional Names
+                    </label>
+                    <p>
+                        Those listed names bellow belongs to your Holyship account. All the
+                            consignment which will be send to them, using the EUA Address
+                            will be put it out on the packages
+                    </p>
+                </div>
                 <div class="panel-body">
-                    <section>
-                        <div class="form-group col-sm-6">
-                            <label for="provider">Provider</label>
-                            <input type="text" id="provider" class=form-control>
-                            <label>Warehouse</label>
-                            <warehouses-select></warehouses-select>
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <label>Addressee</label>
-                            <select class="form-control"></select>
-                            <label for="tracknumber">Tack Number</label>
-                            <input type="text" id="tracknumber" class="form-control">
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <label>Note</label>
-                            <textarea class="form-control"></textarea>
+                    <section class="col-sm-6" v-for="(additional, index) in additionals">
+                        <div class="input-group form-group">
+                            <input type="text" class="form-control" v-bind:value="additional.name"
+                            v-model="additional.name">
+                            <span v-if="additional.delete == false"
+                                  class="btn input-group-addon" @click="addName">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </span>
+                            <span v-show="additional.delete" class="btn input-group-addon" @click="removeName(index)">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </span>
                         </div>
                     </section>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Goods Clearance</th>
-                        </tr>
-                        <tr>
-                            <th class="col-sm-6">Description</th>
-                            <th class="col-sm-2">Manufactured Country</th>
-                            <th class="col-sm-1">Quantity</th>
-                            <th class="col-sm-1">Unit Price</th>
-                            <th class="col-sm-2">Total</th>
-                            <th><button><span class="glyphicon glyphicon-plus" @click="newGoodsField"></span></button></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="(goods, index) in customClearances">
-                            <td><input type="text" v-model="goods.description" class="form-control"></td>
-                            <td><countries-list @selectedCountry="goods.manufacture_country = $event"></countries-list></td>
-                            <td><input type="number" min="1" value="1" v-model="goods.quantity" class="form-control"></td>
-                            <td><input type="number" min="1" value="1" v-model="goods.unit_price" class="form-control"></td>
-                            <td><span><input type="number" disabled class="form-control"></span></td>
-                            <th><button><span class="glyphicon glyphicon-minus" @click="removeFieldGoods(index)"></span></button></th>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -65,9 +44,11 @@
             return {
                 urlForm: '/user/' + this.user_id + '/',
                 disabled: false,
-                buttonName: 'Register',
                 submitAction: this.submitForm,
-                customClearances: [CustomClearance]
+                additionals:[{
+                    name: '',
+                    delete: false
+                }]
             }
         },
 
@@ -91,12 +72,22 @@
                 });
             },
 
-            newGoodsField() {
-                this.customClearances.push(CustomClearance);
+            addName() {
+                if(this.additionals.length >= 1){
+                    if(this.additionals[this.additionals.length -1].name != ''){
+                        this.additionals.push({name:'', delete: false});
+                        this.additionals[this.additionals.length -2].delete = true;
+                        console.log(this.additionals[0].name);
+                    }
+                }else{
+                    this.additionals.push({name:''});
+                }
+
+
             },
 
-            removeFieldGoods(index){
-                this.customClearances.splice(index, 1);
+            removeName(index){
+                this.additionals.splice(index, 1);
             }
 
         }
