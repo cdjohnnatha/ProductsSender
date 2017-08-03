@@ -107,12 +107,19 @@ class PackageController extends Controller
 
     public function warehousePackages()
     {
-        $packages = Package::with(['status' => function($query){
-            $query->where([
-            ['status', 'like', 'WAREHOUSE%'],
-            ['status', '!=', 'WAREHOUSE_SENT'],
-            ]);
-        }])->where('warehouse_id', '=', Auth::user()->default_warehouse_id)->get();
+        $packages = Package::with(
+            ['status' =>
+                function($query){
+                    $query->where([
+                        ['status', 'like', 'WAREHOUSE%'],
+                        ['status', '!=', 'WAREHOUSE_SENT'],
+                    ]);
+            }])->where(
+            'warehouse_id',
+            '=',
+            Auth::user()->default_warehouse_id
+        )->get();
+
         return response()->json([
            'packages' => $packages
         ]);

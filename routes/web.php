@@ -29,10 +29,10 @@ Route::prefix('/register')->group(function() {
 
 Route::get('/home/all', 'HomeController@showall')->name('home.all');
 
-Route::middleware('auth:web')->prefix('/user/{id}')->group(function() {
+Route::prefix('/user/{id}')->group(function() {
 
+    Route::resource('/address', 'AddressController', ['as' => 'user']);
     Route::post('/test', 'UserController@test');
-
     Route::get('/', 'HomeController@index')->name('user');
     Route::get('/edit', 'UserController@edit')->name('user.edit');
     Route::patch('/', 'UserController@update')->name('user.update');

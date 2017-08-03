@@ -53,7 +53,7 @@
                         </a>
                     </li>
                     <li id="list-subscriptions">
-                        <a v-bind:href="prefixUrl">
+                        <a v-bind:href="prefixUrl + 'address/create'">
                             <span class="glyphicon glyphicon-menu-right"></span>
                             Addresses
                         </a>

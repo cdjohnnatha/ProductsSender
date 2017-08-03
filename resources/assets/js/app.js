@@ -28,7 +28,6 @@ Vue.component('admin-form', require('./components/Admins/FormAdmin.vue'));
 Vue.component('vertical-menu', require('./components/Admins/Menu.vue'));
 
 Vue.component('countries-list', require('./components/Utils/Countries.vue'));
-Vue.component('address-form', require('./components/Utils/Address.vue'));
 Vue.component('subscriptions', require('./components/Utils/Subscriptions.vue'));
 
 

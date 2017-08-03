@@ -1,68 +1,123 @@
+@extends('layouts.app')
 
-<section class="container">
-    <div class="panel panel-default">
-        <header class="panel-heading">
-            New Address
-        </header>
-            <section class="panel-body">
-                <div class="form-group">
-                    <div class="col-sm-5">
-                        <label for="label-address">Name for address</label>
-                        <input type="text" class="form-control" name="label-address">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="owner-name">First Name</label>
-                            <input type="text" class="form-control" name="owner-name">
-                    </div>
-                    <div class="col-sm-3">
-                        <label for="owner-surname">Surname</label>
-                             <input type="text" class="form-control" name="owner-surname">
-                    </div>
-                </div>
+@section('content')
+<header class="panel-heading">
+ <h3 class="panel-title">Register Address</h3>
+</header>
+<form action="{{route('user.address.store', Auth::user()->id)}}" role="form" method="POST">
+    <section class="panel-body">
+        {{ csrf_field() }}
+        <div class="form-group col-sm-12" >
+            <div class="col-sm-5" {{ $errors->has('label') ? ' has-error' : '' }}>
+                <label>{{ __('address.titles.name') }}</label>
+                <input type="text" class="form-control" name="label" value="{{ old('label') }}">
 
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="phone">Phone</label>
-                            <input type="text" class="form-control" name="phone">
-                    </div>
-                    <div class="col-sm-3">
-                        <label for="company-name">Company Name</label>
-                        <input type="text" class="form-control" name="company-name">
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="address">Address</label>
-                        <input type="text" class="form-control" name="address">
-                    </div>
-                </div>
+                @if ($errors->has('label'))
+                    <span class="help-block">
+                        <strong class="text-danger" class="alert-danger">{{ $errors->first('label') }}</strong>
+                    </span>
+                @endif
+            </div>
+
+            <div class="col-sm-4" {{ $errors->has('owner_name') ? ' has-error' : '' }}>
+                <label>{{ __('address.titles.first_name') }}</label>
+                <input type="text" class="form-control" name="owner_name" value="{{ old('owner_name') }}"
+                       required autofocus>
+                @if ($errors->has('owner_name'))
+                    <span class="help-block">
+                        <strong class="text-danger">{{ $errors->first('owner_name') }}</strong>
+                    </span>
+                @endif
+            </div>
+            <div class="col-sm-3" {{ $errors->has('owner_surname') ? ' has-error' : '' }}>
+                <label>{{ __('address.titles.last_name') }}</label>
+                <input type="text" class="form-control" name="owner_surname" value="{{ old('owner_surname') }}"
+                       required autofocus>
+                @if ($errors->has('owner_name'))
+                    <span class="help-block">
+                        <strong class="text-danger">{{ $errors->first('owner_surname') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+
+        <div class="form-group col-sm-12" >
+            <div class="col-sm-3" :class="{'has-error': errors.has('phone') }">
+                <label>{{ __('address.titles.phone') }}</label>
+                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+
+                @if ($errors->has('phone'))
+                    <span class="help-block">
+                        <strong class="text-danger">{{ $errors->first('phone') }}</strong>
+                    </span>
+                @endif
+            </div>
+            <div class="col-sm-3" :class="{'has-error': errors.has('company_name') }">
+                <label>{{ __('address.titles.company') }}</label>
+                <input type="text" class="form-control" name="company" value="{{ old('company_name') }}">
+
+                @if ($errors->has('company'))
+                    <span class="help-block">
+                        <strong class="text-danger">{{ $errors->first('company_name') }}</strong>
+                    </span>
+                @endif
+            </div>
+            <div class="col-sm-6">
+                <label>{{ __('address.titles.address') }}</label>
+                <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+
+                @if ($errors->has('address'))
+                    <span class="help-block">
+                        <strong class="text-danger">{{ $errors->first('address') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
 
 
-                <div class="form-group">
-                    <div class="col-sm-4">
-                        <label for="city">City</label>
-                        <input type="text" class="form-control" name="city">
-                    </div>
-                    <div class="col-sm-3">
-                        <label for="state">State/Province/neighborhood</label>
-                        <input type="text" class="form-control" name="state">
-                    </div>
-                    <div class="col-sm-2">
-                        <label for="postal-code">Postal Code</label>
-                        <input type="text" class="form-control" name="postal-code">
-                    </div>
-                    <div class="col-sm-3">
-                        <label for="country">Country</label>
-                        @include('layouts._countries_combobox')
-                    </div>
+        <div class="form-group col-sm-12" :class="{'has-error': errors.has('city') }">
+            <div class="col-sm-4">
+                <label>{{ __('address.titles.city') }}</label>
+                <input type="text" class="form-control" name="city" value="{{ old('city') }}">
 
-                </div>
-            </section>
-            <section class="panel-footer">
-                <div class="col-sm-1 pull-right">
-                    <button type="submit" class="btn btn-primary pull-right">
-                        Next
-                    </button>
-                </div>
-                <div class="clearfix"></div>
-            </section>
-    </div>
-</section>
+                @if ($errors->has('city'))
+                    <span class="help-block">
+                        <strong class="text-danger">{{ $errors->first('city') }}</strong>
+                    </span>
+                @endif
+            </div>
+            <div class="col-sm-3" :class="{'has-error': errors.has('state') }">
+                <label>{{ __('address.titles.state') }}</label>
+                <input type="text" class="form-control" name="state" value="{{ old('state') }}">
+
+                @if ($errors->has('state'))
+                    <span class="help-block">
+                        <strong class="text-danger">{{ $errors->first('state') }}</strong>
+                    </span>
+                @endif
+            </div>
+            <div class="col-sm-2" :class="{'has-error': errors.has('postal_code') }">
+                <label>{{ __('address.titles.postal_code') }}</label>
+                <input type="text" class="form-control" name="postal_code" value="{{ old('postal_code') }}" >
+
+                @if ($errors->has('postal_code'))
+                    <span class="help-block">
+                        <strong class="text-danger">{{ $errors->first('postal_code') }}</strong>
+                    </span>
+                @endif
+            </div>
+            <div class="col-sm-3">
+                <label>{{ __('address.titles.country') }}</label>
+                <input type="hidden" name="country" value="Brasil">
+            </div>
+        </div>
+    </section>
+    <footer class="panel-footer">
+        <div class="pull-right">
+            <button type="submit" class="btn btn-success">{{ __('buttons.titles.save') }}</button>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+
+</form>
+@endsection
