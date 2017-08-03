@@ -12,28 +12,8 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin');
-    }
-
-    public function showAll()
-    {
-        return view('admin.showAll');
-    }
-
-    public function getAll()
-    {
         $admins = Admin::where('id', '!=', Auth::user()->id);
-
-        return response()->json([
-            'admins' => $admins
-        ]);
-    }
-
-    public function show($id)
-    {
-        return response()->json([
-            'admin' => Admin::findOrFail($id)
-        ]);
+        return view('admin', compact('admins'));
     }
 
     public function create()
@@ -41,7 +21,7 @@ class AdminController extends Controller
         return view('admin.FormAdmin');
     }
 
-    public function register(Request $request)
+    public function store(Request $request)
     {
         $admin = new Admin();
         $admin->name = $request->input('name');
@@ -55,6 +35,13 @@ class AdminController extends Controller
             return response('created', 201);
         }
         return response('bad request',400);
+    }
+
+    public function show($id)
+    {
+        return response()->json([
+            'admin' => Admin::findOrFail($id)
+        ]);
     }
 
     public function edit(){

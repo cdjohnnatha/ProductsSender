@@ -46,7 +46,7 @@
 </template>
 
 <script>
-    import Address from '../Utils/ObjectJson/Address';
+    import Address from '../Utils/Objects/Address';
     export default {
         data(){
             return {

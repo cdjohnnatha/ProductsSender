@@ -9,8 +9,10 @@
                             <div class="form-group col-sm-12" >
                                 <div class="form-group col-sm-6" :class="{'has-error': errors.has('warehouse-select') }">
                                     <label>Warehouse</label>
-                                    <warehouses-select @selectedWarehouse="objectPackage.warehouse_id = $event"
-                                                       :setWarehouse="objectPackage.warehouse_id"></warehouses-select>
+                                    <warehouses-select
+                                            @selectedWarehouse="objectPackage.warehouse_id = $event"
+                                            :setWarehouse="objectPackage.warehouse_id">
+                                    </warehouses-select>
                                 </div>
                                 <div class="form-group col-sm-6" :class="{'has-error': errors.has('suite') }">
                                     <label>Suite</label>

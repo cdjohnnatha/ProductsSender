@@ -34,7 +34,7 @@
 </template>
 
 <script>
-    import CustomClearance from '../Utils/ObjectJson/CustomClearance'
+    import CustomClearance from '../Utils/Objects/CustomClearance'
     export default {
         props: {
             data_id: 0,

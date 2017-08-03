@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
 
+
+    public function test(Request $request)
+    {
+        dd($request->input());
+    }
+
     public function viewUsers()
     {
         return view('user.all');
