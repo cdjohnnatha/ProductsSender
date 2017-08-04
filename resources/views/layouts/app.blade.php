@@ -87,11 +87,12 @@
             </div>
         </nav>
         @if(auth()->guard('admin')->user())
-            <vertical-menu></vertical-menu>
+            {{--<vertical-menu></vertical-menu>--}}
+            @include('layouts._lateral_nav')
         @elseif(auth()->guard('web')->user())
             <user-menu :data_id="{{Auth::user()->id}}"></user-menu>
         @endif
-        @if(Auth::check())
+        @if(auth()->guard('admin')->user() || auth()->guard('web')->user())
             <section class="container col-sm-offset-1">
                 <div class="col-sm-11 col-sm-offset-1">
                     <div class="panel panel-default">

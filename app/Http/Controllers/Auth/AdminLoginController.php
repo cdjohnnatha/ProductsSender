@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class AdminLoginController extends Controller
 {
 
-    public function showLoginForm()
+    public function index()
     {
         return view('auth.admin-login');
     }
@@ -28,7 +28,7 @@ class AdminLoginController extends Controller
             'email' => $request->input('email'),
             'password' => $request->input('password')
         ])){
-            return response('/admin/dashboard', 202);
+            return response('/admin/', 202);
         }
 
         return response('something wrong!', 401);

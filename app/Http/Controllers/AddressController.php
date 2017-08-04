@@ -32,9 +32,9 @@ class AddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        return  'index';
+        return  $id;
     }
 
     /**
@@ -71,9 +71,10 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $address_id=null)
     {
-        //
+        $address = Address::findOrFail($address_id);
+        return $address_id;
     }
 
     /**
@@ -94,9 +95,30 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id = null , $address_id = null)
     {
-        //
+        $this->validate($request, $this->rules());
+
+        if(is_null($address_id)){
+            $address = Address::findOrFail($id);
+        }
+        else{
+            $address = Address::findOrFail($address_id);
+        }
+        $address->label = $request->input('label');
+        $address->owner_name = $request->input('owner_name');
+        $address->owner_surname = $request->input('owner_surname');
+        $address->company_name = $request->input('company_name');
+        $address->country = $request->input('country');
+        $address->address = $request->input('address');
+        $address->city = $request->input('city');
+        $address->state = $request->input('state');
+        $address->postal_code = $request->input('postal_code');
+        $address->phone = $request->input('phone');
+
+        if($address->save()){
+            return response('', 200);
+        }
     }
 
     /**
@@ -107,7 +129,11 @@ class AddressController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $address = Address::findOrFail($id);
+        $address->delete();
+        if($address->thashed()){
+            return response('', 200);
+        }
     }
 
     private function getClass($urlPrefix)

@@ -11,21 +11,10 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
 
-
-    public function test(Request $request)
-    {
-        dd($request->input());
-    }
-
-    public function viewUsers()
-    {
-        return view('user.all');
-    }
-
-    public function users()
+    public function index()
     {
         $users = User::with('subscription')->get();
-        return response()->json(['users' => $users]);
+        return view('index', compact('users'));
     }
 
     public function show($id)

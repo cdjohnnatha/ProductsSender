@@ -21,13 +21,13 @@ class Admin extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
         'password',
-        'name',
-        'surname',
         'country',
         'email',
-        'phone'
+        'phone',
+        'default_warehouse_id'
     ];
 
 

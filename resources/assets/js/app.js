@@ -22,10 +22,7 @@ window.Vue.use(VueTouch, { name: 'v-touch' });
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-Vue.component('admin-list', require('./components/Admins/List.vue'));
 Vue.component('login-admin', require('./components/Admins/LoginAdmin.vue'));
-Vue.component('admin-form', require('./components/Admins/FormAdmin.vue'));
-Vue.component('vertical-menu', require('./components/Admins/Menu.vue'));
 
 Vue.component('countries-list', require('./components/Utils/Countries.vue'));
 Vue.component('subscriptions', require('./components/Utils/Subscriptions.vue'));

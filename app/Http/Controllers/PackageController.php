@@ -28,12 +28,12 @@ class PackageController extends Controller
             'changeStatus', 'unread');
     }
 
-    public function form($id = 0)
+    public function create($id = 0)
     {
         return view('package.form')->with('id', $id);
     }
 
-    public function register(Request $request)
+    public function store(Request $request)
     {
         $package = new Package();
         $package->width = $request->input('width');
@@ -93,16 +93,6 @@ class PackageController extends Controller
             return response('created',201);
         }
         return response()->setStatusCode(406);
-    }
-
-    public function showList()
-    {
-        return view('package.list');
-    }
-
-    public function userListPackages()
-    {
-        return view('package.packagesUser');
     }
 
     public function warehousePackages()
@@ -216,8 +206,6 @@ class PackageController extends Controller
         if($package->save()){
             return response('status updated to '.$status->status, '200');
         }
-
-        return response('Error while update!', 406);
     }
 
     public function destroy($id)
@@ -239,8 +227,6 @@ class PackageController extends Controller
         if($package->trashed()){
             return response('/admin/packages/show-list', 200);
         }
-
-        return response('error while deleting at database', 417);
     }
 
 
