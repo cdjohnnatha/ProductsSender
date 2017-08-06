@@ -11,6 +11,19 @@ class Package extends Entity
 
     protected $attributes = ['read' => false];
 
+    protected $fillable = [
+        'width',
+        'height',
+        'depth',
+        'weight',
+        'unit_measure',
+        'weight_measure',
+        'object_owner',
+        'warehouse_id',
+        'default_warehouse_id',
+        'status_id'
+    ];
+
     protected $hidden = [
         'updated_at',
         'deleted_at',

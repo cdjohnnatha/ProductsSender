@@ -4,17 +4,20 @@
 <header class="panel-heading">Warehouse</header>
 @if(Request::is('*/edit'))
     <?php $action = 'admin.warehouses.update' ?>
+    <form action="{{route($action, $warehouse->id)}}" role="form" method="POST">
+        <input name="_method" type="hidden" value="PUT">
 @else
     <?php $action = 'admin.warehouses.store' ?>
+    <form action="{{route($action)}}" role="form" method="POST">
 @endif
-    <form action="{{route($action, $warehouse->id)}}" role="form" method="POST">
     <section class="panel-body">
-        @if(Request::is('*/edit'))
-            <input name="_method" type="hidden" value="PUT">
-        @endif
         {{ csrf_field() }}
         @include('warehouse._form')
-        @include('address._form', array('address'=> $warehouse->address))
+        @if(Request::is('*/edit'))
+            @include('address._form', array('address'=> $warehouse->address))
+        @else
+            @include('address._form')
+        @endif
     </section>
     <footer class="panel-footer">
         <button type="submit" class="btn btn-success pull-right">

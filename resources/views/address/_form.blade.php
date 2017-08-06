@@ -17,8 +17,8 @@
              required autofocus>
       @if ($errors->has('owner_name'))
         <span class="help-block">
-                          <strong class="text-danger">{{ $errors->first('owner_name') }}</strong>
-                      </span>
+          <strong class="text-danger">{{ $errors->first('owner_name') }}</strong>
+        </span>
       @endif
     </div>
     <div class="col-sm-3" {{ $errors->has('owner_surname') ? ' has-error' : '' }}>

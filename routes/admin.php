@@ -13,6 +13,7 @@ Route::group(['middleware' => ['auth:admin']], function(){
             Route::resource('packages', 'PackageController');
             Route::resource('status', 'StatusController');
             Route::resource('subscriptions', 'SubscriptionController');
+            Route::delete('benefits/{benefit}', 'BenefitController@destroy')->name('benefits.destroy');
     });
     Route::resource('admin', 'AdminController');
 });

@@ -11,7 +11,8 @@ return [
         'create'   => 'Create',
         'delete'   => 'Delete',
         'remove'   => 'Remove',
-        'update' => 'update'
+        'update' => 'Update',
+        'show' => 'Show',
     ],
 
 

@@ -23,13 +23,13 @@
                 <td>{{$warehouse->id}}</td>
                 <td>{{$warehouse->name}}</td>
                 <td>{{$warehouse->box_price}}</td>
-                <td>{{$warehouse->address->address}}</td>
-                <td>{{$warehouse->address->city}}</td>
-                <td>{{$warehouse->address->country}}</td>
-                <td>{{$warehouse->address->state}}</td>
-                <td>{{$warehouse->address->postal_code}}</td>
+                <td>{{$warehouse->address['address']}}</td>
+                <td>{{$warehouse->address['city']}}</td>
+                <td>{{$warehouse->address['country']}}</td>
+                <td>{{$warehouse->address['state']}}</td>
+                <td>{{$warehouse->address['postal_code']}}</td>
                 <td class="col-sm-3">
-                   @include('layouts._form_buttons', array('prefix_name' => 'admin.warehouses', 'id' => $warehouse->id))
+                   @include('layouts.formButtons._form_edit_delete', array('prefix_name' => 'admin.warehouses', 'id' => $warehouse->id))
                 </td>
             </tr>
         @endforeach

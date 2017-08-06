@@ -8,6 +8,10 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Subscription extends Entity
 {
+    protected $fillable = [
+        'title',
+        'amount',
+    ];
 
     protected $hidden = [
         'created_at',

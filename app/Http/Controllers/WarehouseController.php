@@ -22,8 +22,9 @@ class WarehouseController extends Controller
         return view('warehouse.create');
     }
 
-    public function register(Request $request)
-    {   $warehouse = new Warehouse();
+    public function store(Request $request)
+    {
+        $warehouse = new Warehouse();
         $warehouse->name = $request->input('name');
         $warehouse->storage_time = $request->input('storage_time');
         $warehouse->box_price = $request->input('box_price');
@@ -31,27 +32,24 @@ class WarehouseController extends Controller
         $warehouse->created_by = Auth::user()->id;
 
         $address = new Address();
-        $address->label = $request->input('address.label');
-        $address->owner_name = $request->input('address.owner_name');
-        $address->owner_surname = $request->input('address.owner_surname');
-        $address->company_name = $request->input('address.company');
+        $address->label = $request->input('label');
+        $address->owner_name = $request->input('owner_name');
+        $address->owner_surname = $request->input('owner_surname');
+        $address->company_name = $request->input('company');
 
         if(is_null($address->company_name))
             $address->company_name = '';
-        $address->country = $request->input('address.country');
-        $address->address = $request->input('address.address');
-        $address->city = $request->input('address.city');
-        $address->state = $request->input('address.state');
-        $address->postal_code = $request->input('address.postal_code');
-        $address->phone = ''.$request->input('address.phone');
+        $address->country = $request->input('country');
+        $address->address = $request->input('address');
+        $address->city = $request->input('city');
+        $address->state = $request->input('state');
+        $address->postal_code = $request->input('postal_code');
+        $address->phone = ''.$request->input('phone');
         $address->default_address = true;
 
-        if($warehouse->save()){
-            if( $warehouse->address()->save($address) ){
-                return response('/admin/warehouses/show-list', 201);
-            }
+        if($warehouse->save() && $warehouse->address()->save($address)){
+            return redirect(route('admin.warehouses.index'));
         }
-        return response('', 401);
     }
 
     public function show($id)
@@ -72,7 +70,6 @@ class WarehouseController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $warehouse = Warehouse::findOrFail($id);
         $warehouse->load('address');
         $warehouse->name = $request->input('name');

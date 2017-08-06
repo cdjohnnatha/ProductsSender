@@ -10,6 +10,10 @@ class Status extends Entity
 {
     protected $table = 'status';
 
+    protected $fillable = [
+        'message'
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',

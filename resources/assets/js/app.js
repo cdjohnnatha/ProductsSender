@@ -23,6 +23,9 @@ window.Vue.use(VueTouch, { name: 'v-touch' });
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('nested-messages', require('./components/Subscriptions/NestedBenefitsMessage.vue'));
+
+
 import { store } from './store'
 
 const app = new Vue({

@@ -9,8 +9,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Benefit extends Entity
 {
 
+    protected $fillable = [
+        'message'
+    ];
+
     protected $hidden = [
-        'id',
         'created_at',
         'updated_at',
         'deleted_at',
