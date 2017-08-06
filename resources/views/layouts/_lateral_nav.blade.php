@@ -93,7 +93,7 @@
             </a>
             <ul class="nav collapse col-sm-offset-1" id="packages-menu" role="menu" aria-labelledby="btn-1">
                 <li id="create-package">
-                    <a href="/admin/packages/form">
+                    <a href="{{route('admin.packages.create')}}">
                         <span class="glyphicon glyphicon-plus-sign"></span>
                         New
                     </a>
@@ -105,7 +105,7 @@
                     </a>
                 </li>
                 <li id="list-packages">
-                    <a href="/admin/packages/show-list">
+                    <a href="{{route('admin.packages.index')}}">
                         <span class="glyphicon glyphicon-align-justify"></span>
                         List
                     </a>

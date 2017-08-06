@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Events\PackageNotification;
-use App\Events\PackageNotifications;
-use App\Notifications\packageRequestNotifications;
 use App\Package;
 use App\PackageFiles;
 use App\Status;
 use App\User;
+use App\Warehouse;
 use Faker\Provider\File;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
@@ -28,9 +27,18 @@ class PackageController extends Controller
             'changeStatus', 'unread');
     }
 
-    public function create($id = 0)
+    public function index()
     {
-        return view('package.form')->with('id', $id);
+        $packages = Package::all();
+        $packages->load('status');
+        return view('package.index', compact('packages'));
+    }
+
+    public function create()
+    {
+        $warehouses = Warehouse::all();
+        $status = Status::all();
+        return view('package.create', compact('warehouses', 'status'));
     }
 
     public function store(Request $request)
@@ -128,9 +136,8 @@ class PackageController extends Controller
         $package->load('warehouse');
         $package->load('status');
         $package->load('user');
-        return response()->json([
-           'package' => $package
-        ]);
+        dd($package);
+        return view('package.show', compact('package'));
     }
 
     public function update(Request $request, $id)

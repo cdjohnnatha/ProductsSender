@@ -2,7 +2,7 @@
 @section('content')
     <header class="panel-heading">Subscriptions</header>
     @if(Request::is('*/edit'))
-        <?php $action = 'admin.subscriptions.update' ?>
+        <?php $action = 'admin.packages.update' ?>
         <form action="{{route($action, $subscription->id)}}" role="form" method="POST" >
         <input name="_method" type="hidden" value="PUT">
     @else
@@ -11,7 +11,7 @@
     @endif
         <section class="panel-body">
             {{ csrf_field() }}
-            @include('subscription._form')
+            @include('package._form')
         </section>
 
         @include('layouts.formButtons._form_save_edit', array())

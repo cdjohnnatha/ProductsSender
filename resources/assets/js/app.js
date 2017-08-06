@@ -24,6 +24,9 @@ window.Vue.use(VueTouch, { name: 'v-touch' });
  */
 
 Vue.component('nested-messages', require('./components/Subscriptions/NestedBenefitsMessage.vue'));
+Vue.component('warehouses-select', require('./components/Warehouse/WarehouseSelect.vue'));
+Vue.component('status-select', require('./components/Utils/Status.vue'));
+// Vue.component('package-pictures', require('./components/Packages/Pictures.vue'));
 
 
 import { store } from './store'
