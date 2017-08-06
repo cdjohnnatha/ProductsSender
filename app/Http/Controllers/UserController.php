@@ -14,7 +14,12 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with('subscription')->get();
-        return view('index', compact('users'));
+        return view('user.index', compact('users'));
+    }
+
+    public function create()
+    {
+        return view('auth.register');
     }
 
     public function show($id)

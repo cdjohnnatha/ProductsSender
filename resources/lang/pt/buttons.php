@@ -11,6 +11,7 @@ return [
         'create'   => 'Criar',
         'delete'   => 'Deletar',
         'remove'   => 'Remover',
+        'update'   => 'Atualizar',
     ],
 
 

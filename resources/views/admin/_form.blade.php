@@ -63,33 +63,33 @@
     </div>
   </section>
   @if(Request::is('*/edit') == false)
-  <section class="form-group col-sm-12">
+    <section class="form-group col-sm-12">
 
-    <div class="col-sm-6" {{ $errors->has('email') ? ' has-error' : '' }}>
-      <label for="password" class="control-label">Password</label>
-      <input id="password" type="password" class="form-control" name="password" value="{{ old('password') }}">
+      <div class="col-sm-6" {{ $errors->has('email') ? ' has-error' : '' }}>
+        <label for="password" class="control-label">Password</label>
+        <input id="password" type="password" class="form-control" name="password" value="{{ old('password') }}">
 
-      @if ($errors->has('password'))
-        <span class="help-block">
-          <strong class="text-danger" class="alert-danger">
-            {{ $errors->first('password') }}
-          </strong>
-        </span>
-      @endif
-    </div>
-    <div class="col-sm-6" {{ $errors->has('password_confirmation') ? ' has-error' : '' }}>
-      <label for="password-confirm" class="control-label">Confirm Password</label>
-      <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-             value="{{ old('password_confirmation') }}">
+        @if ($errors->has('password'))
+          <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('password') }}
+            </strong>
+          </span>
+        @endif
+      </div>
+      <div class="col-sm-6" {{ $errors->has('password_confirmation') ? ' has-error' : '' }}>
+        <label for="password-confirm" class="control-label">Confirm Password</label>
+        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
+               value="{{ old('password_confirmation') }}">
 
-      @if ($errors->has('password_confirmation'))
-        <span class="help-block">
-          <strong class="text-danger" class="alert-danger">
-            {{ $errors->first('password_confirmation') }}
-          </strong>
-        </span>
-      @endif
-    </div>
-  </section>
+        @if ($errors->has('password_confirmation'))
+          <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('password_confirmation') }}
+            </strong>
+          </span>
+        @endif
+      </div>
+    </section>
   @endif
 </article>

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class AdminLoginController extends Controller
 {
 
+
     public function index()
     {
         return view('auth.admin-login');
@@ -18,7 +19,6 @@ class AdminLoginController extends Controller
 
     public function login(Request $request)
     {
-
         $this->validate($request, [
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6',
@@ -28,9 +28,8 @@ class AdminLoginController extends Controller
             'email' => $request->input('email'),
             'password' => $request->input('password')
         ])){
-            return response('/admin/', 202);
+            return redirect(route('admin.index'));
         }
 
-        return response('something wrong!', 401);
     }
 }

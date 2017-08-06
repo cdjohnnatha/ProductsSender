@@ -9,14 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 class WarehouseController extends Controller
 {
-    public function __construct()
+
+
+    public function index()
     {
-        $this->middleware('auth:admin')->except('listAll');
+        $warehouses = Warehouse::with('address')->get();
+        return view('warehouse.index', compact('warehouses'));
     }
 
     public function create()
     {
-        return view('warehouse.form');
+        return view('warehouse.create');
     }
 
     public function register(Request $request)
@@ -51,18 +54,6 @@ class WarehouseController extends Controller
         return response('', 401);
     }
 
-    public function showList()
-    {
-        return view('warehouse.list');
-    }
-
-    public function listAll()
-    {
-        return response()->json([
-            'warehouses' => Warehouse::with('address')->get(),
-        ])->setStatusCode(200);
-    }
-
     public function show($id)
     {
         $warehouse = Warehouse::findOrFail($id);
@@ -72,15 +63,18 @@ class WarehouseController extends Controller
         ]);
     }
 
-    public function edit()
+    public function edit($id)
     {
-        return view('warehouse.form');
+        $warehouse = Warehouse::findOrFail($id);
+        $warehouse->load('address');
+        return view('warehouse.create', compact('warehouse'));
     }
 
     public function update(Request $request, $id)
     {
+
         $warehouse = Warehouse::findOrFail($id);
-        $warehouse->address;
+        $warehouse->load('address');
         $warehouse->name = $request->input('name');
         $warehouse->storage_time = $request->input('storage_time');
         $warehouse->box_price = $request->input('box_price');
@@ -88,35 +82,34 @@ class WarehouseController extends Controller
         $warehouse->created_by = Auth::user()->id;
 
 
-        $warehouse->address->label = $request->input('address.label');
-        $warehouse->address->owner_name = $request->input('address.owner_name');
-        $warehouse->address->owner_surname = $request->input('address.owner_surname');
-        $warehouse->address->company_name = $request->input('address.company');
+        $warehouse->address->label = $request->input('label');
+        $warehouse->address->owner_name = $request->input('owner_name');
+        $warehouse->address->owner_surname = $request->input('owner_surname');
+        $warehouse->address->company_name = $request->input('company');
 
         if(is_null($warehouse->address->company_name))
             $warehouse->address->company_name = '';
-        $warehouse->address->country = $request->input('address.country');
-        $warehouse->address->address = $request->input('address.address');
-        $warehouse->address->city = $request->input('address.city');
-        $warehouse->address->state = $request->input('address.state');
-        $warehouse->address->postal_code = $request->input('address.postal_code');
-        $warehouse->address->phone = ''.$request->input('address.phone');
-        $warehouse->address->default_address = true;
+        $warehouse->address->country = $request->input('country');
+        $warehouse->address->address = $request->input('address');
+        $warehouse->address->city = $request->input('city');
+        $warehouse->address->state = $request->input('state');
+        $warehouse->address->postal_code = $request->input('postal_code');
+        $warehouse->address->phone = ''.$request->input('phone');
 
         if($warehouse->save()){
             if( $warehouse->address->save() ){
-                return response('/admin/warehouses/show-list', 201);
+                return redirect(route('admin.warehouses.index'));
             }
         }
-
-        return response()->setStatusCode(406);
     }
 
     public function destroy($id)
     {
-        $user = Warehouse::findOrFail($id);
-        $user->delete();
-        return response('admin/warehouses/show-list', 201);
+        $warehouse = Warehouse::findOrFail($id);
+        $warehouse->delete();
+        if($warehouse->trashed()){
+            return redirect(route('admin.warehouses.index'));
+        }
 
     }
 }

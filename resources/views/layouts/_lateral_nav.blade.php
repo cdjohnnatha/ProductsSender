@@ -23,7 +23,27 @@
                 </li>
             </ul>
         </li>
-        <li><a href="{{route('admin.users.index')}}">Users</a></li>
+
+        <li>
+            <a href="#" id="btn-users" data-toggle="collapse" data-target="#users-menu"
+               aria-expanded="false">
+                <label>Users</label>
+            </a>
+            <ul class="nav collapse col-sm-offset-1" id="users-menu" role="menu" aria-labelledby="btn-1">
+                <li>
+                    <a href="{{route('admin.users.create')}}">
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                        New
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('admin.users.index')}}">
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                        List
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li>
             <a href="#" id="btn-2" data-toggle="collapse" data-target="#warehouse-menu"
                aria-expanded="false">
@@ -31,13 +51,13 @@
             </a>
             <ul class="nav collapse col-sm-offset-1" id="warehouse-menu" role="menu" aria-labelledby="btn-1">
                 <li>
-                    <a href="/admin/warehouses/create">
+                    <a href="{{route('admin.warehouses.create')}}">
                         <span class="glyphicon glyphicon-menu-right"></span>
                         New
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/warehouses/show-list">
+                    <a href="{{route('admin.warehouses.index')}}">
                         <span class="glyphicon glyphicon-menu-right"></span>
                         List
                     </a>

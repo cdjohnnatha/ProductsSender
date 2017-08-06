@@ -73,7 +73,7 @@ class AdminController extends Controller
         $admin->country = $request->input('country');
 
         if($admin->save()){
-            return redirect(route('admin.index'))->setStatusCode(201);
+            return redirect(route('admin.index'))->setStatusCode(200);
         }
 
     }

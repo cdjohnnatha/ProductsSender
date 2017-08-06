@@ -16,16 +16,6 @@ class HomeController extends Controller
     }
 
 
-    public function showall()
-    {
-        return view('user.all')->with('users', User::paginate(15) );
-    }
-
-    public function edit($id)
-    {
-        return view('user.edit')->with('user', User::find($id));
-    }
-
     public function notifications()
     {
         return response()->json([

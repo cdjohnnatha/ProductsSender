@@ -1,21 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-<header class="panel-heading">Admin</header>
+<header class="panel-heading">Warehouse</header>
 @if(Request::is('*/edit'))
-    <?php $action = 'admin.update' ?>
+    <?php $action = 'admin.warehouses.update' ?>
 @else
-    <?php $action = 'admin.store' ?>
+    <?php $action = 'admin.warehouses.store' ?>
 @endif
-    <form action="{{route($action, Auth::user()->id)}}" role="form" method="POST">
+    <form action="{{route($action, $warehouse->id)}}" role="form" method="POST">
     <section class="panel-body">
         @if(Request::is('*/edit'))
             <input name="_method" type="hidden" value="PUT">
         @endif
         {{ csrf_field() }}
-        @include('admin._form')
-        <input type="hidden" name="country" value="BR">
-        <input type="hidden" name="default_warehouse_id" id="default_warehouse_id" value="2">
+        @include('warehouse._form')
+        @include('address._form', array('address'=> $warehouse->address))
     </section>
     <footer class="panel-footer">
         <button type="submit" class="btn btn-success pull-right">
