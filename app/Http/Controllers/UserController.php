@@ -11,25 +11,20 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
 
-    public function viewUsers()
-    {
-        return view('user.all');
-    }
-
-    public function users()
+    public function index()
     {
         $users = User::with('subscription')->get();
+        return view('user.index', compact('users'));
+    }
 
-        return response()->json([
-            'users' => $users
-        ]);
+    public function create()
+    {
+        return view('auth.register');
     }
 
     public function show($id)
     {
-        return response()->json([
-            'user' => User::findOrFail($id)
-        ]);
+        return response()->json(['user' => User::findOrFail($id)]);
     }
 
     public function edit($id)

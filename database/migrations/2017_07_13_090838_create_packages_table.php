@@ -21,7 +21,7 @@ class CreatePackagesTable extends Migration
             $table->decimal('weight', 10, 2);
             $table->string('unit_measure', 5);
             $table->string('weight_measure', 5);
-            $table->string('note');
+            $table->string('note')->nullable();;
             $table->tinyInteger('status_id');
             $table->integer('object_owner');
             $table->integer('warehouse_id');

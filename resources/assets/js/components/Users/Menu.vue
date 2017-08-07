@@ -53,13 +53,13 @@
                         </a>
                     </li>
                     <li id="list-subscriptions">
-                        <a v-bind:href="prefixUrl">
+                        <a v-bind:href="prefixUrl + 'address/create'">
                             <span class="glyphicon glyphicon-menu-right"></span>
                             Addresses
                         </a>
                     </li>
                     <li>
-                        <a v-bind:href="prefixUrl">
+                        <a v-bind:href="prefixUrl + 'additional-names'">
                             <span class="glyphicon glyphicon-menu-right"></span>
                             Additional Names
                         </a>

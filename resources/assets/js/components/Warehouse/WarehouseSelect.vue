@@ -1,28 +1,19 @@
 <template>
-    <select class="form-control" @change="selectingWarehouse" v-bind:value="setWarehouse" name="warehouse-select">
-        <option v-for="warehouse in warehouses"  v-bind:value="warehouse.id">{{warehouse.name}}</option>
+    <select class="form-control" v-bind:value="setwarehouse" name="warehouse_id">
+        <option v-for="warehouse in warehouses"  v-bind:value="warehouse.id">
+            {{warehouse.name}}
+        </option>
     </select>
 </template>
 
 <script>
     export default {
-        props: ['setWarehouse'],
+        props: {
+            warehouses: Array,
+            setwarehouse: ''
+        },
         data() {
             return {
-                warehouses: []
-            }
-        },
-
-        created() {
-            axios.get('/admin/warehouses/').then( response => {
-                this.warehouses = response.data.warehouses;
-                this.$emit('selectedWarehouse', this.warehouses[0].id);
-            });
-        },
-
-        methods:{
-            selectingWarehouse: function(event){
-                this.$emit('selectedWarehouse', event.target.value);
             }
         },
     }

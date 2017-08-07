@@ -32,7 +32,7 @@ class RegisterController extends Controller
     protected function redirectTo()
     {
 
-        return '/user/'.Auth::user()->id;
+        return '/user/'.Auth::user()->id.'/dashboard';
     }
     /**
      * Create a new controller instance.

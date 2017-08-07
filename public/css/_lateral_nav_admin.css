@@ -1,0 +1,21 @@
+#aside-menu{
+    width: 15%;
+    z-index: 1;
+    position: fixed;
+    padding-top: 60px;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+}
+
+#aside-menu a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+
+#admin-menu li{
+    font-size: .9em;
+}

@@ -6,14 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Wallet extends Model
+class Wallet extends Entity
 {
-    use SoftDeletes;
-    use LogsActivity;
-    protected $dates = ['deleted_at'];
-
     protected $hidden = [
-        'created_at', 'updated_at', 'deleted_at'
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
 
     protected $attributes = array('balance' => 0);

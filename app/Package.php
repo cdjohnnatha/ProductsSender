@@ -6,20 +6,38 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Package extends Model
+class Package extends Entity
 {
-    use SoftDeletes;
-    use LogsActivity;
-    protected $dates = ['deleted_at'];
 
-    protected $attributes = ['read' => false];
+    protected $fillable = [
+        'width',
+        'height',
+        'depth',
+        'weight',
+        'unit_measure',
+        'weight_measure',
+        'object_owner',
+        'warehouse_id',
+        'status_id',
+        'note'
+    ];
 
     protected $hidden = [
-        'updated_at', 'deleted_at', 'status_id'
+        'updated_at',
+        'deleted_at',
+        'status_id'
     ];
     protected static $logAttributes = [
-        'width', 'height', 'depth','weight','unit_measure', 'weight_measure',
-        'object_owner','warehouse_id', 'default_warehouse_id', 'status_id'
+        'width',
+        'height',
+        'depth',
+        'weight',
+        'unit_measure',
+        'weight_measure',
+        'object_owner',
+        'warehouse_id',
+        'default_warehouse_id',
+        'status_id'
     ];
 
     public function user()
@@ -50,22 +68,6 @@ class Package extends Model
         });
     }
 
-    /**
-     * Log configure
-     */
 
-    /**
-     * @param string $eventName before write at log
-     * @return string the name of event
-     */
-    public function getLogNameToUse(string $eventName = ''): string
-    {
-        return 'Package';
-    }
-
-    public function getDescriptionForEvent(string $eventName): string
-    {
-        return "Package has been {$eventName}";
-    }
 
 }

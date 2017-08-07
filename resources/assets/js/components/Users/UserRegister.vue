@@ -112,7 +112,7 @@
 </template>
 
 <script>
-    import User from '../Utils/ObjectJson/User'
+    import User from '../Utils/Objects/User'
     export default {
         data() {
             return {

@@ -10,33 +10,46 @@ use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
 
-    public function __construct()
+    public function rules()
     {
-        $this->middleware('auth:admin');
+        return [
+            'name' => 'bail|required|min:3',
+            'surname' => 'required',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|numeric',
+            'country' => 'required',
+            'default_warehouse_id' => 'required',
+            'password' => 'required|string|min:6|confirmed'
+
+        ];
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return view('admin');
+        $admins = Admin::all();
+        return view('admin.index', compact('admins'));
     }
 
-    public function showAll()
+    public function create()
     {
-        return view('admin.showAll');
+        return view('admin.create');
     }
 
-    public function getAll()
+    public function store(Request $request)
     {
-        $admins = Admin::where('id', '!=', Auth::user()->id);
+        $this->validate($request, $this->rules());
+        $admin = new Admin();
+        $admin->name = $request->input('name');
+        $admin->surname = $request->input('surname');
+        $admin->email = $request->input('email');
+        $admin->phone = $request->input('phone');
+        $admin->country = $request->input('country');
+        $admin->default_warehouse_id = $request->input('default_warehouse_id');
+        $admin->password = bcrypt($request->input('password'));
 
-        return response()->json([
-            'admins' => $admins
-        ]);
+        if( $admin->save() ){
+            return redirect(route('admin.index'))->setStatusCode(200);
+        }
     }
 
     public function show($id)
@@ -46,29 +59,9 @@ class AdminController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        return view('admin.FormAdmin');
-    }
-
-    public function register(Request $request)
-    {
-        $admin = new Admin();
-        $admin->name = $request->input('name');
-        $admin->surname = $request->input('surname');
-        $admin->email = $request->input('email');
-        $admin->phone = $request->input('phone');
-        $admin->country = $request->input('country');
-        $admin->password = bcrypt($request->input('password'));
-
-        if( $admin->save() ){
-            return response('created', 201);
-        }
-        return response('bad request',400);
-    }
-
-    public function edit(){
-        return view('admin.FormAdmin');
+    public function edit($id){
+        $admin = Admin::find($id);
+        return view('admin.create', compact('admin'));
     }
 
     public function update(Request $request, $id)
@@ -80,11 +73,8 @@ class AdminController extends Controller
         $admin->country = $request->input('country');
 
         if($admin->save()){
-            return response()->json([
-                'admin' => $admin
-            ])->setStatusCode(201);
+            return redirect(route('admin.index'))->setStatusCode(200);
         }
-        return response()->setStatusCode(406);
 
     }
 
@@ -93,9 +83,7 @@ class AdminController extends Controller
         $admin = Admin::findOrFail($id);
         $admin->delete();
         if ($admin->trashed()) {
-            return response()->setStatusCode(200);
+            return redirect(route('admin.index'))->setStatusCode(200);
         }
-
-        return response()->setStatusCode(406);
     }
 }

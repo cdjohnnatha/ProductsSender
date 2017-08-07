@@ -9,88 +9,82 @@ use Illuminate\Support\Facades\Auth;
 
 class SubscriptionController extends Controller
 {
-    public function __construct()
+
+    public function rules()
     {
-        $this->middleware('auth:admin')->except('subscriptions');
+        return [
+            'subscription' => [
+                'title' => 'required',
+                'amount' => 'required'
+            ]
+        ];
+    }
+
+    public function index()
+    {
+        $subscriptions = Subscription::with('benefits')->get();
+        return view('subscription.index', compact('subscriptions'));
+    }
+
+    public function create()
+    {
+        return view('subscription.create');
+    }
+
+    public function store(Request $request)
+    {
+        $subscription = new Subscription($request->input('subscription'));
+
+        if ($subscription->save()) {
+            $subscription->benefits()->createMany(
+                $request->input('benefits')
+            );
+
+            return redirect(route('admin.subscriptions.index'));
+        }
     }
 
     public function show($id)
     {
-        $subscription = Subscription::find($id);
-        $subscription->load('benefits');
-        return response()->json([
-            'subscription' => $subscription,
-        ])->setStatusCode(200);
+        $subscription = Subscription::with('benefits')->find($id);
+        return view('subscription.show', compact('subscription'));
     }
 
-    public function showList()
+    public function edit($id)
     {
-        return view('subscription.list');
-    }
-
-    public function subscriptions()
-    {
-        $subscriptions = Subscription::with('benefits')->get();
-        return response()->json([
-            'subscriptions' => $subscriptions,
-        ])->setStatusCode(200);
-    }
-
-    public function subscriptionForm($id = 0)
-    {
-
-        return view('subscription.form')->with('id', $id);
-    }
-
-    public function register(Request $request)
-    {
-        $subscription = new Subscription();
-        $subscription->title = $request->input('title');
-        $subscription->amount = $request->input('amount');
-        $subscription->created_by = Auth::id();
-        $subscription->updated_by = Auth::id();
-        $listBenefits = $request->input('benefits');
-        if ($subscription->save()) {
-            foreach ($listBenefits as $benefit) {
-                $benefits = new Benefit();
-                $benefits->message = $benefit['message'];
-                $benefits->subscription_id = $subscription->id;
-                $subscription->benefits()->save($benefits);
-            }
-            return response('/admin/subscriptions/show-list', 201);
-        }
-        return response('', 406);
+        $subscription = Subscription::with('benefits')->findOrFail($id);
+        return view('subscription.create', compact('subscription'));
     }
 
     public function update(Request $request, $id)
     {
+        $this->validate($request, $this->rules());
         $subscription = Subscription::findOrFail($id);
-        $subscription->title = $request->input('title');
-        $subscription->amount = $request->input('amount');
-        $subscription->created_by = Auth::id();
-        $subscription->updated_by = Auth::id();
-        $listBenefits = $request->input('benefits');
+        $subscription->title = $request->input('subscription.title');
+        $subscription->amount = $request->input('subscription.amount');
+        $subscription->load('benefits');
         if ($subscription->save()) {
-            $benefits = $subscription->benefits;
-            foreach ($listBenefits as $key => $value) {
-                $benefits[$key]->message = $value['message'];
-                $benefits[$key]->save();
+            $benefits = $subscription->benefits()->get()->toArray();
+            if(count($request->input('benefits')) < count($benefits)){
+                dd(array_diff($request->input('benefits'), $benefits));
             }
-            return response('/admin/subscriptions/show-list', 201);
+            foreach ($request->input('benefits') as $message){
+                $subscription->benefits()->updateOrCreate(
+                ['id' => $message['id']],
+                ['message' => $message['message']]);
+            }
+            return redirect(route('admin.subscriptions.index'));
         }
-        return response('', 406);
     }
 
     public function destroy($id)
     {
         $subscription = Subscription::findOrFail($id);
         $subscription->delete();
-        if( $subscription->trashed())
-        {
-            return response('/admin/subscriptions/show-list', 200);
+        if( $subscription->trashed()) {
+            return redirect(route('admin.subscriptions.index'));
         }
 
-        return response('', 406);
 
     }
 }

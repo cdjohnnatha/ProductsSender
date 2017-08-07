@@ -14,23 +14,27 @@ class Admin extends Authenticatable
     use LogsActivity;
 
     protected $guard = 'admin';
-    protected $dates = ['deleted_at'];
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'name', 'surname', 'country', 'email', 'phone'
+        'name',
+        'surname',
+        'email',
+        'password',
+        'country',
+        'email',
+        'phone',
+        'default_warehouse_id'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+
     protected $hidden = [
-        'password', 'remember_token','created_at', 'updated_at', 'deleted_at'
+        'password',
+        'remember_token',
+        'deleted_at'
     ];
 
 }
