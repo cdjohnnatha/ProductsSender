@@ -9,8 +9,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Package extends Entity
 {
 
-    protected $attributes = ['read' => false];
-
     protected $fillable = [
         'width',
         'height',
@@ -20,8 +18,8 @@ class Package extends Entity
         'weight_measure',
         'object_owner',
         'warehouse_id',
-        'default_warehouse_id',
-        'status_id'
+        'status_id',
+        'note'
     ];
 
     protected $hidden = [

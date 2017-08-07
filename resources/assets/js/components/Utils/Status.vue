@@ -1,5 +1,5 @@
 <template>
-    <select class="form-control" name="status" v-bind:value="setStatus">
+    <select class="form-control" name="status_id" v-bind:value="setStatus">
         <option v-for="item in status" v-bind:value="item.id">{{item.status}}</option>
     </select>
 </template>
