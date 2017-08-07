@@ -31,7 +31,7 @@
       <div class="form-group col-sm-12">
         <div class="col-sm-6">
           <label>Status</label>
-          <status-select :status="{{$status}}"></status-select>
+          <status-select :status="{{$status}}" :set_status="{{json_encode( old('status_id'))}}"></status-select>
         </div>
 
         <div class="form-group col-sm-3" {{ $errors->has('weight') ? ' has-error' : '' }}>

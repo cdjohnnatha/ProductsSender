@@ -27,6 +27,7 @@ Vue.component('nested-messages', require('./components/Subscriptions/NestedBenef
 Vue.component('warehouses-select', require('./components/Warehouse/WarehouseSelect.vue'));
 Vue.component('status-select', require('./components/Utils/Status.vue'));
 Vue.component('package-upload-files', require('./components/Packages/UploadFiles.vue'));
+Vue.component('package-pictures', require('./components/Packages/PackagePictures.vue'));
 
 
 import { store } from './store'

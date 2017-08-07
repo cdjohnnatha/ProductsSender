@@ -1,6 +1,6 @@
 <template>
-    <section class="col-sm-4" id="picture-wall">
-        <label v-show="this.objectPackage.pictures.length <= 0 ? true : false">Pictures not found!</label>
+    <section class="col-sm-12" id="picture-wall">
+        <label v-show="this.pictures.length <= 0 ? true : false">Pictures not found!</label>
         <ul>
             <li v-for="(image, index) in images" v-bind:class="index == 0 ? 'mainPicture thumbnail' : 'smallPictures col-sm-1'"  >
                     <img v-if="index == 0" v-lazy="image.src" @click="openGallery(index)">
@@ -22,39 +22,32 @@
     require('vue-image-lightbox/dist/vue-image-lightbox.min.css');
     export default {
         props: {
-            pictures: [],
+            pictures: Array,
         },
 
         data(){
             return {
-                pictures: [{
-                        id:'',
-                        name:'',
-                        path:'',
-                        type:'',
-                }],
                 images:[]
             }
         },
-
         components: {
             Lightbox,
         },
 
 
         created() {
-//            if(this.objectPackage.pictures.length >= 0) {
-//                for (var picture in this.objectPackage.pictures) {
-//                    console.log("sss" + picture);
-//                    var src = '/' + this.objectPackage.pictures[picture].path + this.objectPackage.pictures[picture].name;
-//                    var pics = {};
-//                    pics.thumb = src;
-//                    pics.src = src;
-//                    pics.caption = this.objectPackage.pictures[picture].id;
-//                    this.images.push(pics);
-//                }
-//            }
+            console.log('created');
+            console.log(this.pictures);
+            if(this.pictures.length > 0){
+                for(var count = 0; count < this.pictures.length; count++){
+                    this.images.push({
+                        'src': '/'+this.pictures[count].path,
+                        'thumb': '/'+this.pictures[count].path,
+                        'caption': '/'+this.pictures[count].id,
+                    });
 
+                }
+            }
         },
         methods: {
             openGallery(index) {

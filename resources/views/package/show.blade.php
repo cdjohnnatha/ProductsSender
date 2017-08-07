@@ -9,7 +9,7 @@
         <section class="col-sm-12">
             <section class="col-sm-4" id="picture-wall">
                 <label>Pictures of Package</label>
-                <package-pictures></package-pictures>
+                <package-pictures :pictures="{{$package->pictures}}"></package-pictures>
             </section>
             <section class="col-sm-4">
                 <div class="panel panel-default">
