@@ -22,6 +22,6 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('holyship123'),
             'subscription_id' => 1
         ]);
-        factory(App\User::class, 10)->create();
+//        factory(App\User::class, 10)->create();
     }
 }
