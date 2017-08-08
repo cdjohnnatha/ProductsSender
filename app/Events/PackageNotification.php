@@ -18,15 +18,17 @@ class PackageNotification implements ShouldBroadcast, ShouldQueue
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     protected $package;
+    protected $message;
 
     /**
      * Create a new event instance.
      *
      * @param $package
      */
-    public function __construct($package)
+    public function __construct($package, $message)
     {
         $this->package = $package;
+        $this->message = $message;
     }
 
     /**

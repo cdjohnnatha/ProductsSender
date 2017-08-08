@@ -176,8 +176,11 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ObserverServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
+
+
 
     ],
 

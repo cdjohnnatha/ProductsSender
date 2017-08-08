@@ -45,23 +45,27 @@ class RegisterController extends Controller
 
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function rules()
     {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
+        return [
+            'user.name' => 'required|string|max:255',
+            'user.surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'country' => 'required|string',
+            'user.country' => 'required|string',
             'subscription_id' => 'required',
+            'user.phone' => 'required|string',
+            'user.password' => 'required|string|min:6|confirmed',
+            'label' => 'required',
+            'owner_name' => 'required',
+            'owner_surname' => 'required',
+            'company' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'postal_code' => 'required',
             'phone' => 'required|string',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+            'country' => 'required|string',
+        ];
     }
 
 
@@ -73,38 +77,38 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
+//        dd($request->input());
+        dd($this->validate($request, $this->rules()));
         $user = new User();
         $address = new Address;
         $user->name = $request->input('user.name');
         $user->surname = $request->input('user.surname');
         $user->country = $request->input('user.country');
-        $user->email = $request->input('user.email');
-        $user->subscription_id = (int) $request->input('user.subscription_id');
+        $user->email = $request->input('email');
+        $user->subscription_id = (int) $request->input('subscription_id');
         $user->phone = ''.$request->input('user.phone');
         $user->password = bcrypt($request->input('user.password'));
 
-        $address->label = $request->input('user.address.label');
-        $address->owner_name = $request->input('user.address.owner_name');
-        $address->owner_surname = $request->input('user.address.owner_surname');
-        $address->company_name = $request->input('user.address.company');
+        $address->label = $request->input('label');
+        $address->owner_name = $request->input('owner_name');
+        $address->owner_surname = $request->input('owner_surname');
+        $address->company_name = $request->input('company');
         if(is_null($address->company_name))
             $address->company_name = '';
-        $address->country = $request->input('user.address.country');
-        $address->address = $request->input('user.address.address');
-        $address->city = $request->input('user.address.city');
-        $address->state = $request->input('user.address.state');
-        $address->postal_code = $request->input('user.address.postal_code');
-        $address->phone = ''.$request->input('user.address.phone');
+        $address->country = $request->input('country');
+        $address->address = $request->input('address');
+        $address->city = $request->input('city');
+        $address->state = $request->input('state');
+        $address->postal_code = $request->input('postal_code');
+        $address->phone = ''.$request->input('phone');
         $address->default_address = true;
 
         if($user->save()){
             if( $user->address()->save($address) && $user->wallet()->save(new Wallet())){
-                return response('created', 201);
+                return redirect(route('users.index'));
             }
 
         }
-
-        return response('bad request',400);
 
     }
 }

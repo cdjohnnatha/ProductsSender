@@ -29,6 +29,9 @@ Vue.component('status-select', require('./components/Utils/Status.vue'));
 Vue.component('package-upload-files', require('./components/Packages/UploadFiles.vue'));
 Vue.component('package-pictures', require('./components/Packages/PackagePictures.vue'));
 
+Vue.component('small-pictures-preview', require('./components/Packages/PackageSmallPreview.vue'));
+Vue.component('register-form-button', require('./components/Users/UserFormButton.vue'));
+
 
 import { store } from './store'
 

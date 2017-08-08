@@ -60,9 +60,11 @@
                     </div>
                 </div>
             </aside>
-            <footer class="pull-right col-sm-4">
-                @include('layouts.formButtons._form_edit_delete', array('prefix_name' => 'admin.packages', 'id' => $package->id))
-            </footer>
+            @if(auth()->guard('admin')->user())
+                <footer class="pull-right col-sm-4">
+                    @include('layouts.formButtons._form_edit_delete', array('prefix_name' => 'admin.packages', 'id' => $package->id))
+                </footer>
+            @endif
         </section>
     </div>
 @endsection

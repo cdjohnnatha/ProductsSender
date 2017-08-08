@@ -63,12 +63,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(AdditionalNames::class);
     }
-
-    protected static function boot() {
-        parent::boot();
-
-        static::deleting(function ($user) {
-            $user->wallet()->delete();
-        });
-    }
 }
