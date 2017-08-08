@@ -36,7 +36,18 @@ class PackageController extends Controller
 
     public function index()
     {
-        $packages = Package::all();
+        $packages = Package::with(
+            ['status' =>
+                function($query){
+                    $query->where([
+                        ['status', 'like', 'WAREHOUSE%'],
+                        ['status', '!=', 'WAREHOUSE_SENT'],
+                    ]);
+                }])->where(
+            'warehouse_id',
+            '=',
+            Auth::user()->default_warehouse_id
+        )->get();
         $packages->load('status');
         return view('package.index', compact('packages'));
     }
@@ -104,10 +115,6 @@ class PackageController extends Controller
 
     }
 
-    public function showView($id, $packageId)
-    {
-        return view('package.show')->with('id', $packageId);
-    }
 
     public function show($id)
     {
@@ -117,6 +124,15 @@ class PackageController extends Controller
         $package->load('status');
         $package->load('user');
         return view('package.show', compact('package'));
+    }
+
+    public function edit($id)
+    {
+        $package = Package::find($id);
+        $package->load('pictures');
+        $status = Status::all();
+        $warehouses = Warehouse::all();
+        return view('package.create', compact('package', 'status', 'warehouses'));
     }
 
     public function update(Request $request, $id)
@@ -129,58 +145,37 @@ class PackageController extends Controller
         $package->unit_measure = $request->input('unit_measure');
         $package->weight_measure = $request->input('weight_measure');
         $package->note = $request->input('note');
-        if(is_null($package->note))
-            $package->note = '';
-        $package->status_id = $request->input('status.id');
+        $package->status_id = $request->input('status_id');
         $package->object_owner = $request->input('object_owner');
-        $package->warehouse_id = $request->input('warehouse.id');
+        $package->warehouse_id = $request->input('warehouse_id');
         if($package->save()){
-            $files = $request->input('pictures');
-            if(!is_null($files)) {
-                foreach ($files as $file) {
-                    $fileName =  $package->id . date("dmYhms");
-                    $fileName = md5($fileName);
-                    $exploded = explode(',', $file);
-                    $decoded = base64_decode($exploded[1]);
-                    $extension = '';
-                    if (str_contains($exploded[0], 'jpg')) {
-                        $extension = 'jpg';
-                    }
-                    else if (str_contains($exploded[0], 'jpeg')) {
-                        $extension = 'jpeg';
-                    }
-                    else if (str_contains($exploded[0], 'png')) {
-                        $extension = 'png';
-                    }
-                    else {
-                        return response('Format not accepted', 405);
-                    }
-                    $name = $fileName.'.'.$extension;
-                    Storage::put(
-                        config('constants.files.full_public_path').$name,
-                        $decoded
+            if($request->hasFile('package_files')) {
+                foreach ($request->file('package_files') as $file) {
+                    $fileName = $package->id . date("dmYhms");
+                    $extension = explode('.', $file->getClientOriginalName())[1];
+                    $fileName = md5($fileName) . '.' . $extension;
+                    $path = $file->storeAs(
+                        'public/PackagePictures', $fileName
                     );
+                    $path = str_replace('public', 'storage', $path);
                     $picture = new PackageFiles();
-                    $picture->name = $name;
-                    $picture->type = $extension;
-                    $picture->path = config('constants.files.full_default_folder');
-                    if($package->pictures()->save($picture)){
+                    $picture->name = $fileName;
+                    $picture->path = $path;
+                    if ($package->pictures()->save($picture)) {
                         activity()
                             ->performedOn($package)
                             ->causedBy(Auth::user())
                             ->withProperty('package_id', $package->id)
-                            ->withProperty('file_name', $name)
-                            ->log('The package id is :properties.package_id, 
-                            the causer name is :causer.name and it was uploaded a file which is :properties.file_name 
+                            ->withProperty('file_name', $fileName)
+                            ->log('The package id is :properties.package_id,
+                            the causer name is :causer.name and it was uploaded a file which is :properties.file_name
                             with id:');
                     }
                 }
-
             }
             event(new PackageNotification($package));
-            return response('created',201);
+            return redirect(route('admin.packages.index'));
         }
-        return response()->setStatusCode(406);
     }
 
     public function changeStatus(Request $request)

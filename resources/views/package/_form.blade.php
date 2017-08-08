@@ -5,10 +5,15 @@
       <div class="form-group col-sm-12" >
         <div class="form-group col-sm-6" :class="{'has-error': errors.has('warehouse_id') }">
           <label>Warehouse</label>
-          <warehouses-select :warehouses="{{$warehouses}}"
-                             :setwarehouse="{{$package->warehouse_id or old('warehouse_id') or '1'}}">
-
-          </warehouses-select>
+          @if(Request::is('*/edit'))
+            <warehouses-select :warehouses="{{$warehouses}}"
+                               :setwarehouse="{{$package->warehouse_id or old('warehouse_id')}}">
+            </warehouses-select>
+          @else
+            <warehouses-select :warehouses="{{$warehouses}}"
+                               :setwarehouse="{{old('warehouse_id') or 1}}">
+            </warehouses-select>
+          @endif
 
           @if ($errors->has('warehouse_id'))
             <span class="help-block">
@@ -31,7 +36,12 @@
       <div class="form-group col-sm-12">
         <div class="col-sm-6">
           <label>Status</label>
-          <status-select :status="{{$status}}" :set_status="{{json_encode( old('status_id'))}}"></status-select>
+          @if(Request::is('*/edit'))
+            <status-select :status="{{$status}}" :set_status="{{$package->status_id or old('status_id')}}"></status-select>
+          @else
+            <status-select :status="{{$status}}" :set_status="{{old('status_id') or 1}}"></status-select>
+          @endif
+
         </div>
 
         <div class="form-group col-sm-3" {{ $errors->has('weight') ? ' has-error' : '' }}>
@@ -103,8 +113,7 @@
       <section class="col-sm-12">
         <div class="col-sm-12" {{ $errors->has('note') ? ' has-error' : '' }}>
           <label>Note</label>
-          <textarea class="form-control" name="note"
-                    value="{{$package->note or old('note')}}"></textarea>
+          <textarea class="form-control" name="note">{{$package->note or old('note')}}</textarea>
 
           @if ($errors->has('note'))
             <span class="help-block">
@@ -113,6 +122,7 @@
           @endif
         </div>
       </section>
+
       <section class="col-sm-12">
         <div class="col-sm-12">
           <label>Upload Pictures</label>

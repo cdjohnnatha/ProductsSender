@@ -10,22 +10,15 @@ use Illuminate\Support\Facades\Storage;
 
 class PackageFilesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
 
-    public function delete($idPackage, $fileId)
+    public function destroy($fileId)
     {
         $file = PackageFiles::findOrFail($fileId);
         Storage::delete(config('full_public_path').$file->name);
         $file->delete();
         if($file->trashed()){
-            return response('removed', 200);
-
+            return redirect()->back();
         }
-
-        return response('error while deleting at database', 417);
     }
 
 }
