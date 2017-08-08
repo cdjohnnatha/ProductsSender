@@ -25,14 +25,9 @@
                     <td>{{ $user->subscription }}</td>
                     <td>{{ $user->phone }}</td>
                     <td>
-                        <a class="edit-modal btn btn-warning">
-                            <span class="glyphicon glyphicon-edit"></span>
-                            Edit
-                        </a>
-                        <button class="edit-modal btn btn-error">
-                            <span class="glyphicon glyphicon-trash"></span>
-                            Delete
-                        </button>
+                        @include('layouts.formButtons._form_edit_delete',
+                                array('prefix_name' => 'admin.users',
+                                    'id' => $user->id))
                     </td>
                 </tr>
             @endforeach

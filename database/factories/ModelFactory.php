@@ -94,7 +94,5 @@ $factory->define(App\Subscription::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->company,
         'amount' => $faker->randomFloat($nbMaxDecimals = 2, $min = 1, $max = 6),
-        'created_by' => 1,
-        'updated_by' => 1,
     ];
 });

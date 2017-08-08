@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/common/common.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
@@ -87,7 +88,6 @@
             </div>
         </nav>
         @if(auth()->guard('admin')->user())
-            {{--<vertical-menu></vertical-menu>--}}
             @include('layouts._lateral_nav')
         @elseif(auth()->guard('web')->user())
             <user-menu :data_id="{{Auth::user()->id}}"></user-menu>

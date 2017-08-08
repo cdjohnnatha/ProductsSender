@@ -3,11 +3,11 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class StatusSeeder extends Seeder
+class StatusTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
+     * @group startup
      * @return void
      */
     public function run()

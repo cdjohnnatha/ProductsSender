@@ -12,12 +12,12 @@ class AdminTableSeeder extends Seeder
     public function run()
     {
         DB::table('admins')->insert([
-            'name' => 'Claudio',
-            'surname' => 'Djohnnatha',
-            'email' => 'claudio@admin.com',
+            'name' => 'Holyship',
+            'surname' => 'Team',
+            'email' => 'holyship@admin.com',
             'country' => 'Brasil',
-            'phone' => '8398000802',
-            'password' => Hash::make('123456'),
+            'phone' => '08000800',
+            'password' => Hash::make('holyship123'),
             'default_warehouse_id' => 1
         ]);
     }

@@ -14,12 +14,12 @@ class UsersTableSeeder extends Seeder
     {
 
         DB::table('users')->insert([
-            'name' => 'Claudio',
-            'surname' => 'Djohnnatha',
-            'email' => 'claudio@example.com',
+            'name' => 'Holyship',
+            'surname' => 'User',
+            'email' => 'holyship@user.com',
             'country' => 'Brasil',
-            'phone' => '98000802',
-            'password' => Hash::make('123456'),
+            'phone' => '08000800',
+            'password' => Hash::make('holyship123'),
             'subscription_id' => 1
         ]);
         factory(App\User::class, 10)->create();
