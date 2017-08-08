@@ -173,7 +173,6 @@ class PackageController extends Controller
                     }
                 }
             }
-            event(new PackageNotification($package));
             return redirect(route('admin.packages.index'));
         }
     }
@@ -206,7 +205,7 @@ class PackageController extends Controller
         }
         $package->delete();
         if($package->trashed()){
-            return response('/admin/packages/show-list', 200);
+            return redirect(route('admin.packages.index'));
         }
     }
 

@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
-    <header class="panel-heading">Package</header>
+    <header class="panel-heading">{{__('packages.form.title')}}</header>
     @if(Request::is('*/edit'))
         <section class="container-fluid">
             <div class="col-sm-12">
                 <div class="col-sm-12">
-                    <label>Uploaded Pictures</label>
+                    <label>{{__('packages.form.uploaded_pictures')}}</label>
                     <section>
                         <ul class="col-sm-11 pre-scrollable" style="list-style-type: none; height: 10em;">
                             @foreach($package->pictures as $picture)
