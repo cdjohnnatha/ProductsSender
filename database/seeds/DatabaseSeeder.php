@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('address')->insert([
+        DB::table('addresses')->insert([
             'label' => 'Principal',
             'owner_name' => 'Holyship',
             'owner_surname' => 'Testing',
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        DB::table('address')->insert([
+        DB::table('addresses')->insert([
             'label' => 'Principal',
             'owner_name' => 'Holyship',
             'owner_surname' => 'Testing',
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
             'default_address' => true
         ]);
 
-        DB::table('address')->insert([
+        DB::table('addresses')->insert([
             'label' => 'Principal',
             'owner_name' => 'Holyship',
             'owner_surname' => 'Testing',
