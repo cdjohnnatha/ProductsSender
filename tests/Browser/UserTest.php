@@ -21,39 +21,29 @@ class UserTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $faker = \Faker\Factory::create();
             $country = $faker->countryCode;
+            $password = $faker->password(6, 10);
             $browser->visit('/register')
-                ->pause(1000)
-                ->assertSee('Register User')
-                ->type('name', $faker->firstName)
-                ->type('surname', $faker->lastName)
-                ->type('phone', 83998000802)
-                ->select('#countryUser', $country)
-                ->type('email', $faker->email)
-                ->type('password', '123456')
-                ->type('password_confirmation', $faker->password(6, 10))
-                ->click('#submit-button')
+                ->type('users[name]', $faker->firstName)
+                ->type('users[surname]', $faker->lastName)
+                ->type('users[phone]', 83998000802)
+                ->type('users[email]', $faker->email)
+                ->type('users[country]', $country)
+                ->type('users[password]', $password)
+                ->type('users[password_confirmation]', $password)
+                ->click('#section-button')
                 //Address form
-                ->assertSee('Register Address')
-                ->select('country-address', $country)
-                ->assertSelected('country-address', $country)
-                ->type('#label', 'Default Address')
+                ->assertSee('Address')
+                ->type('#label-name', 'Default Address')
                 ->type('owner_name', $faker->firstName)
                 ->type('owner_surname', $faker->lastName)
-                ->type('phone-address', 83998000802)
-                ->type('company', '')
-                ->type('address', $faker->address)
-                ->type('city', $faker->city)
-                ->type('state', 'Paraiba')
+                ->type('phone', $faker->phoneNumber)
+                ->type('company_name', $faker->company)
+                ->type('address', $faker->streetAddress)
+                ->type('#city', $faker->streetName)
+                ->type('state', $faker->streetSuffix)
                 ->type('postal_code', $faker->postcode)
                 ->click('#submit-button')
-                //Subscription
-                ->assertSee('Select Subscription')
-                ->mouseover('.columns')
-                ->click('.columns')
-                ->click('#submit-button')
-                ->pause(5000)
-                ->waitForLocation('/login');
-
+                ->assertPathIsNot('/register');
         });
     }
 

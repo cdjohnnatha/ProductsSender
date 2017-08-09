@@ -24,7 +24,7 @@
     </section>
     <div class="form-group col-sm-3" {{ $errors->first('box_price') }} >
       <label>Box price</label>
-      <input name="box_price" class="form-control" type="number"
+      <input name="box_price" class="form-control" type="number" min="0.01" step="0.01"
              value="{{$warehouse->box_price or old('box_price') }}">
 
       @if ($errors->has('box_price'))

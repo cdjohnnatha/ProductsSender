@@ -55408,7 +55408,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n#section-header{\n    margin-bottom: 1em;\n}\n", ""]);
 
 // exports
 
@@ -55442,7 +55442,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             subscriptionSection: false,
             backBtn: false,
             typeFormBtn: 'button',
-            formBtnClass: 'btn btn-info'
+            formBtnClass: 'btn btn-info',
+            submitSection: true
         };
     },
     created: function created() {
@@ -55462,6 +55463,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 $('#addressSection').removeClass('hidden');
                 this.buttonName = 'Register';
                 $('#submitSection').removeClass('hidden');
+                this.submitSection = false;
+                $('#section-header').html('Address');
             }
         },
         backSections: function backSections() {
@@ -55483,6 +55486,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('footer', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.submitSection),
+      expression: "submitSection"
+    }],
     staticClass: "panel-footer"
   }, [_c('div', {
     staticClass: "pull-right"
@@ -55503,7 +55512,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Back")]), _vm._v(" "), _c('button', {
     class: _vm.formBtnClass,
     attrs: {
-      "type": _vm.typeFormBtn
+      "type": _vm.typeFormBtn,
+      "id": "section-button"
     },
     on: {
       "click": _vm.changeSections

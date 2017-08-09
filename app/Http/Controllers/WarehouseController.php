@@ -28,8 +28,6 @@ class WarehouseController extends Controller
         $warehouse->name = $request->input('name');
         $warehouse->storage_time = $request->input('storage_time');
         $warehouse->box_price = $request->input('box_price');
-        $warehouse->updated_by = Auth::user()->id;
-        $warehouse->created_by = Auth::user()->id;
 
         $address = new Address();
         $address->label = $request->input('label');
@@ -75,9 +73,6 @@ class WarehouseController extends Controller
         $warehouse->name = $request->input('name');
         $warehouse->storage_time = $request->input('storage_time');
         $warehouse->box_price = $request->input('box_price');
-        $warehouse->updated_by = Auth::user()->id;
-        $warehouse->created_by = Auth::user()->id;
-
 
         $warehouse->address->label = $request->input('label');
         $warehouse->address->owner_name = $request->input('owner_name');

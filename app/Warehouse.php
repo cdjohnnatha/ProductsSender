@@ -12,16 +12,12 @@ class Warehouse extends Entity
         'name',
         'storage_time',
         'box_price',
-        'created_by',
-        'updated_by'
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
         'deleted_at',
-        'created_by',
-        'updated_by'
     ];
 
     public function address()
