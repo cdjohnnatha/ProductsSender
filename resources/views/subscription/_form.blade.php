@@ -1,21 +1,21 @@
 
-<section class="form-group col-sm-9" {{ $errors->has('title') ? ' has-error' : '' }}>
+<section class="form-group col-sm-9" {{ $errors->has('subscription.title') ? ' has-error' : '' }}>
         <label>Title for Subscription</label>
         <input name="subscription[title]" class="form-control"
-               value="{{$subscription->title or old('title')}}">
-        @if ($errors->has('title'))
+               value="{{$subscription->title or old('subscription.title')}}">
+        @if ($errors->has('subscription.title'))
         <span class="help-block">
-          <strong class="text-danger">{{ $errors->first('title') }}</strong>
+          <strong class="text-danger">{{ $errors->first('subscription.title') }}</strong>
         </span>
         @endif
 </section>
-<section class="form-group col-sm-3" {{ $errors->has('amount') ? ' has-error' : '' }} >
+<section class="form-group col-sm-3" {{ $errors->has('subscription.amount') ? ' has-error' : '' }} >
         <label>Price</label>
-        <input name="subscription[amount]" class="form-control" type="number"
-               value="{{$subscription->amount or old('amount')}}">
-        @if ($errors->has('amount'))
+        <input name="subscription[amount]" class="form-control" type="number" min="0.01" step="0.01"
+               value="{{$subscription->amount or old('subscription.amount')}}">
+        @if ($errors->has('subscription.amount'))
                 <span class="help-block">
-          <strong class="text-danger">{{ $errors->first('amount') }}</strong>
+          <strong class="text-danger">{{ $errors->first('subscription.amount') }}</strong>
         </span>
         @endif
 </section>

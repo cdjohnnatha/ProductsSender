@@ -35,7 +35,7 @@
                             <form action="{{route('admin.destroy', $admin->id)}}" method="POST"  role="form" class="col-sm-8">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
-                                <button type="submit" class="btn btn-danger">
+                                <button type="submit" id="delete-{{$admin->id}}" class="btn btn-danger">
                                     <span class="glyphicon glyphicon-trash"></span>
                                     {{ __('buttons.titles.delete') }}
                                 </button>

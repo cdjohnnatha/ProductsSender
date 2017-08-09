@@ -13,8 +13,9 @@
             {{ csrf_field() }}
             @include('subscription._form')
         </section>
-
-        @include('layouts.formButtons._form_save_edit', array())
-
+        <footer class="panel-footer">
+            @include('layouts.formButtons._form_save_edit', array())
+            <div class="clearfix"></div>
+        </footer>
     </form>
 @endsection
