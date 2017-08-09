@@ -2,7 +2,7 @@
   <div class="form-group col-sm-12" >
     <div class="col-sm-5" {{ $errors->has('label') ? ' has-error' : '' }}>
       <label>{{ __('address.titles.name') }}</label>
-      <input type="text" class="form-control" name="label" value="{{$address->label or old('label') }}">
+      <input type="text" class="form-control" id="label-name" name="label" value="{{$address->label or old('label') }}">
 
       @if ($errors->has('label'))
         <span class="help-block">
@@ -46,9 +46,10 @@
     </div>
     <div class="col-sm-3" :class="{'has-error': errors.has('company_name') }">
       <label>{{ __('address.titles.company') }}</label>
-      <input type="text" class="form-control" name="company" value="{{ $address->company_name or old('company_name') }}">
+      <input type="text" class="form-control" name="company_name" id="company_name"
+             value="{{ $address->company_name or old('company_name') }}">
 
-      @if ($errors->has('company'))
+      @if ($errors->has('company_name'))
         <span class="help-block">
           <strong class="text-danger">{{ $errors->first('company_name') }}</strong>
         </span>
@@ -70,7 +71,8 @@
   <div class="form-group col-sm-12" :class="{'has-error': errors.has('city') }">
     <div class="col-sm-4">
       <label>{{ __('address.titles.city') }}</label>
-      <input type="text" class="form-control" name="city" value="{{ $address->city or old('city') }}">
+      <input type="text" class="form-control" name="city" id="city"
+             value="{{ $address->city or old('city') }}">
 
       @if ($errors->has('city'))
         <span class="help-block">
@@ -80,7 +82,7 @@
     </div>
     <div class="col-sm-3" :class="{'has-error': errors.has('state') }">
       <label>{{ __('address.titles.state') }}</label>
-      <input type="text" class="form-control" name="state" value="{{ $address->state or old('state') }}">
+      <input type="text" class="form-control" name="state" id="state" value="{{ $address->state or old('state') }}">
 
       @if ($errors->has('state'))
         <span class="help-block">

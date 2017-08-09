@@ -32,7 +32,7 @@ class RegisterController extends Controller
     protected function redirectTo()
     {
 
-        return '/user/'.Auth::user()->id.'/dashboard';
+        return route('user.dashboard', Auth::user()->id);
     }
     /**
      * Create a new controller instance.
@@ -48,17 +48,17 @@ class RegisterController extends Controller
     public function rules()
     {
         return [
-            'user.name' => 'required|string|max:255',
-            'user.surname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'user.country' => 'required|string',
-            'subscription_id' => 'required',
-            'user.phone' => 'required|string',
-            'user.password' => 'required|string|min:6|confirmed',
+            'users.name' => 'required|string|max:255',
+            'users.surname' => 'required|string|max:255',
+            'users.email' => 'required|string|email|max:255|unique:users',
+            'users.country' => 'required|string',
+            'users.subscription_id' => 'required',
+            'users.phone' => 'required|string',
+            'users.password' => 'required|string|min:6|confirmed',
             'label' => 'required',
             'owner_name' => 'required',
             'owner_surname' => 'required',
-            'company' => 'required',
+            'company_name' => 'required',
             'address' => 'required',
             'city' => 'required',
             'state' => 'required',
@@ -74,25 +74,23 @@ class RegisterController extends Controller
         return view('auth.register');
     }
 
-
     public function store(Request $request)
     {
-//        dd($request->input());
-        dd($this->validate($request, $this->rules()));
+        $this->validate($request, $this->rules());
         $user = new User();
         $address = new Address;
-        $user->name = $request->input('user.name');
-        $user->surname = $request->input('user.surname');
-        $user->country = $request->input('user.country');
-        $user->email = $request->input('email');
-        $user->subscription_id = (int) $request->input('subscription_id');
-        $user->phone = ''.$request->input('user.phone');
-        $user->password = bcrypt($request->input('user.password'));
+        $user->name = $request->input('users.name');
+        $user->surname = $request->input('users.surname');
+        $user->country = $request->input('users.country');
+        $user->email = $request->input('users.email');
+        $user->subscription_id = (int) $request->input('users.subscription_id');
+        $user->phone = ''.$request->input('users.phone');
+        $user->password = bcrypt($request->input('users.password'));
 
         $address->label = $request->input('label');
         $address->owner_name = $request->input('owner_name');
         $address->owner_surname = $request->input('owner_surname');
-        $address->company_name = $request->input('company');
+        $address->company_name = $request->input('company_name');
         if(is_null($address->company_name))
             $address->company_name = '';
         $address->country = $request->input('country');
@@ -105,7 +103,7 @@ class RegisterController extends Controller
 
         if($user->save()){
             if( $user->address()->save($address) && $user->wallet()->save(new Wallet())){
-                return redirect(route('users.index'));
+                return redirect(route('user.dashboard', $user->id));
             }
 
         }

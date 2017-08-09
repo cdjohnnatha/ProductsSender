@@ -1,9 +1,9 @@
 <template>
-    <footer class="panel-footer">
+    <footer class="panel-footer" v-show="submitSection">
         <div class="pull-right">
             <button class="btn btn-warning" type="button" @click="backSections"
                     v-show="backBtn">Back</button>
-            <button v-bind:class="formBtnClass" v-bind:type="typeFormBtn"
+            <button v-bind:class="formBtnClass" v-bind:type="typeFormBtn" id="section-button"
                     @click="changeSections">{{buttonName}}</button>
         </div>
         <div class="clearfix"></div>
@@ -21,7 +21,8 @@
                 subscriptionSection: false,
                 backBtn: false,
                 typeFormBtn: 'button',
-                formBtnClass: 'btn btn-info'
+                formBtnClass: 'btn btn-info',
+                submitSection: true
             }
         },
 
@@ -41,6 +42,8 @@
                     $('#addressSection').removeClass('hidden');
                     this.buttonName = 'Register';
                     $('#submitSection').removeClass('hidden');
+                    this.submitSection = false;
+                    $('#section-header').html('Address');
                 }
             },
             backSections: function() {
@@ -60,4 +63,7 @@
 </script>
 
 <style lang="css">
+    #section-header{
+        margin-bottom: 1em;
+    }
 </style>
