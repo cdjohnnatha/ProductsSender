@@ -13,10 +13,9 @@ class SubscriptionController extends Controller
     public function rules()
     {
         return [
-            'subscription' => [
-                'title' => 'required',
-                'amount' => 'required'
-            ]
+            'subscription.title' => 'required',
+            'subscription.amount' => 'required|numeric',
+            'benefits.*.message' => 'required'
         ];
     }
 
@@ -33,8 +32,8 @@ class SubscriptionController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, $this->rules());
         $subscription = new Subscription($request->input('subscription'));
-
         if ($subscription->save()) {
             $subscription->benefits()->createMany(
                 $request->input('benefits')

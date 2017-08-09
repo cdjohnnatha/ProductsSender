@@ -53836,7 +53836,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -53908,7 +53908,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        editing: Array
+        editing: []
     },
     data: function data() {
         return {
@@ -53917,7 +53917,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     created: function created() {
-        if (this.editing.length <= 0) {
+        console.log(this.editing);
+        if (this.editing == null) {
             return this.benefits;
         } else {
             return this.benefits = this.editing;
@@ -53932,11 +53933,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         removeMessage: function removeMessage(index) {
-            axios.post('/admin/benefits/' + this.benefits[index].id, {
-                '_method': 'delete'
-            }).catch(function (error) {
-                console.log(error);
-            });
+            if (this.editing != null) {
+                axios.post('/admin/benefits/' + this.benefits[index].id, {
+                    '_method': 'delete'
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
             if (this.benefits.length - 1 > 0) this.benefits.splice(index, 1);
         }
     }
@@ -53953,7 +53956,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h4', [_vm._v("Benefits\n            "), _c('button', {
     staticClass: "btn",
     attrs: {
-      "type": "button"
+      "type": "button",
+      "id": "addMessage"
     },
     on: {
       "click": _vm.addMessage

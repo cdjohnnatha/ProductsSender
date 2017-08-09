@@ -2,7 +2,7 @@
     <section>
         <div class="col-sm-12">
             <h4>Benefits
-                <button class="btn" @click="addMessage" type="button">
+                <button class="btn" @click="addMessage" type="button" id="addMessage">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </h4>
@@ -26,7 +26,7 @@
 <script>
     export default {
         props: {
-            editing: Array
+            editing: []
         },
         data(){
             return {
@@ -36,7 +36,8 @@
             },
 
         created() {
-            if(this.editing.length <= 0){
+            console.log(this.editing);
+            if(this.editing == null){
                 return this.benefits;
             }
             else{
@@ -53,11 +54,13 @@
                 }
             },
             removeMessage(index){
-              axios.post('/admin/benefits/' + this.benefits[index].id, {
-                  '_method': 'delete'
-              }).catch(function (error) {
-                  console.log(error);
-              });
+                if(this.editing != null) {
+                    axios.post('/admin/benefits/' + this.benefits[index].id, {
+                        '_method': 'delete'
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
               if(this.benefits.length - 1 > 0)
                 this.benefits.splice(index, 1);
 

@@ -18,13 +18,7 @@
         <input type="hidden" name="default_warehouse_id" id="default_warehouse_id" value="2">
     </section>
     <footer class="panel-footer">
-        <button type="submit" class="btn btn-success pull-right">
-            @if(Request::is('*/edit'))
-            {{__('buttons.titles.update')}}
-            @else
-                {{__('buttons.titles.create')}}
-            @endif
-        </button>
+        @include('layouts.formButtons._form_save_edit')
         <div class="clearfix"></div>
     </footer>
 </form>
