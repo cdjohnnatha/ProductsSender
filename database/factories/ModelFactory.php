@@ -50,8 +50,6 @@ $factory->define(App\Warehouse::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->company,
         'storage_time' => $faker->numberBetween($min = 30, $max = 60),
-        'created_by' => 1,
-        'updated_by' => 1,
         'box_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 5)
     ];
 });

@@ -1,13 +1,12 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class StatusTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     * @group startup
+     *
      * @return void
      */
     public function run()
@@ -56,9 +55,5 @@ class StatusTableSeeder extends Seeder
         DB::table('status')->insert([
             'status' => 'WAREHOUSE_NOTIFY_USER',
         ]);
-
-
-
     }
-
 }
