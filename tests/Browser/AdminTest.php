@@ -73,7 +73,7 @@ class AdminTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $faker = \Faker\Factory::create();
-            $delete = DB::table('admins')->orderBy('id', 'desc')->first();
+            $delete = Admin::orderBy('id', 'desc')->first();
             $browser->loginAs(Admin::find(1), 'admin')
                 ->visit(route('admin.index'))
                 ->click('#delete-'.$delete->id)
