@@ -24,7 +24,7 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->subscription }}</td>
                     <td>{{ $user->phone }}</td>
-                    <td>
+                    <td class="col-sm-3">
                         @include('layouts.formButtons._form_edit_delete',
                                 array('prefix_name' => 'admin.users',
                                     'id' => $user->id))

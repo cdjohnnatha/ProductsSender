@@ -125,7 +125,11 @@ class DatabaseSeeder extends Seeder
             'subscription_id' => 3
         ]);
 
-
+        DB::table('warehouses')->insert([
+            'name' => 'Jon People',
+            'storage_time' => 30,
+            'box_price' => 5.00
+        ]);
 
     }
 }

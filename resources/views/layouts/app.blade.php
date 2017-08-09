@@ -88,9 +88,9 @@
             </div>
         </nav>
         @if(auth()->guard('admin')->user())
-            @include('layouts._lateral_nav')
+            @include('layouts.nav-menu._admin_lateral_nav')
         @elseif(auth()->guard('web')->user())
-            <user-menu :data_id="{{Auth::user()->id}}"></user-menu>
+            @include('layouts.nav-menu._user_lateral_nav')
         @endif
         @if(auth()->guard('admin')->user() || auth()->guard('web')->user())
             <section class="container col-sm-offset-1">
