@@ -11,7 +11,7 @@ class WarehousesTest extends DuskTestCase
 {
 
     /**
-     * @group warehouse
+     * @group registerWarehouse
      */
     public function testRegisterWarehouse()
     {
@@ -20,24 +20,25 @@ class WarehousesTest extends DuskTestCase
             $faker = \Faker\Factory::create();
             $country = $faker->country;
             $browser->loginAs($admin, 'admin')
-                ->visit('/admin/warehouses/create')
-                ->assertSee('Warehouses')
-                ->select('country-address', $country)
+                ->visit(route('admin.warehouses.create'))
+
                 ->type('name', $faker->company)
                 ->type('storage_time', $faker->numberBetween(0, 60))
                 ->type('box_price', $faker->randomFloat(2, 0, 8))
-                ->type('#label', 'Default Address')
-                ->type('owner_name', $admin->name)
-                ->type('owner_surname', $admin->surname)
-                ->type('phone-address', 83998000802)
-                ->type('company', '')
-                ->type('address', $faker->address)
-                ->type('city', $faker->city)
-                ->type('state', 'Paraiba')
+                ->type('#label-name', 'Default Address')
+                ->type('owner_name', $faker->firstName)
+                ->type('owner_surname', $faker->lastName)
+                ->type('phone', $faker->phoneNumber)
+                ->type('company_name', $faker->company)
+                ->type('address', $faker->streetAddress)
+                ->type('#city', $faker->streetName)
+                ->type('state', $faker->streetSuffix)
                 ->type('postal_code', $faker->postcode)
                 ->press('#submit-button')
-                ->waitForLocation('/admin/warehouses/show-list')
-                ->assertPathIs('/admin/warehouses/show-list');
+                ->waitForLocation('/admin/warehouses')
+                ->assertPathIs('/admin/warehouses');
+
+
         });
     }
 }

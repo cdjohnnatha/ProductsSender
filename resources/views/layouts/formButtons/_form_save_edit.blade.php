@@ -1,4 +1,4 @@
-<button type="submit" class="btn btn-success pull-right">
+<button type="submit" id="submit-button" class="btn btn-success pull-right">
   @if(Request::is('*/edit'))
     {{__('buttons.titles.update')}}
   @else
