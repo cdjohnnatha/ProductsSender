@@ -6,16 +6,17 @@ use App\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
 
-    public function rules()
+    private function rules()
     {
         return [
             'name' => 'bail|required|min:3',
             'surname' => 'required',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:admins',
             'phone' => 'required|numeric',
             'country' => 'required',
             'default_warehouse_id' => 'required',
@@ -38,13 +39,7 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, $this->rules());
-        $admin = new Admin();
-        $admin->name = $request->input('name');
-        $admin->surname = $request->input('surname');
-        $admin->email = $request->input('email');
-        $admin->phone = $request->input('phone');
-        $admin->country = $request->input('country');
-        $admin->default_warehouse_id = $request->input('default_warehouse_id');
+        $admin = new Admin($request->all());
         $admin->password = bcrypt($request->input('password'));
 
         if( $admin->save() ){
@@ -66,11 +61,24 @@ class AdminController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+            'name' => 'bail|required|min:3',
+            'surname' => 'required',
+            'email' => [
+                'required',
+                Rule::unique('admins')->ignore($id),
+            ],
+            'phone' => 'required|numeric',
+            'country' => 'required',
+            'default_warehouse_id' => 'required',
+            'password' => 'nullable|confirmed'
+        ]);
         $admin = Admin::findOrFail($id);
-        $admin->name = $request->input('name');
-        $admin->surname = $request->input('surname');
-        $admin->email = $request->input('email');
-        $admin->country = $request->input('country');
+        if(is_null($request->password)){
+            $admin->fill($request->except('password'));
+        } else{
+            $admin->fill($request->all());
+        }
 
         if($admin->save()){
             return redirect(route('admin.index'))->setStatusCode(200);

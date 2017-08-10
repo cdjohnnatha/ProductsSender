@@ -54,7 +54,6 @@ class SubscriptionTest extends DuskTestCase
                 ->type('#input-message-2', $faker->word)
                 ->press('#submit-button')
                 ->waitForLocation('/admin/subscriptions');
-
         });
     }
 

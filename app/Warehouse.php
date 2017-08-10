@@ -9,7 +9,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Warehouse extends Entity
 {
     protected $fillable = [
-        'name',
         'storage_time',
         'box_price',
     ];

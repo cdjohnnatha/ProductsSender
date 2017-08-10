@@ -7,9 +7,22 @@ use App\Subscription;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+
+
+    private function rules()
+    {
+        return [
+            'users.name' => 'required|string',
+            'users.surname' => 'required|string',
+            'users.email' => 'required|email|string',
+            'users.password' => 'nullable|confirmed',
+            'users.subscription_id' => 'required'
+        ];
+    }
 
     public function index()
     {
@@ -39,24 +52,35 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        $this->validate($request,[
+            'users.name' => 'bail|required|min:3',
+            'users.surname' => 'required|string',
+            'users.email' => [
+                'required',
+                Rule::unique('users')->ignore($id),
+            ],
+            'users.phone' => 'required|numeric',
+            'users.country' => 'required',
+            'users.password' => 'nullable|confirmed',
+            'users.subscription_id' => 'required',
+        ]);
         $user = User::findOrFail($id);
-        $user->name = $request->input('name');
-        $user->surname = $request->input('surname');
-        $user->email = $request->input('email');
-        if(!empty($request->input('plan')) || $request->input('plan') != '')
-            $user->subscriptions_id = (int) $request->input('plan');
-        $user->country = $request->input('country');
-        $user->phone = $request->input('phone');
+        if(is_null($request->password)){
+            $tmp = $request->except('users.password');
+            $user->fill($tmp['users']);
+        } else{
+            $user->fill($request->input('users'));
+        }
+
 
         if($user->save()){
             if(auth()->guard('admin')->user()){
-                return redirect('admin/users');
+                return redirect(route('admin.users.index'));
             }else {
-                return redirect('user/'.$id);
+                return redirect(route('user.dashboard', $user->id));
             }
         }
-
-        return response()->setStatusCode(406);
     }
 
 

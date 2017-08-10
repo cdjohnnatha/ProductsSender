@@ -10,6 +10,23 @@ use Illuminate\Support\Facades\Auth;
 class WarehouseController extends Controller
 {
 
+    private function rules()
+    {
+        return [
+            'warehouse.storage_time' => 'required|numeric',
+            'warehouse.box_price' => 'required|numeric',
+            'address.label' => 'required|string',
+            'address.owner_name' => 'required|string',
+            'address.owner_surname' => 'required|string',
+            'address.phone' => 'required|string',
+            'address.company_name' => 'nullable|string',
+            'address.address' => 'required|string',
+            'address.city' => 'required|string',
+            'address.state' => 'required|string',
+            'address.postal_code' => 'required|string',
+            'address.country' => 'required|string',
+        ];
+    }
 
     public function index()
     {
@@ -24,25 +41,10 @@ class WarehouseController extends Controller
 
     public function store(Request $request)
     {
-        $warehouse = new Warehouse();
-        $warehouse->name = $request->input('name');
-        $warehouse->storage_time = $request->input('storage_time');
-        $warehouse->box_price = $request->input('box_price');
+        $this->validate($request, $this->rules());
+        $warehouse = new Warehouse($request->input('warehouse'));
 
-        $address = new Address();
-        $address->label = $request->input('label');
-        $address->owner_name = $request->input('owner_name');
-        $address->owner_surname = $request->input('owner_surname');
-        $address->company_name = $request->input('company');
-
-        if(is_null($address->company_name))
-            $address->company_name = '';
-        $address->country = $request->input('country');
-        $address->address = $request->input('address');
-        $address->city = $request->input('city');
-        $address->state = $request->input('state');
-        $address->postal_code = $request->input('postal_code');
-        $address->phone = ''.$request->input('phone');
+        $address = new Address($request->input('address'));
         $address->default_address = true;
 
         if($warehouse->save() && $warehouse->address()->save($address)){
@@ -68,30 +70,15 @@ class WarehouseController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validate($request, $this->rules());
+
         $warehouse = Warehouse::findOrFail($id);
         $warehouse->load('address');
-        $warehouse->name = $request->input('name');
-        $warehouse->storage_time = $request->input('storage_time');
-        $warehouse->box_price = $request->input('box_price');
+        $warehouse->fill($request->input('warehouse'));
+        $warehouse->address->fill($request->input('address'));
 
-        $warehouse->address->label = $request->input('label');
-        $warehouse->address->owner_name = $request->input('owner_name');
-        $warehouse->address->owner_surname = $request->input('owner_surname');
-        $warehouse->address->company_name = $request->input('company');
-
-        if(is_null($warehouse->address->company_name))
-            $warehouse->address->company_name = '';
-        $warehouse->address->country = $request->input('country');
-        $warehouse->address->address = $request->input('address');
-        $warehouse->address->city = $request->input('city');
-        $warehouse->address->state = $request->input('state');
-        $warehouse->address->postal_code = $request->input('postal_code');
-        $warehouse->address->phone = ''.$request->input('phone');
-
-        if($warehouse->save()){
-            if( $warehouse->address->save() ){
-                return redirect(route('admin.warehouses.index'));
-            }
+        if($warehouse->save() &&  $warehouse->address->save()){
+            return redirect(route('admin.warehouses.index'));
         }
     }
 

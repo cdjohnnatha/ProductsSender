@@ -55,6 +55,7 @@ class PackageController extends Controller
     public function create()
     {
         $warehouses = Warehouse::all();
+        $warehouses->load('address');
         $status = Status::all();
         return view('package.create', compact('warehouses', 'status'));
     }

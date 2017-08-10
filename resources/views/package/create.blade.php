@@ -42,7 +42,7 @@
                 @include('package._form')
             </section>
             <footer class="panel-footer">
-                @include('layouts.formButtons._form_save_edit')
+                @include('layouts.formButtons._form_save_edit', ['url' => route('admin.packages.index')])
                 <div class="clearfix"></div>
             </footer>
         </form>

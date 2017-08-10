@@ -1,7 +1,7 @@
 
 <section class="form-group">
     <div class="col-sm-4" {{ $errors->has('users.name') ? ' has-error' : '' }}>
-        <label for="name">Name</label>
+        <label for="name">{{__('common.titles.name')}}</label>
         <input type="text" name="users[name]" id="name" class="form-control"
                value="{{$user->name or old('users.name')}}">
 
@@ -14,7 +14,7 @@
     <div class="col-sm-4" {{ $errors->has('users.surname') ? ' has-error' : '' }}>
         <label for="surname">Surname</label>
         <input type="text" name="users[surname]" id="surname" class="form-control"
-               value="{{$user->surname or old('surname')}}">
+               value="{{$user->surname or old('users.surname')}}">
 
         @if ($errors->has('users.surname'))
             <span class="help-block">
@@ -43,7 +43,7 @@
     <div class="form-group col-sm-4" {{ $errors->has('users.phone') ? ' has-error' : '' }}>
         <label for="phone">Phone</label>
         <input type="text" name="users[phone]" id="phone" class="form-control"
-        value="{{$user->phone or old('users[phone]')}}">
+        value="{{$user->phone or old('users.phone')}}">
 
         @if ($errors->has('users.phone'))
             <span class="help-block">
@@ -71,3 +71,13 @@
 
     </div>
 </section>
+
+@if ($errors->any())
+  <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif

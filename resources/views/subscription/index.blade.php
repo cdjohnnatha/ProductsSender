@@ -2,7 +2,7 @@
 
 @section('content')
 <link href="{{asset('css/plans.css')}}" rel="stylesheet">
-<div class="panel-heading">Subscriptions</div>
+<div class="panel-heading">Plans</div>
 <div class="panel-body">
     @foreach($subscriptions as $subscription)
         <section id="lists">

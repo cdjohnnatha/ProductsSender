@@ -52,19 +52,19 @@ class RegisterController extends Controller
             'users.surname' => 'required|string|max:255',
             'users.email' => 'required|string|email|max:255|unique:users',
             'users.country' => 'required|string',
-            'users.subscription_id' => 'required',
+            'users.subscription_id' => 'required|integer',
             'users.phone' => 'required|string',
             'users.password' => 'required|string|min:6|confirmed',
-            'label' => 'required',
-            'owner_name' => 'required',
-            'owner_surname' => 'required',
-            'company_name' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'postal_code' => 'required',
-            'phone' => 'required|string',
-            'country' => 'required|string',
+            'address.label' => 'required',
+            'address.owner_name' => 'required',
+            'address.owner_surname' => 'required|string',
+            'address.company_name' => 'nullable|string',
+            'address.address' => 'required|string',
+            'address.city' => 'required|string',
+            'address.state' => 'required|string',
+            'address.postal_code' => 'required',
+            'address.phone' => 'required|string',
+            'address.country' => 'required|string',
         ];
     }
 
@@ -77,28 +77,10 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, $this->rules());
-        $user = new User();
-        $address = new Address;
-        $user->name = $request->input('users.name');
-        $user->surname = $request->input('users.surname');
-        $user->country = $request->input('users.country');
-        $user->email = $request->input('users.email');
-        $user->subscription_id = (int) $request->input('users.subscription_id');
-        $user->phone = ''.$request->input('users.phone');
+        $user = new User($request->input('users'));
+        $address = new Address($request->input('address'));
+        $user->subscription_id = (int)$request->input('users.subscription_id');
         $user->password = bcrypt($request->input('users.password'));
-
-        $address->label = $request->input('label');
-        $address->owner_name = $request->input('owner_name');
-        $address->owner_surname = $request->input('owner_surname');
-        $address->company_name = $request->input('company_name');
-        if(is_null($address->company_name))
-            $address->company_name = '';
-        $address->country = $request->input('country');
-        $address->address = $request->input('address');
-        $address->city = $request->input('city');
-        $address->state = $request->input('state');
-        $address->postal_code = $request->input('postal_code');
-        $address->phone = ''.$request->input('phone');
         $address->default_address = true;
 
         if($user->save()){
