@@ -7,6 +7,7 @@ use App\Subscription;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -51,16 +52,27 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, $this->rules());
+
+        $this->validate($request,[
+            'users.name' => 'bail|required|min:3',
+            'users.surname' => 'required|string',
+            'users.email' => [
+                'required',
+                Rule::unique('users')->ignore($id),
+            ],
+            'users.phone' => 'required|numeric',
+            'users.country' => 'required',
+            'users.password' => 'nullable|confirmed',
+            'users.subscription_id' => 'required',
+        ]);
         $user = User::findOrFail($id);
-        $user->name = $request->input('users.name');
-        $user->surname = $request->input('users.surname');
-        $user->email = $request->input('users.email');
-        $user->subscription_id = (int) $request->input('users.subscription_id');
-        $user->country = $request->input('users.country');
-        $user->phone = $request->input('users.phone');
-        if(!empty($request->input('users.password')))
-            $user->password = bcrypt($request->input('users.password'));
+        if(is_null($request->password)){
+            $tmp = $request->except('users.password');
+            $user->fill($tmp['users']);
+        } else{
+            $user->fill($request->input('users'));
+        }
+
 
         if($user->save()){
             if(auth()->guard('admin')->user()){

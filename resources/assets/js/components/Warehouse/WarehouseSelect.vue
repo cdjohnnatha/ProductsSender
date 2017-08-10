@@ -1,7 +1,7 @@
 <template>
     <select class="form-control" v-bind:value="setwarehouse" name="warehouse_id">
         <option v-for="warehouse in warehouses"  v-bind:value="warehouse.id">
-            {{warehouse.name}}
+            {{warehouse.address.label}}
         </option>
     </select>
 </template>
@@ -15,7 +15,7 @@
         data() {
             return {
             }
-        },
+        }
     }
 </script>
 

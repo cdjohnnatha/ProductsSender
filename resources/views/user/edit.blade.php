@@ -20,7 +20,7 @@
               <input name="users[subscription_id]" type="hidden" value="1">
             </section>
             <footer class="panel-footer">
-                @include('layouts.formButtons._form_save_edit')
+                @include('layouts.formButtons._form_save_edit', ['url' => route($userType.'.index')])
                 <div class="clearfix"></div>
             </footer>
         </section>

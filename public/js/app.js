@@ -54151,7 +54151,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": warehouse.id
       }
-    }, [_vm._v("\n        " + _vm._s(warehouse.name) + "\n    ")])
+    }, [_vm._v("\n        " + _vm._s(warehouse.address.label) + "\n    ")])
   }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true
