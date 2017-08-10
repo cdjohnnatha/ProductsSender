@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="col-sm-6 col-sm-offset-3" id="form-admin">
+<section class="col-sm-7 col-sm-offset-2" id="form-admin">
     <div class="row">
         <div class="panel panel-default">
             <header class="panel-heading">

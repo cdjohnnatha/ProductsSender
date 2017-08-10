@@ -26,7 +26,7 @@
                         <td>{{$admin->email}}</td>
                         <td>{{$admin->phone}}</td>
                         <td>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <a href="{{route('admin.edit', $admin->id)}}" class="edit-modal btn btn-warning">
                                     <span class="glyphicon glyphicon-edit"></span>
                                     {{ __('buttons.titles.edit') }}

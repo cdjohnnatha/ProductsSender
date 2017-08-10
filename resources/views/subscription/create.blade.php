@@ -14,7 +14,7 @@
             @include('subscription._form')
         </section>
         <footer class="panel-footer">
-            @include('layouts.formButtons._form_save_edit', array())
+            @include('layouts.formButtons._form_save_edit', ['url' => route('admin.subscriptions.index')])
             <div class="clearfix"></div>
         </footer>
     </form>

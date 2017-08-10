@@ -2,7 +2,7 @@
 
 return [
     'titles' => [
-        'name' => 'Nick for address',
+        'name' => 'Give a name for address',
         'first_name'    => 'First name',
         'last_name'  => 'Surname',
         'phone'   => 'Phone',

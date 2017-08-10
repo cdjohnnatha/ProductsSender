@@ -92,17 +92,14 @@
         @elseif(auth()->guard('web')->user())
             @include('layouts.nav-menu._user_lateral_nav')
         @endif
-        @if(auth()->guard('admin')->user() || auth()->guard('web')->user())
-            <section class="container col-sm-offset-1">
-                <div class="col-sm-11 col-sm-offset-1">
-                    <div class="panel panel-default">
-                        @yield('content')
-                    </div>
+
+        <section class="container col-sm-offset-2">
+            <div class="col-sm-10">
+                <div class="panel panel-default">
+                    @yield('content')
                 </div>
-            </section>
-        @else
-            @yield('content')
-        @endif
+            </div>
+        </section>
     </div>
 
     <!-- Scripts -->

@@ -62,8 +62,7 @@
       @endif
     </div>
   </section>
-  @if(Request::is('*/edit') == false)
-    <section class="form-group col-sm-12">
+      <section class="form-group col-sm-12">
 
       <div class="col-sm-6" {{ $errors->has('email') ? ' has-error' : '' }}>
         <label for="password" class="control-label">Password</label>
@@ -91,5 +90,4 @@
         @endif
       </div>
     </section>
-  @endif
 </article>
