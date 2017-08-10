@@ -1,6 +1,6 @@
 
 <section class="form-group col-sm-9" {{ $errors->has('subscription.title') ? ' has-error' : '' }}>
-        <label>Title for Subscription</label>
+        <label>Give a name for a plan</label>
         <input name="subscription[title]" class="form-control"
                value="{{$subscription->title or old('subscription.title')}}">
         @if ($errors->has('subscription.title'))
@@ -11,7 +11,7 @@
 </section>
 <section class="form-group col-sm-3" {{ $errors->has('subscription.amount') ? ' has-error' : '' }} >
         <label>Price</label>
-        <input name="subscription[amount]" class="form-control" type="number" min="0.01" step="0.01"
+        <input name="subscription[amount]" class="form-control" type="number" min="0.00" step="0.01"
                value="{{$subscription->amount or old('subscription.amount')}}">
         @if ($errors->has('subscription.amount'))
                 <span class="help-block">
