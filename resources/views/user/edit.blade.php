@@ -1,61 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="container col-sm-8 col-sm-offset-2">
-        <div class="panel panel-default">
+
+    @if(auth()->guard('admin')->user())
+        <?php $userType = 'admin.users'; ?>
+    @else
+        <?php $userType = 'user'; ?>
+    @endif
+    <section class="container col-sm-10 col-sm-offset-1">
+        <form action="{{route($userType.'.update', $user->id)}}" role="form" method="POST">
+        <section class="panel panel-default">
             <header class="panel-heading">
                 Edit User
             </header>
             <section class="panel-body">
-            {{ Form::model($user, ['method' =>'PATCH', 'url' => '/user/'.$user->id])}}
-                <div class="form-group">
-                    <div class="form-group col-sm-4">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" id="name" class="form-control"
-                               value="{{$user->name}}">
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label for="name">Surname</label>
-                        <input type="text" name="surname" id="surname" class="form-control"
-                               value="{{$user->surname}}">
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label for="country">Country</label>
-                        {{ Form::select('country', ['Brasil' => 'Brasil', 'Canada' => 'Canada', 'USA' => 'USA'],
-                        null, ['class' => 'form-control']) }}
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="form-group col-sm-8">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control"
-                        value="{{$user->email}}">
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label for="phone">Phone</label>
-                        <input type="text" name="phone" id="phone" class="form-control"
-                        value="{{$user->phone}}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-group pull-right">
-                        @if(auth()->guard('admin')->user())
-                            <a href="/admin/users" class="btn btn-danger">
-                        @else
-                            <a href="{{'/user/'.$user->id}}" class="btn btn-danger">
-                        @endif
-                            <span class="glyphicon glyphicon-trash"></span>
-                            Cancel
-                        </a>
-                        <button type="submit" class="btn btn-success" id="save">
-                        <span class="glyphicon glyphicon-save"></span>
-                            Save
-                        </button>
-                    </div>
-                </div>
-            {{Form::close()}}
+                {{ csrf_field() }}
+                @include('user._form', ['user' => $user])
+                <input name="_method" type="hidden" value="PUT">
+              <input name="users[subscription_id]" type="hidden" value="1">
             </section>
-        </div>
+            <footer class="panel-footer">
+                @include('layouts.formButtons._form_save_edit')
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
     </section>
 @endsection

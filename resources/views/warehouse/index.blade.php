@@ -21,7 +21,7 @@
         @foreach($warehouses as $warehouse)
             <tr>
                 <td>{{$warehouse->id}}</td>
-                <td>{{$warehouse->name}}</td>
+                <td>{{$warehouse->address['label']}}</td>
                 <td>{{$warehouse->box_price}}</td>
                 <td>{{$warehouse->address['address']}}</td>
                 <td>{{$warehouse->address['city']}}</td>

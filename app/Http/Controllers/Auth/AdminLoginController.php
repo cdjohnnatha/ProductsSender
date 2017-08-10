@@ -11,6 +11,13 @@ class AdminLoginController extends Controller
 {
 
 
+    private function rules()
+    {
+        return [
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:6',
+        ];
+    }
     public function index()
     {
         return view('auth.admin-login');
@@ -19,11 +26,8 @@ class AdminLoginController extends Controller
 
     public function login(Request $request)
     {
-        $this->validate($request, [
-            'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:6',
-        ]);
 
+        $this->validate($request, $this->rules());
         if(Auth::guard('admin')->attempt([
             'email' => $request->input('email'),
             'password' => $request->input('password')
@@ -31,5 +35,6 @@ class AdminLoginController extends Controller
             return redirect(route('admin.index'));
         }
 
+        return redirect(route('admin.login'));
     }
 }

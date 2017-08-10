@@ -11,6 +11,18 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
 
+
+    private function rules()
+    {
+        return [
+            'users.name' => 'required|string',
+            'users.surname' => 'required|string',
+            'users.email' => 'required|email|string',
+            'users.password' => 'nullable|confirmed',
+            'users.subscription_id' => 'required'
+        ];
+    }
+
     public function index()
     {
         $users = User::with('subscription')->get();
@@ -39,24 +51,24 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validate($request, $this->rules());
         $user = User::findOrFail($id);
-        $user->name = $request->input('name');
-        $user->surname = $request->input('surname');
-        $user->email = $request->input('email');
-        if(!empty($request->input('plan')) || $request->input('plan') != '')
-            $user->subscriptions_id = (int) $request->input('plan');
-        $user->country = $request->input('country');
-        $user->phone = $request->input('phone');
+        $user->name = $request->input('users.name');
+        $user->surname = $request->input('users.surname');
+        $user->email = $request->input('users.email');
+        $user->subscription_id = (int) $request->input('users.subscription_id');
+        $user->country = $request->input('users.country');
+        $user->phone = $request->input('users.phone');
+        if(!empty($request->input('users.password')))
+            $user->password = bcrypt($request->input('users.password'));
 
         if($user->save()){
             if(auth()->guard('admin')->user()){
-                return redirect('admin/users');
+                return redirect(route('admin.users.index'));
             }else {
-                return redirect('user/'.$id);
+                return redirect(route('user.dashboard', $user->id));
             }
         }
-
-        return response()->setStatusCode(406);
     }
 
 

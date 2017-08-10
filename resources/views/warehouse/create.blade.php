@@ -12,12 +12,12 @@
 @endif
     <section class="panel-body">
         {{ csrf_field() }}
-        @include('warehouse._form')
         @if(Request::is('*/edit'))
-            @include('address._form', array('address'=> $warehouse->address))
+            @include('address._form', array('address'=> $warehouse->address, 'title' => __('warehouse.form.title_label')))
         @else
-            @include('address._form')
+            @include('address._form', array('title' => __('warehouse.form.title_label')))
         @endif
+        @include('warehouse._form')
     </section>
     <footer class="panel-footer">
            @include('layouts.formButtons._form_save_edit')

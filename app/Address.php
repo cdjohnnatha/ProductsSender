@@ -17,7 +17,7 @@ Relation::morphMap([
 class Address extends Model
 {
 
-    protected $attributes = array('company_name' => '', 'default_address' => false);
+    protected $attributes = array('default_address' => false);
 
     protected $fillable = [
         'label',
