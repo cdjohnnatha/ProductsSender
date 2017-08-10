@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <header class="panel-heading">Subscriptions</header>
+    <header class="panel-heading">Plans</header>
     @if(Request::is('*/edit'))
         <?php $action = 'admin.subscriptions.update' ?>
         <form action="{{route($action, $subscription->id)}}" role="form" method="POST" >
