@@ -60,7 +60,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('user.dashboard', Auth::user()->id)}}">
+                    <a href="{{route('user.additional-names.index', Auth::user()->id)}}">
                         <span class="glyphicon glyphicon-menu-right"></span>
                         Additional Names
                     </a>

@@ -43,6 +43,12 @@ Route::group(['middleware' => ['web']], function() {
             'destroy',
             'show'
         ]]);
+
+        Route::resource('additional-names', 'AdditionalNamesController', ['only' => [
+            'index',
+            'store',
+            'destroy'
+        ]]);
     });
 
     Route::resource('user', 'UserController');

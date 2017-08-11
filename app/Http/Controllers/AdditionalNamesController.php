@@ -3,24 +3,48 @@
 namespace App\Http\Controllers;
 
 use App\AdditionalNames;
+use App\Subscription;
+use App\User;
 use Illuminate\Http\Request;
 
 class AdditionalNamesController extends Controller
 {
-    public function create()
+
+    private function rules()
     {
-        return view('user.additionalNames');
+        return [
+            'additional.*.id' => 'required|integer'
+        ];
     }
 
-    public function register(Request $request)
+    public function index($id)
     {
+        $names = AdditionalNames::where('user_id', $id)->get();
+        return view('user.additionalNames.index', compact('names'));
+    }
+
+
+    public function store(Request $request, $id)
+    {
+        $this->validate($request, $this->rules());
+        $user = User::with('additionalNames')->findOrFail($id);
+        foreach ($request->input('additional') as $name) {
+            if(!is_null($name['name'])) {
+                $user->additionalNames()->updateOrCreate(
+                    ['id' => $name['id']],
+                    ['name' => $name['name']]
+                );
+            }
+        }
+        return redirect(route('user.additional-names.index', $id));
 
     }
 
-    public function names($id)
+    public function destroy($id, $name_id)
     {
-        return response()->json([
-            'names' => AdditionalNames::where('user_id', $id)
-        ]);
+        $name = AdditionalNames::findOrFail($name_id);
+        $name->delete();
+        if($name->trashed())
+            return back();
     }
 }

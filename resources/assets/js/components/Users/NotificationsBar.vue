@@ -68,12 +68,10 @@
             unreadNotifications() {
                 axios.get(this.prefixUrl + 'unread').then( response => {
                     response.data.unread.forEach(notifications => {
-                        console.log(notifications.data.package);
                        this.$store.commit('add_notification', notifications.data.package);
 
                     });
                     this.notificationsBarSize = this.unread_notifications;
-                    console.log(this.notificationsBarSize);
                 }).catch(function (error) {
                     console.log(error);
                 });

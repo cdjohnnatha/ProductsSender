@@ -36,7 +36,6 @@
             },
 
         created() {
-            console.log(this.editing);
             if(this.editing == null){
                 return this.benefits;
             }

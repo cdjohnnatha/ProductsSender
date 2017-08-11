@@ -32,6 +32,7 @@ Vue.component('package-pictures', require('./components/Packages/PackagePictures
 Vue.component('small-pictures-preview', require('./components/Packages/PackageSmallPreview.vue'));
 Vue.component('register-form-button', require('./components/Users/UserFormButton.vue'));
 Vue.component('user-notifications', require('./components/Users/NotificationsBar.vue'));
+Vue.component('user-additional-names', require('./components/Users/AdditionalNames.vue'));
 
 
 import { store } from './store'
