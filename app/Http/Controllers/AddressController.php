@@ -15,15 +15,15 @@ class AddressController extends Controller
     public function rules()
     {
         return [
-            'label' => 'bail|required|min:3',
-            'owner_name' => 'required',
-            'owner_surname' => 'required',
-            'country' => 'required',
-            'address' => 'required|min:5',
-            'city' => 'required',
-            'state' => 'required',
-            'postal_code' => 'required',
-            'phone' => 'required|numeric',
+            'address.label' => 'bail|required|min:3',
+            'address.owner_name' => 'required',
+            'address.owner_surname' => 'required',
+            'address.country' => 'required',
+            'address.address' => 'required|min:5',
+            'address.city' => 'required',
+            'address.state' => 'required',
+            'address.postal_code' => 'required',
+            'address.phone' => 'required|numeric',
         ];
     }
 
@@ -32,8 +32,9 @@ class AddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index(Request $request, $id)
     {
+        dd($request);
         return  $id;
     }
 
@@ -59,9 +60,9 @@ class AddressController extends Controller
         $polymorph = $this->getClass($request->route()->getPrefix());
         $address = new Address($request->all());
         $object = $polymorph::find($id);
-//        if($object->address()->save($address)){
+        if($object->address()->save($address)){
             return redirect()->action('AddressController@index', $id);
-//        }
+        }
 
     }
 

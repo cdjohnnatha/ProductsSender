@@ -58,19 +58,14 @@ class SubscriptionController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, $this->rules());
-        $subscription = Subscription::findOrFail($id);
-        $subscription->title = $request->input('subscription.title');
-        $subscription->amount = $request->input('subscription.amount');
-        $subscription->load('benefits');
+        $subscription = Subscription::with('benefits')->findOrFail($id);
+        $subscription->fill($request->input('subscription'));
         if ($subscription->save()) {
-            $benefits = $subscription->benefits()->get()->toArray();
-            if(count($request->input('benefits')) < count($benefits)){
-                dd(array_diff($request->input('benefits'), $benefits));
-            }
             foreach ($request->input('benefits') as $message){
-                $subscription->benefits()->updateOrCreate(
-                ['id' => $message['id']],
-                ['message' => $message['message']]);
+                    $subscription->benefits()->updateOrCreate(
+                        ['id' => (int)$message['id']],
+                        ['message' => $message['message']]
+                    );
             }
             return redirect(route('admin.subscriptions.index'));
         }

@@ -19,4 +19,9 @@ class AdditionalNames extends Entity
 
 
     protected static $logAttributes = ['name'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
