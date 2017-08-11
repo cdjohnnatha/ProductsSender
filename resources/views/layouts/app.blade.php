@@ -48,7 +48,7 @@
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
                             @if(auth()->guard('web')->user())
-                                <notification-bar :data_id="{{Auth::user()->id}}"></notification-bar>
+                                <user-notifications :data_id="{{Auth::user()->id}}"></user-notifications>
                             @endif
                             <li>
                                 <a href="#" class="btn-lg">

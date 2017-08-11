@@ -68,7 +68,7 @@
         <li>
             <a href="#" id="btn-subscription" data-toggle="collapse" data-target="#subscriptions-menu"
                aria-expanded="false">
-                <label>Subscriptions</label>
+                <label>Plans</label>
             </a>
             <ul class="nav collapse col-sm-offset-1" id="subscriptions-menu" role="menu" aria-labelledby="btn-1">
                 <li id="create-subscription">

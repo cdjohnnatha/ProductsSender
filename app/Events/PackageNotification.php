@@ -44,6 +44,17 @@ class PackageNotification implements ShouldBroadcast, ShouldQueue
 
     public function broadcastWith()
     {
-        return ['package' => $this->package];
+        return [
+            'package' => $this->package,
+            'message' => $this->message
+            ];
+    }
+
+    public function toDatabase($notifiable)
+    {
+        return [
+            'package' => $this->package,
+            'message' => $this->message
+        ];
     }
 }

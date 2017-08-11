@@ -9,10 +9,6 @@ use Illuminate\Support\Facades\Log;
 
 class UserPackageHandleController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function table()
     {

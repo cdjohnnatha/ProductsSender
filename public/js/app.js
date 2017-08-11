@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(6);
+var bind = __webpack_require__(7);
 var isBuffer = __webpack_require__(23);
 
 /*global toString:true*/
@@ -797,10 +797,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(7);
+    adapter = __webpack_require__(8);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(7);
+    adapter = __webpack_require__(8);
   }
   return adapter;
 }
@@ -875,301 +875,6 @@ module.exports = defaults;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function bind(fn, thisArg) {
-  return function wrap() {
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-    return fn.apply(thisArg, args);
-  };
-};
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-var settle = __webpack_require__(27);
-var buildURL = __webpack_require__(29);
-var parseHeaders = __webpack_require__(30);
-var isURLSameOrigin = __webpack_require__(31);
-var createError = __webpack_require__(8);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(32);
-
-module.exports = function xhrAdapter(config) {
-  return new Promise(function dispatchXhrRequest(resolve, reject) {
-    var requestData = config.data;
-    var requestHeaders = config.headers;
-
-    if (utils.isFormData(requestData)) {
-      delete requestHeaders['Content-Type']; // Let the browser set it
-    }
-
-    var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if ("development" !== 'test' &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
-
-    // HTTP basic authentication
-    if (config.auth) {
-      var username = config.auth.username || '';
-      var password = config.auth.password || '';
-      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
-    }
-
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
-
-    // Set the request timeout in MS
-    request.timeout = config.timeout;
-
-    // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
-        return;
-      }
-
-      // The request errored out and we didn't get a response, this will be
-      // handled by onerror instead
-      // With one exception: request that using file: protocol, most browsers
-      // will return status as 0 even though it's a successful request
-      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
-        return;
-      }
-
-      // Prepare the response
-      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
-      var response = {
-        data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
-        headers: responseHeaders,
-        config: config,
-        request: request
-      };
-
-      settle(resolve, reject, response);
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle low level network errors
-    request.onerror = function handleError() {
-      // Real errors are hidden from us by the browser
-      // onerror should only fire if it's a network error
-      reject(createError('Network Error', config, null, request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle timeout
-    request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
-        request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Add xsrf header
-    // This is only done if running in a standard browser environment.
-    // Specifically not if we're in a web worker, or react-native.
-    if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(33);
-
-      // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-          cookies.read(config.xsrfCookieName) :
-          undefined;
-
-      if (xsrfValue) {
-        requestHeaders[config.xsrfHeaderName] = xsrfValue;
-      }
-    }
-
-    // Add headers to the request
-    if ('setRequestHeader' in request) {
-      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
-        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
-          // Remove Content-Type if data is undefined
-          delete requestHeaders[key];
-        } else {
-          // Otherwise add header to the request
-          request.setRequestHeader(key, val);
-        }
-      });
-    }
-
-    // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
-    }
-
-    // Add responseType to request if needed
-    if (config.responseType) {
-      try {
-        request.responseType = config.responseType;
-      } catch (e) {
-        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
-        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
-        if (config.responseType !== 'json') {
-          throw e;
-        }
-      }
-    }
-
-    // Handle progress if needed
-    if (typeof config.onDownloadProgress === 'function') {
-      request.addEventListener('progress', config.onDownloadProgress);
-    }
-
-    // Not all browsers support upload events
-    if (typeof config.onUploadProgress === 'function' && request.upload) {
-      request.upload.addEventListener('progress', config.onUploadProgress);
-    }
-
-    if (config.cancelToken) {
-      // Handle cancellation
-      config.cancelToken.promise.then(function onCanceled(cancel) {
-        if (!request) {
-          return;
-        }
-
-        request.abort();
-        reject(cancel);
-        // Clean up request
-        request = null;
-      });
-    }
-
-    if (requestData === undefined) {
-      requestData = null;
-    }
-
-    // Send the request
-    request.send(requestData);
-  });
-};
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var enhanceError = __webpack_require__(28);
-
-/**
- * Create an Error with the specified message, config, error code, request and response.
- *
- * @param {string} message The error message.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The created error.
- */
-module.exports = function createError(message, config, code, request, response) {
-  var error = new Error(message);
-  return enhanceError(error, config, code, request, response);
-};
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function isCancel(value) {
-  return !!(value && value.__CANCEL__);
-};
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * A `Cancel` is an object that is thrown when an operation is canceled.
- *
- * @class
- * @param {string=} message The message.
- */
-function Cancel(message) {
-  this.message = message;
-}
-
-Cancel.prototype.toString = function toString() {
-  return 'Cancel' + (this.message ? ': ' + this.message : '');
-};
-
-Cancel.prototype.__CANCEL__ = true;
-
-module.exports = Cancel;
-
-
-/***/ }),
-/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11261,7 +10966,302 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+var settle = __webpack_require__(27);
+var buildURL = __webpack_require__(29);
+var parseHeaders = __webpack_require__(30);
+var isURLSameOrigin = __webpack_require__(31);
+var createError = __webpack_require__(9);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(32);
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if ("development" !== 'test' &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(33);
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(28);
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
 
 /***/ }),
 /* 12 */
@@ -11306,7 +11306,7 @@ if(false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(88);
+module.exports = __webpack_require__(94);
 
 
 /***/ }),
@@ -11321,7 +11321,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_lazyload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_lazyload__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_touch__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_touch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_touch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(92);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -11331,7 +11331,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __webpack_require__(16);
 
-window.Vue = __webpack_require__(11);
+window.Vue = __webpack_require__(5);
 
 
 window.Vue.use(__WEBPACK_IMPORTED_MODULE_0_vee_validate___default.a);
@@ -11355,12 +11355,13 @@ Vue.component('package-pictures', __webpack_require__(68));
 
 Vue.component('small-pictures-preview', __webpack_require__(76));
 Vue.component('register-form-button', __webpack_require__(81));
-
+Vue.component('user-notifications', __webpack_require__(86));
 
 
 var app = new Vue({
   el: '#app',
   store: __WEBPACK_IMPORTED_MODULE_3__store__["a" /* store */]
+
 });
 
 /***/ }),
@@ -28521,7 +28522,7 @@ Pusher.log = function (message) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(18)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(18)(module)))
 
 /***/ }),
 /* 18 */
@@ -41208,7 +41209,7 @@ module.exports = __webpack_require__(22);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(6);
+var bind = __webpack_require__(7);
 var Axios = __webpack_require__(24);
 var defaults = __webpack_require__(4);
 
@@ -41243,9 +41244,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(10);
+axios.Cancel = __webpack_require__(11);
 axios.CancelToken = __webpack_require__(39);
-axios.isCancel = __webpack_require__(9);
+axios.isCancel = __webpack_require__(10);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -41595,7 +41596,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(8);
+var createError = __webpack_require__(9);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -42014,7 +42015,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(36);
-var isCancel = __webpack_require__(9);
+var isCancel = __webpack_require__(10);
 var defaults = __webpack_require__(4);
 
 /**
@@ -42167,7 +42168,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(10);
+var Cancel = __webpack_require__(11);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -55536,12 +55537,511 @@ if (false) {
 
 /***/ }),
 /* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(87)
+}
+var Component = __webpack_require__(3)(
+  /* script */
+  __webpack_require__(89),
+  /* template */
+  __webpack_require__(91),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/Users/NotificationsBar.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] NotificationsBar.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-68ef66b6", Component.options)
+  } else {
+    hotAPI.reload("data-v-68ef66b6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(88);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("35014493", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-68ef66b6\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsBar.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-68ef66b6\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsBar.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n#badge{\n    font-size: 60%;\n    position:absolute;\n    top: .6em;\n    right: .3em;\n    z-index: 99;\n}\n#li-sizing{\n    padding-right: 8.5em;\n    padding-left: 8.5em;\n}\n.li-list{\n    font-size: 90%;\n}\n#show-all{\n    color: blue;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_virtual_scroll_list__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_virtual_scroll_list___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_virtual_scroll_list__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        data_id: 0
+    },
+    components: { virtualList: __WEBPACK_IMPORTED_MODULE_0_vue_virtual_scroll_list___default.a },
+    data: function data() {
+        return {
+            prefixUrl: '/user/' + this.data_id + '/'
+        };
+    },
+    mounted: function mounted() {
+        this.listen();
+        this.unreadNotifications();
+    },
+
+    computed: {
+        unread_notifications: function unread_notifications() {
+            return this.$store.getters.notifications_length;
+        },
+        all_notifications: function all_notifications() {
+            return this.$store.getters.all_notifications;
+        }
+    },
+
+    methods: {
+        listen: function listen() {
+            var _this = this;
+
+            window.Echo.private('App.User.' + this.data_id).listen('PackageNotification', function (e) {
+                _this.$store.commit('add_notification', e);
+            });
+        },
+        unreadNotifications: function unreadNotifications() {
+            var _this2 = this;
+
+            axios.get(this.prefixUrl + 'unread').then(function (response) {
+                response.data.unread.forEach(function (notifications) {
+                    console.log(notifications.data.package);
+                    _this2.$store.commit('add_notification', notifications.data.package);
+                });
+                _this2.notificationsBarSize = _this2.unread_notifications;
+                console.log(_this2.notificationsBarSize);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+
+});
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function (root, ns, factory) {
+    if (true) {
+        module.exports = factory(__webpack_require__(5))
+    } else if (typeof define === 'function' && define.amd) {
+        define(['vue'], factory)
+    } else if (typeof exports === 'object') {
+        exports[ns] = factory(require('vue'))
+    } else {
+        root[ns] = factory(root['Vue'])
+    }
+})(this, 'VirutalScrollList', function (Vue2) {
+    if (typeof Vue2 === 'object' && typeof Vue2.default === 'function') {
+        Vue2 = Vue2.default
+    }
+
+    var innerns = 'vue-virtual-scroll-list'
+
+    return Vue2.component(innerns, {
+        props: {
+            size: { type: Number, required: true },
+            remain: { type: Number, required: true },
+            rtag: { type: String, default: 'div' },
+            rclass: { type: String, default: '' },
+            wtag: { type: String, default: 'div' },
+            wclass: { type: String, default: '' },
+            start: { type: Number, default: 0 },
+            totop: Function,
+            tobottom: Function,
+            onscroll: Function
+        },
+
+        created: function () {
+            // An object helping to calculate.
+            this.delta = {
+                start: 0, // Start index.
+                end: 0, // End index.
+                total: 0, // All items count.
+                keeps: 0, // Nums keeping in real dom.
+                benchs: 0, // Nums scroll pass should force update.
+                scrollTop: 0, // Store scrollTop.
+                scrollDirect: 'd', // Scroll direction.
+                viewHeight: 0, // Container wrapper viewport height.
+                allPadding: 0, // All padding of not-render-yet doms.
+                paddingTop: 0, // Container wrapper real padding-top.
+                timeStamp: 0 // Last event fire timestamp avoid compact fire.
+            }
+        },
+
+        watch: {
+            start: function (index) {
+                if (!this.validStart(index)) {
+                    return
+                }
+
+                var delta = this.delta
+                var start, end, scrollTop
+
+                if (this.isOverflow(index)) {
+                    var zone = this.getLastZone()
+                    end = zone.end
+                    start = zone.start
+                    scrollTop = delta.total * this.size
+                } else {
+                    start = index
+                    end = start + delta.keeps
+                    scrollTop = start * this.size
+                }
+
+                delta.end = end
+                delta.start = start >= this.remain ? start : 0
+
+                this.$forceUpdate()
+                Vue2.nextTick(this.setScrollTop.bind(this, scrollTop))
+            }
+        },
+
+        methods: {
+            handleScroll: function (e) {
+                var scrollTop = this.$refs.container.scrollTop
+
+                this.updateZone(scrollTop)
+
+                if (this.onscroll) {
+                    this.onscroll(e, scrollTop)
+                }
+            },
+
+            updateZone: function (offset) {
+                var delta = this.delta
+                var overs = Math.floor(offset / this.size)
+
+                if (!offset && delta.total) {
+                    this.fireEvent('totop')
+                }
+
+                delta.scrollDirect = delta.scrollTop > offset ? 'u' : 'd'
+                delta.scrollTop = offset
+
+                // Calculate the start and end by moving items.
+                var start = overs || 0
+                var end = overs ? (overs + delta.keeps) : delta.keeps
+
+                var isOver = this.isOverflow(start)
+                if (isOver) {
+                    var zone = this.getLastZone()
+                    end = zone.end
+                    start = zone.start
+                }
+
+                // If scroll pass items within now benchs, do not update.
+                if (!isOver && (overs > delta.start) && (overs - delta.start <= delta.benchs)) {
+                    return
+                }
+
+                delta.end = end
+                delta.start = start
+
+                // Call component to update shown items.
+                this.$forceUpdate()
+            },
+
+            // Avoid overflow range.
+            isOverflow: function (start) {
+                var delta = this.delta
+                var overflow = (delta.total - delta.keeps > 0) && (start + this.remain >= delta.total)
+                if (overflow && delta.scrollDirect === 'd') {
+                    this.fireEvent('tobottom')
+                }
+                return overflow
+            },
+
+            // Fire a props event to parent.
+            fireEvent: function (event) {
+                var now = +new Date()
+                if (this[event] && now - this.delta.timeStamp > 30) {
+                    this[event]()
+                    this.delta.timeStamp = now
+                }
+            },
+
+            // Check if given start is valid.
+            validStart: function (start) {
+                var valid = 1
+                if (start !== parseInt(start, 10)) {
+                    valid = 0
+                    console.warn(innerns + ': start ' + start + ' is not an integer.')
+                }
+                if (start < 0 || start > this.delta.total - 1) {
+                    valid = 0
+                    console.warn(innerns + ': start ' + start + ' is an overflow index.')
+                }
+                return !!valid
+            },
+
+            // If overflow range return the last zone.
+            getLastZone: function () {
+                return {
+                    end: this.delta.total,
+                    start: this.delta.total - this.delta.keeps
+                }
+            },
+
+            // Set manual scrollTop
+            setScrollTop: function (scrollTop) {
+                this.$refs.container.scrollTop = scrollTop
+            },
+
+            // Filter the shown items base on start and end.
+            filter: function (slots) {
+                var delta = this.delta
+
+                if (!slots) {
+                    slots = []
+                    delta.start = 0
+                }
+
+                var hasPadding = slots.length > delta.keeps
+
+                delta.total = slots.length
+                delta.paddingTop = this.size * (hasPadding ? delta.start : 0)
+                delta.allPadding = this.size * (hasPadding ? slots.length - delta.keeps : 0)
+
+                return slots.filter(function (slot, index) {
+                    return index >= delta.start && index <= delta.end
+                })
+            }
+        },
+
+        beforeMount: function () {
+            var delta = this.delta
+            var remain = this.remain
+            var benchs = Math.round(remain / 2)
+
+            delta.benchs = benchs
+            delta.keeps = remain + benchs
+            delta.viewHeight = this.size * remain
+            delta.start = this.start >= remain ? this.start : 0
+            delta.end = this.start + remain + benchs
+        },
+
+        mounted: function () {
+            if (this.validStart(this.start)) {
+                this.setScrollTop(this.start * this.size)
+            }
+        },
+
+        render: function (createElement) {
+            var showList = this.filter(this.$slots.default)
+            var delta = this.delta
+
+            return createElement(this.rtag, {
+                'ref': 'container',
+                'style': {
+                    'display': 'block',
+                    'overflow-y': 'auto',
+                    'height': delta.viewHeight + 'px'
+                },
+                'on': {
+                    'scroll': this.handleScroll
+                },
+                'class': this.rclass
+            }, [
+                createElement(this.wtag, {
+                    'style': {
+                        'display': 'block',
+                        'padding-top': delta.paddingTop + 'px',
+                        'padding-bottom': delta.allPadding - delta.paddingTop + 'px'
+                    },
+                    'class': this.wclass
+                }, showList)
+            ])
+        }
+    })
+})
+
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', {
+    staticClass: "dropdown"
+  }, [_c('a', {
+    staticClass: "btn-lg dropdown-toggle",
+    attrs: {
+      "href": "#",
+      "data-toggle": "dropdown",
+      "role": "button",
+      "aria-expanded": "false"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-globe",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "badge",
+    attrs: {
+      "aria-hidden": "true",
+      "id": "badge"
+    }
+  }, [_vm._v(_vm._s(_vm.unread_notifications))])]), _vm._v(" "), _c('ul', {
+    staticClass: "dropdown-menu",
+    attrs: {
+      "role": "menu"
+    }
+  }, [_c('li', {
+    staticClass: "dropdown-header"
+  }, [_vm._v("Notifications ")]), _vm._v(" "), _c('li', {
+    staticClass: "divider",
+    attrs: {
+      "role": "separator"
+    }
+  }), _vm._v(" "), _c('virtual-list', {
+    attrs: {
+      "role": "menu",
+      "size": 12,
+      "remain": 12,
+      "rclass": 'col-sm-12',
+      "rtag": 'li',
+      "wtag": 'li'
+    }
+  }, [_vm._l((_vm.all_notifications), function(notify, index) {
+    return _c('li', {
+      key: index,
+      staticClass: "item dropdown-header"
+    }, [_c('a', {
+      attrs: {
+        "href": _vm.prefixUrl + 'packages/' + notify.id
+      }
+    }, [_vm._v("\n                        New package: # " + _vm._s(notify.id) + "\n                    ")])])
+  }), _vm._v(" "), _c('li', {
+    staticClass: "divider",
+    attrs: {
+      "role": "separator"
+    }
+  })], 2), _vm._v(" "), _c('li', {
+    staticClass: "divider",
+    attrs: {
+      "role": "separator"
+    }
+  }), _vm._v(" "), _c('li', {
+    staticClass: "dropdown-header"
+  }, [_c('a', {
+    attrs: {
+      "href": _vm.prefixUrl + 'notifications',
+      "id": "show-all"
+    }
+  }, [_vm._v("\n                Show all\n            ")])])], 1)])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-68ef66b6", module.exports)
+  }
+}
+
+/***/ }),
+/* 92 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 
 
@@ -55570,7 +56070,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
 });
 
 /***/ }),
-/* 87 */
+/* 93 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56383,7 +56883,7 @@ var index_esm = {
 
 
 /***/ }),
-/* 88 */
+/* 94 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

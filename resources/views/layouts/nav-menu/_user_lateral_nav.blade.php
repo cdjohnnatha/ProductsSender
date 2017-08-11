@@ -48,7 +48,7 @@
             </a>
             <ul class="nav collapse col-sm-offset-1" id="user-menu" role="menu" aria-labelledby="btn-1">
                 <li id="create-subscription">
-                    <a href="{{route('user.dashboard', Auth::user()->id)}}">
+                    <a href="{{route('user.show', Auth::user()->id)}}">
                         <span class="glyphicon glyphicon-menu-right"></span>
                         Perfil
                     </a>

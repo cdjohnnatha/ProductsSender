@@ -59,15 +59,4 @@ class Package extends Entity
     {
         return $this->hasMany(PackageFiles::class, 'package_id');
     }
-
-    protected static function boot() {
-        parent::boot();
-
-        static::deleting(function ($user) {
-            $user->pictures()->delete();
-        });
-    }
-
-
-
 }
