@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     public function subscription()
     {
-        return $this->hasOne(Subscription::class, 'id', 'subscriptions_id');
+        return $this->belongsTo(Subscription::class);
     }
 
     public function wallet()

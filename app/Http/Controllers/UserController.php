@@ -42,7 +42,12 @@ class UserController extends Controller
 
     public function show($id)
     {
-        return response()->json(['user' => User::findOrFail($id)]);
+        $user = User::with([
+            'subscription',
+            'address' => function($query){
+                $query->where('default_address', true);
+            }])->findOrFail($id);
+        return view('user.perfil', compact('user'));
     }
 
     public function edit($id)
