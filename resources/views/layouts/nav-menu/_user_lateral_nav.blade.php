@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li id="list-subscriptions">
-                    <a href="{{route('user.dashboard', Auth::user()->id)}}">
+                    <a href="{{route('user.address.index', [Auth::user()->id, 'user'])}}">
                         <span class="glyphicon glyphicon-menu-right"></span>
                         Addresses
                     </a>

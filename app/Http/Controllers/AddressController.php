@@ -34,8 +34,12 @@ class AddressController extends Controller
      */
     public function index(Request $request, $id)
     {
-        dd($request);
-        return  $id;
+        $morph = $this->getClass($request)::with('address')->findOrFail($id);
+        $default = $this->getClass($request)::with([
+            'address' => function($query){
+                $query->where('default_address', true);
+            }])->findOrFail($id);
+        return  view('address.index', compact('morph', 'default'));
     }
 
     /**
@@ -137,14 +141,25 @@ class AddressController extends Controller
         }
     }
 
-    private function getClass($urlPrefix)
+    private function getClass($request)
     {
-        if( strpos( $urlPrefix, 'warehouse' ) !== false ) {
+        if ($request->is('warehouse/*')) {
             return Warehouse::class;
-        }else if(strpos( $urlPrefix, 'user' ) !== false) {
+        }else if($request->is('user/*')) {
             return User::class;
         } else{
             return Admin::class;
+        }
+    }
+
+    private function getType($request)
+    {
+        if ($request->is('warehouse/*')) {
+            return 'warehouse';
+        }else if($request->is('user/*')) {
+            return 'user';
+        } else{
+            return 'admin';
         }
     }
 }
