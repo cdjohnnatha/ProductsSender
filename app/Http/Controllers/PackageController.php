@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Event;
 use App\Events\PackageNotification;
+use App\Notifications\PackageNotifications;
 use App\Package;
 use App\PackageFiles;
 use App\Status;
@@ -89,7 +91,6 @@ class PackageController extends Controller
                     }
                 }
             }
-            event(new PackageNotification($package));
             return redirect(route('admin.packages.index'));
         }
 
@@ -133,6 +134,7 @@ class PackageController extends Controller
         $package->load('pictures');
         $status = Status::all();
         $warehouses = Warehouse::all();
+        $warehouses->load('address');
         return view('package.create', compact('package', 'status', 'warehouses'));
     }
 
@@ -155,9 +157,7 @@ class PackageController extends Controller
                     $fileName = $package->id . date("dmYhms");
                     $extension = explode('.', $file->getClientOriginalName())[1];
                     $fileName = md5($fileName) . '.' . $extension;
-                    $path = $file->storeAs(
-                        'public/PackagePictures', $fileName
-                    );
+                    $path = $file->storeAs('public/PackagePictures', $fileName);
                     $path = str_replace('public', 'storage', $path);
                     $picture = new PackageFiles();
                     $picture->name = $fileName;
@@ -174,6 +174,8 @@ class PackageController extends Controller
                     }
                 }
             }
+
+
             return redirect(route('admin.packages.index'));
         }
     }

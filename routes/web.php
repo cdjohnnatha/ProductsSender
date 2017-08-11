@@ -33,6 +33,16 @@ Route::group(['middleware' => ['web']], function() {
         'prefix' => 'user/{user}'
     ], function() {
         Route::get('/dashboard', 'UserController@dashboard')->name('dashboard');
+        Route::get('/notifications', 'UserNotificationsController@notifications')->name('notifications');
+        Route::get('/unread', 'UserNotificationsController@unread')->name('notifications.unread');
+        Route::resource('packages', 'PackageController', ['only' => [
+            'show'
+        ]]);
+        Route::resource('notifications', 'UserNotificationsController', ['only' => [
+            'index',
+            'destroy',
+            'show'
+        ]]);
     });
 
     Route::resource('user', 'UserController');

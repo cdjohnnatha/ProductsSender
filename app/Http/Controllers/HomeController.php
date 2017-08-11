@@ -16,28 +16,5 @@ class HomeController extends Controller
     }
 
 
-    public function notifications()
-    {
-        return response()->json([
-            'notifications' => Auth::user()->notifications,
-            'unreadNotifications' => Auth::user()->unreadNotifications
-        ]);
-    }
 
-    public function unread()
-    {
-        return response()->json([
-            'unread' => Auth::user()->unreadNotifications
-        ]);
-    }
-
-    public function markRead()
-    {
-        Auth::user()->notifications->markAsRead();
-    }
-
-    public function showNotifications()
-    {
-        return view('user.notifications');
-    }
 }

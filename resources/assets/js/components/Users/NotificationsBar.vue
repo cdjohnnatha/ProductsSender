@@ -22,7 +22,7 @@
                 </virtual-list>
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">
-                <a v-bind:href="prefixUrl + 'show-notifications'" id="show-all">
+                <a v-bind:href="prefixUrl + 'notifications'" id="show-all">
                     Show all
                 </a>
             </li>
@@ -30,11 +30,14 @@
     </li>
 </template>
 <script>
+
+
+    import virtualList from 'vue-virtual-scroll-list'
     export default {
         props: {
             data_id: 0
         },
-
+        components: { virtualList },
         data(){
             return {
                 prefixUrl: '/user/' + this.data_id + '/' ,
