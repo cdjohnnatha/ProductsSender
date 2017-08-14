@@ -11306,7 +11306,7 @@ if(false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(94);
+module.exports = __webpack_require__(100);
 
 
 /***/ }),
@@ -11321,7 +11321,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_lazyload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_lazyload__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_touch__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_touch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_touch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(98);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -11356,7 +11356,7 @@ Vue.component('package-pictures', __webpack_require__(68));
 Vue.component('small-pictures-preview', __webpack_require__(76));
 Vue.component('register-form-button', __webpack_require__(81));
 Vue.component('user-notifications', __webpack_require__(86));
-Vue.component('user-additional-names', __webpack_require__(101));
+Vue.component('user-additional-names', __webpack_require__(92));
 
 
 var app = new Vue({
@@ -56034,11 +56034,283 @@ if (false) {
 
 /***/ }),
 /* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(93)
+}
+var Component = __webpack_require__(3)(
+  /* script */
+  __webpack_require__(95),
+  /* template */
+  __webpack_require__(97),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/Users/AdditionalNames.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] AdditionalNames.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-8a7100f4", Component.options)
+  } else {
+    hotAPI.reload("data-v-8a7100f4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(94);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("9f915f8a", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8a7100f4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AdditionalNames.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8a7100f4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AdditionalNames.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 95 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils_Objects_CustomClearance__ = __webpack_require__(96);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        editing: Array,
+        user_id: 0
+    },
+    data: function data() {
+        return {
+            additionals: [{
+                id: 0,
+                name: ''
+            }]
+        };
+    },
+    created: function created() {
+        if (this.editing == null || this.editing.length === 0) {
+            return this.additionals;
+        } else {
+            this.additionals = this.editing;
+            this.additionals.push({ name: '', id: 0 });
+            return this.additionals;
+        }
+    },
+
+
+    methods: {
+        addName: function addName() {
+            if (this.additionals.length - 1 >= 0 && this.additionals[this.additionals.length - 1].name.length > 0) {
+                this.additionals.push({ name: '', id: 0 });
+                $('#submit-button').click();
+            }
+        },
+        removeName: function removeName(index) {
+            if (this.additionals[index].id !== 0) {
+                axios.post('/user/' + this.user_id + '/additional-names/' + this.additionals[index].id, {
+                    '_method': 'delete'
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+            this.additionals.splice(index, 1);
+        }
+    }
+
+});
+
+/***/ }),
+/* 96 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony default export */ var _unused_webpack_default_export = ({
+    customClearance: {
+        description: '',
+        manufacture_country: '',
+        quantity: 1,
+        unit_price: 1,
+        total_price: 0.0
+    }
+});
+
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('section', [_c('section', [_vm._l((_vm.additionals), function(additional, index) {
+    return _c('section', {
+      staticClass: "col-sm-6"
+    }, [_c('div', {
+      staticClass: "input-group form-group"
+    }, [_c('input', {
+      staticClass: "hidden",
+      attrs: {
+        "name": 'additional[' + index + '][id]'
+      },
+      domProps: {
+        "value": additional.id
+      }
+    }), _vm._v(" "), _c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (additional.name),
+        expression: "additional.name"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "name": 'additional[' + index + '][name]',
+        "placeholder": "Name"
+      },
+      domProps: {
+        "value": additional.name,
+        "value": (additional.name)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          additional.name = $event.target.value
+        }
+      }
+    }), _vm._v(" "), _c('span', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (additional.name.length != 0),
+        expression: "additional.name.length != 0"
+      }],
+      staticClass: "btn input-group-addon",
+      on: {
+        "click": function($event) {
+          _vm.removeName(index)
+        }
+      }
+    }, [_c('span', {
+      staticClass: "glyphicon glyphicon-trash"
+    })]), _vm._v(" "), (_vm.additionals.length == index + 1) ? _c('span', {
+      staticClass: "btn input-group-addon",
+      on: {
+        "click": _vm.addName
+      }
+    }, [_c('span', {
+      staticClass: "glyphicon glyphicon-plus"
+    })]) : _vm._e()])])
+  }), _vm._v(" "), _c('button', {
+    staticClass: "hidden",
+    attrs: {
+      "type": "submit",
+      "id": "submit-button"
+    }
+  }), _vm._v(" "), _vm._m(0)], 2)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('footer', {
+    staticClass: "col-sm-12"
+  }, [_c('button', {
+    staticClass: "btn btn-info",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-refresh"
+  }, [_vm._v("UPDATE")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-8a7100f4", module.exports)
+  }
+}
+
+/***/ }),
+/* 98 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 
@@ -56068,7 +56340,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
 });
 
 /***/ }),
-/* 93 */
+/* 99 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56881,288 +57153,10 @@ var index_esm = {
 
 
 /***/ }),
-/* 94 */
+/* 100 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(102)
-}
-var Component = __webpack_require__(3)(
-  /* script */
-  __webpack_require__(104),
-  /* template */
-  __webpack_require__(106),
-  /* styles */
-  injectStyle,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/Users/AdditionalNames.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] AdditionalNames.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-8a7100f4", Component.options)
-  } else {
-    hotAPI.reload("data-v-8a7100f4", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 102 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(103);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("9f915f8a", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8a7100f4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AdditionalNames.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8a7100f4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AdditionalNames.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 103 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 104 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils_Objects_CustomClearance__ = __webpack_require__(105);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        editing: Array,
-        user_id: 0
-    },
-    data: function data() {
-        return {
-            additionals: [{
-                id: 0,
-                name: ''
-            }]
-        };
-    },
-    created: function created() {
-        if (this.editing == null || this.editing.length === 0) {
-            return this.additionals;
-        } else {
-            this.additionals = this.editing;
-            this.additionals.push({ name: '', id: 0 });
-            return this.additionals;
-        }
-    },
-
-
-    methods: {
-        addName: function addName() {
-            if (this.additionals.length - 1 >= 0 && this.additionals[this.additionals.length - 1].name.length > 0) {
-                this.additionals.push({ name: '', id: 0 });
-                $('#submit-button').click();
-            }
-        },
-        removeName: function removeName(index) {
-            if (this.additionals[index].id !== 0) {
-                axios.post('/user/' + this.user_id + '/additional-names/' + this.additionals[index].id, {
-                    '_method': 'delete'
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            }
-            this.additionals.splice(index, 1);
-        }
-    }
-
-});
-
-/***/ }),
-/* 105 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony default export */ var _unused_webpack_default_export = ({
-    customClearance: {
-        description: '',
-        manufacture_country: '',
-        quantity: 1,
-        unit_price: 1,
-        total_price: 0.0
-    }
-});
-
-/***/ }),
-/* 106 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', [_c('section', [_vm._l((_vm.additionals), function(additional, index) {
-    return _c('section', {
-      staticClass: "col-sm-6"
-    }, [_c('div', {
-      staticClass: "input-group form-group"
-    }, [_c('input', {
-      staticClass: "hidden",
-      attrs: {
-        "name": 'additional[' + index + '][id]'
-      },
-      domProps: {
-        "value": additional.id
-      }
-    }), _vm._v(" "), _c('input', {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: (additional.name),
-        expression: "additional.name"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        "type": "text",
-        "name": 'additional[' + index + '][name]',
-        "placeholder": "Name"
-      },
-      domProps: {
-        "value": additional.name,
-        "value": (additional.name)
-      },
-      on: {
-        "input": function($event) {
-          if ($event.target.composing) { return; }
-          additional.name = $event.target.value
-        }
-      }
-    }), _vm._v(" "), _c('span', {
-      directives: [{
-        name: "show",
-        rawName: "v-show",
-        value: (additional.name.length != 0),
-        expression: "additional.name.length != 0"
-      }],
-      staticClass: "btn input-group-addon",
-      on: {
-        "click": function($event) {
-          _vm.removeName(index)
-        }
-      }
-    }, [_c('span', {
-      staticClass: "glyphicon glyphicon-trash"
-    })]), _vm._v(" "), (_vm.additionals.length == index + 1) ? _c('span', {
-      staticClass: "btn input-group-addon",
-      on: {
-        "click": _vm.addName
-      }
-    }, [_c('span', {
-      staticClass: "glyphicon glyphicon-plus"
-    })]) : _vm._e()])])
-  }), _vm._v(" "), _c('button', {
-    staticClass: "hidden",
-    attrs: {
-      "type": "submit",
-      "id": "submit-button"
-    }
-  }), _vm._v(" "), _vm._m(0)], 2)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('footer', {
-    staticClass: "col-sm-12"
-  }, [_c('button', {
-    staticClass: "btn btn-info",
-    attrs: {
-      "type": "submit"
-    }
-  }, [_c('span', {
-    staticClass: "glyphicon glyphicon-refresh"
-  }, [_vm._v("UPDATE")])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-8a7100f4", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

@@ -35,9 +35,9 @@ Route::group(['middleware' => ['web']], function() {
         Route::get('/dashboard', 'UserController@dashboard')->name('dashboard');
         Route::get('/notifications', 'UserNotificationsController@notifications')->name('notifications');
         Route::get('/unread', 'UserNotificationsController@unread')->name('notifications.unread');
+
         Route::resource('address', 'AddressController');
         Route::resource('packages', 'PackageController', ['only' => ['show']]);
-
         Route::resource('notifications', 'UserNotificationsController', ['only' => [
             'index',
             'destroy',

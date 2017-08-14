@@ -23,7 +23,7 @@ class AddressController extends Controller
             'address.city' => 'required',
             'address.state' => 'required',
             'address.postal_code' => 'required',
-            'address.phone' => 'required|numeric',
+            'address.phone' => 'required',
         ];
     }
 
@@ -61,13 +61,12 @@ class AddressController extends Controller
     public function store(Request $request, $id)
     {
         $this->validate($request, $this->rules());
-        $polymorph = $this->getClass($request->route()->getPrefix());
-        $address = new Address($request->all());
+        $polymorph = $this->getClass($request);
+        $address = new Address($request->input('address'));
         $object = $polymorph::find($id);
         if($object->address()->save($address)){
-            return redirect()->action('AddressController@index', $id);
+            return back();
         }
-
     }
 
     /**
