@@ -61,9 +61,10 @@
     </div>
     <div class="col-sm-6">
       <label>{{ __('address.titles.address') }}</label>
-      <input type="text" class="form-control" name="address[address]"
-             value="{{ $address->address or old('address.address') }}">
+      {{--<input type="text" class="form-control" name="address[address]"--}}
+             {{--value="{{ $address->address or old('address.address') }}">--}}
 
+      <countries-list></countries-list>
       @if ($errors->has('address.address'))
         <span class="help-block">
           <strong class="text-danger">{{ $errors->first('address.address') }}</strong>

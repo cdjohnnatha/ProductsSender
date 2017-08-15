@@ -7,7 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiwJ8VLRYRIG_5kUNgNFlELaJTjBWt-Hw&libraries=places"></script>
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
@@ -33,7 +33,6 @@
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
-
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
@@ -104,5 +103,13 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jeoquery.js') }}"></script>
+    <script>
+        var dbg;
+        jeoquery.getGeoNames('countryInfo', { country: 'GB' }, function(result){
+            console.log(result);
+        });
+    </script>
+
 </body>
 </html>

@@ -457,6 +457,103 @@ function toComment(sourceMap) {
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// this module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -672,103 +769,6 @@ function applyToTag (styleElement, obj) {
       styleElement.removeChild(styleElement.firstChild)
     }
     styleElement.appendChild(document.createTextNode(css))
-  }
-}
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// this module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
   }
 }
 
@@ -11306,7 +11306,7 @@ if(false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(100);
+module.exports = __webpack_require__(108);
 
 
 /***/ }),
@@ -11321,7 +11321,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_lazyload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_lazyload__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_touch__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_touch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_touch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_google_autocomplete__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_google_autocomplete___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_google_autocomplete__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(106);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -11330,7 +11332,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  */
 
 __webpack_require__(16);
-
 window.Vue = __webpack_require__(5);
 
 
@@ -11357,11 +11358,15 @@ Vue.component('small-pictures-preview', __webpack_require__(76));
 Vue.component('register-form-button', __webpack_require__(81));
 Vue.component('user-notifications', __webpack_require__(86));
 Vue.component('user-additional-names', __webpack_require__(92));
+Vue.component('countries-list', __webpack_require__(98));
+Vue.component('vue-google-autocomplete', __webpack_require__(102));
+
 
 
 var app = new Vue({
   el: '#app',
-  store: __WEBPACK_IMPORTED_MODULE_3__store__["a" /* store */]
+  store: __WEBPACK_IMPORTED_MODULE_4__store__["a" /* store */],
+  VueGoogleAutocomplete: __WEBPACK_IMPORTED_MODULE_3_vue_google_autocomplete___default.a
 
 });
 
@@ -53768,7 +53773,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(48)
 }
-var Component = __webpack_require__(3)(
+var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(51),
   /* template */
@@ -53814,7 +53819,7 @@ var content = __webpack_require__(49);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("46ff6353", content, false);
+var update = __webpack_require__(3)("46ff6353", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -54034,7 +54039,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(54)
 }
-var Component = __webpack_require__(3)(
+var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(56),
   /* template */
@@ -54080,7 +54085,7 @@ var content = __webpack_require__(55);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("3122de88", content, false);
+var update = __webpack_require__(3)("3122de88", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -54172,7 +54177,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(59)
 }
-var Component = __webpack_require__(3)(
+var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(61),
   /* template */
@@ -54218,7 +54223,7 @@ var content = __webpack_require__(60);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("2da1c2df", content, false);
+var update = __webpack_require__(3)("2da1c2df", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -54305,7 +54310,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(64)
 }
-var Component = __webpack_require__(3)(
+var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(66),
   /* template */
@@ -54351,7 +54356,7 @@ var content = __webpack_require__(65);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("0fe539a9", content, false);
+var update = __webpack_require__(3)("0fe539a9", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -54477,7 +54482,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(69)
 }
-var Component = __webpack_require__(3)(
+var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(71),
   /* template */
@@ -54523,7 +54528,7 @@ var content = __webpack_require__(70);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("7ebb3e06", content, false);
+var update = __webpack_require__(3)("7ebb3e06", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -55160,7 +55165,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(77)
 }
-var Component = __webpack_require__(3)(
+var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(79),
   /* template */
@@ -55206,7 +55211,7 @@ var content = __webpack_require__(78);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("d6b7cd7c", content, false);
+var update = __webpack_require__(3)("d6b7cd7c", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -55343,7 +55348,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(82)
 }
-var Component = __webpack_require__(3)(
+var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(84),
   /* template */
@@ -55389,7 +55394,7 @@ var content = __webpack_require__(83);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("d0d48f64", content, false);
+var update = __webpack_require__(3)("d0d48f64", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -55544,7 +55549,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(87)
 }
-var Component = __webpack_require__(3)(
+var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(89),
   /* template */
@@ -55590,7 +55595,7 @@ var content = __webpack_require__(88);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("35014493", content, false);
+var update = __webpack_require__(3)("35014493", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -56041,7 +56046,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(93)
 }
-var Component = __webpack_require__(3)(
+var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(95),
   /* template */
@@ -56087,7 +56092,7 @@ var content = __webpack_require__(94);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("9f915f8a", content, false);
+var update = __webpack_require__(3)("9f915f8a", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -56306,11 +56311,468 @@ if (false) {
 
 /***/ }),
 /* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(99)
+}
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(101),
+  /* template */
+  __webpack_require__(105),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/Utils/Countries.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Countries.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6ccb83fc", Component.options)
+  } else {
+    hotAPI.reload("data-v-6ccb83fc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(100);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("7d94f175", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6ccb83fc\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Countries.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6ccb83fc\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Countries.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 101 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['setCountry'],
+    data: function data() {
+        return {
+            selectedCountry: '',
+            address: ''
+        };
+    },
+    created: function created() {},
+
+    methods: {
+        getAddressData: function getAddressData(addressData, placeResultData) {
+            this.address = addressData;
+            console.log(placeResultData.address_components[1].short_name);
+        }
+    }
+});
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(103),
+  /* template */
+  __webpack_require__(104),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/node_modules/vue-google-autocomplete/src/VueGoogleAutocomplete.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] VueGoogleAutocomplete.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0f9b48be", Component.options)
+  } else {
+    hotAPI.reload("data-v-0f9b48be", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 103 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'VueGoogleAutocomplete',
+
+  props: {
+    id: {
+      type: String,
+      required: true
+    },
+
+    classname: String,
+
+    placeholder: {
+      type: String,
+      default: 'Start typing'
+    },
+
+    types: {
+      type: String,
+      default: 'address'
+    },
+
+    country: {
+      type: [String, Array],
+      default: null
+    },
+
+    enableGeolocation: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  data: function data() {
+    return {
+      /**
+       * The Autocomplete object.
+       *
+       * @type {Autocomplete}
+       * @link https://developers.google.com/maps/documentation/javascript/reference#Autocomplete
+       */
+      autocomplete: null,
+
+      /**
+       * Autocomplete input text
+       * @type {String}
+       */
+      autocompleteText: ''
+    };
+  },
+
+  mounted: function mounted() {
+    var _this = this;
+
+    var options = {};
+
+    if (this.types) {
+      options.types = [this.types];
+    }
+
+    if (this.country) {
+      options.componentRestrictions = {
+        country: this.country
+      };
+    }
+
+    this.autocomplete = new google.maps.places.Autocomplete(document.getElementById(this.id), options);
+
+    this.autocomplete.addListener('place_changed', function () {
+
+      var place = _this.autocomplete.getPlace();
+
+      if (!place.geometry) {
+        // User entered the name of a Place that was not suggested and
+        // pressed the Enter key, or the Place Details request failed.
+        _this.$emit('no-results-found', place);
+        return;
+      }
+
+      var addressComponents = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+      };
+
+      var returnData = {};
+
+      if (place.address_components !== undefined) {
+        // Get each component of the address from the place details
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+
+          if (addressComponents[addressType]) {
+            var val = place.address_components[i][addressComponents[addressType]];
+            returnData[addressType] = val;
+          }
+        }
+
+        returnData['latitude'] = place.geometry.location.lat();
+        returnData['longitude'] = place.geometry.location.lng();
+
+        // return returnData object and PlaceResult object
+        _this.$emit('placechanged', returnData, place, _this.id);
+      }
+    });
+  },
+
+  methods: {
+    /**
+     * When the input gets focus
+     */
+    onFocus: function onFocus() {
+      this.geolocate();
+      this.$emit('focus');
+    },
+
+
+    /**
+     * When the input loses focus
+     */
+    onBlur: function onBlur() {
+      this.$emit('blur');
+    },
+
+
+    /**
+     * When the input got changed
+     */
+    onChange: function onChange() {
+      this.$emit('change', this.autocompleteText);
+    },
+
+
+    /**
+     * When a key gets pressed
+     * @param  {Event} event A keypress event
+     */
+    onKeyPress: function onKeyPress(event) {
+      this.$emit('keypress', event);
+    },
+
+
+    /**
+     * Clear the input
+     */
+    clear: function clear() {
+      this.autocompleteText = '';
+    },
+
+
+    /**
+     * Focus the input
+     */
+    focus: function focus() {
+      this.$refs.autocomplete.focus();
+    },
+
+
+    /**
+     * Blur the input
+     */
+    blur: function blur() {
+      this.$refs.autocomplete.blur();
+    },
+
+
+    /**
+     * Update the value of the input
+     * @param  {String} value
+     */
+    update: function update(value) {
+      this.autocompleteText = value;
+    },
+
+
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    geolocate: function geolocate() {
+      var _this2 = this;
+
+      if (this.enableGeolocation) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            _this2.autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.autocompleteText),
+      expression: "autocompleteText"
+    }],
+    ref: "autocomplete",
+    class: _vm.classname,
+    attrs: {
+      "type": "text",
+      "id": _vm.id,
+      "placeholder": _vm.placeholder
+    },
+    domProps: {
+      "value": (_vm.autocompleteText)
+    },
+    on: {
+      "focus": function($event) {
+        _vm.onFocus()
+      },
+      "blur": function($event) {
+        _vm.onBlur()
+      },
+      "change": _vm.onChange,
+      "keypress": _vm.onKeyPress,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.autocompleteText = $event.target.value
+      }
+    }
+  })
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-0f9b48be", module.exports)
+  }
+}
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('section', [_c('vue-google-autocomplete', {
+    ref: "address",
+    attrs: {
+      "id": "map",
+      "classname": "form-control",
+      "placeholder": "Please type your address",
+      "country": "br"
+    },
+    on: {
+      "placechanged": _vm.getAddressData
+    }
+  })], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-6ccb83fc", module.exports)
+  }
+}
+
+/***/ }),
+/* 106 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 
@@ -56340,7 +56802,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
 });
 
 /***/ }),
-/* 99 */
+/* 107 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57153,7 +57615,7 @@ var index_esm = {
 
 
 /***/ }),
-/* 100 */
+/* 108 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
