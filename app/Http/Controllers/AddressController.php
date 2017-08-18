@@ -18,12 +18,16 @@ class AddressController extends Controller
             'address.label' => 'bail|required|min:3',
             'address.owner_name' => 'required',
             'address.owner_surname' => 'required',
-            'address.country' => 'required',
-            'address.address' => 'required|min:5',
+            'address.phone' => 'required',
+            'address.company_name' => 'nullable',
             'address.city' => 'required',
             'address.state' => 'required',
+            'address.country' => 'required',
+            'address.street' => 'required|min:3',
+            'address.number' => 'required|string|max:15',
+            'address.formatted_address' => 'required',
             'address.postal_code' => 'required',
-            'address.phone' => 'required',
+            'address.default_address' => 'boolean'
         ];
     }
 
@@ -60,6 +64,7 @@ class AddressController extends Controller
      */
     public function store(Request $request, $id)
     {
+        dd($request->input());
         $this->validate($request, $this->rules());
         $polymorph = $this->getClass($request);
         $address = new Address($request->input('address'));

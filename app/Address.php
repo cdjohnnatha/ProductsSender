@@ -25,9 +25,10 @@ class Address extends Model
         'owner_surname',
         'company_name',
         'country',
-        'address',
+        'street',
         'city',
         'state',
+        'number',
         'postal_code',
         'phone',
         'default_address',
@@ -48,5 +49,10 @@ class Address extends Model
     public function addressable()
     {
         return $this->morphTo();
+    }
+
+    public function geonameCode()
+    {
+        return $this->hasOne(AddressGeonameCode::class);
     }
 }

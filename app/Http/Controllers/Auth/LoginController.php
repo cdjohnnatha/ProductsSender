@@ -32,7 +32,7 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         if(auth()->guard('admin')->user()){
-            return route('admin.index');
+            return route('admin.dashboard');
         }
         else{
             return route('user.dashboard', Auth::user()->id);

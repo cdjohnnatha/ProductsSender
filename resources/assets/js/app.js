@@ -7,7 +7,6 @@
 
 require('./bootstrap');
 window.Vue = require('vue');
-
 import VeeValidate from 'vee-validate';
 window.Vue.use(VeeValidate);
 
@@ -35,11 +34,15 @@ Vue.component('user-additional-names', require('./components/Users/AdditionalNam
 Vue.component('countries-list', require('./components/Utils/Countries.vue'));
 Vue.component('vue-google-autocomplete', require('vue-google-autocomplete'));
 
-import VueGoogleAutocomplete from 'vue-google-autocomplete'
+
+import VueGoogleAutocomplete from 'vue-google-autocomplete';
+import vSelect from "vue-select";
+Vue.component('vue-country-select', VueGoogleAutocomplete);
+Vue.component('v-select', vSelect);
+
 import { store } from './store'
 const app = new Vue({
     el: '#app',
     store,
-    VueGoogleAutocomplete
 
 });

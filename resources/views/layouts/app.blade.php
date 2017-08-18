@@ -7,7 +7,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiwJ8VLRYRIG_5kUNgNFlELaJTjBWt-Hw&libraries=places"></script>
+    {{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiwJ8VLRYRIG_5kUNgNFlELaJTjBWt-Hw&libraries=places"></script>--}}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZFQPhIqrB4KK8tY9O0uC0oajn1ZD0xRQ&libraries=places"></script>
+
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
@@ -87,7 +89,7 @@
             </div>
         </nav>
         @if(auth()->guard('admin')->user())
-            @include('layouts.nav-menu._admin_lateral_nav')
+            @include('layouts.nav-menu._top_nav')
         @elseif(auth()->guard('web')->user())
             @include('layouts.nav-menu._user_lateral_nav')
         @endif
@@ -103,13 +105,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/jeoquery.js') }}"></script>
-    <script>
-        var dbg;
-        jeoquery.getGeoNames('countryInfo', { country: 'GB' }, function(result){
-            console.log(result);
-        });
-    </script>
 
 </body>
 </html>
