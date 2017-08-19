@@ -19,7 +19,7 @@
 </template>
 <script>
      export default {
-        props: ['setCountry'],
+        props: ['setAddress'],
         data() {
             return {
                 geonameUsername: '&username=cdjohnnatha',
