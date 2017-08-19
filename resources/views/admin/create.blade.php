@@ -16,17 +16,16 @@
                         </li>
                     </ul>
                 </header>
-                <div class="card-body">
-                    <div class="">
-                        <div class="input-group col-sm-6">
+                <section class="card-body">
+                    <div class="form-inline">
+                        <div class="input-group">
                             <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
                             <input type="text" class="form-control" placeholder="Name">
-
+                        </div>
+                        <div class="input-group">
                             <input type="text" class="form-control" placeholder="Surname">
-
                         </div>
                     </div>
-
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
@@ -45,13 +44,16 @@
                             <input type="text" class="form-control" placeholder="country">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-inline">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
+                            <span class="input-group-addon"><i class="zmdi zmdi-key"></i></span>
                             <input type="text" class="form-control" placeholder="Password">
                         </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Confirm Password">
+                        </div>
                     </div>
-                </div>
+                </section>
                 <div class="card-footer text-right">
                     <button class="btn btn-primary btn-flat ">Cancel</button>
                     <button class="btn btn-primary">Submit</button>
