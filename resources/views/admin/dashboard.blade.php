@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('panel_header')
   {{ config('app.name') }} Dashboards

@@ -10,101 +10,73 @@
     {{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiwJ8VLRYRIG_5kUNgNFlELaJTjBWt-Hw&libraries=places"></script>--}}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZFQPhIqrB4KK8tY9O0uC0oajn1ZD0xRQ&libraries=places"></script>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Holyship') }}</title>
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/common/common.css') }}" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="{{asset('css/layout/vendor.bundle.css')}}" rel="stylesheet">
+    <link href="{{asset('css/layout/app.bundle.css')}}" rel="stylesheet">
+    <link href="{{asset('css/layout/theme-a.css')}}" rel="stylesheet">
 
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
+    <section id="app">
+    @if (Auth::guest())
+    <section id="app_wrapper">
+        <header id="app_topnavbar-wrapper">
+            <nav role="navigation" class="navbar topnavbar">
+                <section class="nav-wrapper">
+                    <ul class="nav navbar-nav pull-right right-menu">
+                        <li class="app_menu-open">
+                            <a href="javascript:void(0)" data-toggle-state="app_sidebar-left-open" data-key="leftSideBar">
+                                <i class="zmdi zmdi-menu"></i>
+                            </a>
+                        </li>
                         <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            @if(auth()->guard('web')->user())
-                                <user-notifications :data_id="{{Auth::user()->id}}"></user-notifications>
-                            @endif
-                            <li>
-                                <a href="#" class="btn-lg">
-                                    <span class="glyphicon  glyphicon-question-sign"></span>
-                                </a>
-                            </li>
-                            <li class="dropdown" id="optionsDropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <span class="glyphicon glyphicon-triangle-bottom"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="">Perfil</a></li>
-                                    <li><a id="edit" href="{{route('user.edit', Auth::user()->id)}}">Edit</a></li>
-                                    <li>
-                                        {{Form::open(['method' => 'DELETE', 'url'=> route('user.destroy', Auth::user()->id), 'style' => 'display:inline'])}}
-                                            <button id="delete" type="submit" class="remove-button-border padding-list">Delete</button>
-                                        {{Form::close()}}
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-
-                                </ul>
-                            </li>
-                        @endif
+                        <li><a href="{{ route('login') }}">Login</a></li>
+                        <li><a href="{{ route('register') }}">Register</a></li>
                     </ul>
-                </div>
-            </div>
-        </nav>
-        @if(auth()->guard('admin')->user())
-            @include('layouts.nav-menu._top_nav')
-        @elseif(auth()->guard('web')->user())
-            @include('layouts.nav-menu._user_lateral_nav')
-        @endif
-
-        <section class="container col-sm-offset-2">
-            <div class="col-sm-10">
-                <div class="panel panel-default">
-                    @yield('content')
+                </section>
+            </nav>
+        </header>
+        <section id="content_outer_wrapper" class="">
+            <div id="content_wrapper" class="">
+                <div id="content" class="container-fluid">
+                    <div class="content-body">
+                        @yield('content')
+                    </div>
                 </div>
             </div>
         </section>
-    </div>
+    </section>
+    @else
+        @if(auth()->guard('web')->user())
+            <user-notifications :data_id="{{Auth::user()->id}}"></user-notifications>
+        @endif
+        @include('layouts._template')
+        @yield('content')
+    @endif
 
-    <!-- Scripts -->
+
+
+    </section>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
+        ga('create', 'UA-46627904-1', 'authenticgoods.co');
+        ga('send', 'pageview');
+    </script>
+    <script src="{{ asset('js/layout/vendor.bundle.js') }}"></script>
+    <script src="{{ asset('js/layout/app.bundle.js') }}"></script>
 </body>
 </html>
