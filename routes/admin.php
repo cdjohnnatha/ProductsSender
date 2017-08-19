@@ -8,6 +8,7 @@ Route::group(['middleware' => ['auth:admin']], function(){
         'as' => 'admin.',
         'prefix' => 'admin'
         ], function() {
+            Route::get('/dashboard', 'AdminDashboardController@index')->name('dashboard');
             Route::resource('users', 'UserController');
             Route::resource('warehouses', 'WarehouseController');
             Route::resource('packages', 'PackageController');

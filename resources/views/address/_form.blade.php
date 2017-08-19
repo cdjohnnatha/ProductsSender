@@ -37,7 +37,7 @@
   </div>
 
   <div class="form-group col-sm-12" >
-    <div class="col-sm-3" {{ $errors->has('address.phone') ? ' has-error' : '' }}>
+    <div class="col-sm-4" {{ $errors->has('address.phone') ? ' has-error' : '' }}>
       <label>{{ __('address.titles.phone') }}</label>
       <input id="phone" type="text" class="form-control" name="address[phone]"
              value="{{ $address->phone or old('address.phone') }}">
@@ -48,7 +48,7 @@
         </span>
       @endif
     </div>
-    <div class="col-sm-3" {{ $errors->has('address.company_name') ? ' has-error' : '' }}>
+    <div class="col-sm-8" {{ $errors->has('address.company_name') ? ' has-error' : '' }}>
       <label>{{ __('address.titles.company') }}</label>
       <input type="text" class="form-control" name="address[company_name]" id="company_name"
              value="{{ $address->company_name or old('address.company_name') }}">
@@ -59,57 +59,49 @@
         </span>
       @endif
     </div>
-    <div class="col-sm-6">
+  </div>
+  <section class="form-group col-sm-12">
+    <div class="col-sm-7">
       <label>{{ __('address.titles.address') }}</label>
-      <input type="text" class="form-control" name="address[address]"
-             value="{{ $address->address or old('address.address') }}">
-
+      <countries-list></countries-list>
       @if ($errors->has('address.address'))
         <span class="help-block">
-          <strong class="text-danger">{{ $errors->first('address.address') }}</strong>
-        </span>
+            <strong class="text-danger">{{ $errors->first('address.address') }}</strong>
+          </span>
       @endif
     </div>
-  </div>
 
+    <div class="col-sm-2" {{ $errors->has('address.number') ? ' has-error' : '' }}>
+      <label>Number</label>
+      <input type="text" class="form-control" name="address[number]"
+             value="{{ $address->number or old('address.number') }}" >
 
-  <div class="form-group col-sm-12" {{ $errors->has('address.city') ? ' has-error' : '' }}>
-    <div class="col-sm-4">
-      <label>{{ __('address.titles.city') }}</label>
-      <input type="text" class="form-control" name="address[city]" id="city"
-             value="{{ $address->city or old('address.city') }}">
-
-      @if ($errors->has('address.city'))
+      @if ($errors->has('address.number'))
         <span class="help-block">
-          <strong class="text-danger">{{ $errors->first('address.city') }}</strong>
-        </span>
+            <strong class="text-danger">{{ $errors->first('address.number') }}</strong>
+          </span>
       @endif
     </div>
-    <div class="col-sm-3" {{ $errors->has('address.state') ? ' has-error' : '' }}>
-      <label>{{ __('address.titles.state') }}</label>
-      <input type="text" class="form-control" name="address[state]" id="state"
-             value="{{ $address->state or old('address.state') }}">
 
-      @if ($errors->has('address.state'))
-        <span class="help-block">
-          <strong class="text-danger">{{ $errors->first('address.state') }}</strong>
-        </span>
-      @endif
-    </div>
-    <div class="col-sm-2" {{ $errors->has('address.postal_code') ? ' has-error' : '' }}>
+    <div class="col-sm-3" {{ $errors->has('address.postal_code') ? ' has-error' : '' }}>
       <label>{{ __('address.titles.postal_code') }}</label>
       <input type="text" class="form-control" name="address[postal_code]"
              value="{{ $address->postal_code or old('address.postal_code') }}" >
 
       @if ($errors->has('address.postal_code'))
         <span class="help-block">
-          <strong class="text-danger">{{ $errors->first('address.postal_code') }}</strong>
-        </span>
+            <strong class="text-danger">{{ $errors->first('address.postal_code') }}</strong>
+          </span>
       @endif
     </div>
-    <div class="col-sm-3">
-      <label>{{ __('address.titles.country') }}</label>
-      <input type="hidden" name="address[country]" value="Brasil">
+    <div class="col-sm-12">
+      <div class="checkbox">
+        <label>
+          <input type='hidden' value='0' name='address[default_address]'>
+          <input type='checkbox' name='address[default_address]' value='1'>
+          Make default address
+        </label>
+      </div>
     </div>
-  </div>
+  </section>
 </section>

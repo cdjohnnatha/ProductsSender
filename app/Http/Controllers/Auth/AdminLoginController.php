@@ -26,13 +26,12 @@ class AdminLoginController extends Controller
 
     public function login(Request $request)
     {
-
         $this->validate($request, $this->rules());
         if(Auth::guard('admin')->attempt([
             'email' => $request->input('email'),
             'password' => $request->input('password')
         ])){
-            return redirect(route('admin.index'));
+            return redirect(route('admin.dashboard'));
         }
 
         return redirect(route('admin.login'));

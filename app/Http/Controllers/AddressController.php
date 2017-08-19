@@ -18,12 +18,16 @@ class AddressController extends Controller
             'address.label' => 'bail|required|min:3',
             'address.owner_name' => 'required',
             'address.owner_surname' => 'required',
-            'address.country' => 'required',
-            'address.address' => 'required|min:5',
+            'address.phone' => 'required',
+            'address.company_name' => 'nullable',
             'address.city' => 'required',
             'address.state' => 'required',
+            'address.country' => 'required',
+            'address.street' => 'required|min:3',
+            'address.number' => 'required|string|max:15',
+            'address.formatted_address' => 'required',
             'address.postal_code' => 'required',
-            'address.phone' => 'required|numeric',
+            'address.default_address' => 'boolean'
         ];
     }
 
@@ -34,8 +38,12 @@ class AddressController extends Controller
      */
     public function index(Request $request, $id)
     {
-        dd($request);
-        return  $id;
+        $morph = $this->getClass($request)::with('address')->findOrFail($id);
+        $default = $this->getClass($request)::with([
+            'address' => function($query){
+                $query->where('default_address', true);
+            }])->findOrFail($id);
+        return  view('address.index', compact('morph', 'default'));
     }
 
     /**
@@ -56,14 +64,14 @@ class AddressController extends Controller
      */
     public function store(Request $request, $id)
     {
+        dd($request->input());
         $this->validate($request, $this->rules());
-        $polymorph = $this->getClass($request->route()->getPrefix());
-        $address = new Address($request->all());
+        $polymorph = $this->getClass($request);
+        $address = new Address($request->input('address'));
         $object = $polymorph::find($id);
         if($object->address()->save($address)){
-            return redirect()->action('AddressController@index', $id);
+            return back();
         }
-
     }
 
     /**
@@ -137,14 +145,25 @@ class AddressController extends Controller
         }
     }
 
-    private function getClass($urlPrefix)
+    private function getClass($request)
     {
-        if( strpos( $urlPrefix, 'warehouse' ) !== false ) {
+        if ($request->is('warehouse/*')) {
             return Warehouse::class;
-        }else if(strpos( $urlPrefix, 'user' ) !== false) {
+        }else if($request->is('user/*')) {
             return User::class;
         } else{
             return Admin::class;
+        }
+    }
+
+    private function getType($request)
+    {
+        if ($request->is('warehouse/*')) {
+            return 'warehouse';
+        }else if($request->is('user/*')) {
+            return 'user';
+        } else{
+            return 'admin';
         }
     }
 }

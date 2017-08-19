@@ -7,12 +7,10 @@
 <form action="{{route('user.address.store', Auth::user()->id)}}" role="form" method="POST">
     <section class="panel-body">
         {{ csrf_field() }}
-        @include('address._form')
+        @include('address._form', ['title' => 'Give a name for your address'])
     </section>
     <footer class="panel-footer">
-        <div class="pull-right">
-            <button type="submit" class="btn btn-success">{{ __('buttons.titles.save') }}</button>
-        </div>
+        @include('layouts.formButtons._form_save_edit', ['url' => route('user.address.index', Auth::user()->id)])
         <div class="clearfix"></div>
     </footer>
 
