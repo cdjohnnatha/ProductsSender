@@ -1,5 +1,4 @@
 <section>
-   <a href="javascript:void(0)" class="edit-product icon"><i class="zmdi zmdi-delete"></i></a>
     <a href="{{route($prefix_name.'.edit', $id)}}" class="edit-product icon">
       <i class="zmdi zmdi-edit"></i>
     </a>

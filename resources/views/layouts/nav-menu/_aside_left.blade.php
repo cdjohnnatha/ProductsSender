@@ -28,16 +28,17 @@
             <li><a href="{{route('admin.create')}}">Create new admin</a></li>
           </ul>
         </li>
-        <li class="nav-dropdown"><a href="#"><i class="zmdi zmdi-widgets"></i>Cards</a>
+        <li class="nav-dropdown"><a href="#"><i class="zmdi zmdi-store"></i>Warehouses</a>
           <ul class="nav-sub">
-            <li><a href="card-templates.html">Card Templates</a></li>
+            <li><a href="{{Route('admin.warehouses.index')}}">List warehouses</a></li>
+            <li><a href="{{Route('admin.warehouses.create')}}">Register new warehouse</a></li>
             <li><a href="card-demos.html">Card Demos</a></li>
           </ul>
         </li>
-        <li class="nav-dropdown"><a href="#"><i class="zmdi zmdi-chart"></i>Charts</a>
+        <li class="nav-dropdown"><a href="#"><i class="zmdi zmdi-inbox"></i>Packages</a>
           <ul class="nav-sub">
-            <li><a href="charts-c3.html">C3 Charts</a></li>
-            <li><a href="charts-chartist.html">Chartist</a></li>
+            <li><a href="{{Route('admin.packages.index')}}">Packages on warehouse</a></li>
+            <li><a href="{{Route('admin.packages.create')}}">Register new package</a></li>
             <li><a href="charts-chartjs.html">Chartjs</a></li>
             <li><a href="charts-morrisjs.html">Morris.js Charts</a></li>
           </ul>
