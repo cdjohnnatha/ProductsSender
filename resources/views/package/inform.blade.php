@@ -24,7 +24,7 @@
                         <textarea class="form-control"></textarea>
                     </div>
             </section>
-            <customclearance-table></customclearance-table>
+            {{--<customclearance-table></customclearance-table>--}}
             <button>submit</button>
         </form>
     </div>

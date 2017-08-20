@@ -15,16 +15,19 @@ class WarehouseController extends Controller
         return [
             'warehouse.storage_time' => 'required|numeric',
             'warehouse.box_price' => 'required|numeric',
-            'address.label' => 'required|string',
-            'address.owner_name' => 'required|string',
-            'address.owner_surname' => 'required|string',
-            'address.phone' => 'required|string',
-            'address.company_name' => 'nullable|string',
-            'address.address' => 'required|string',
-            'address.city' => 'required|string',
-            'address.state' => 'required|string',
-            'address.postal_code' => 'required|string',
-            'address.country' => 'required|string',
+            'address.label' => 'bail|required|min:3',
+            'address.owner_name' => 'required',
+            'address.owner_surname' => 'required',
+            'address.phone' => 'required',
+            'address.company_name' => 'nullable',
+            'address.city' => 'required',
+            'address.state' => 'required',
+            'address.country' => 'required',
+            'address.street' => 'required|min:3',
+            'address.number' => 'required|string|max:15',
+            'address.formatted_address' => 'required',
+            'address.postal_code' => 'required',
+            'address.default_address' => 'boolean'
         ];
     }
 

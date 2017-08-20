@@ -3,6 +3,7 @@
 return [
     'titles' => [
         'name' => 'Give a name for address',
+        'admin_name' => 'Give a name for this warehouse',
         'first_name'    => 'First name',
         'last_name'  => 'Surname',
         'phone'   => 'Phone',
@@ -12,6 +13,7 @@ return [
         'state'   => 'State/province',
         'postal_code'   => 'Postal Code ',
         'country'   => 'Country',
+        'number'   => 'Number',
     ],
 
 ];

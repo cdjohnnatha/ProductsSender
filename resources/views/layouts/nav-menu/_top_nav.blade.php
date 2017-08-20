@@ -113,7 +113,7 @@
 										<img src="{{asset('img/profiles/03.jpg')}}" alt="" class="img-circle max-w-35">
 										<i class="badge mini success status"></i>
 									</span>
-									<span class="name">Mike Jones</span>
+									<span class="name">{{Auth::user()->name}}</span>
 									<span class="caret"></span>
 								</span>
             </a>

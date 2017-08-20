@@ -1,27 +1,44 @@
 @extends('layouts.app')
 
+@section('panel_header')
+    Warehouses
+@endsection
+
+
 @section('content')
-<header class="panel-heading">Warehouse</header>
-@if(Request::is('*/edit'))
-    <?php $action = 'admin.warehouses.update' ?>
-    <form action="{{route($action, $warehouse->id)}}" role="form" method="POST">
-        <input name="_method" type="hidden" value="PUT">
-@else
-    <?php $action = 'admin.warehouses.store' ?>
-    <form action="{{route($action)}}" role="form" method="POST">
-@endif
-    <section class="panel-body">
-        {{ csrf_field() }}
-        @if(Request::is('*/edit'))
-            @include('address._form', array('address'=> $warehouse->address, 'title' => __('warehouse.form.title_label')))
-        @else
-            @include('address._form', array('title' => __('warehouse.form.title_label')))
-        @endif
-        @include('warehouse._form')
-    </section>
-    <footer class="panel-footer">
-           @include('layouts.formButtons._form_save_edit', ['url' => route('admin.warehouses.index')])
-        <div class="clearfix"></div>
-    </footer>
-</form>
+
+<section class="content-body">
+    <div class="row">
+        <div class="col-sm-offset-2 col-xs-12 col-sm-8">
+            <div class="card">
+                <header class="card-heading ">
+                    <h2 class="card-title">Form Warehouse</h2>
+                    <ul class="card-actions icons right-top">
+                        <li>
+                            <a href="javascript:void(0)" data-toggle-view="code">
+                                <i class="zmdi zmdi-code"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </header>
+                @if(Request::is('*/edit'))
+                    <?php $action = 'admin.warehouses.update' ?>
+                    <form action="{{route($action, $admin->id)}}" role="form" method="POST">
+                        <input name="_method" type="hidden" value="PUT">
+                        @else
+                    <?php $action = 'admin.warehouses.store' ?>
+                    <form action="{{route($action)}}" role="form" method="POST">
+                        @endif
+                        {{ csrf_field() }}
+                        <section class="card-body">
+                            @include('warehouse._form')
+                        </section>
+                        <footer class="card-footer text-right">
+                            @include('layouts.formButtons._form_save_edit', ['url' => Route('admin.warehouses.index')])
+                        </footer>
+                    </form>
+            </div>
+        </div>
+    </div>
+</section>
 @endsection
