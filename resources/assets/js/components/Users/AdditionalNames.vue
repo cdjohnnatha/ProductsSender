@@ -27,7 +27,6 @@
 </template>
 
 <script>
-    import CustomClearance from '../Utils/Objects/CustomClearance'
     export default {
         props: {
             editing: Array,

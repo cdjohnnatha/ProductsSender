@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
+@section('panel_header')
+    Admins of Holyship
+@endsection
+
 @section('content')
-
-
-<div class="content-body">
+<section class="content-body">
     <div class="row">
         <div class="col-xs-12">
             <div class="card card-data-tables product-table-wrapper">
@@ -87,5 +89,5 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 @endsection

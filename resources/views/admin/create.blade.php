@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
+@section('panel_header')
+    Admins of Holyship
+@endsection
 
+@section('content')
 <section class="content-body">
     <div class="row">
         <div class="col-sm-offset-2 col-xs-12 col-sm-8">

@@ -1,26 +1,41 @@
-<section>
-  <div class="form-group col-sm-12" >
-    <section class="form-group col-sm-3" {{ $errors->first('warehouse.storage_time') }} >
-      <label>Storage Time</label>
-      <input name="warehouse[storage_time]" class="form-control" type="number" required min="0"
-             step="1" value="{{$warehouse->storage_time or old('warehouse.storage_time') }}">
+<article>
+  @include('address._form', ['title' => __('address.titles.admin_name')])
 
-      @if ($errors->has('warehouse.storage_time'))
-        <span class="help-block">
-            <strong class="text-danger">{{ $errors->first('warehouse.storage_time') }}</strong>
+  <section class="row">
+    <section class="form-group col-sm-6 {{ $errors->has('warehouse.storage_time') ? ' has-error' : '' }}">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-alarm"></i></span>
+        <input type="number" min="0" name="warehouse.storage_time" class="form-control" placeholder="Storage Time" name="name"
+               value="{{ $warehouse->storage_time or old('warehouse.storage_time') }}">
+
+        @if ($errors->has('warehouse.storage_time'))
+          <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('warehouse.storage_time') }}
+            </strong>
           </span>
-      @endif
+        @endif
+      </div>
     </section>
-    <div class="form-group col-sm-3" {{ $errors->first('warehouse.box_price') }} >
-      <label>Box price</label>
-      <input name="warehouse[box_price]" class="form-control" type="number" min="0.00" step="0.01"
-             value="{{$warehouse->box_price or old('warehouse.box_price') }}">
+
+    <section class="form-group col-sm-6 {{ $errors->has('warehouse.box_price') ? ' has-error' : '' }}">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-money"></i></span>
+        <input type="number" min="0.00" step="0.01" name="warehouse.box_price" class="form-control" placeholder="Box price"
+               value="{{ $warehouse->box_price or old('warehouse.box_price') }}">
+      </div>
 
       @if ($errors->has('warehouse.box_price'))
         <span class="help-block">
-            <strong class="text-danger">{{ $errors->first('warehouse.box_price') }}</strong>
-          </span>
+          <strong class="text-danger" class="alert-danger">
+            {{ $errors->first('warehouse.box_price') }}
+          </strong>
+        </span>
       @endif
-    </div>
-  </div>
-</section>
+    </section>
+  </section>
+</article>
+
+
+
+

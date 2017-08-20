@@ -32,8 +32,9 @@ class Address extends Model
         'postal_code',
         'phone',
         'default_address',
+        'formatted_address',
         'addressable_type',
-        'addressable_id'
+        'addressable_id',
     ];
 
     protected $hidden = [

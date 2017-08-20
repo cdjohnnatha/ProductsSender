@@ -112,7 +112,7 @@
 </template>
 
 <script>
-    import User from '../Utils/Objects/User'
+//    import User from '../Utils/Objects/User'
     export default {
         data() {
             return {
@@ -124,7 +124,7 @@
                 buttonStatus: false,
                 nameForm: 'Register User',
                 actionButton: this.validateUserSection,
-                user: User,
+                user: '',
 
             }
         },
