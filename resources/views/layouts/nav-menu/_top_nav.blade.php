@@ -110,7 +110,7 @@
             <a href="javascript:void(0)" data-toggle="dropdown" aria-expanded="false">
 								<span class="meta">
 									<span class="avatar">
-										<img src="{{asset('img/profiles/03.jpg')}}" alt="" class="img-circle max-w-35">
+										<img src="{{asset('img/holyship-logo.jpg')}}" alt="" class="img-circle max-w-35">
 										<i class="badge mini success status"></i>
 									</span>
 									<span class="name">{{Auth::user()->name}}</span>
@@ -128,7 +128,13 @@
                     <a href="javascript:void(0)"><i class="zmdi zmdi-settings"></i> Account Settings</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)"><i class="zmdi zmdi-sign-in"></i> Sign Out</a>
+                    <a href="{{Route('logout')}}" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                        <i class="zmdi zmdi-sign-in"></i> Sign Out
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            {{ csrf_field() }}
+                        </form>
+                    </a>
                 </li>
             </ul>
         </li>
