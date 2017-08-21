@@ -16,44 +16,53 @@
       </div>
     </div>
 
-  <section class="row">
-    <div class="form-group col-sm-6 {{ $errors->has('address.owner_name') ? 'has-error' : '' }}">
+  @if(Route::is('admin.warehouses.*'))
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-male-alt"></i></span>
+        @include('admin._select')
+      </div>
+    </div>
+  @else
+    <section class="row">
+      <div class="form-group col-sm-6 {{ $errors->has('address.owner_name') ? 'has-error' : '' }}">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
+          <input type="text" class="form-control" placeholder="{{__('common.titles.name')}}" name="address[owner_name]"
+                 value="{{ $address->owner_name or old('address.owner_name') }}">
+        </div>
+        @if ($errors->has('address.owner_name'))
+          <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('address.owner_name') }}
+            </strong>
+          </span>
+        @endif
+      </div>
+
+
+    <div class="form-group col-sm-6 {{ $errors->has('address.owner_surname') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
-        <input type="text" class="form-control" placeholder="{{__('common.titles.name')}}" name="address[owner_name]"
-               value="{{ $address->owner_name or old('address.owner_name') }}">
+        <input type="text" class="form-control" placeholder="{{__('common.titles.surname')}}" name="address[owner_surname]"
+                 value="{{ $address->owner_surname or old('address.owner_surname') }}">
       </div>
-      @if ($errors->has('address.owner_name'))
-        <span class="help-block">
-          <strong class="text-danger" class="alert-danger">
-            {{ $errors->first('address.owner_name') }}
-          </strong>
-        </span>
-      @endif
-    </div>
-
-
-  <div class="form-group col-sm-6 {{ $errors->has('address.owner_surname') ? ' has-error' : '' }}">
-    <div class="input-group">
-      <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
-      <input type="text" class="form-control" placeholder="{{__('common.titles.surname')}}" name="address[owner_surname]"
-               value="{{ $address->owner_surname or old('address.owner_surname') }}">
-    </div>
-      @if ($errors->has('address.owner_surname'))
-        <span class="help-block">
-          <strong class="text-danger" class="alert-danger">
-            {{ $errors->first('address.owner_surname') }}
-          </strong>
-        </span>
-      @endif
-    </div>
-  </section>
+        @if ($errors->has('address.owner_surname'))
+          <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('address.owner_surname') }}
+            </strong>
+          </span>
+        @endif
+      </div>
+    </section>
+  @endif
 
   <section class="form-group {{ $errors->has('address.phone') ? ' has-error' : '' }}">
     <div class="input-group">
       <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
       <input type="text" class="form-control" placeholder="Phone Number" name="address[phone]"
-             value="{{ $address->phone or old('phone') }}">
+             value="{{ $address->phone or old('address.phone') }}">
 
 
       @if ($errors->has('address.phone'))

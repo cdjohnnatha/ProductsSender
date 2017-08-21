@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Admin;
 use App\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +17,7 @@ class WarehouseController extends Controller
             'warehouse.storage_time' => 'required|numeric',
             'warehouse.box_price' => 'required|numeric',
             'address.label' => 'bail|required|min:3',
-            'address.owner_name' => 'required',
-            'address.owner_surname' => 'required',
+            'admin_id' => 'required|min:1',
             'address.phone' => 'required',
             'address.company_name' => 'nullable',
             'address.city' => 'required',
@@ -39,17 +39,21 @@ class WarehouseController extends Controller
 
     public function create()
     {
-        return view('warehouse.create');
+        $admins = Admin::all();
+        return view('warehouse.create', compact('admins'));
     }
 
     public function store(Request $request)
     {
+//        dd($request->input());
         $this->validate($request, $this->rules());
         $warehouse = new Warehouse($request->input('warehouse'));
-
         $address = new Address($request->input('address'));
+        $admin = Admin::find($request->input('admin_id'));
+        $address->owner_name = $admin->name;
+        $address->owner_surname = $admin->surname;
         $address->default_address = true;
-
+        $address->company_name = 'Holyship';
         if($warehouse->save() && $warehouse->address()->save($address)){
             return redirect(route('admin.warehouses.index'));
         }

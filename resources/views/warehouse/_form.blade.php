@@ -5,7 +5,7 @@
     <section class="form-group col-sm-6 {{ $errors->has('warehouse.storage_time') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-alarm"></i></span>
-        <input type="number" min="0" name="warehouse.storage_time" class="form-control" placeholder="Storage Time" name="name"
+        <input type="number" min="0" name="warehouse[storage_time]" class="form-control" placeholder="Storage Time" name="name"
                value="{{ $warehouse->storage_time or old('warehouse.storage_time') }}">
 
         @if ($errors->has('warehouse.storage_time'))
@@ -21,7 +21,7 @@
     <section class="form-group col-sm-6 {{ $errors->has('warehouse.box_price') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-money"></i></span>
-        <input type="number" min="0.00" step="0.01" name="warehouse.box_price" class="form-control" placeholder="Box price"
+        <input type="number" min="0.00" step="0.01" name="warehouse[box_price]" class="form-control" placeholder="Box price"
                value="{{ $warehouse->box_price or old('warehouse.box_price') }}">
       </div>
 
