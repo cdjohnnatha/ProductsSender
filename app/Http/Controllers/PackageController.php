@@ -24,15 +24,15 @@ class PackageController extends Controller
     public function rules()
     {
         return [
-            'width' => 'required',
-            'height' => 'required',
-            'depth' => 'required',
-            'weight' => 'required',
-            'unit_measure' => 'required',
-            'weight_measure' => 'required',
-            'object_owner' => 'required',
+            'package.width' => 'required',
+            'package.height' => 'required',
+            'package.depth' => 'required',
+            'package.weight' => 'required',
+            'package.unit_measure' => 'required',
+            'package.weight_measure' => 'required',
+            'package.object_owner' => 'required',
             'warehouse_id' => 'required',
-            'status_id' => 'required'
+            'status.status_id' => 'required|min:1'
         ];
     }
 
@@ -48,16 +48,16 @@ class PackageController extends Controller
                 }])->where(
             'warehouse_id',
             '=',
-            Auth::user()->default_warehouse_id
+            Auth::user()->warehouse_id
         )->get();
         $packages->load('status');
+        $packages->load('pictures');
         return view('package.index', compact('packages'));
     }
 
     public function create()
     {
-        $warehouses = Warehouse::all();
-        $warehouses->load('address');
+        $warehouses = Warehouse::with('address')->get();
         $status = Status::all();
         return view('package.create', compact('warehouses', 'status'));
     }
@@ -65,7 +65,9 @@ class PackageController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, $this->rules());
-        $package = new Package($request->all());
+        $package = new Package($request->input('package'));
+        $package->status_id = $request->input('status.status_id');
+        $package->warehouse_id = $request->input('warehouse_id');
         if($package->save()){
             if($request->hasFile('package_files')) {
                 foreach ($request->file('package_files') as $file) {

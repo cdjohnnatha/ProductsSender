@@ -4,15 +4,16 @@ return [
     'form' => [
         'title' => 'Package',
         'weight' => 'Weight',
-        'width' => 'Weight',
+        'width' => 'Width',
         'weight_measure' => 'Weight measure',
         'dimensions' => 'Dimensions',
         'height' => 'Height',
         'depth' => 'Depth',
         'unit_measure' => 'Unit Measure',
         'note' => 'Note',
-        'upload_pictures' => 'Upload Pictures',
+        'upload_pictures' => 'Upload one or more pictures',
         'uploaded_pictures' => 'Uploaded Pictures',
+        'quote' => 'Make a quote about some detail',
     ],
 
     'notification' => [

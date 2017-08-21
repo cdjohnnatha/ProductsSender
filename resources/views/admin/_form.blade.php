@@ -63,8 +63,8 @@
 
   <section class="form-group">
     <div class="input-group">
-      <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
-      {{--<countries-list set_address="{{$admin->country or old('country')}}"></countries-list>--}}
+      <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
+      @include('warehouse._select')
     </div>
   </section>
 

@@ -54344,7 +54344,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54355,6 +54355,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -54377,18 +54378,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('select', {
     staticClass: "form-control",
     attrs: {
-      "name": "status_id"
+      "name": "status[status_id]"
     },
     domProps: {
       "value": _vm.set_status
     }
-  }, _vm._l((_vm.status), function(item) {
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Select the status")]), _vm._v(" "), _vm._l((_vm.status), function(item) {
     return _c('option', {
       domProps: {
         "value": item.id
       }
     }, [_vm._v(_vm._s(item.status))])
-  }))
+  })], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
