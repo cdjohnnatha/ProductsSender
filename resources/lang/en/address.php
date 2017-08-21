@@ -16,4 +16,8 @@ return [
         'number'   => 'Number',
     ],
 
+    'label' => [
+        'type_address' => 'Please type your address'
+    ]
+
 ];

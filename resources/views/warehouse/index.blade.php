@@ -59,12 +59,10 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
-                                    <th>Box Price</th>
-                                    <th>Address</th>
+                                    <th>Box Price $</th>
                                     <th>City</th>
                                     <th>Country</th>
                                     <th>State</th>
-                                    <th>Postal Code</th>
                                     <th data-orderable="false" class="col-xs-2">
                                         <a href="{{Route('admin.warehouses.create')}}">
                                             <button class="btn btn-primary btn-fab  animate-fab"><i class="zmdi zmdi-plus"></i></button>
@@ -77,12 +75,10 @@
                                     <tr>
                                         <td>{{$warehouse->id}}</td>
                                         <td>{{$warehouse->address['label']}}</td>
-                                        <td>{{$warehouse->box_price}}</td>
-                                        <td>{{$warehouse->address['address']}}</td>
+                                        <td>$: {{$warehouse->box_price}}</td>
                                         <td>{{$warehouse->address['city']}}</td>
                                         <td>{{$warehouse->address['country']}}</td>
                                         <td>{{$warehouse->address['state']}}</td>
-                                        <td>{{$warehouse->address['postal_code']}}</td>
                                         <td>
                                             @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'admin.warehouses' ,'id' => $warehouse->id])
                                         </td>
