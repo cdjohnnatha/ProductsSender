@@ -2,7 +2,8 @@
 
 return [
     'form' => [
-        'title' => 'Package',
+        'title_form' => 'Fill the package informations',
+        'package' => 'Package|Packages',
         'weight' => 'Weight',
         'width' => 'Width',
         'weight_measure' => 'Weight measure',
@@ -14,6 +15,7 @@ return [
         'upload_pictures' => 'Upload one or more pictures',
         'uploaded_pictures' => 'Uploaded Pictures',
         'quote' => 'Make a quote about some detail',
+        'suite' => 'Suite'
     ],
 
     'notification' => [

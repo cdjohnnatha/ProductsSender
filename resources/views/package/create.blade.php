@@ -12,7 +12,7 @@
         <div class="col-sm-offset-2 col-xs-12 col-sm-8">
             <div class="card">
                 <header class="card-heading ">
-                    <h2 class="card-title">Form Warehouse</h2>
+                    <h2 class="card-title">{{__('packages.form.title_form')}}</h2>
                     <ul class="card-actions icons right-top">
                         <li>
                             <a href="javascript:void(0)" data-toggle-view="code">
