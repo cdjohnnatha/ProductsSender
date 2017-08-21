@@ -1,6 +1,6 @@
 <article>
   <section class="row">
-    <div class="form-group col-sm-6 {{ $errors->has('default_warehouse_id') ? ' has-error has-feedback is-empty' : '' }}">
+    <div class="form-group col-sm-6 {{ $errors->has('warehouse_id') ? ' has-error has-feedback is-empty' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
         @include('warehouse._select')
@@ -133,7 +133,7 @@
   </section>
   <div class="form-group is-empty">
     <div class="input-group col-sm-12">
-      <input type="file" class="form-control" placeholder="File Upload..." multiple name="package_files[]">
+      <input type="file" class="form-control" placeholder="File Upload..." multiple name="package_files[]" id="package_files">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-collection-image"></i></span>
         <input type="text" readonly="" class="form-control" placeholder="{{__('packages.form.upload_pictures')}}">

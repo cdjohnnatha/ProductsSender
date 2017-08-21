@@ -48,7 +48,7 @@ class PackageController extends Controller
                 }])->where(
             'warehouse_id',
             '=',
-            Auth::user()->default_warehouse_id
+            Auth::user()->warehouse_id
         )->get();
         $packages->load('status');
         $packages->load('pictures');
@@ -64,9 +64,10 @@ class PackageController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->file('package_files'));
         $this->validate($request, $this->rules());
-        $package = new Package($request->all());
+        $package = new Package($request->input('package'));
+        $package->status_id = $request->input('status.status_id');
+        $package->warehouse_id = $request->input('warehouse_id');
         if($package->save()){
             if($request->hasFile('package_files')) {
                 foreach ($request->file('package_files') as $file) {

@@ -67,7 +67,7 @@ class AdminTest extends DuskTestCase
     }
 
     /**
-     * @group admin
+     * @group delete_admin
      */
     public function testDeleteAdmin()
     {
