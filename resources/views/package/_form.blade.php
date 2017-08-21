@@ -1,53 +1,94 @@
-
-<section class="panel-body">
-  <div class="col-sm-12">
-    <div class="col-sm-12">
-      <div class="form-group col-sm-12" >
-        <div class="form-group col-sm-6" :class="{'has-error': errors.has('warehouse_id') }">
-          <label>{{__('warehouse.form.warehouse')}}</label>
-          @if(Request::is('*/edit'))
-            <warehouses-select :warehouses="{{$warehouses}}"
-                               :setwarehouse="{{$package->warehouse_id or old('warehouse_id')}}">
-            </warehouses-select>
-          @else
-            <warehouses-select :warehouses="{{$warehouses}}"
-                               :setwarehouse="{{old('warehouse_id') or 1}}">
-            </warehouses-select>
-          @endif
-
-          @if ($errors->has('warehouse_id'))
-            <span class="help-block">
-              <strong class="text-danger">{{ $errors->first('warehouse_id') }}</strong>
-            </span>
-          @endif
-        </div>
-        <div class="form-group col-sm-6" {{ $errors->has('object_owner') ? ' has-error' : '' }}>
-          <label>Suite</label>
-          <input name="object_owner" class="form-control" type="text" required
-                 value="{{$package->object_owner or old('object_owner')}}">
-
-          @if ($errors->has('object_owner'))
-            <span class="help-block">
-              <strong class="text-danger">{{ $errors->first('object_owner') }}</strong>
-            </span>
-          @endif
-        </div>
+<article>
+  <section class="row">
+    <div class="form-group col-sm-6 {{ $errors->has('default_warehouse_id') ? ' has-error has-feedback is-empty' : '' }}">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
+        @include('warehouse._select');
       </div>
-      <div class="form-group col-sm-12">
-        <div class="col-sm-6">
-          <label>Status</label>
-          @if(Request::is('*/edit'))
-            <status-select :status="{{$status}}" :set_status="{{$package->status_id or old('status_id')}}"></status-select>
-          @else
-            <status-select :status="{{$status}}" :set_status="{{old('status_id') or 1}}"></status-select>
-          @endif
+    </div>
+    <div class="form-group col-sm-6 {{ $errors->has('package.object_owner') ? ' has-error' : '' }}">
+      <input type="text" class="form-control" placeholder="Suite" name="package[object_owner]"
+             value="{{$package->object_owner or old('object_owner')}}">
 
-        </div>
+      @if ($errors->has('package.object_owner'))
+        <span class="help-block">
+          <strong class="text-danger" class="alert-danger">
+            {{ $errors->first('package.object_owner') }}
+          </strong>
+        </span>
+      @endif
+    </div>
+  </section>
+
+  <section class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+    <div class="input-group">
+      <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+      @if(Request::is('*/edit'))
+        <status-select :status="{{$status}}" :set_status="{{$package->status_id or old('status_id')}}"></status-select>
+      @else
+        <status-select :status="{{$status}}" :set_status="{{old('status_id') or 1}}"></status-select>
+      @endif
+    </div>
+  </section>
+
+  <section class="form-group {{ $errors->has('package.weight') ? ' has-error' : '' }}">
+    <div class="input-group">
+      <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
+      <input type="number" class="form-control" placeholder="Weight" name="package[wieght]"
+             value="{{$package->weight or old('package.weight')}}" min="0.01" step="0.01">
+
+      @if ($errors->has('package.weight'))
+        <span class="help-block">
+          <strong class="text-danger" class="alert-danger">
+            {{ $errors->first('package.weight') }}
+          </strong>
+        </span>
+      @endif
+    </div>
+  </section>
+
+  <section class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
+      @include('warehouse._select')
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="form-group col-sm-6 {{ $errors->has('password') ? 'has-error' : '' }}">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-key"></i></span>
+        <input type="text" class="form-control" placeholder="Password" name="password"
+               value="{{ old('password') }}">
+
+
+        @if ($errors->has('password'))
+          <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('password') }}
+            </strong>
+          </span>
+          <span class="zmdi zmdi-close form-control-feedback"></span>
+        @endif
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6 {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+      <input type="text" class="form-control" placeholder="Confirm Password">
+    </div>
+  </section>
+</article>
+
+
+
+
+
+
 
         <div class="form-group col-sm-3" {{ $errors->has('weight') ? ' has-error' : '' }}>
           <label>{{__('packages.form.weight')}}</label>
           <input name="weight" class="form-control" type="number" required
-                 value="{{$package->weight or old('weight')}}" min="0.01" step="0.01">
+
           @if ($errors->has('weight'))
             <span class="help-block">
               <strong class="text-danger">{{ $errors->first('weight') }}</strong>

@@ -51,13 +51,13 @@ class PackageController extends Controller
             Auth::user()->default_warehouse_id
         )->get();
         $packages->load('status');
+        $packages->load('pictures');
         return view('package.index', compact('packages'));
     }
 
     public function create()
     {
-        $warehouses = Warehouse::all();
-        $warehouses->load('address');
+        $warehouses = Warehouse::with('address')->get();
         $status = Status::all();
         return view('package.create', compact('warehouses', 'status'));
     }

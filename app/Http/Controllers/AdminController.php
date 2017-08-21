@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
+use App\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,6 @@ class AdminController extends Controller
             'surname' => 'required',
             'email' => 'required|string|email|max:255|unique:admins',
             'phone' => 'required|numeric',
-            'country' => 'required',
             'default_warehouse_id' => 'required',
             'password' => 'required|string|min:6|confirmed'
 
@@ -33,11 +33,13 @@ class AdminController extends Controller
 
     public function create()
     {
-        return view('admin.create');
+        $warehouses = Warehouse::with('address')->get();
+        return view('admin.create', compact('warehouses'));
     }
 
     public function store(Request $request)
     {
+        dd($request->input());
         $this->validate($request, $this->rules());
         $admin = new Admin($request->all());
         $admin->password = bcrypt($request->input('password'));
@@ -69,7 +71,6 @@ class AdminController extends Controller
                 Rule::unique('admins')->ignore($id),
             ],
             'phone' => 'required|numeric',
-            'country' => 'required',
             'default_warehouse_id' => 'required',
             'password' => 'nullable|confirmed'
         ]);
