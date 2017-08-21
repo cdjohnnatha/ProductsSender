@@ -57,11 +57,7 @@
                                     </th>
                                     <th>Id</th>
                                     <th>Picture</th>
-                                    <th>Width</th>
-                                    <th>Height</th>
-                                    <th>Unit_measure</th>
-                                    <th>Weight</th>
-                                    <th>Weight_measure</th>
+                                    <th>Suite</th>
                                     <th>Status</th>
                                     <th data-orderable="false" class="col-xs-2">
                                         <a href="{{Route('admin.packages.create')}}">
@@ -79,11 +75,7 @@
                                                 <img src="/{{$package->pictures[0]->path}}" alt="" class="img-thumbnail" />
                                             @endif
                                         </td>
-                                        <td>{{$package->width}}</td>
-                                        <td>{{$package->height}}</td>
-                                        <td>{{$package->unit_measure}}</td>
-                                        <td>{{$package->weight}}</td>
-                                        <td>{{$package->weight_measure}}</td>
+                                        <td>{{$package->object_owner}}</td>
                                         <td><span class="label label-default">{{$package->status->status}}</span></td>
                                         <td>
                                             @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'admin.packages' ,'id' => $package->id])

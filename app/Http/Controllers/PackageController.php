@@ -24,15 +24,15 @@ class PackageController extends Controller
     public function rules()
     {
         return [
-            'width' => 'required',
-            'height' => 'required',
-            'depth' => 'required',
-            'weight' => 'required',
-            'unit_measure' => 'required',
-            'weight_measure' => 'required',
-            'object_owner' => 'required',
+            'package.width' => 'required',
+            'package.height' => 'required',
+            'package.depth' => 'required',
+            'package.weight' => 'required',
+            'package.unit_measure' => 'required',
+            'package.weight_measure' => 'required',
+            'package.object_owner' => 'required',
             'warehouse_id' => 'required',
-            'status_id' => 'required'
+            'status.status_id' => 'required|min:1'
         ];
     }
 
@@ -64,6 +64,7 @@ class PackageController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->file('package_files'));
         $this->validate($request, $this->rules());
         $package = new Package($request->all());
         if($package->save()){

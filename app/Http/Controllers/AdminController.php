@@ -19,7 +19,7 @@ class AdminController extends Controller
             'surname' => 'required',
             'email' => 'required|string|email|max:255|unique:admins',
             'phone' => 'required|numeric',
-            'default_warehouse_id' => 'required',
+            'warehouse_id' => 'required',
             'password' => 'required|string|min:6|confirmed'
 
         ];
@@ -71,7 +71,7 @@ class AdminController extends Controller
                 Rule::unique('admins')->ignore($id),
             ],
             'phone' => 'required|numeric',
-            'default_warehouse_id' => 'required',
+            'warehouse_id' => 'required',
             'password' => 'nullable|confirmed'
         ]);
         $admin = Admin::findOrFail($id);

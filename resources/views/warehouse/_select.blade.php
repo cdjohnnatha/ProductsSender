@@ -1,5 +1,5 @@
 <section>
-    <select class="select form-control" name="default_warehouse_id">
+    <select class="select form-control" name="warehouse_id">
         <option value="">Select Warehouse</option>
       @foreach($warehouses as $warehouse)
         <option value="{{$warehouse->id or old('default_warehouse_id')}}">
