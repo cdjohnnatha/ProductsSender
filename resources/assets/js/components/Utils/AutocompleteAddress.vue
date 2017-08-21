@@ -4,7 +4,7 @@
         ref="address"
         id="map"
         classname="form-control"
-        placeholder="Please type your address"
+        placeholder=""
         v-on:placechanged="getAddressData" v-bind:value="set_address">
       </vue-google-autocomplete>
       <input type="hidden" name="address[city]" v-bind:value="address.city">
@@ -19,7 +19,12 @@
 </template>
 <script>
      export default {
-        props: ['set_address'],
+        props: {
+            set_address: {
+                type: String,
+                default: ''
+            }
+        },
         data(){
             return {
                 geonameUsername: '&username=cdjohnnatha',
@@ -39,7 +44,8 @@
 
             }
         },
-        created() {
+        mounted() {
+            console.log(this.set_address);
         },
         methods:{
             getAddressData: function (addressData, placeResultData) {

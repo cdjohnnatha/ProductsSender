@@ -56462,7 +56462,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['set_address'],
+    props: {
+        set_address: {
+            type: String,
+            default: ''
+        }
+    },
     data: function data() {
         return {
             geonameUsername: '&username=cdjohnnatha',
@@ -56482,7 +56487,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         };
     },
-    created: function created() {},
+    mounted: function mounted() {
+        console.log(this.set_address);
+    },
 
     methods: {
         getAddressData: function getAddressData(addressData, placeResultData) {
@@ -56540,7 +56547,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "map",
       "classname": "form-control",
-      "placeholder": "Please type your address",
+      "placeholder": "",
       "value": _vm.set_address
     },
     on: {

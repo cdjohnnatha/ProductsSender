@@ -45,7 +45,6 @@ class WarehouseController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request->input());
         $this->validate($request, $this->rules());
         $warehouse = new Warehouse($request->input('warehouse'));
         $address = new Address($request->input('address'));
@@ -70,15 +69,15 @@ class WarehouseController extends Controller
 
     public function edit($id)
     {
-        $warehouse = Warehouse::findOrFail($id);
-        $warehouse->load('address');
-        return view('warehouse.create', compact('warehouse'));
+        $warehouse = Warehouse::with('address')->findOrFail($id);
+        $admins = Admin::all();
+        return view('warehouse.create', compact('warehouse', 'admins'));
     }
 
     public function update(Request $request, $id)
     {
+//        dd($request->input());
         $this->validate($request, $this->rules());
-
         $warehouse = Warehouse::findOrFail($id);
         $warehouse->load('address');
         $warehouse->fill($request->input('warehouse'));
