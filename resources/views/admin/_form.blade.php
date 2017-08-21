@@ -1,9 +1,10 @@
 <article>
   <section class="row">
-    <div class="form-group col-sm-6 {{ $errors->has('name') ? ' has-error has-feedback is-empty' : '' }}">
+    <div class="form-group col-sm-6 {{ $errors->has('name') ? ' has-error has-feedback is-empty' : '' }} label-floating">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
-        <input type="text" class="form-control" placeholder="Name" name="name"
+        <label class="control-label">{{__('admin.form.name')}}</label>
+        <input type="text" class="form-control" name="name"
                value="{{ $admin->name or old('name') }}">
 
         @if ($errors->has('name'))
@@ -15,8 +16,9 @@
         @endif
       </div>
     </div>
-    <div class="form-group col-sm-6 {{ $errors->has('surname') ? ' has-error' : '' }}">
-      <input type="text" class="form-control" placeholder="Surname" name="surname"
+    <div class="form-group col-sm-6 {{ $errors->has('surname') ? ' has-error' : '' }} label-floating">
+      <label class="control-label">{{__('admin.form.surname')}}</label>
+      <input type="text" class="form-control" name="surname"
              value="{{ $admin->surname or old('surname') }}">
 
       @if ($errors->has('surname'))
@@ -29,10 +31,11 @@
     </div>
   </section>
 
-  <section class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+  <section class="form-group {{ $errors->has('email') ? ' has-error' : '' }} label-floating">
     <div class="input-group">
       <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
-      <input type="email" class="form-control" placeholder="Email Address" name="email"
+      <label class="control-label">Email</label>
+      <input type="email" class="form-control" name="email"
              value="{{ $admin->email or old('email') }}">
 
       @if ($errors->has('email'))
@@ -45,10 +48,11 @@
     </div>
   </section>
 
-  <section class="form-group {{ $errors->has('phone') ? ' has-error' : '' }}">
+  <section class="form-group {{ $errors->has('phone') ? ' has-error' : '' }} label-floating">
     <div class="input-group">
       <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
-      <input type="text" class="form-control" placeholder="Phone Number" name="phone"
+      <label class="control-label">{{__('admin.form.phone')}}</label>
+      <input type="text" class="form-control" name="phone"
              value="{{ $admin->email or old('email') }}">
 
       @if ($errors->has('phone'))
@@ -64,15 +68,17 @@
   <section class="form-group">
     <div class="input-group">
       <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
+      <label class="control-label">{{__('warehouse.form.select_warehouse')}}</label>
       @include('warehouse._select')
     </div>
   </section>
 
   <section class="row">
-    <div class="form-group col-sm-6 {{ $errors->has('password') ? 'has-error' : '' }}">
+    <div class="form-group col-sm-6 {{ $errors->has('password') ? 'has-error' : '' }} label-floating">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-key"></i></span>
-        <input type="text" class="form-control" placeholder="Password" name="password"
+        <label class="control-label">{{__('common.titles.password')}}</label>
+        <input type="text" class="form-control" name="password"
                value="{{ old('password') }}">
 
 
@@ -87,8 +93,9 @@
       </div>
     </div>
 
-    <div class="form-group col-sm-6 {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-      <input type="text" class="form-control" placeholder="Confirm Password">
+    <div class="form-group col-sm-6 {{ $errors->has('password_confirmation') ? ' has-error' : '' }} label-floating">
+      <label class="control-label">{{__('common.titles.password_confirm')}}</label>
+      <input type="text" class="form-control">
     </div>
   </section>
 </article>

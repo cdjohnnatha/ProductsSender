@@ -6,7 +6,7 @@ return [
         'name' => 'Name',
         'surname'    => 'Surname',
         'country'  => 'Country',
-        'phone'   => 'Phone',
+        'phone'   => 'Phone number',
         'actions' => 'Actions'
     ],
 
