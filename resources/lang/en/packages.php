@@ -18,6 +18,12 @@ return [
         'suite' => 'Suite'
     ],
 
+    'index' => [
+        'title' => 'Plans',
+        'short_description' => 'All the plans offered to users are listed here',
+
+    ],
+
     'notification' => [
         'updated_warehouse' => 'Package was updated at warehouse',
         'created_warehouse' => 'Package was identified at warehouse'
