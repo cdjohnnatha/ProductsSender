@@ -3,7 +3,7 @@
       <i class="zmdi zmdi-edit"></i>
     </a>
 
-    <a href="javascript:void(0)" class="icon alerting-delete" formSubmitId="delete-form-{{$id}}">
+    <a href="javascript:void(0)" class="icon alerting-delete" id="delete-button-{{$id}}" formSubmitId="delete-form-{{$id}}">
       <i class="zmdi zmdi-delete"></i>
     </a>
     <form action="{{route($prefix_name.'.destroy', $id)}}" method="POST"  role="form" id="delete-form-{{$id}}">

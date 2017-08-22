@@ -59,7 +59,8 @@ class AdminController extends Controller
 
     public function edit($id){
         $admin = Admin::find($id);
-        return view('admin.create', compact('admin'));
+        $warehouses = Warehouse::all();
+        return view('admin.create', compact('admin', 'warehouses'));
     }
 
     public function update(Request $request, $id)

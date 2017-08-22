@@ -13,6 +13,7 @@ class AdminTest extends DuskTestCase
 
     /**
      * @group admin
+     * @group all
      */
     public function testLogin()
     {
@@ -22,13 +23,15 @@ class AdminTest extends DuskTestCase
                 ->assertSee('Login')
                 ->type('email', $admin->email)
                 ->type('password', 'holyship123')
-                ->press('Login')
-                ->waitForLocation('/admin');
+                ->press('#submit')
+                ->waitForLocation('/admin/dashboard');
         });
     }
 
     /**
      * @group registerAdmin
+     * @group admin
+     * @group all
      */
     public function testNewAdmin()
     {
@@ -50,6 +53,7 @@ class AdminTest extends DuskTestCase
 
     /**
      * @group admin
+     * @group all
      */
     public function testEditAdmin()
     {

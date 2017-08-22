@@ -13,6 +13,7 @@ class SubscriptionTest extends DuskTestCase
 
     /**
      * @group subscriptions
+     * @all
      */
     public function testRegisterSubscription()
     {
@@ -37,6 +38,7 @@ class SubscriptionTest extends DuskTestCase
 
     /**
      * @group subscriptions
+     * @all
      */
     public function testEditSubscription()
     {
@@ -58,16 +60,22 @@ class SubscriptionTest extends DuskTestCase
     }
 
     /**
-     * @group subscriptions
+     * @group subscriptionsDelete
+     * @all
      */
     public function testDeleteSubscription()
     {
         $this->browse(function (Browser $browser) {
-            $admin = Admin::find(1);
+            $admin = Admin::all();
+            $admin = $admin[1];
             $delete = Subscription::orderBy('id', 'desc')->first();
             $browser->loginAs($admin, 'admin')
                 ->visit(route('admin.subscriptions.index'))
-                ->press('#delete-'.$delete->id)
+                ->press('#delete-button-'.$delete->id)
+                ->press('.swal2-confirm')
+                ->waitFor('.swal2-confirm')
+                ->press('.swal2-confirm')
+                ->pause(4000)
                 ->waitForLocation('/admin/subscriptions');
 
         });
