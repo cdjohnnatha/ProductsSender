@@ -52,7 +52,7 @@ class Address extends Model
         return $this->morphTo();
     }
 
-    public function geonameCode()
+    public function geonames()
     {
         return $this->hasOne(AddressGeonameCode::class);
     }

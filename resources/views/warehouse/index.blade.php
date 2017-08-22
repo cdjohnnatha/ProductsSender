@@ -59,7 +59,6 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
-                                    <th>Box Price $</th>
                                     <th>City</th>
                                     <th>Country</th>
                                     <th>State</th>
@@ -75,7 +74,6 @@
                                     <tr>
                                         <td>{{$warehouse->id}}</td>
                                         <td>{{$warehouse->address['label']}}</td>
-                                        <td>$: {{$warehouse->box_price}}</td>
                                         <td>{{$warehouse->address['city']}}</td>
                                         <td>{{$warehouse->address['country']}}</td>
                                         <td>{{$warehouse->address['state']}}</td>

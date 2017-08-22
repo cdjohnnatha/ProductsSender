@@ -30,13 +30,9 @@ class WarehousesTest extends DuskTestCase
                 ->type('#map', 'Rua rita porfirio chaves')
                 ->waitFor('.pac-item')
                 ->click('.pac-item')
-                ->pause(400)
+                ->pause(500)
                 ->press('#submit-button')
-                ->pause(8000)
-                ->waitForLocation('/admin/warehouses')
-                ->assertPathIs('/admin/warehouses');
-
-
+                ->waitForLocation(Route('admin.warehouses.index'));
         });
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Observers\PackageObserver;
+use App\Observers\WarehouseObserver;
 use App\Package;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +17,7 @@ class ObserverServiceProvider extends ServiceProvider
     public function boot()
     {
         Package::observe(PackageObserver::class);
+        Package::observe(WarehouseObserver::class);
     }
 
     /**

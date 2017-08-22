@@ -11399,7 +11399,7 @@ Vue.component('small-pictures-preview', __webpack_require__(77));
 Vue.component('register-form-button', __webpack_require__(82));
 Vue.component('user-notifications', __webpack_require__(87));
 Vue.component('user-additional-names', __webpack_require__(93));
-Vue.component('countries-list', __webpack_require__(98));
+Vue.component('autocomplete-address', __webpack_require__(98));
 Vue.component('vue-google-autocomplete', __webpack_require__(14));
 
 
@@ -56478,14 +56478,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -56497,19 +56489,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             geonameUsername: '&username=cdjohnnatha',
-            prefixGeonames: 'http://api.geonames.org/',
-            address: {
-                city: '',
-                state: '',
-                country: '',
-                street: '',
-                formated_address: ''
-            },
-            geonames: {
-                country: '',
-                state: '',
-                city: ''
-            }
+            prefixGeonames: 'http://api.geonames.org/'
 
         };
     },
@@ -56521,13 +56501,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getAddressData: function getAddressData(addressData, placeResultData) {
             var index = 0;
             $('#submit-button').addClass('disabled');
-            this.address.street = addressData.route;
-            this.address.state = addressData.administrative_area_level_1;
-            this.address.country = addressData.country;
-            this.address.formated_address = placeResultData.formatted_address;
+            $('#street').val(addressData.route);
+            $('#state').val(addressData.administrative_area_level_1);
+            $('#country').val(addressData.country);
+            $('#formatted_address').val(placeResultData.formatted_address);
             for (index; index < placeResultData.address_components.length; index++) {
                 if (placeResultData.address_components[index].types[0] == 'administrative_area_level_2') {
-                    this.address.city = placeResultData.address_components[index].long_name;
+                    $('#city').val(placeResultData.address_components[index].long_name);
                     break;
                 }
             }
@@ -56537,27 +56517,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         getCountryGeonameId: function getCountryGeonameId() {
-            var _this = this;
-
-            var url = this.prefixGeonames + 'searchJSON?q=' + this.address.country + '&maxRows=2' + this.geonameUsername;
+            var url = this.prefixGeonames + 'searchJSON?q=' + $('#country').val() + '&maxRows=2' + this.geonameUsername;
             return axios.get(url, { headers: '' }).then(function (response) {
-                _this.geonames.country = response.data.geonames[0].geonameId;
+                $('#geonames_country').val(response.data.geonames[0].geonameId);
+                console.log(response.data.geonames[0].geonameId);
             });
         },
         getCityGeonameId: function getCityGeonameId() {
-            var _this2 = this;
-
-            var url = this.prefixGeonames + 'searchJSON?q=' + this.address.city + '&maxRows=2' + this.geonameUsername;
+            var url = this.prefixGeonames + 'searchJSON?q=' + $('#city').val() + '&maxRows=2' + this.geonameUsername;
             return axios.get(url, { headers: '' }).then(function (response) {
-                _this2.geonames.city = response.data.geonames[0].geonameId;
+                $('#geonames_city').val(response.data.geonames[0].geonameId);
             });
         },
         getStateGeonameId: function getStateGeonameId() {
-            var _this3 = this;
-
-            var url = this.prefixGeonames + 'searchJSON?q=' + this.address.state + '&maxRows=2' + this.geonameUsername;
+            var url = this.prefixGeonames + 'searchJSON?q=' + $('#state').val() + '&maxRows=2' + this.geonameUsername;
             return axios.get(url, { headers: '' }).then(function (response) {
-                _this3.geonames.state = response.data.geonames[0].geonameId;
+                $('#geonames_state').val(response.data.geonames[0].geonameId);
             });
         }
     }
@@ -56578,70 +56553,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "placechanged": _vm.getAddressData
-    }
-  }), _vm._v(" "), _c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": "address[city]"
-    },
-    domProps: {
-      "value": _vm.address.city
-    }
-  }), _vm._v(" "), _c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": "address[state]"
-    },
-    domProps: {
-      "value": _vm.address.state
-    }
-  }), _vm._v(" "), _c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": "address[country]"
-    },
-    domProps: {
-      "value": _vm.address.country
-    }
-  }), _vm._v(" "), _c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": "address[street]"
-    },
-    domProps: {
-      "value": _vm.address.street
-    }
-  }), _vm._v(" "), _c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": "address[formatted_address]"
-    },
-    domProps: {
-      "value": _vm.address.formated_address
-    }
-  }), _vm._v(" "), _c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": "address_code[country]"
-    },
-    domProps: {
-      "value": _vm.geonames.city
-    }
-  }), _vm._v(" "), _c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": "address_code[state]"
-    },
-    domProps: {
-      "value": _vm.geonames.state
-    }
-  }), _vm._v(" "), _c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": "address_code[city]"
-    },
-    domProps: {
-      "value": _vm.geonames.country
     }
   })], 1)
 },staticRenderFns: []}
