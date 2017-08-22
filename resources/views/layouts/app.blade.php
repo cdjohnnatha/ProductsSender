@@ -59,6 +59,7 @@
 
     </section>
     <script src="{{ asset('js/app.js') }}"></script>
+
     <script>
         (function(i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
@@ -77,5 +78,6 @@
     </script>
     <script src="{{ asset('js/layout/vendor.bundle.js') }}"></script>
     <script src="{{ asset('js/layout/app.bundle.js') }}"></script>
+    <script src="{{ asset('js/layout/alerts.js') }}"></script>
 </body>
 </html>

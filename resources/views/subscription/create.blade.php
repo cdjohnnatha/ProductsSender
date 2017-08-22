@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('panel_header')
