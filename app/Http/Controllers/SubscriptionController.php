@@ -38,7 +38,7 @@ class SubscriptionController extends Controller
             $subscription->benefits()->createMany(
                 $request->input('benefits')
             );
-
+            $request->session()->flash('status', 'Plan was successfully created!');
             return redirect(route('admin.subscriptions.index'));
         }
     }
@@ -67,6 +67,7 @@ class SubscriptionController extends Controller
                         ['message' => $message['message']]
                     );
             }
+            $request->session()->flash('status', 'Plan was successful updated!');
             return redirect(route('admin.subscriptions.index'));
         }
     }
