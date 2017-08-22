@@ -9,6 +9,7 @@ return [
         'warehouse_phone' => 'Phone number for this warehouse',
         'storage_time' => 'Storage time',
         'box_price' => 'Box price',
+        'select_warehouse' => 'Select warehouse'
     ],
 
 

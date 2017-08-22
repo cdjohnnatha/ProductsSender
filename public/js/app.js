@@ -53940,7 +53940,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54009,6 +54009,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -54031,6 +54036,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         addMessage: function addMessage() {
+            console.log('pressed');
             if (this.benefits.length - 1 >= 0 && this.benefits[this.benefits.length - 1].message.length > 0) {
                 this.benefits.push({ message: '', id: '' });
             }
@@ -54054,25 +54060,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', [_c('div', {
-    staticClass: "col-sm-12"
-  }, [_c('h4', [_vm._v("Benefits\n            "), _c('button', {
-    staticClass: "btn",
-    attrs: {
-      "type": "button",
-      "id": "addMessage"
-    },
+  return _c('section', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "input-group"
+  }, [_c('h4', [_vm._v("Benefits")]), _vm._v(" "), _c('span', {
+    staticClass: "input-group-btn",
     on: {
       "click": _vm.addMessage
     }
-  }, [_c('span', {
-    staticClass: "glyphicon glyphicon-plus"
-  })])])]), _vm._v(" "), _vm._l((_vm.benefits), function(benefit, index) {
+  }, [_vm._m(0)])]), _vm._v(" "), _vm._l((_vm.benefits), function(benefit, index) {
     return _c('div', {
-      staticClass: "form-group col-sm-6"
+      staticClass: "form-group col-sm-12 label-floating"
     }, [_c('div', {
-      staticClass: "input-group col-sm-12"
-    }, [_c('input', {
+      staticClass: "input-group"
+    }, [_vm._m(1, true), _vm._v(" "), _c('label', {
+      staticClass: "control-label"
+    }, [_vm._v("What is offered")]), _vm._v(" "), _c('input', {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -54108,17 +54112,44 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": benefit.id
       }
     })]), _vm._v(" "), _c('span', {
-      staticClass: "btn input-group-addon",
+      staticClass: "input-group-btn",
       on: {
         "click": function($event) {
           _vm.removeMessage(index)
         }
       }
-    }, [_c('span', {
-      staticClass: "glyphicon glyphicon-minus"
-    })])])])
+    }, [_vm._m(2, true)])])])
   })], 2)
-},staticRenderFns: []}
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "btn btn-info btn-fab animate-fab btn-fab-sm",
+    attrs: {
+      "type": "button",
+      "id": "addMessage"
+    }
+  }, [_c('span', {
+    staticClass: "input-group-addon"
+  }, [_c('i', {
+    staticClass: "zmdi zmdi-plus"
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    staticClass: "input-group-addon"
+  }, [_c('i', {
+    staticClass: "zmdi zmdi-check"
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "btn btn-warning btn-fab animate-fab btn-fab-sm",
+    attrs: {
+      "type": "button"
+    }
+  }, [_c('span', {
+    staticClass: "input-group-addon"
+  }, [_c('i', {
+    staticClass: "zmdi zmdi-minus"
+  })])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -54344,7 +54375,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54355,7 +54386,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -54383,17 +54413,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "value": _vm.set_status
     }
-  }, [_c('option', {
-    attrs: {
-      "value": ""
-    }
-  }, [_vm._v("Select the status")]), _vm._v(" "), _vm._l((_vm.status), function(item) {
+  }, _vm._l((_vm.status), function(item) {
     return _c('option', {
       domProps: {
         "value": item.id
       }
     }, [_vm._v(_vm._s(item.status))])
-  })], 2)
+  }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

@@ -142,17 +142,11 @@ class PackageController extends Controller
 
     public function update(Request $request, $id)
     {
-        $package = Package::findOrFail($id);
-        $package->width = $request->input('width');
-        $package->height = $request->input('height');
-        $package->depth = $request->input('depth');
-        $package->weight = $request->input('weight');
-        $package->unit_measure = $request->input('unit_measure');
-        $package->weight_measure = $request->input('weight_measure');
-        $package->note = $request->input('note');
-        $package->status_id = $request->input('status_id');
-        $package->object_owner = $request->input('object_owner');
+        $this->validate($request, $this->rules());
+        $package = new Package($request->input('package'));
+        $package->status_id = $request->input('status.status_id');
         $package->warehouse_id = $request->input('warehouse_id');
+
         if($package->save()){
             if($request->hasFile('package_files')) {
                 foreach ($request->file('package_files') as $file) {
