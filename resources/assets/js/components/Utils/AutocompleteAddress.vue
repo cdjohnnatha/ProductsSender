@@ -7,14 +7,6 @@
         placeholder=""
         v-on:placechanged="getAddressData" v-bind:value="set_address">
       </vue-google-autocomplete>
-      <input type="hidden" name="address[city]" v-bind:value="address.city">
-      <input type="hidden" name="address[state]" v-bind:value="address.state">
-      <input type="hidden" name="address[country]" v-bind:value="address.country">
-      <input type="hidden" name="address[street]" v-bind:value="address.street">
-      <input type="hidden" name="address[formatted_address]" v-bind:value="address.formated_address">
-      <input type="hidden" name="address_code[country]" v-bind:value="geonames.city">
-      <input type="hidden" name="address_code[state]" v-bind:value="geonames.state">
-      <input type="hidden" name="address_code[city]" v-bind:value="geonames.country">
   </section>
 </template>
 <script>
@@ -29,18 +21,6 @@
             return {
                 geonameUsername: '&username=cdjohnnatha',
                 prefixGeonames: 'http://api.geonames.org/',
-                address: {
-                  city: '',
-                  state: '',
-                  country: '',
-                  street: '',
-                  formated_address: '',
-                },
-                geonames: {
-                    country: '',
-                    state: '',
-                    city: '',
-                }
 
             }
         },
@@ -51,13 +31,13 @@
             getAddressData: function (addressData, placeResultData) {
                 var index = 0;
                 $('#submit-button').addClass('disabled');
-                this.address.street = addressData.route;
-                this.address.state = addressData.administrative_area_level_1;
-                this.address.country = addressData.country;
-                this.address.formated_address = placeResultData.formatted_address;
+                $('#street').val(addressData.route);
+                $('#state').val(addressData.administrative_area_level_1);
+                $('#country').val(addressData.country);
+                $('#formatted_address').val(placeResultData.formatted_address);
                 for(index; index < placeResultData.address_components.length; index++){
                     if(placeResultData.address_components[index].types[0] == 'administrative_area_level_2'){
-                        this.address.city = placeResultData.address_components[index].long_name;
+                        $('#city').val(placeResultData.address_components[index].long_name);
                         break;
                     }
                 }
@@ -70,28 +50,29 @@
 
             getCountryGeonameId(){
                 var url = this.prefixGeonames + 'searchJSON?q='
-                    + this.address.country + '&maxRows=2' + this.geonameUsername;
+                    + $('#country').val() + '&maxRows=2' + this.geonameUsername;
                 return axios.get(url, {headers: ''})
                   .then( response => {
-                    this.geonames.country = response.data.geonames[0].geonameId;
+                    $('#geonames_country').val(response.data.geonames[0].geonameId);
+                    console.log(response.data.geonames[0].geonameId);
                 });
             },
 
             getCityGeonameId(){
-                var url = this.prefixGeonames + 'searchJSON?q=' + this.address.city + '&maxRows=2'
+                var url = this.prefixGeonames + 'searchJSON?q=' + $('#city').val() + '&maxRows=2'
                     + this.geonameUsername;
                 return axios.get(url, {headers: ''})
                     .then( response => {
-                        this.geonames.city = response.data.geonames[0].geonameId;
+                        $('#geonames_city').val(response.data.geonames[0].geonameId);
                     });
             },
 
             getStateGeonameId(){
-                var url = this.prefixGeonames + 'searchJSON?q=' + this.address.state + '&maxRows=2'
+                var url = this.prefixGeonames + 'searchJSON?q=' + $('#state').val() + '&maxRows=2'
                     + this.geonameUsername;
                 return axios.get(url, {headers: ''})
                     .then( response => {
-                        this.geonames.state = response.data.geonames[0].geonameId;
+                        $('#geonames_state').val(response.data.geonames[0].geonameId);
                     });
             }
         },

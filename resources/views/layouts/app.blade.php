@@ -80,7 +80,7 @@
     <script src="{{ asset('js/layout/app.bundle.js') }}"></script>
     <script src="{{ asset('js/layout/alerts.js') }}"></script>
     @if(Session::has('status'))
-        <script>swal("Good job!", "{{ Session::get('status')}}", "success");</script>
+        <script>alertify.success("{{ Session::get('status')}}");</script>
     @endif
     @yield('footerJS')
 </body>

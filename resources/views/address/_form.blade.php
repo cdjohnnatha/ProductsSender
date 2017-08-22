@@ -90,7 +90,7 @@
     <div class="input-group">
       <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
       <label class="control-label">{{__('address.label.type_address')}}</label>
-      <countries-list set_address="{{ $address->formatted_address or old('address.formatted_address')}}"></countries-list>
+      <autocomplete-address set_address="{{ $address->formatted_address or old('address.formatted_address')}}"></autocomplete-address>
       @if ($errors->has('address.formatted_address'))
         <span class="help-block">
           <strong class="text-danger" class="alert-danger">
@@ -136,6 +136,16 @@
       @endif
     </div>
   </section>
+  <input type="hidden" id="city" name="address[city]" value="{{ $address->city or old('address.city')}}">
+  <input type="hidden" id="state" name="address[state]" value="{{ $address->state or old('address.state')}}">
+  <input type="hidden" id="country" name="address[country]" value="{{ $address->country or old('address.country')}}">
+  <input type="hidden" id="street" name="address[street]" value="{{ $address->street or old('address.street')}}">
+  <input type="hidden" id="formatted_address" name="address[formatted_address]" value="{{ $address->formatted_address or old('address.formated_address')}}">
+
+
+  <input type="hidden" id="geonames_country" name="geonames[country]" value="{{ $address->geonames->country or old('geonames.country')}}">
+  <input type="hidden" id="geonames_city" name="geonames[city]" value="{{ $address->geonames->city or old('geonames.city')}}">
+  <input type="hidden" id="geonames_state" name="geonames[state]" value="{{ $address->geonames->state or old('geonames.state')}}">
 </article>
 
 

@@ -40,7 +40,7 @@
               </span>
             @endif
             <span class="input-group-btn">
-              <button type="submit" class="btn btn-blue btn-fab animate-fab btn-fab-sm">
+              <button type="submit" class="btn btn-blue btn-fab animate-fab btn-fab-sm" id="submit">
                 <i class="zmdi zmdi-mail-send"></i>
               </button>
             </span>

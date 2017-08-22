@@ -93,6 +93,7 @@ class PackageController extends Controller
                     }
                 }
             }
+            $request->session()->flash('status', 'Package was successfully registered at warehouse!');
             return redirect(route('admin.packages.index'));
         }
 
@@ -171,7 +172,7 @@ class PackageController extends Controller
                 }
             }
 
-
+            $request->session()->flash('status', 'Package #'.$package->id.' was successfully updated!');
             return redirect(route('admin.packages.index'));
         }
     }

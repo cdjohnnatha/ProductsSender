@@ -45,7 +45,8 @@ class AdminController extends Controller
         $admin->password = bcrypt($request->input('password'));
 
         if( $admin->save() ){
-            return redirect(route('admin.index'))->setStatusCode(200);
+            $request->session()->flash('status', 'Admin was successfully created!');
+            return redirect(route('admin.index'));
         }
     }
 
@@ -58,7 +59,8 @@ class AdminController extends Controller
 
     public function edit($id){
         $admin = Admin::find($id);
-        return view('admin.create', compact('admin'));
+        $warehouses = Warehouse::all();
+        return view('admin.create', compact('admin', 'warehouses'));
     }
 
     public function update(Request $request, $id)
@@ -82,6 +84,7 @@ class AdminController extends Controller
         }
 
         if($admin->save()){
+            $request->session()->flash('status', 'Admin was successfully created!');
             return redirect(route('admin.index'))->setStatusCode(200);
         }
 

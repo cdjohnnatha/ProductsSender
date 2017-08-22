@@ -9,7 +9,7 @@
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-alarm"></i></span>
         <label class="control-label">{{__('warehouse.form.storage_time')}}</label>
-        <input type="number" min="0" name="warehouse[storage_time]" class="form-control" placeholder=""
+        <input type="number" min="0" name="warehouse[storage_time]" class="form-control"
                value="{{ $warehouse->storage_time or old('warehouse.storage_time') }}">
 
         @if ($errors->has('warehouse.storage_time'))
@@ -44,3 +44,12 @@
 
 
 
+@if ($errors->any())
+  <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif
