@@ -79,5 +79,9 @@
     <script src="{{ asset('js/layout/vendor.bundle.js') }}"></script>
     <script src="{{ asset('js/layout/app.bundle.js') }}"></script>
     <script src="{{ asset('js/layout/alerts.js') }}"></script>
+    @if(Session::has('status'))
+        <script>swal("Good job!", "{{ Session::get('status')}}", "success");</script>
+    @endif
+    @yield('footerJS')
 </body>
 </html>

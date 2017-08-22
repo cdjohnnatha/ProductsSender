@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 
@@ -7,7 +8,6 @@
 
 
 @section('content')
-
 <section class="content-body">
     <div class="row">
         <div class="col-xs-12">
