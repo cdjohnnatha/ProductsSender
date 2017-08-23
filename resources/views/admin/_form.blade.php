@@ -53,7 +53,7 @@
       <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
       <label class="control-label">{{__('admin.form.phone')}}</label>
       <input type="text" class="form-control" name="phone"
-             value="{{ $admin->email or old('email') }}">
+             value="{{ $admin->phone or old('phone') }}">
 
       @if ($errors->has('phone'))
         <span class="help-block">

@@ -75,7 +75,6 @@ class SubscriptionTest extends DuskTestCase
                 ->press('.swal2-confirm')
                 ->waitFor('.swal2-confirm')
                 ->press('.swal2-confirm')
-                ->pause(4000)
                 ->waitForLocation('/admin/subscriptions');
 
         });

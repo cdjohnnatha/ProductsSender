@@ -12,6 +12,7 @@ return [
         'titles' => 'Titles',
         'amount' => 'Amount',
         'price' => 'Price',
+        'phone' => 'Phone'
     ],
 
 ];

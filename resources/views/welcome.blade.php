@@ -72,7 +72,7 @@
                         <a href="{{ url(route('user.dashboard', Auth::user()->id)) }}">Home</a>
                     @else
                         <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
+                        <a href="{{ Route('register.create') }}">Register</a>
                     @endif
                 </div>
             @endif
