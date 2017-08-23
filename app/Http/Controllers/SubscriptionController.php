@@ -34,11 +34,16 @@ class SubscriptionController extends Controller
     {
         $this->validate($request, $this->rules());
         $subscription = new Subscription($request->input('subscription'));
+        $subscription->active = $request->exists('active');
+        $subscription->principal = $request->exists('principal');
         if ($subscription->save()) {
             $subscription->benefits()->createMany(
                 $request->input('benefits')
             );
-            $request->session()->flash('status', 'Plan was successfully created!');
+            $request->session()->flash('status',
+                __('statusMessage.status.subscription.created',
+                    ['attribute' => $subscription->id]));
+
             return redirect(route('admin.subscriptions.index'));
         }
     }
@@ -60,6 +65,8 @@ class SubscriptionController extends Controller
         $this->validate($request, $this->rules());
         $subscription = Subscription::with('benefits')->findOrFail($id);
         $subscription->fill($request->input('subscription'));
+        $subscription->active = $request->exists('active');
+        $subscription->principal = $request->exists('principal');
         if ($subscription->save()) {
             foreach ($request->input('benefits') as $message){
                     $subscription->benefits()->updateOrCreate(
@@ -67,7 +74,11 @@ class SubscriptionController extends Controller
                         ['message' => $message['message']]
                     );
             }
-            $request->session()->flash('status', 'Plan was successful updated!');
+
+            $request->session()->flash('status',
+                __('statusMessage.status.subscription.updated',
+                    ['attribute' => $subscription->id]));
+
             return redirect(route('admin.subscriptions.index'));
         }
     }
@@ -79,7 +90,30 @@ class SubscriptionController extends Controller
         if( $subscription->trashed()) {
             return redirect(route('admin.subscriptions.index'));
         }
+    }
 
+    public function active(Request $request, $id)
+    {
+        $subscription = Subscription::find($id);
+        $subscription->active = $request->exists('active');
+        if( $subscription->save()) {
+            $request->session()->flash('status',
+                __('statusMessage.status.subscription.active',
+                ['attribute' => $subscription->id]));
 
+            return redirect(route('admin.subscriptions.index'));
+        }
+    }
+
+    public function principalOffer(Request $request, $id)
+    {
+        $subscription = Subscription::find($id);
+        $subscription->principal = $request->exists('principal');
+        if( $subscription->save()) {
+            $request->session()->flash('status',
+                __('statusMessage.status.subscription.principal_offer',
+                    ['attribute' => $subscription->id]));
+            return redirect(route('admin.subscriptions.index'));
+        }
     }
 }

@@ -1,14 +1,14 @@
 <template>
     <section class="form-group">
-        <div class="input-group">
+        <div class="input-group col-sm-1">
             <h4>Benefits</h4>
-              <span class="input-group-btn" @click="addMessage">
-                <button class="btn btn-info btn-fab animate-fab btn-fab-sm" type="button" id="addMessage">
-                  <span class="input-group-addon"><i class="zmdi zmdi-plus"></i></span>
-                </button>
-              </span>
+            <span class="input-group-btn" @click="addMessage">
+              <button class="btn btn-info btn-fab animate-fab btn-fab-sm" type="button" id="addMessage">
+                <span><i class="zmdi zmdi-plus"></i></span>
+              </button>
+            </span>
         </div>
-          <div class="form-group col-sm-12 label-floating" v-for="(benefit, index) in benefits">
+          <div class="form-group col-sm-6 label-floating" v-for="(benefit, index) in benefits">
             <div class="input-group">
               <span class="input-group-addon"><i class="zmdi zmdi-check"></i></span>
               <label class="control-label">What is offered</label>

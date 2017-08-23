@@ -4,7 +4,8 @@
   @else
     @include('address._form', ['title' => __('address.titles.admin_name')])
   @endif
-  <section class="row">
+
+    <section class="row">
     <section class="form-group col-sm-6 {{ $errors->has('warehouse.storage_time') ? ' has-error' : '' }} label-floating">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-alarm"></i></span>

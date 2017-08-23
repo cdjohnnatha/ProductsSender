@@ -11,6 +11,8 @@ class Subscription extends Entity
     protected $fillable = [
         'title',
         'amount',
+        'active',
+        'period',
     ];
 
     protected $hidden = [
@@ -20,6 +22,9 @@ class Subscription extends Entity
         'created_by',
         'updated_by'
     ];
+
+    protected $attributes = ['active' => true];
+
 
     public function users()
     {

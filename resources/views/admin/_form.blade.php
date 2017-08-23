@@ -1,6 +1,6 @@
 <article>
   <section class="row">
-    <div class="form-group col-sm-6 {{ $errors->has('name') ? ' has-error has-feedback is-empty' : '' }} label-floating">
+    <div class="form-group col-sm-6 label-floating {{ $errors->has('name') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
         <label class="control-label">{{__('admin.form.name')}}</label>
