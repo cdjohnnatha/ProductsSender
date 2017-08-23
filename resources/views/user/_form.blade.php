@@ -29,40 +29,43 @@
         </span>
       @endif
     </div>
+
   </section>
+  <section class="row">
 
-  <section class="form-group {{ $errors->has('user.email') ? ' has-error' : '' }} label-floating">
-    <div class="input-group">
-      <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
-      <label class="control-label">Email</label>
-      <input type="email" class="form-control" name="user[email]"
-             value="{{ $user->email or old('user.email') }}">
+    <section class="form-group col-sm-7 {{ $errors->has('user.email') ? ' has-error' : '' }} label-floating">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+        <label class="control-label">Email</label>
+        <input type="email" class="form-control" name="user[email]"
+               value="{{ $user->email or old('user.email') }}">
 
-      @if ($errors->has('user.email'))
-        <span class="help-block">
+        @if ($errors->has('user.email'))
+          <span class="help-block">
           <strong class="text-danger" class="alert-danger">
             {{ $errors->first('user.email') }}
           </strong>
         </span>
-      @endif
-    </div>
-  </section>
+        @endif
+      </div>
+    </section>
 
-  <section class="form-group {{ $errors->has('user.phone') ? ' has-error' : '' }} label-floating">
-    <div class="input-group">
-      <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
-      <label class="control-label">{{__('common.titles.phone')}}</label>
-      <input type="text" class="form-control" name="user[phone]"
-             value="{{ $user->email or old('user.email') }}">
+    <section class="form-group col-sm-5 {{ $errors->has('user.phone') ? ' has-error' : '' }} label-floating">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
+        <label class="control-label">{{__('common.titles.phone')}}</label>
+        <input type="text" class="form-control" name="user[phone]"
+               value="{{ $user->email or old('user.email') }}">
 
-      @if ($errors->has('user.phone'))
-        <span class="help-block">
+        @if ($errors->has('user.phone'))
+          <span class="help-block">
           <strong class="text-danger" class="alert-danger">
             {{ $errors->first('user.phone') }}
           </strong>
         </span>
-      @endif
-    </div>
+        @endif
+      </div>
+    </section>
   </section>
 
   <section class="row">

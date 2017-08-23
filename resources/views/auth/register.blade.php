@@ -50,18 +50,17 @@
                     @include('user._form')
                   </section>
                 </div>
-                <!--end #tab1 -->
+                <!--end User Informations #tab1 -->
                 <div class="tab-pane" id="tab2">
                     @include('address._form', ['title' => __('user.registration.address_title')])
                 </div>
-                <!--end #tab2 -->
+                <!--end Address informations #tab2 -->
 
                 <div class="tab-pane" id="tab3">
                   @include('subscription.index_user')
-                  {{--{{$subscriptions}}--}}
                 </div>
+                <!--end Plans #tab3 -->
 
-                <!--end #tab3 -->
                 <div class="tab-pane" id="tab4">
                   <form class="form-horizontal" role="form">
                     <div class="row">
@@ -375,10 +374,4 @@
     </footer>
   </section>
 </div>
-</div>
-
-
-
-
-
 @endsection

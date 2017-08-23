@@ -38,7 +38,7 @@
                 </section>
             </nav>
         </header>
-        <section id="content_outer_wrapper" class="">
+        <section id="content_outer_wrapper" style="padding-bottom: 0;">
             <div id="content_wrapper" class="">
                 <div id="content" class="container-fluid">
                     <div class="content-body">
