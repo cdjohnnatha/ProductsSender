@@ -54063,7 +54063,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('section', {
     staticClass: "form-group"
   }, [_c('div', {
-    staticClass: "input-group"
+    staticClass: "input-group col-sm-1"
   }, [_c('h4', [_vm._v("Benefits")]), _vm._v(" "), _c('span', {
     staticClass: "input-group-btn",
     on: {
@@ -54071,7 +54071,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._m(0)])]), _vm._v(" "), _vm._l((_vm.benefits), function(benefit, index) {
     return _c('div', {
-      staticClass: "form-group col-sm-12 label-floating"
+      staticClass: "form-group col-sm-6 label-floating"
     }, [_c('div', {
       staticClass: "input-group"
     }, [_vm._m(1, true), _vm._v(" "), _c('label', {
@@ -54127,9 +54127,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "button",
       "id": "addMessage"
     }
-  }, [_c('span', {
-    staticClass: "input-group-addon"
-  }, [_c('i', {
+  }, [_c('span', [_c('i', {
     staticClass: "zmdi zmdi-plus"
   })])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -54317,7 +54315,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/Utils/Status.vue"
+Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/utils/Status.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Status.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -56437,7 +56435,7 @@ var Component = __webpack_require__(1)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/Utils/AutocompleteAddress.vue"
+Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/utils/AutocompleteAddress.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] AutocompleteAddress.vue: functional components are not supported with templates, they should use render functions.")}
 

@@ -1,13 +1,14 @@
 <article>
   <section class="row">
-    <div class="form-group col-sm-6 {{ $errors->has('warehouse_id') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-4 label-floating {{ $errors->has('warehouse_id') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
         <label class="control-label">{{__('warehouse.form.select_warehouse')}}</label>
         @include('warehouse._select')
       </div>
     </div>
-    <div class="form-group col-sm-6 {{ $errors->has('package.object_owner') ? ' has-error' : '' }}  label-floating">
+
+    <div class="form-group col-sm-4 label-floating {{ $errors->has('package.object_owner') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
         <label class="control-label">{{__('packages.form.suite')}}</label>
@@ -22,18 +23,17 @@
         @endif
       </div>
     </div>
+
+
+    <section class="form-group label-floating {{ $errors->has('package.status_id') ? ' has-error' : '' }}">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-traffic"></i></span>
+        @include('utils._status')
+      </div>
+    </section>
   </section>
-
-  <section class="form-group {{ $errors->has('package.status_id') ? ' has-error' : '' }}">
-    <div class="input-group">
-      <span class="input-group-addon"><i class="zmdi zmdi-traffic"></i></span>
-      @include('Utils._status')
-    </div>
-  </section>
-
-
   <section class="row">
-    <section class="form-group col-sm-6 label-floating {{ $errors->has('package.weight') ? ' has-error' : '' }}">
+    <section class="form-group col-sm-2 label-floating {{ $errors->has('package.weight') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-ruler"></i></span>
         <label class="control-label">{{__('packages.form.weight')}}</label>
@@ -51,7 +51,7 @@
     </section>
 
 
-    <section class="form-group col-sm-6">
+    <section class="form-group col-sm-2 label-floating">
       <label class="control-label">{{__('packages.form.weight_measure')}}</label>
       <select class="select form-control" name="package[weight_measure]">
         <option value="kg">kg</option>
@@ -60,10 +60,7 @@
       </select>
     </section>
 
-  </section>
-
-  <section class="row">
-    <section class="form-group col-sm-3 label-floating {{ $errors->has('package.width') ? ' has-error' : '' }}">
+    <section class="form-group col-sm-2 label-floating {{ $errors->has('package.width') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-ruler"></i></span>
         <label class="control-label">{{__('packages.form.width')}}</label>
@@ -81,7 +78,7 @@
     </section>
 
 
-    <div class="form-group col-sm-3 label-floating {{ $errors->has('packages.height') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-2 label-floating {{ $errors->has('packages.height') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-ruler"></i></span>
         <label class="control-label">{{__('packages.form.height')}}</label>
@@ -97,7 +94,7 @@
       </div>
     </div>
 
-    <div class="form-group col-sm-3 label-floating {{ $errors->has('packages.depth') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-2 label-floating {{ $errors->has('packages.depth') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-ruler"></i></span>
         <label class="control-label">{{__('packages.form.depth')}}</label>
@@ -113,10 +110,10 @@
       </div>
     </div>
 
-    <div class="form-group col-sm-3 label-floating {{ $errors->has('packages.unit_measure') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-2 label-floating {{ $errors->has('packages.unit_measure') ? ' has-error' : '' }}">
       <div class="input-group">
         <label class="control-label">{{__('packages.form.unit_measure')}}</label>
-        <select class="form-control" name="package[unit_measure]">
+        <select class="select form-control" name="package[unit_measure]">
           <option value="cm" selected>cm</option>
           <option value="mm">mm</option>
           <option value="in">in</option>
@@ -133,6 +130,7 @@
       </div>
     </div>
   </section>
+
   <div class="form-group label-floating">
     <div class="input-group col-sm-12">
       <input type="file" class="form-control" placeholder="File Upload..." multiple name="package_files[]" id="package_files">

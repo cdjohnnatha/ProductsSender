@@ -1,5 +1,6 @@
 <article>
-    <div class="form-group {{ $errors->has('address.label') ? 'has-error' : '' }}">
+  <section class="row">
+    <div class="form-group col-sm-4 label-floating {{ $errors->has('address.label') ? 'has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
         <label class="control-label">{{$title}}</label>
@@ -18,7 +19,7 @@
     </div>
 
   @if(Route::is('admin.warehouses.*'))
-    <div class="form-group {{ $errors->has('admin_id') ? 'has-error' : '' }}">
+    <div class="form-group col-sm-4 label-floating {{ $errors->has('admin_id') ? 'has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-male-alt"></i></span>
         @include('admin._select')
@@ -33,8 +34,8 @@
       </div>
     </div>
   @else
-    <section class="row">
-      <div class="form-group col-sm-6 {{ $errors->has('address.owner_name') ? 'has-error' : '' }} label-floating">
+
+      <div class="form-group col-sm-4 label-floating {{ $errors->has('address.owner_name') ? 'has-error' : '' }} label-floating">
         <div class="input-group">
           <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
           <label class="control-label">{{__('common.titles.name')}}</label>
@@ -51,7 +52,7 @@
       </div>
 
 
-    <div class="form-group col-sm-6 {{ $errors->has('address.owner_surname') ? ' has-error' : '' }} label-floating">
+    <div class="form-group col-sm-4 label-floating {{ $errors->has('address.owner_surname') ? ' has-error' : '' }} label-floating">
       <div class="input-group label-floating ">
         <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
         <label class="control-label">{{__('common.titles.surname')}}</label>
@@ -69,7 +70,7 @@
     </section>
   @endif
 
-  <section class="form-group {{ $errors->has('address.phone') ? ' has-error' : '' }} label-floating">
+  <section class="form-group label-floating {{ $errors->has('address.phone') ? ' has-error' : '' }} label-floating">
     <div class="input-group">
       <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
       <label class="control-label">{{__('address.titles.phone')}}</label>
@@ -86,7 +87,7 @@
     </div>
   </section>
 
-  <section class="form-group {{ $errors->has('address.formatted_address') ? ' has-error' : '' }} label-floating">
+  <section class="form-group col-sm-7{{ $errors->has('address.formatted_address') ? ' has-error' : '' }} label-floating">
     <div class="input-group">
       <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
       <label class="control-label">{{__('address.label.type_address')}}</label>
@@ -102,7 +103,7 @@
   </section>
 
   <section class="row">
-    <div class="form-group col-sm-6 {{ $errors->has('address.number') ? 'has-error' : '' }} label-floating">
+    <div class="form-group col-sm-2 {{ $errors->has('address.number') ? 'has-error' : '' }} label-floating">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
         <label class="control-label">{{__('address.titles.number')}}</label>
@@ -119,7 +120,7 @@
     </div>
 
 
-    <div class="form-group col-sm-6 {{ $errors->has('address.postal_code') ? ' has-error' : '' }} label-floating">
+    <div class="form-group col-sm-3 {{ $errors->has('address.postal_code') ? ' has-error' : '' }} label-floating">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
         <label class="control-label">{{__('address.titles.postal_code')}}</label>

@@ -7,7 +7,7 @@
 @section('content')
 <section class="content-body">
     <div class="row">
-        <div class="col-sm-offset-2 col-xs-12 col-sm-8">
+        <div class="col-xs-12 col-sm-12">
             <div class="card">
                 <header class="card-heading ">
                     <h2 class="card-title">Form Admin</h2>

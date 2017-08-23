@@ -35,8 +35,8 @@
     </section>
   </section>
 
-  <section class="form-group label-floating {{ $errors->has('subscription.amount') ? ' has-error' : '' }}">
-    <div class="input-group">
+  <section class="{{ $errors->has('subscription.amount') ? ' has-error' : '' }}">
+    <div>
       @if(Request::is('*/edit'))
         <nested-messages :editing="{{$subscription->benefits}}"></nested-messages>
       @else

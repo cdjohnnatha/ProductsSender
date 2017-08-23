@@ -61,6 +61,7 @@ class SubscriptionTest extends DuskTestCase
 
     /**
      * @group subscriptionsDelete
+     * @group subscriptions
      * @all
      */
     public function testDeleteSubscription()
