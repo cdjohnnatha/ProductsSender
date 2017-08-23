@@ -13,6 +13,7 @@ class SubscriptionTest extends DuskTestCase
 
     /**
      * @group subscriptions
+     * @group subscriptionsRegister
      * @all
      */
     public function testRegisterSubscription()
@@ -30,7 +31,9 @@ class SubscriptionTest extends DuskTestCase
                 ->type('#input-message-1', $faker->word)
                 ->press('#addMessage')
                 ->type('#input-message-2', $faker->word)
+                ->press('.toggle')
                 ->press('#submit-button')
+                ->pause(5000)
                 ->waitForLocation('/admin/subscriptions');
 
         });

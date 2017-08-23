@@ -15,9 +15,11 @@ class AddActiveAndTypeToSubscriptions extends Migration
     {
         Schema::table('subscriptions', function (Blueprint $table) {
             $table->boolean('active');
+            $table->boolean('principal');
             $table->smallInteger('period');
             $table->index('active', 'active_index');
-            $table->index('period');
+            $table->index('period', 'period_index');
+            $table->index('principal', 'principal_index');
         });
     }
 
@@ -29,9 +31,10 @@ class AddActiveAndTypeToSubscriptions extends Migration
     public function down()
     {
         Schema::table('subscriptions', function (Blueprint $table) {
-            $table->dropColumn('actice');
+            $table->dropColumn('active');
             $table->dropColumn('period');
-            $table->dropIndex(['active', 'period']);
+            $table->dropColumn('principal');
+            $table->dropIndex(['active_index', 'period_index', 'principal_index']);
         });
     }
 }

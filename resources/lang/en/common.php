@@ -12,7 +12,16 @@ return [
         'titles' => 'Titles',
         'amount' => 'Amount',
         'price' => 'Price',
-        'phone' => 'Phone'
+        'phone' => 'Phone',
+        'active' => 'Active',
+        'period' => 'Period',
+        'principal_offer' => 'Principal offer',
     ],
+
+    'calendar' => [
+        'month' => 'Month',
+        'year' => 'Year',
+        'day' => 'Day',
+    ]
 
 ];

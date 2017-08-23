@@ -1,6 +1,31 @@
 <article>
+  <section>
+    <ul class="card-actions icons right-top">
+      <li class="form-group">
+        <label class="control-label">{{__('common.titles.active')}}</label>
+        <section class="togglebutton m-b-15 ">
+          <label>
+            <input type="checkbox" name="active"
+                   class="toggle-primary" {{$subscription->active or old('active') ? 'checked' : ''}}
+                   value="{{$subscription->active or old('active')}}">
+          </label>
+        </section>
+      </li>
+      <li class="form-group">
+        <label class="control-label">{{__('common.titles.principal_offer')}}</label>
+        <section class="togglebutton m-b-15 ">
+          <label>
+            <input type="checkbox" name="principal"
+                   class="toggle-primary" {{$subscription->principal or old('principal') ? 'checked' : ''}}
+                   value="{{$subscription->principal or old('principal')}}">
+          </label>
+        </section>
+      </li>
+    </ul>
+  </section>
+
   <section class="row">
-    <section class="form-group col-sm-8 label-floating {{ $errors->has('subscription.title') ? ' has-error' : '' }}">
+    <section class="form-group col-sm-6 label-floating {{ $errors->has('subscription.title') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
         <label class="control-label">{{__('plans.form.name')}}</label>
@@ -17,7 +42,7 @@
       </div>
     </section>
 
-    <section class="form-group col-sm-4 label-floating {{ $errors->has('subscription.amount') ? ' has-error' : '' }}">
+    <section class="form-group col-sm-3 label-floating {{ $errors->has('subscription.amount') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-money"></i></span>
         <label class="control-label">{{__('common.titles.price')}}</label>
@@ -31,6 +56,16 @@
             </strong>
           </span>
         @endif
+      </div>
+    </section>
+
+    <section class="form-group col-sm-3 label-floating">
+      <div class="input-group">
+        <label class="control-label">{{__('common.titles.period')}}</label>
+        <select class="select form-control" name="subscription[period]">
+          <option value="0">{{__('common.calendar.month')}}</option>
+          <option value="1">{{__('common.calendar.year')}}</option>
+        </select>
       </div>
     </section>
   </section>

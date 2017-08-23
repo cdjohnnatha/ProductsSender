@@ -62,6 +62,9 @@
                                     <th>Id</th>
                                     <th>{{__('common.titles.titles')}}</th>
                                     <th>{{__('common.titles.amount')}}</th>
+                                    <th>{{__('common.titles.period')}}</th>
+                                    <th>{{__('common.titles.active')}}</th>
+                                    <th>{{__('common.titles.principal_offer')}}</th>
                                     <th data-orderable="false" class="col-xs-2">
                                         <a href="{{Route('admin.subscriptions.create')}}">
                                             <button class="btn btn-primary btn-fab  animate-fab">
@@ -77,6 +80,36 @@
                                     <td>{{$subscription->id}}</td>
                                     <td>{{$subscription->title}}</td>
                                     <td>$ {{$subscription->amount}}</td>
+                                    <td>{{$subscription->period ? 'Month' : 'Year'}}</td>
+                                    <td class="col-xs-1">
+                                        <form action="{{Route('admin.subscriptions.active', $subscription->id)}}"
+                                              role="form" method="POST" id="form-active-{{$subscription->id}}">
+                                            {{ csrf_field() }}
+                                            <div class="togglebutton m-b-15 ">
+                                                <label>
+                                                   <input type="checkbox" name="active"
+                                                       class="toggle-primary" {{$subscription->active ? 'checked' : ''}}
+                                                       onChange="$('#form-active-{{$subscription->id}}').submit();"
+                                                       value="{{$subscription->active}}">
+                                                </label>
+                                            </div>
+                                        </form>
+                                    </td>
+
+                                    <td class="col-xs-1">
+                                        <form action="{{Route('admin.subscriptions.principal_offer', $subscription->id)}}"
+                                              role="form" method="POST" id="form-principal-{{$subscription->id}}">
+                                            {{ csrf_field() }}
+                                            <div class="togglebutton m-b-15 ">
+                                                <label>
+                                                    <input type="checkbox" name="principal"
+                                                           class="toggle-primary" {{$subscription->principal ? 'checked' : ''}}
+                                                           onChange="$('#form-principal-{{$subscription->id}}').submit();"
+                                                           value="{{$subscription->principal}}">
+                                                </label>
+                                            </div>
+                                        </form>
+                                    </td>
                                     <td>
                                         @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'admin.subscriptions' ,'id' => $subscription->id])
                                     </td>
