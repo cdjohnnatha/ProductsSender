@@ -80,7 +80,7 @@
                                     <td>{{$subscription->id}}</td>
                                     <td>{{$subscription->title}}</td>
                                     <td>$ {{$subscription->amount}}</td>
-                                    <td>{{$subscription->period ? 'Month' : 'Year'}}</td>
+                                    <td>{{$subscription->period ? 'Year' : 'Month'}}</td>
                                     <td class="col-xs-1">
                                         <form action="{{Route('admin.subscriptions.active', $subscription->id)}}"
                                               role="form" method="POST" id="form-active-{{$subscription->id}}">
@@ -103,7 +103,7 @@
                                             <div class="togglebutton m-b-15 ">
                                                 <label>
                                                     <input type="checkbox" name="principal"
-                                                           class="toggle-primary" {{$subscription->principal ? 'checked' : ''}}
+                                                           class="toggle-info" {{$subscription->principal ? 'checked' : ''}}
                                                            onChange="$('#form-principal-{{$subscription->id}}').submit();"
                                                            value="{{$subscription->principal}}">
                                                 </label>

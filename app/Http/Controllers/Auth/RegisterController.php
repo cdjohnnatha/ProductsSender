@@ -71,7 +71,12 @@ class RegisterController extends Controller
 
     public function register()
     {
-        $subscriptions = Subscription::all();
+        $subscriptions_active_month = Subscription::where('active',  1)
+                                    ->where('period', 0)
+                                    ->orderBy('amount')
+                                    ->get();
+
+//        dd($subscriptions_active);
         return view('auth.register', compact('subscriptions'));
     }
 

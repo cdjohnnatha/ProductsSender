@@ -31,7 +31,7 @@
 <script>
     export default {
         props: {
-            editing: []
+            editing: Array
         },
         data(){
             return {
@@ -41,7 +41,7 @@
             },
 
         created() {
-            if(this.editing == null){
+            if(this.editing == null || this.editing.length == 0){
                 return this.benefits;
             }
             else{
