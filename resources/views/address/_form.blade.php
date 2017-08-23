@@ -3,7 +3,7 @@
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
         <label class="control-label">{{$title}}</label>
-        <input type="text" class="form-control" placeholder="{{$title}}" name="address[label]"
+        <input type="text" class="form-control" name="address[label]"
                value="{{ $address->label or old('address.label') }}" id="address.label">
 
         @if ($errors->has('address.label'))
@@ -38,7 +38,7 @@
         <div class="input-group">
           <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
           <label class="control-label">{{__('common.titles.name')}}</label>
-          <input type="text" class="form-control" placeholder="{{__('common.titles.name')}}" name="address[owner_name]"
+          <input type="text" class="form-control" name="address[owner_name]"
                  value="{{ $address->owner_name or old('address.owner_name') }}">
         </div>
         @if ($errors->has('address.owner_name'))
@@ -55,7 +55,7 @@
       <div class="input-group label-floating ">
         <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
         <label class="control-label">{{__('common.titles.surname')}}</label>
-        <input type="text" class="form-control" placeholder="" name="address[owner_surname]"
+        <input type="text" class="form-control" name="address[owner_surname]"
                  value="{{ $address->owner_surname or old('address.owner_surname') }}">
       </div>
         @if ($errors->has('address.owner_surname'))
@@ -73,7 +73,7 @@
     <div class="input-group">
       <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
       <label class="control-label">{{__('address.titles.phone')}}</label>
-      <input type="text" class="form-control" placeholder="" name="address[phone]"
+      <input type="text" class="form-control" name="address[phone]"
              value="{{ $address->phone or old('address.phone') }}">
 
       @if ($errors->has('address.phone'))
@@ -106,7 +106,7 @@
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
         <label class="control-label">{{__('address.titles.number')}}</label>
-        <input type="text" class="form-control" placeholder="" name="address[number]"
+        <input type="text" class="form-control" name="address[number]"
                value="{{ $address->number or old('address.number') }}">
       </div>
       @if ($errors->has('address.number'))
@@ -123,7 +123,7 @@
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
         <label class="control-label">{{__('address.titles.postal_code')}}</label>
-        <input type="text" class="form-control" placeholder="" name="address[postal_code]"
+        <input type="text" class="form-control" name="address[postal_code]"
                value="{{ $address->postal_code or old('address.postal_code') }}">
       </div>
 

@@ -18,7 +18,7 @@ class AdminController extends Controller
             'name' => 'bail|required|min:3',
             'surname' => 'required',
             'email' => 'required|string|email|max:255|unique:admins',
-            'phone' => 'required|numeric',
+            'phone' => 'required|string',
             'warehouse_id' => 'required',
             'password' => 'required|string|min:6|confirmed'
 
@@ -39,7 +39,7 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->input());
+//        dd($request->input());
         $this->validate($request, $this->rules());
         $admin = new Admin($request->all());
         $admin->password = bcrypt($request->input('password'));

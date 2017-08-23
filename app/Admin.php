@@ -27,7 +27,7 @@ class Admin extends Authenticatable
         'country',
         'email',
         'phone',
-        'default_warehouse_id'
+        'warehouse_id'
     ];
 
 

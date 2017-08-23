@@ -22,7 +22,7 @@ Auth::routes();
 
 Route::prefix('/register')->group(function() {
     Route::post('/', 'Auth\RegisterController@store')->name('register.submit');
-    Route::get('/form', 'Auth\RegisterController@registerForm')->name('register.form');
+    Route::get('/create', 'Auth\RegisterController@register')->name('register.create');
     Route::get('/subscriptions', 'SubscriptionController@subscriptions')->name('subscriptions.all');
 });
 

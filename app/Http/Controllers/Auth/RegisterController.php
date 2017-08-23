@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Address;
+use App\Subscription;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -69,9 +69,10 @@ class RegisterController extends Controller
     }
 
 
-    public function registerForm()
+    public function register()
     {
-        return view('auth.register');
+        $subscriptions = Subscription::all();
+        return view('auth.register', compact('subscriptions'));
     }
 
     public function store(Request $request)

@@ -42,11 +42,12 @@ class AdminTest extends DuskTestCase
                 ->waitForLocation('/admin/create')
                 ->type('name', $faker->firstName)
                 ->type('surname', $faker->lastName)
-                ->type('phone', '9999999999')
+                ->type('phone', $faker->phoneNumber)
                 ->type('email', $faker->email)
                 ->type('password', '123456')
                 ->type('password_confirmation', '123456')
-                ->click('#submit-button');
+                ->click('#submit-button')
+                ->waitForLocation('/admin');
         });
 
     }
@@ -78,10 +79,14 @@ class AdminTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $faker = \Faker\Factory::create();
             $delete = Admin::orderBy('id', 'desc')->first();
-            $browser->loginAs(Admin::find(1), 'admin')
+            $admin = Admin::all();
+            $browser->loginAs($admin[count($admin) - 1], 'admin')
                 ->visit(route('admin.index'))
-                ->click('#delete-'.$delete->id)
-                ->waitForLocation('/admin/');
+                ->click('#delete-button-'.$delete->id)
+                ->press('.swal2-confirm')
+                ->waitFor('.swal2-confirm')
+                ->press('.swal2-confirm')
+                ->waitForLocation('/admin');
         });
     }
 }
