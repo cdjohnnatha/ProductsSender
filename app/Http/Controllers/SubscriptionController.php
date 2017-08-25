@@ -13,16 +13,27 @@ class SubscriptionController extends Controller
     public function rules()
     {
         return [
-            'subscription.title' => 'required',
-            'subscription.amount' => 'required|numeric',
-            'benefits.*.message' => 'required'
+            'subscription.title' => 'required|string',
+            'benefits' => 'required|array|size:8'
         ];
     }
 
     public function index()
     {
         $subscriptions = Subscription::with('benefits')->get();
-        return view('subscription.index', compact('subscriptions'));
+
+        $allow_activation_month = Subscription::where('active',  1)
+                                                ->where('period', 0)
+                                                ->count();
+
+        $allow_activation_year = Subscription::where('active',  1)
+            ->where('period', 1)
+            ->count();
+
+        return view('subscription.index',
+            compact('subscriptions',
+                         'allow_activation_month',
+                            'allow_activation_year'));
     }
 
     public function create()
@@ -34,8 +45,6 @@ class SubscriptionController extends Controller
     {
         $this->validate($request, $this->rules());
         $subscription = new Subscription($request->input('subscription'));
-        $subscription->active = $request->exists('active');
-        $subscription->principal = $request->exists('principal');
         if ($subscription->save()) {
             $subscription->benefits()->createMany(
                 $request->input('benefits')
@@ -65,14 +74,12 @@ class SubscriptionController extends Controller
         $this->validate($request, $this->rules());
         $subscription = Subscription::with('benefits')->findOrFail($id);
         $subscription->fill($request->input('subscription'));
-        $subscription->active = $request->exists('active');
-        $subscription->principal = $request->exists('principal');
         if ($subscription->save()) {
             foreach ($request->input('benefits') as $message){
                     $subscription->benefits()->updateOrCreate(
                         ['id' => (int)$message['id']],
-                        ['message' => $message['message']]
-                    );
+                        ['message' => $message['message'],
+                         'active' => array_key_exists('active',$message)]);
             }
 
             $request->session()->flash('status',

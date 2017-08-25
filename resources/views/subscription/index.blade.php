@@ -61,7 +61,6 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>{{__('common.titles.titles')}}</th>
-                                    <th>{{__('common.titles.amount')}}</th>
                                     <th>{{__('common.titles.period')}}</th>
                                     <th>{{__('common.titles.active')}}</th>
                                     <th>{{__('common.titles.principal_offer')}}</th>
@@ -77,9 +76,8 @@
                             <tbody>
                             @foreach($subscriptions as $subscription)
                                 <tr>
-                                    <td>{{$subscription->id}}</td>
+                                    <td class="col-sm-2">{{$subscription->id}}</td>
                                     <td>{{$subscription->title}}</td>
-                                    <td>$ {{$subscription->amount}}</td>
                                     <td>{{$subscription->period ? 'Year' : 'Month'}}</td>
                                     <td class="col-xs-1">
                                         <form action="{{Route('admin.subscriptions.active', $subscription->id)}}"
@@ -87,10 +85,13 @@
                                             {{ csrf_field() }}
                                             <div class="togglebutton m-b-15 ">
                                                 <label>
-                                                   <input type="checkbox" name="active"
-                                                       class="toggle-primary" {{$subscription->active ? 'checked' : ''}}
-                                                       onChange="$('#form-active-{{$subscription->id}}').submit();"
-                                                       value="{{$subscription->active}}">
+                                                    <input type="checkbox" name="active"
+                                                           class="toggle-primary"
+                                                           {{($allow_activation_month == 3 && $subscription->active == 0 && $subscription->period == 0) ? 'disabled' : ''}}
+                                                           {{($allow_activation_year == 3 && $subscription->active == 0 && $subscription->period == 1) ? 'disabled' : ''}}
+                                                           {{$subscription->active ? 'checked' : ''}}
+                                                           onChange="$('#form-active-{{$subscription->id}}').submit();"
+                                                           value="{{$subscription->active}}">
                                                 </label>
                                             </div>
                                         </form>
@@ -103,7 +104,8 @@
                                             <div class="togglebutton m-b-15 ">
                                                 <label>
                                                     <input type="checkbox" name="principal"
-                                                           class="toggle-info" {{$subscription->principal ? 'checked' : ''}}
+                                                           class="toggle-info"
+                                                           {{$subscription->principal ? 'checked' : ''}}
                                                            onChange="$('#form-principal-{{$subscription->id}}').submit();"
                                                            value="{{$subscription->principal}}">
                                                 </label>

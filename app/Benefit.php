@@ -10,7 +10,8 @@ class Benefit extends Entity
 {
 
     protected $fillable = [
-        'message'
+        'message',
+        'active'
     ];
 
     protected $hidden = [
@@ -19,6 +20,8 @@ class Benefit extends Entity
         'deleted_at',
         'subscription_id',
     ];
+
+    protected $attributes = array('active' => false);
 
     public function subscription()
     {

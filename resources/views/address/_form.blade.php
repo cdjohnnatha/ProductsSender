@@ -70,21 +70,41 @@
     </section>
   @endif
 
-  <section class="form-group label-floating {{ $errors->has('address.phone') ? ' has-error' : '' }} label-floating">
-    <div class="input-group">
-      <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
-      <label class="control-label">{{__('address.titles.phone')}}</label>
-      <input type="text" class="form-control" name="address[phone]"
-             value="{{ $address->phone or old('address.phone') }}">
+  <section class="row">
+    <section class="form-group col-sm-4 label-floating {{ $errors->has('address.phone') ? ' has-error' : '' }} label-floating">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
+        <label class="control-label">{{__('address.titles.phone')}}</label>
+        <input type="text" class="form-control" name="address[phone]"
+               value="{{ $address->phone or old('address.phone') }}">
 
-      @if ($errors->has('address.phone'))
-        <span class="help-block">
-          <strong class="text-danger" class="alert-danger">
-            {{ $errors->first('address.phone') }}
-          </strong>
-        </span>
-      @endif
-    </div>
+        @if ($errors->has('address.phone'))
+          <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('address.phone') }}
+            </strong>
+          </span>
+        @endif
+      </div>
+    </section>
+
+    <section class="form-group col-sm-8 label-floating {{ $errors->has('address.company_name') ? ' has-error' : '' }} label-floating">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
+        <label class="control-label">{{__('address.titles.company')}}</label>
+        <input type="text" class="form-control" name="address[company_name]"
+               value="{{ $address->company_name or old('address.company_name') }}">
+
+        @if ($errors->has('address.company_name'))
+          <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('address.company_name') }}
+            </strong>
+          </span>
+        @endif
+      </div>
+    </section>
+
   </section>
 
   <section class="form-group col-sm-7{{ $errors->has('address.formatted_address') ? ' has-error' : '' }} label-floating">
@@ -95,7 +115,7 @@
       @if ($errors->has('address.formatted_address'))
         <span class="help-block">
           <strong class="text-danger" class="alert-danger">
-            {{ $errors->first('address.phone') }}
+            {{ $errors->first('address.formatted_address') }}
           </strong>
         </span>
       @endif

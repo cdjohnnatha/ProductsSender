@@ -16,6 +16,12 @@ return [
         'active' => 'Active',
         'period' => 'Period',
         'principal_offer' => 'Principal offer',
+        'subscription' => 'Subscription',
+        'plan' => 'Plan',
+        'dashboard' => 'Dashboard',
+        'admin' => 'Admin',
+        'warehouse' => 'Warehouse',
+        'package' => 'Package'
     ],
 
     'calendar' => [

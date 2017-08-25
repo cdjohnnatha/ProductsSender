@@ -12,9 +12,9 @@ window.Vue.use(VeeValidate);
 
 import VueLazyLoad from 'vue-lazyload';
 import VueTouch from 'vue-touch';
-
 window.Vue.use(VueLazyLoad);
 window.Vue.use(VueTouch, { name: 'v-touch' });
+
 
  /* Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -33,6 +33,8 @@ Vue.component('user-notifications', require('./components/Users/NotificationsBar
 Vue.component('user-additional-names', require('./components/Users/AdditionalNames.vue'));
 Vue.component('autocomplete-address', require('./components/Utils/AutocompleteAddress.vue'));
 Vue.component('vue-google-autocomplete', require('vue-google-autocomplete'));
+Vue.component('select-subscription', require('./components/Utils/SelectSubscription.vue'));
+
 
 
 import VueGoogleAutocomplete from 'vue-google-autocomplete';

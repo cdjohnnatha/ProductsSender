@@ -23,29 +23,29 @@
         <li class="{{ Route::is('admin.dashboard') ? 'active' : '' }}">
           <a href="{{route('admin.dashboard')}}">
             <i class="zmdi zmdi-view-dashboard"></i>
-            {{__('admin.panel.dashboard')}}
+            {{__('common.titles.dashboard')}}
           </a>
         </li>
         <li class="{{ Route::is('admin.index') ? 'active' : '' }}">
           <a href="{{Route('admin.index')}}"><i class="zmdi zmdi-ticket-star"></i>
-            {{__('admin.panel.admin.label')}}
+            {{__('common.titles.admin')}}
           </a>
         </li>
         <li class="{{ Route::is('admin.warehouses.*') ? 'active' : '' }}">
           <a href="{{Route('admin.warehouses.index')}}"><i class="zmdi zmdi-store"></i>
-            {{__('admin.panel.warehouses.label')}}
+            {{__('common.titles.warehouse')}}
           </a>
         </li>
         <li class="{{ Route::is('admin.packages.*') ? 'active' : '' }}">
           <a href="{{Route('admin.packages.index')}}">
             <i class="zmdi zmdi-inbox"></i>
-            {{__('admin.panel.packages.label')}}
+            {{__('common.titles.package')}}
           </a>
         </li>
 
         <li class="{{ Route::is('admin.subscriptions.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.subscriptions.index')}}"><i class="zmdi zmdi-money"></i>
-            {{__('admin.panel.subscriptions.label')}}
+          <a href="{{Route('admin.subscriptions.index')}}"><i class="zmdi zmdi-tag"></i>
+            {{__('common.titles.subscription')}}
           </a>
         </li>
       </ul>
