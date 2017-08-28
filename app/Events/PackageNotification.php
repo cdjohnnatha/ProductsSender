@@ -11,7 +11,6 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Support\Facades\Log;
 
 class PackageNotification implements ShouldBroadcast, ShouldQueue
 {
@@ -19,6 +18,7 @@ class PackageNotification implements ShouldBroadcast, ShouldQueue
 
     protected $package;
     protected $message;
+    protected $user;
 
     /**
      * Create a new event instance.
@@ -27,8 +27,9 @@ class PackageNotification implements ShouldBroadcast, ShouldQueue
      */
     public function __construct($package, $message)
     {
-        $this->package = $package;
+        $this->package = $package->id;
         $this->message = $message;
+        $this->user = $package->object_owner;
     }
 
     /**
@@ -38,15 +39,16 @@ class PackageNotification implements ShouldBroadcast, ShouldQueue
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('App.User.'.$this->package->object_owner);
+        return new PrivateChannel('App.User.'.$this->user);
     }
 
 
     public function broadcastWith()
     {
         return [
+            'user' => $this->user,
             'package' => $this->package,
-            'message' => $this->message
+            'message' => $this->message,
             ];
     }
 
@@ -54,7 +56,8 @@ class PackageNotification implements ShouldBroadcast, ShouldQueue
     {
         return [
             'package' => $this->package,
-            'message' => $this->message
+            'message' => $this->message,
+            'user' => $this->user,
         ];
     }
 }

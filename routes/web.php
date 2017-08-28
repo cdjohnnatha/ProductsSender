@@ -30,14 +30,13 @@ Route::group(['middleware' => ['web']], function() {
 
     Route::group([
         'as' => 'user.',
-        'prefix' => 'user/{user}'
+        'prefix' => 'user'
     ], function() {
         Route::get('/dashboard', 'UserController@dashboard')->name('dashboard');
         Route::get('/notifications', 'UserNotificationsController@notifications')->name('notifications');
-        Route::get('/unread', 'UserNotificationsController@unread')->name('notifications.unread');
 
         Route::resource('address', 'AddressController');
-        Route::resource('packages', 'PackageController', ['only' => ['show']]);
+        Route::resource('packages', 'PackageController', ['only' => ['show', 'index', 'destroy']]);
         Route::resource('notifications', 'UserNotificationsController', ['only' => [
             'index',
             'destroy',
@@ -49,8 +48,18 @@ Route::group(['middleware' => ['web']], function() {
             'store',
             'destroy'
         ]]);
+
+
+//        Route::resource('packages', 'UserPackageController');
+
+        Route::resource('notifications', 'UserNotificationsController');
+        Route::get('/unread', 'Api\UserNotificationsApiController@unread')->name('notifications.unread');
+
+
     });
 
-    Route::resource('user', 'UserController');
+    Route::resource('user', 'UserController', ['except' => [
+        'index'
+    ]]);
 });
 

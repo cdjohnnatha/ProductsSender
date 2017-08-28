@@ -11,10 +11,10 @@ use App\Warehouse;
 class WarehouseObserver
 {
 
-    public function deleting(Warehouse $warehouse)
-    {
-        dd($warehouse->address);
-//        $warehouse->address->geonames->delete();
-//        $warehouse->address->delete();
-    }
+//    public function deleting(Warehouse $warehouse)
+//    {
+//        dd($warehouse->address);
+////        $warehouse->address->geonames->delete();
+////        $warehouse->address->delete();
+//    }
 }

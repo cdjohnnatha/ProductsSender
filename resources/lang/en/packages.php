@@ -3,7 +3,7 @@
 return [
     'form' => [
         'title_form' => 'Fill the package informations',
-        'package' => 'Package|Packages',
+        'packages' => 'Packages',
         'weight' => 'Weight',
         'width' => 'Width',
         'weight_measure' => 'Weight measure',
@@ -19,8 +19,9 @@ return [
     ],
 
     'index' => [
-        'title' => 'Plans',
-        'short_description' => 'All the plans offered to users are listed here',
+        'title_package' => 'Packages',
+        'short_description' => 'All your packages can be found here.',
+        'short_show_description' => 'Here you can see your package information'
 
     ],
 

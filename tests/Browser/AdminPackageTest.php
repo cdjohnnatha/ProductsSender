@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class AdminPackageTest extends DuskTestCase
 {
     /**
-     * @group packages
+     * @group packagesRegister
      * @all
      */
     public function testRegisterPackage()
@@ -22,11 +22,9 @@ class AdminPackageTest extends DuskTestCase
             $admin = $admin[1];
             $browser->loginAs($admin, 'admin')
                 ->visit(route('admin.packages.create'))
-                ->select('warehouse_id', 2)
-                ->mouseover('.withripple')
-                ->select('.withripple', 2)
+                ->pressAndWaitFor('#warehouse_select', 1)
+                ->click('#warehouse_select')
                 ->type('package[object_owner]', 1)
-                ->select('status[status_id]')
                 ->type('package[weight]', $faker->randomFloat(2, 1, 5))
                 ->type('package[width]', $faker->randomFloat(2, 1, 5))
                 ->type('package[depth]', $faker->randomFloat(2, 1, 5))
@@ -34,6 +32,7 @@ class AdminPackageTest extends DuskTestCase
                 ->type('package[quote]', $faker->words)
                 ->attach('package_files[]', '/home/claudio/Pictures/full-1.jpg')
                 ->press('#submit-button')
+                ->pause(1000)
                 ->waitForLocation('/admin/packages');
         });
     }

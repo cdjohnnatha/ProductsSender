@@ -35,7 +35,7 @@ class LoginController extends Controller
             return route('admin.dashboard');
         }
         else{
-            return route('user.dashboard', Auth::user()->id);
+            return route('user.dashboard');
         }
     }
 

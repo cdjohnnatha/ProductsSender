@@ -1,46 +1,38 @@
 <template>
-    <li class="dropdown">
-        <a href="#" class="btn-lg dropdown-toggle" data-toggle="dropdown"
-           role="button" aria-expanded="false">
-            <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-            <span class="badge" aria-hidden="true" id="badge">{{unread_notifications}}</span>
 
-        </a>
-
-        <ul class="dropdown-menu" role="menu">
-            <li class="dropdown-header">Notifications </li>
-            <li role="separator" class="divider"></li>
-            <virtual-list role="menu" :size="12" :remain="12"
-                              :rclass="'col-sm-12'" :rtag="'li'" :wtag="'li'">
-                    <li class="item dropdown-header" v-for="(notify, index) in all_notifications"
-                       :key="index">
-                        <a v-bind:href="prefixUrl + 'packages/' + notify.id">
-                            New package: # {{ notify.id }}
-                        </a>
-                    </li>
-                    <li role="separator" class="divider"></li>
-                </virtual-list>
-            <li role="separator" class="divider"></li>
-            <li class="dropdown-header">
-                <a v-bind:href="prefixUrl + 'notifications'" id="show-all">
-                    Show all
-                </a>
-            </li>
-        </ul>
-    </li>
+<section>
+  <ul class="scrollbar max-h-250" style="padding-left: 0;">
+    <span>
+      <li v-for="(notify, index) in all_notifications">
+        <div class="card">
+          <a href="javascript:void(0)" class="pull-right dismiss" data-dismiss="close">
+            <i class="zmdi zmdi-close"></i>
+          </a>
+          <div class="card-body">
+            <ul class="list-group ">
+              <li class="list-group-item ">
+                <span class="pull-left"><img src="img/profiles/11.jpg" alt="" class="img-circle max-w-40 m-r-10 "></span>
+                <div class="list-group-item-body">
+                  <div class="list-group-item-heading">{{notify.message.header}}</div>
+                  <div class="list-group-item-text">{{notify.message}}</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </span>
+  </ul>
+</section>
 </template>
 <script>
-
-
-    import virtualList from 'vue-virtual-scroll-list'
     export default {
         props: {
             data_id: 0
         },
-        components: { virtualList },
         data(){
             return {
-                prefixUrl: '/user/' + this.data_id + '/' ,
+                prefixUrl: '/user/',
             }
         },
         mounted(){
@@ -61,44 +53,29 @@
             listen(){
                 window.Echo.private('App.User.' + this.data_id)
                 .listen('PackageNotification', (e) => {
-                    this.$store.commit('add_notification', e);
+                    this.$store.commit('add_notification', e.data);
+                    console.log(e);
                 });
             },
 
             unreadNotifications() {
                 axios.get(this.prefixUrl + 'unread').then( response => {
                     response.data.unread.forEach(notifications => {
-                       this.$store.commit('add_notification', notifications.data.package);
-
+                       this.$store.commit('add_notification', notifications.data);
+                       console.log(notifications);
                     });
                     this.notificationsBarSize = this.unread_notifications;
+                    if(this.unread_notifications > 0){
+                        $('#notification_span').addClass('status danger');
+                    }
                 }).catch(function (error) {
                     console.log(error);
                 });
+
             },
         }
 
     }
 </script>
 <style lang="css">
-    #badge{
-        font-size: 60%;
-        position:absolute;
-        top: .6em;
-        right: .3em;
-        z-index: 99;
-    }
-
-    #li-sizing{
-        padding-right: 8.5em;
-        padding-left: 8.5em;
-    }
-    .li-list{
-        font-size: 90%;
-    }
-
-    #show-all{
-        color: blue;
-    }
-
 </style>

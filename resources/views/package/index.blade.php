@@ -11,8 +11,8 @@
         <div class="col-xs-12">
             <div class="card card-data-tables product-table-wrapper">
                 <header class="card-heading">
-                    <h2 class="card-title">Admins</h2>
-                    <small class="dataTables_info">All the admins which can use the application are here.</small>
+                    <h2 class="card-title">{{__('common.titles.package')}}</h2>
+                    <small class="dataTables_info">{{__('packages.index.short_description')}}</small>
 
                     <div class="card-search">
                         <div id="productsTable_wrapper" class="form-group label-floating is-empty">
@@ -57,11 +57,11 @@
                         <table id="productsTable" class="mdl-data-table product-table m-t-30" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                </th>
-                                <th>Id</th>
-                                <th>Picture</th>
-                                <th>Suite</th>
-                                <th>Status</th>
+                                <th class="col-sm-1">Id</th>
+                                <th class="col-sm-2">Picture</th>
+                                <th class="col-sm-1">Suite</th>
+                                <th class="col-sm-2">Status</th>
+                                <th>Obs</th>
                                 <th data-orderable="false" class="col-xs-2">
                                     <a href="{{Route('admin.packages.create')}}">
                                         <button class="btn btn-primary btn-fab  animate-fab"><i class="zmdi zmdi-plus"></i></button>
@@ -75,13 +75,18 @@
                                     <td>{{$package->id}}</td>
                                     <td>
                                         @if(count($package->pictures) > 0)
-                                            <img src="/{{$package->pictures[0]->path}}" alt="" class="img-thumbnail" />
+                                            <img src="{{$package->pictures[0]->path}}" alt="" class="img-thumbnail" />
                                         @endif
                                     </td>
                                     <td>{{$package->object_owner}}</td>
                                     <td><span class="label label-default">{{$package->status->status}}</span></td>
+                                    <td>{{$package->note}}</td>
                                     <td>
-                                        @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'admin.packages' ,'id' => $package->id])
+                                        @if(auth()->guard('admin')->user())
+                                            @include('layouts.formButtons._form_all', ['prefix_name' => 'admin.packages' ,'id' => $package->id])
+                                        @else
+                                            @include('layouts.formButtons._form_show_delete', ['prefix_name' => 'user.packages' ,'id' => $package->id])
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

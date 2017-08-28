@@ -6,7 +6,8 @@
   @endif
 
     <section class="row">
-    <section class="form-group col-sm-6 {{ $errors->has('warehouse.storage_time') ? ' has-error' : '' }} label-floating">
+    <section class="form-group col-sm-6 label-floating
+        {{ $errors->has('warehouse.storage_time') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-alarm"></i></span>
         <label class="control-label">{{__('warehouse.form.storage_time')}}</label>

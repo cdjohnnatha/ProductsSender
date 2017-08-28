@@ -11,7 +11,11 @@
             </form>
         </nav>
     </header>
-    @include('layouts.nav-menu._aside_left')
+    @if(auth()->guard('web')->user())
+        @include('layouts.nav-menu._aside_left_user')
+    @elseif(auth()->guard('admin')->user())
+        @include('layouts.nav-menu._aside_left_admin')
+    @endif
     <section id="content_outer_wrapper" style="padding-bottom: 0;">
         <div id="content_wrapper">
             <div id="header_wrapper" class="header-sm">

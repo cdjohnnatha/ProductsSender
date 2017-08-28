@@ -49,9 +49,9 @@
             </section>
         </section>
     @else
-        @if(auth()->guard('web')->user())
-            <user-notifications :data_id="{{Auth::user()->id}}"></user-notifications>
-        @endif
+        {{--@if(auth()->guard('web')->user())--}}
+            {{--<user-notifications :data_id="{{Auth::user()->id}}"></user-notifications>--}}
+        {{--@endif--}}
         @include('layouts._template')
     @endif
 

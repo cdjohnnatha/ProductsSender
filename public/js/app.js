@@ -55745,7 +55745,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n#badge{\n    font-size: 60%;\n    position:absolute;\n    top: .6em;\n    right: .3em;\n    z-index: 99;\n}\n#li-sizing{\n    padding-right: 8.5em;\n    padding-left: 8.5em;\n}\n.li-list{\n    font-size: 90%;\n}\n#show-all{\n    color: blue;\n}\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -55756,8 +55756,6 @@ exports.push([module.i, "\n#badge{\n    font-size: 60%;\n    position:absolute;\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_virtual_scroll_list__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_virtual_scroll_list___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_virtual_scroll_list__);
 //
 //
 //
@@ -55785,21 +55783,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         data_id: 0
     },
-    components: { virtualList: __WEBPACK_IMPORTED_MODULE_0_vue_virtual_scroll_list___default.a },
     data: function data() {
         return {
-            prefixUrl: '/user/' + this.data_id + '/'
+            prefixUrl: '/user/'
         };
     },
     mounted: function mounted() {
@@ -55829,9 +55820,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get(this.prefixUrl + 'unread').then(function (response) {
                 response.data.unread.forEach(function (notifications) {
-                    _this2.$store.commit('add_notification', notifications.data.package);
+                    _this2.$store.commit('add_notification', notifications.data);
+                    console.log(notifications);
                 });
                 _this2.notificationsBarSize = _this2.unread_notifications;
+                if (_this2.unread_notifications > 0) {
+                    $('#notification_span').addClass('status danger');
+                }
             }).catch(function (error) {
                 console.log(error);
             });
@@ -55841,320 +55836,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-(function (root, ns, factory) {
-    if (true) {
-        module.exports = factory(__webpack_require__(5))
-    } else if (typeof define === 'function' && define.amd) {
-        define(['vue'], factory)
-    } else if (typeof exports === 'object') {
-        exports[ns] = factory(require('vue'))
-    } else {
-        root[ns] = factory(root['Vue'])
-    }
-})(this, 'VirutalScrollList', function (Vue2) {
-    if (typeof Vue2 === 'object' && typeof Vue2.default === 'function') {
-        Vue2 = Vue2.default
-    }
-
-    var innerns = 'vue-virtual-scroll-list'
-
-    return Vue2.component(innerns, {
-        props: {
-            size: { type: Number, required: true },
-            remain: { type: Number, required: true },
-            rtag: { type: String, default: 'div' },
-            rclass: { type: String, default: '' },
-            wtag: { type: String, default: 'div' },
-            wclass: { type: String, default: '' },
-            start: { type: Number, default: 0 },
-            totop: Function,
-            tobottom: Function,
-            onscroll: Function
-        },
-
-        created: function () {
-            // An object helping to calculate.
-            this.delta = {
-                start: 0, // Start index.
-                end: 0, // End index.
-                total: 0, // All items count.
-                keeps: 0, // Nums keeping in real dom.
-                benchs: 0, // Nums scroll pass should force update.
-                scrollTop: 0, // Store scrollTop.
-                scrollDirect: 'd', // Scroll direction.
-                viewHeight: 0, // Container wrapper viewport height.
-                allPadding: 0, // All padding of not-render-yet doms.
-                paddingTop: 0, // Container wrapper real padding-top.
-                timeStamp: 0 // Last event fire timestamp avoid compact fire.
-            }
-        },
-
-        watch: {
-            start: function (index) {
-                if (!this.validStart(index)) {
-                    return
-                }
-
-                var delta = this.delta
-                var start, end, scrollTop
-
-                if (this.isOverflow(index)) {
-                    var zone = this.getLastZone()
-                    end = zone.end
-                    start = zone.start
-                    scrollTop = delta.total * this.size
-                } else {
-                    start = index
-                    end = start + delta.keeps
-                    scrollTop = start * this.size
-                }
-
-                delta.end = end
-                delta.start = start >= this.remain ? start : 0
-
-                this.$forceUpdate()
-                Vue2.nextTick(this.setScrollTop.bind(this, scrollTop))
-            }
-        },
-
-        methods: {
-            handleScroll: function (e) {
-                var scrollTop = this.$refs.container.scrollTop
-
-                this.updateZone(scrollTop)
-
-                if (this.onscroll) {
-                    this.onscroll(e, scrollTop)
-                }
-            },
-
-            updateZone: function (offset) {
-                var delta = this.delta
-                var overs = Math.floor(offset / this.size)
-
-                if (!offset && delta.total) {
-                    this.fireEvent('totop')
-                }
-
-                delta.scrollDirect = delta.scrollTop > offset ? 'u' : 'd'
-                delta.scrollTop = offset
-
-                // Calculate the start and end by moving items.
-                var start = overs || 0
-                var end = overs ? (overs + delta.keeps) : delta.keeps
-
-                var isOver = this.isOverflow(start)
-                if (isOver) {
-                    var zone = this.getLastZone()
-                    end = zone.end
-                    start = zone.start
-                }
-
-                // If scroll pass items within now benchs, do not update.
-                if (!isOver && (overs > delta.start) && (overs - delta.start <= delta.benchs)) {
-                    return
-                }
-
-                delta.end = end
-                delta.start = start
-
-                // Call component to update shown items.
-                this.$forceUpdate()
-            },
-
-            // Avoid overflow range.
-            isOverflow: function (start) {
-                var delta = this.delta
-                var overflow = (delta.total - delta.keeps > 0) && (start + this.remain >= delta.total)
-                if (overflow && delta.scrollDirect === 'd') {
-                    this.fireEvent('tobottom')
-                }
-                return overflow
-            },
-
-            // Fire a props event to parent.
-            fireEvent: function (event) {
-                var now = +new Date()
-                if (this[event] && now - this.delta.timeStamp > 30) {
-                    this[event]()
-                    this.delta.timeStamp = now
-                }
-            },
-
-            // Check if given start is valid.
-            validStart: function (start) {
-                var valid = 1
-                if (start !== parseInt(start, 10)) {
-                    valid = 0
-                    console.warn(innerns + ': start ' + start + ' is not an integer.')
-                }
-                if (start < 0 || start > this.delta.total - 1) {
-                    valid = 0
-                    console.warn(innerns + ': start ' + start + ' is an overflow index.')
-                }
-                return !!valid
-            },
-
-            // If overflow range return the last zone.
-            getLastZone: function () {
-                return {
-                    end: this.delta.total,
-                    start: this.delta.total - this.delta.keeps
-                }
-            },
-
-            // Set manual scrollTop
-            setScrollTop: function (scrollTop) {
-                this.$refs.container.scrollTop = scrollTop
-            },
-
-            // Filter the shown items base on start and end.
-            filter: function (slots) {
-                var delta = this.delta
-
-                if (!slots) {
-                    slots = []
-                    delta.start = 0
-                }
-
-                var hasPadding = slots.length > delta.keeps
-
-                delta.total = slots.length
-                delta.paddingTop = this.size * (hasPadding ? delta.start : 0)
-                delta.allPadding = this.size * (hasPadding ? slots.length - delta.keeps : 0)
-
-                return slots.filter(function (slot, index) {
-                    return index >= delta.start && index <= delta.end
-                })
-            }
-        },
-
-        beforeMount: function () {
-            var delta = this.delta
-            var remain = this.remain
-            var benchs = Math.round(remain / 2)
-
-            delta.benchs = benchs
-            delta.keeps = remain + benchs
-            delta.viewHeight = this.size * remain
-            delta.start = this.start >= remain ? this.start : 0
-            delta.end = this.start + remain + benchs
-        },
-
-        mounted: function () {
-            if (this.validStart(this.start)) {
-                this.setScrollTop(this.start * this.size)
-            }
-        },
-
-        render: function (createElement) {
-            var showList = this.filter(this.$slots.default)
-            var delta = this.delta
-
-            return createElement(this.rtag, {
-                'ref': 'container',
-                'style': {
-                    'display': 'block',
-                    'overflow-y': 'auto',
-                    'height': delta.viewHeight + 'px'
-                },
-                'on': {
-                    'scroll': this.handleScroll
-                },
-                'class': this.rclass
-            }, [
-                createElement(this.wtag, {
-                    'style': {
-                        'display': 'block',
-                        'padding-top': delta.paddingTop + 'px',
-                        'padding-bottom': delta.allPadding - delta.paddingTop + 'px'
-                    },
-                    'class': this.wclass
-                }, showList)
-            ])
-        }
-    })
-})
-
-
-/***/ }),
+/* 91 */,
 /* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', {
-    staticClass: "dropdown"
-  }, [_c('a', {
-    staticClass: "btn-lg dropdown-toggle",
-    attrs: {
-      "href": "#",
-      "data-toggle": "dropdown",
-      "role": "button",
-      "aria-expanded": "false"
+  return _c('section', [_c('ul', {
+    staticClass: "scrollbar max-h-250",
+    staticStyle: {
+      "padding-left": "0"
     }
-  }, [_c('span', {
-    staticClass: "glyphicon glyphicon-globe",
+  }, [_c('span', _vm._l((_vm.all_notifications), function(notify, index) {
+    return _c('li', [_c('div', {
+      staticClass: "card"
+    }, [_vm._m(0, true), _vm._v(" "), _c('div', {
+      staticClass: "card-body"
+    }, [_c('ul', {
+      staticClass: "list-group "
+    }, [_c('li', {
+      staticClass: "list-group-item "
+    }, [_vm._m(1, true), _vm._v(" "), _c('div', {
+      staticClass: "list-group-item-body"
+    }, [_c('div', {
+      staticClass: "list-group-item-heading"
+    }, [_vm._v(_vm._s(notify.message.header))]), _vm._v(" "), _c('div', {
+      staticClass: "list-group-item-text"
+    }, [_vm._v(_vm._s(notify.message.body))])])])])])])])
+  }))])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('a', {
+    staticClass: "pull-right dismiss",
     attrs: {
-      "aria-hidden": "true"
+      "href": "javascript:void(0)",
+      "data-dismiss": "close"
     }
-  }), _vm._v(" "), _c('span', {
-    staticClass: "badge",
+  }, [_c('i', {
+    staticClass: "zmdi zmdi-close"
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    staticClass: "pull-left"
+  }, [_c('img', {
+    staticClass: "img-circle max-w-40 m-r-10 ",
     attrs: {
-      "aria-hidden": "true",
-      "id": "badge"
+      "src": "img/profiles/11.jpg",
+      "alt": ""
     }
-  }, [_vm._v(_vm._s(_vm.unread_notifications))])]), _vm._v(" "), _c('ul', {
-    staticClass: "dropdown-menu",
-    attrs: {
-      "role": "menu"
-    }
-  }, [_c('li', {
-    staticClass: "dropdown-header"
-  }, [_vm._v("Notifications ")]), _vm._v(" "), _c('li', {
-    staticClass: "divider",
-    attrs: {
-      "role": "separator"
-    }
-  }), _vm._v(" "), _c('virtual-list', {
-    attrs: {
-      "role": "menu",
-      "size": 12,
-      "remain": 12,
-      "rclass": 'col-sm-12',
-      "rtag": 'li',
-      "wtag": 'li'
-    }
-  }, [_vm._l((_vm.all_notifications), function(notify, index) {
-    return _c('li', {
-      key: index,
-      staticClass: "item dropdown-header"
-    }, [_c('a', {
-      attrs: {
-        "href": _vm.prefixUrl + 'packages/' + notify.id
-      }
-    }, [_vm._v("\n                        New package: # " + _vm._s(notify.id) + "\n                    ")])])
-  }), _vm._v(" "), _c('li', {
-    staticClass: "divider",
-    attrs: {
-      "role": "separator"
-    }
-  })], 2), _vm._v(" "), _c('li', {
-    staticClass: "divider",
-    attrs: {
-      "role": "separator"
-    }
-  }), _vm._v(" "), _c('li', {
-    staticClass: "dropdown-header"
-  }, [_c('a', {
-    attrs: {
-      "href": _vm.prefixUrl + 'notifications',
-      "id": "show-all"
-    }
-  }, [_vm._v("\n                Show all\n            ")])])], 1)])
-},staticRenderFns: []}
+  })])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
