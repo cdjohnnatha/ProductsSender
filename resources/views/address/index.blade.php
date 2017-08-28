@@ -1,48 +1,84 @@
 @extends('layouts.app')
 
-@section('content')
-  <header class="panel-heading">
-    Addresses
-    <a href="{{route('user.address.create', Auth::user()->id)}}" class="btn btn-default pull-right">
-      <span class="glyphicon glyphicon-plus"></span>
-    </a>
-    <div class="clearfix"></div>
-  </header>
-  <section class="panel-body">
-    <article class="col-sm-4">
-      <section class="panel panel-primary">
-        <header class="panel-heading">
-          <h3>Address: {{ $default->address[0]->label}}</h3>
-        </header>
-        <section class="panel-body" style="padding: 0;">
-          @include('address.show', ['address' => $default->address[0]])
-        </section>
-        <footer class="panel-footer">
-          Default Address
-        </footer>
-      </section>
-    </article>
 
-    @foreach($morph->address as $address)
-      @if($address->default_address != 1)
-        <section class="col-sm-4">
-          <section class="panel panel-info">
-            <header class="panel-heading">
-              <h3>Address: {{ $address->label}}</h3>
-            </header>
-            <section class="panel-body" style="padding: 0;">
-              @include('address.show', ['address' => $address])
-            </section>
-            <footer class="panel-footer">
-              <form action="{{route('user.address.store', Auth::user()->id)}}" role="form" method="POST">
-                {{ csrf_field() }}
-                <button class="btn btn-info pull-right">Make default</button>
-                <div class="clearfix"></div>
-              </form>
-            </footer>
-          </section>
-        </section>
-      @endif
-    @endforeach
-  </section>
+@section('panel_header')
+  {{__('common.titles.address')}}
 @endsection
+
+@section('content')
+  <section class="card">
+    <header class="card-body p-0">
+      <div class="tabpanel">
+        <ul class="nav nav-tabs nav-tabs-right">
+          <li class="active" role="presentation"><a href="#tab-1" data-toggle="tab" aria-expanded="true">{{__('common.titles.address')}}</a></li>
+          <li role="presentation"><a href="#tab-2" data-toggle="tab" aria-expanded="true">{{__('common.titles.warehouse')}}</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <header class="card-heading">
+      <h2 class="card-title">{{__('common.titles.address')}}</h2>
+      <small class="dataTables_info">{{__('address.label.short_description')}}</small>
+      <ul class="card-actions icons fab-action right-bottom">
+        <li>
+          <button class="btn btn-info animate-fab btn-fab" onclick="window.location='{{Route('user.address.create')}}'">
+            <i class="zmdi zmdi-plus"></i>
+          </button>
+        </li>
+      </ul>
+    </header>
+
+
+    <section class="tab-content  p-20">
+      <section class="tab-pane fadeIn active" id="tab-1">
+        <div class="row">
+          <div class="card-body p-0">
+            @foreach($morph->address as $address)
+              <div class="col-lg-4">
+                <div class="card">
+                  <header class="card-heading {{$address->default_address ? 'card-yellow' : 'card-default'}}">
+                    <h2 class="card-title">
+                      @if($address->default_address)
+                        <i class="zmdi zmdi-star"></i>
+                      @endif
+                      {{$address->label}}
+                    </h2>
+                  </header>
+                  <div class="card-body">
+                    <h3>{{$address->owner_name.' '.$address->owner_surname}}</h3>
+                    <small class="dataTables_info">{{__('address.titles.phone').': '.$address->phone}}</small>
+                    <p>{{$address->formatted_address}}
+                      <small class="dataTables_info">, nº {{$address->number.', '.__('address.titles.postal_code').': '. $address->postal_code}}</small></p>
+                  </div>
+                  <footer class="card-footer border-top">
+                    <ul class="card-actions left-bottom">
+                      <li>
+                        <a href="javascript:void(0)" class="btn btn-flat {{$address->default_address ? 'btn-default disabled' : 'btn-info'}}"
+                          onclick="$('#form-makedefault-{{$address->id}}').submit();">
+                          <i class="zmdi {{$address->default_address ? 'zmdi-star' : 'zmdi-star-border'}}"></i> Make default
+                        </a>
+                        <form action="{{Route('user.address.default', $address->id)}}"
+                              role="form" method="POST" id="form-makedefault-{{$address->id}}">
+                          {{ csrf_field() }}
+                        </form>
+                      </li>
+                    </ul>
+                    <ul class="card-actions icons right-bottom">
+                      <li>
+                        @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'user.address', 'id' => $address->id])
+                      </li>
+                    </ul>
+                  </footer>
+                </div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+      </section>
+      <section class="tab-pane fadeIn" id="tab-2">
+
+      </section>
+    </section>
+
+@endsection
+

@@ -10,12 +10,12 @@
     <header class="card-body p-0">
         <div class="tabpanel">
             <ul class="nav nav-tabs nav-tabs-right">
-                <li class="active" role="presentation"><a href="#tab-1" data-toggle="tab" aria-expanded="true">General</a></li>
-                <li role="presentation"><a href="#tab-2" data-toggle="tab" aria-expanded="true">Address</a></li>
-                <li role="presentation"><a href="#tab-3" data-toggle="tab" aria-expanded="true">Order Info</a></li>
-                <li role="presentation"><a href="#tab-4" data-toggle="tab" aria-expanded="true">Comments</a></li>
+                <li class="active" role="presentation"><a href="#tab-1" data-toggle="tab" aria-expanded="true">{{__('common.titles.general')}}</a></li>
+                <li role="presentation"><a href="#tab-2" data-toggle="tab" aria-expanded="true">{{__('common.titles.address')}}</a></li>
+                <li role="presentation"><a href="#tab-3" data-toggle="tab" aria-expanded="true">{{__('common.titles.order_info')}}</a></li>
+                <li role="presentation"><a href="#tab-4" data-toggle="tab" aria-expanded="true">{{__('common.titles.comments')}}</a></li>
                 @if(count($package->pictures) >= 8)
-                    <li role="presentation"><a href="#tab-5" data-toggle="tab" aria-expanded="true">Galery</a></li>
+                    <li role="presentation"><a href="#tab-5" id="galery-tab" data-toggle="tab" aria-expanded="true">Galery</a></li>
                 @endif
             </ul>
         </div>

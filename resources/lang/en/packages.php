@@ -7,7 +7,7 @@ return [
         'weight' => 'Weight',
         'width' => 'Width',
         'weight_measure' => 'Weight measure',
-        'dimensions' => 'Dimensions',
+        'dimensions' => 'Dimensions (L x H x W)',
         'height' => 'Height',
         'depth' => 'Depth',
         'unit_measure' => 'Unit Measure',

@@ -4,7 +4,7 @@
         <div class="col-lg-4">
           <section class="card card-gallery">
             <header class="card-heading">
-              <h2 class="card-title">Image Gallery</h2>
+              <h2 class="card-title">{{__('common.titles.image_gallery')}}</h2>
             </header>
             <section class="card-body p-0">
               <div id="photo-gallery" class="gallery row" itemscope itemtype="http://schema.org/ImageGallery">
@@ -28,7 +28,7 @@
               <footer class="card-footer border-top">
                 <ul class="more">
                   <li>
-                    <a href="javascript:void(0)" disabled>View More</a>
+                    <a href="javascript:void(0)" onclick="$('#galery-tab').click()">View More</a>
                   </li>
                 </ul>
               </footer>

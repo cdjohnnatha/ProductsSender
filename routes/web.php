@@ -36,6 +36,7 @@ Route::group(['middleware' => ['web']], function() {
         Route::get('/notifications', 'UserNotificationsController@notifications')->name('notifications');
 
         Route::resource('address', 'AddressController');
+        Route::post('address/{address}/default', 'AddressController@defaultAddress')->name('address.default');
         Route::resource('packages', 'PackageController', ['only' => ['show', 'index', 'destroy']]);
         Route::resource('notifications', 'UserNotificationsController', ['only' => [
             'index',

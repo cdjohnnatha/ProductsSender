@@ -90,7 +90,7 @@
 
     <section class="form-group col-sm-8 label-floating {{ $errors->has('address.company_name') ? ' has-error' : '' }} label-floating">
       <div class="input-group">
-        <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
+        <span class="input-group-addon"><i class="zmdi zmdi-city"></i></span>
         <label class="control-label">{{__('address.titles.company')}}</label>
         <input type="text" class="form-control" name="address[company_name]"
                value="{{ $address->company_name or old('address.company_name') }}">

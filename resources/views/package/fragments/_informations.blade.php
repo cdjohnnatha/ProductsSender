@@ -5,23 +5,26 @@
       <table class="table table-hover">
         <thead>
         <tr>
-          <th colspan="2"><h2>Informations</h2></th>
+          <th colspan="2"><h2>{{__('common.titles.informations')}}</h2></th>
         </tr>
         </thead>
         <tbody>
         <tr>
-          <th>Status</th>
+          <th>{{__('common.titles.status')}}</th>
           <td class="md-bg-blue-50">{{$package->status->status}}</td>
         </tr>
         <tr>
-          <th>Dimensions (C x A x L):</th>
+          <th>{{__('packages.form.dimensions')}}:</th>
           <td>
             {{$package->depth.' x '.$package->height.' x '.$package->width.' '.$package->unit_measure}}
           </td>
         </tr>
         <tr>
-          <th>Weight:</th>
+          <th>{{__('packages.form.weight')}}:</th>
           <td>{{$package->weight.' '.$package->weight_measure}}</td>
+        </tr>
+        <tr>
+          <th>Description</th>
         </tr>
         </tbody>
       </table>
