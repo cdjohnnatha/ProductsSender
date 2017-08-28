@@ -28,7 +28,10 @@ class AddressController extends Controller
             'address.number' => 'required|string|max:15',
             'address.formatted_address' => 'required',
             'address.postal_code' => 'required',
-            'address.default_address' => 'boolean'
+            'address.default_address' => 'boolean',
+            'geonames.country' => 'required',
+            'geonames.city' => 'required',
+            'geonames.state' => 'required',
         ];
     }
 
@@ -67,9 +70,11 @@ class AddressController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request, $id = null)
     {
-        dd($request->input());
+        if(is_null($id)){
+            $id = Auth::user()->id;
+        }
         $this->validate($request, $this->rules());
         $polymorph = $this->getClass($request);
         $address = new Address($request->input('address'));

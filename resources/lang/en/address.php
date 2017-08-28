@@ -14,11 +14,12 @@ return [
         'postal_code'   => 'Postal Code ',
         'country'   => 'Country',
         'number'   => 'Number',
+        'form' => 'Address form'
     ],
 
     'label' => [
         'type_address' => 'Please type your address',
-        'short_description' => 'All your addresses can be found here.',
+        'short_description' => 'All the addresses can be found here.',
         'filter_address' => 'Filter address'
     ]
 

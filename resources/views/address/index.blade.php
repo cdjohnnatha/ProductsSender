@@ -16,6 +16,19 @@
       </div>
     </header>
 
+    <header class="card-heading">
+      <h2 class="card-title">{{__('common.titles.address')}}</h2>
+      <small class="dataTables_info">{{__('address.label.short_description')}}</small>
+      <ul class="card-actions icons fab-action right-bottom">
+        <li>
+          <button class="btn btn-info animate-fab btn-fab" onclick="window.location='{{Route('user.address.create')}}'">
+            <i class="zmdi zmdi-plus"></i>
+          </button>
+        </li>
+      </ul>
+    </header>
+
+
     <section class="tab-content  p-20">
       <section class="tab-pane fadeIn active" id="tab-1">
         <div class="row">
@@ -66,5 +79,6 @@
 
       </section>
     </section>
+
 @endsection
 

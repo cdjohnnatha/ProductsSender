@@ -24,11 +24,7 @@ window.Vue.use(VueTouch, { name: 'v-touch' });
 Vue.component('nested-messages', require('./components/Subscriptions/NestedBenefitsMessage.vue'));
 Vue.component('warehouses-select', require('./components/Warehouse/WarehouseSelect.vue'));
 Vue.component('status-select', require('./components/Utils/Status.vue'));
-Vue.component('package-upload-files', require('./components/Packages/UploadFiles.vue'));
-Vue.component('package-pictures', require('./components/Packages/PackagePictures.vue'));
 
-Vue.component('small-pictures-preview', require('./components/Packages/PackageSmallPreview.vue'));
-Vue.component('register-form-button', require('./components/Users/UserFormButton.vue'));
 Vue.component('user-notifications', require('./components/Users/NotificationsBar.vue'));
 Vue.component('user-additional-names', require('./components/Users/AdditionalNames.vue'));
 Vue.component('autocomplete-address', require('./components/Utils/AutocompleteAddress.vue'));
