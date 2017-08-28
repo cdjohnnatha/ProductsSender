@@ -1,70 +1,46 @@
 @extends('layouts.app')
 
-@section('content')
-    <div class="panel-heading">
-        <label>Package:</label>
-        # {{$package->id}}
-    </div>
-    <div class="panel-body">
-        <section class="col-sm-12">
-            <section class="col-sm-4" id="picture-wall">
-                <label>Pictures of Package</label>
-                <package-pictures :pictures="{{$package->pictures}}"></package-pictures>
-            </section>
-            <section class="col-sm-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Order Informations
-                    </div>
-                    <div class="panel-body">
-                    </div>
-                </div>
-            </section>
-            <aside class="col-sm-4" >
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Object Informations
-                    </div>
-                    <div class="panel-body">
-                        <table class="table">
-                            <tbody>
-                            <tr>
-                                <th>Dimensions ({{$package->unit_measure}}):</th>
-                                <td>
-                                    {{$package->width}} x {{$package->height}}
-                                    x {{$package->depth}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Weight ({{$package->weight_measure}}):</th>
-                                <td>{{$package->weight}}</td>
-                            </tr>
-                            <tr>
-                                <th>Status:</th>
-                                <td>{{$package->status->status}}</td>
-                            </tr>
-                            <tr>
-                                <th>Object Owner:</th>
-                                <td>{{$package->user->name}}</td>
-                            </tr>
-                            <tr>
-                                <th>Warehouse:</th>
-                                <td>{{$package->warehouse->name}}</td>
-                            </tr>
-                            <tr>
-                                <th>Note:</th>
-                                <td>{{$package->note}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </aside>
-            @if(auth()->guard('admin')->user())
-                <footer class="pull-right col-sm-4">
-                    @include('layouts.formButtons._form_edit_delete', array('prefix_name' => 'admin.packages', 'id' => $package->id))
-                </footer>
-            @endif
-        </section>
-    </div>
+@section('panel_header')
+    Package #{{$package->id}}
 @endsection
+
+
+@section('content')
+<section class="card">
+    <header class="card-body p-0">
+        <div class="tabpanel">
+            <ul class="nav nav-tabs nav-tabs-right">
+                <li class="active" role="presentation"><a href="#tab-1" data-toggle="tab" aria-expanded="true">General</a></li>
+                <li role="presentation"><a href="#tab-2" data-toggle="tab" aria-expanded="true">Address</a></li>
+                <li role="presentation"><a href="#tab-3" data-toggle="tab" aria-expanded="true">Order Info</a></li>
+                <li role="presentation"><a href="#tab-4" data-toggle="tab" aria-expanded="true">Comments</a></li>
+                @if(count($package->pictures) >= 8)
+                    <li role="presentation"><a href="#tab-5" data-toggle="tab" aria-expanded="true">Galery</a></li>
+                @endif
+            </ul>
+        </div>
+    </header>
+    <section class="tab-content  p-20">
+        <section class="tab-pane fadeIn active" id="tab-1">
+            @include('package.fragments._informations')
+        </section>
+        <section class="tab-pane fadeIn" id="tab-2">
+
+        </section>
+
+        <section class="tab-pane fadeIn" id="tab-3">
+
+        </section>
+
+        <section class="tab-pane fadeIn" id="tab-4">
+
+        </section>
+
+        <section class="tab-pane fadeIn" id="tab-5">
+            @include('package.fragments._image_galery')
+        </section>
+    </section>
+    @include('package.fragments._photoswipe_element')
+</section>
+@endsection
+

@@ -1505,8 +1505,16 @@
 	  $('input#toggle-price:checkbox').on('change', function () {
 	    if ($(this).is(":checked")) {
 	      $('.pricing-wrapper .card-container').addClass("flipped");
+		  setTimeout(function() {
+              $('.container-card-front').addClass("hidden");
+          }, 150);
+
 	    } else {
 	      $('.pricing-wrapper .card-container').removeClass("flipped");
+            setTimeout(function() {
+                $('.container-card-front').removeClass("hidden");
+            }, 200);
+
 	    }
 	  });
 	};
@@ -4706,10 +4714,11 @@
 	    }
 	  });
 	  $('#rootwizard .finish').on('click', function (e) {
-	    e.stopPropagation();
+	  	e.stopPropagation();
 	    swal({ title: "Order Complete", text: "Thank you for your purchase!", type: "success", timer: 2000,
 	      showConfirmButton: false });
-	    $('#rootwizard').find("a[href*='tab1']").trigger('click');
+	    // $('#rootwizard').find("a[href*='tab1']").trigger('click');
+		 //  alert('clicked');
 	  });
 	};
 	exports.wizardDemo = wizardDemo;

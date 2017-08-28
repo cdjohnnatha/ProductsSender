@@ -13,6 +13,7 @@ class PackageNotifications extends Notification implements ShouldQueue
     use Queueable;
     private $package;
     private $message;
+    private $user;
     /**
      * Create a new notification instance.
      *
@@ -20,7 +21,8 @@ class PackageNotifications extends Notification implements ShouldQueue
      */
     public function __construct($package, $message)
     {
-        $this->package = $package;
+        $this->user = $package->object_owner;
+        $this->package = $package->id;
         $this->message = $message;
     }
 
@@ -32,7 +34,7 @@ class PackageNotifications extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -58,8 +60,9 @@ class PackageNotifications extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
+            'user' => $this->user,
             'package' => $this->package,
-            'message' => $this->message
+            'message' => $this->message,
         ];
     }
 
@@ -74,7 +77,8 @@ class PackageNotifications extends Notification implements ShouldQueue
     {
         return new BroadcastMessage([
             'package' => $this->package,
-            'message' => $this->message
+            'message' => $this->message,
+            'user' => $this->user
         ]);
     }
 

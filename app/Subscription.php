@@ -11,50 +11,25 @@ class Subscription extends Entity
     protected $fillable = [
         'title',
         'amount',
-        'active',
-        'period',
+        'period'
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
         'deleted_at',
-        'created_by',
-        'updated_by'
     ];
 
-    protected $attributes = ['active' => true];
-
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
-
-    public function createdBy()
-    {
-        return $this->belongsTo(Admin::class, 'created_by');
-    }
-
-    public function updatedBy()
-    {
-        return $this->belongsTo(Admin::class, 'updated_by');
-    }
+    protected $attributes = [
+        'active' => false,
+        'principal' => false];
 
     public function benefits(){
         return $this->hasMany(Benefit::class);
     }
 
-
-
-    protected static function boot() {
-        parent::boot();
-
-        static::deleting(function ($subscription) {
-            foreach($subscription->benefits()->get() as $benefit){
-                $benefit->delete();
-            }
-        });
+    public function plans(){
+        return $this->hasMany(Plan::class);
     }
 
 }

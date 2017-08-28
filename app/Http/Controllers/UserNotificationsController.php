@@ -40,6 +40,7 @@ class UserNotificationsController extends Controller
         ]);
     }
 
+
     public function markRead()
     {
         Auth::user()->notifications->markAsRead();

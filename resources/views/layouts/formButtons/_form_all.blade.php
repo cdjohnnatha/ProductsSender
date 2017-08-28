@@ -1,22 +1,17 @@
 <section>
-  <div class="col-sm-4">
-    <a href="{{route($prefix_name.'.show', $id)}}" class="edit-modal btn btn-info">
-      <span class="glyphicon glyphicon-edit"></span>
-      {{ __('buttons.titles.show') }}
-    </a>
-  </div>
-  <div class="col-sm-4">
-    <a href="{{route($prefix_name.'.edit', $id)}}" class="edit-modal btn btn-warning">
-      <span class="glyphicon glyphicon-edit"></span>
-      {{ __('buttons.titles.edit') }}
-    </a>
-  </div>
-  <form action="{{route($prefix_name.'.destroy', $id)}}" method="POST"  role="form">
+  <a href="#" class="icon" onclick="window.location='{{Route($prefix_name.".show", $id)}}'">
+    <i class="zmdi zmdi-search"></i>
+  </a>
+
+  <a href="#" class="icon" onclick="window.location='{{Route($prefix_name.".edit", $id)}}'">
+    <i class="zmdi zmdi-edit"></i>
+  </a>
+
+  <a href="javascript:void(0)" class="icon alerting-delete" id="delete-button-{{$id}}" formSubmitId="delete-form-{{$id}}">
+    <i class="zmdi zmdi-delete"></i>
+  </a>
+  <form action="{{route($prefix_name.'.destroy', $id)}}" method="POST"  role="form" id="delete-form-{{$id}}">
     {{ csrf_field() }}
     {{ method_field('DELETE') }}
-    <button type="submit" class="btn btn-danger">
-      <span class="glyphicon glyphicon-trash"></span>
-      {{ __('buttons.titles.delete') }}
-    </button>
   </form>
 </section>

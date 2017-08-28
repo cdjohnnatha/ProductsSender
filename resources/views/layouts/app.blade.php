@@ -21,37 +21,37 @@
 <body>
     <section id="app">
     @if (Auth::guest())
-    <section id="app_wrapper">
-        <header id="app_topnavbar-wrapper">
-            <nav role="navigation" class="navbar topnavbar">
-                <section class="nav-wrapper">
-                    <ul class="nav navbar-nav pull-right right-menu">
-                        <li class="app_menu-open">
-                            <a href="javascript:void(0)" data-toggle-state="app_sidebar-left-open" data-key="leftSideBar">
-                                <i class="zmdi zmdi-menu"></i>
-                            </a>
-                        </li>
-                        <!-- Authentication Links -->
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                        <li><a href="{{ Route('register.create') }}">Register</a></li>
-                    </ul>
-                </section>
-            </nav>
-        </header>
-        <section id="content_outer_wrapper" style="padding-bottom: 0;">
-            <div id="content_wrapper" class="">
-                <div id="content" class="container-fluid">
-                    <div class="content-body">
-                        @yield('content')
+        <section id="app_wrapper">
+            <header id="app_topnavbar-wrapper">
+                <nav role="navigation" class="navbar topnavbar">
+                    <section class="nav-wrapper">
+                        <ul class="nav navbar-nav pull-right right-menu">
+                            <li class="app_menu-open">
+                                <a href="javascript:void(0)" data-toggle-state="app_sidebar-left-open" data-key="leftSideBar">
+                                    <i class="zmdi zmdi-menu"></i>
+                                </a>
+                            </li>
+                            <!-- Authentication Links -->
+                            <li><a href="{{ route('login') }}">Login</a></li>
+                            <li><a href="{{ Route('register.create') }}">Register</a></li>
+                        </ul>
+                    </section>
+                </nav>
+            </header>
+            <section id="content_outer_wrapper" style="padding-bottom: 0;">
+                <div id="content_wrapper" class="">
+                    <div id="content" class="container-fluid">
+                        <div class="content-body">
+                            @yield('content')
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </section>
-    </section>
     @else
-        @if(auth()->guard('web')->user())
-            <user-notifications :data_id="{{Auth::user()->id}}"></user-notifications>
-        @endif
+        {{--@if(auth()->guard('web')->user())--}}
+            {{--<user-notifications :data_id="{{Auth::user()->id}}"></user-notifications>--}}
+        {{--@endif--}}
         @include('layouts._template')
     @endif
 

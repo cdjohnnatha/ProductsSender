@@ -22,28 +22,44 @@ class UserTest extends DuskTestCase
             $faker = \Faker\Factory::create();
             $country = $faker->countryCode;
             $password = $faker->password(6, 10);
-            $browser->visit('/register')
-                ->type('users[name]', $faker->firstName)
-                ->type('users[surname]', $faker->lastName)
-                ->type('users[phone]', 83998000802)
-                ->type('users[email]', $faker->email)
-                ->type('users[country]', $country)
-                ->type('users[password]', $password)
-                ->type('users[password_confirmation]', $password)
-                ->click('#section-button')
-                //Address form
-                ->assertSee('Address')
-                ->type('#label-name', 'Default Address')
-                ->type('owner_name', $faker->firstName)
-                ->type('owner_surname', $faker->lastName)
-                ->type('phone', $faker->phoneNumber)
-                ->type('company_name', $faker->company)
-                ->type('address', $faker->streetAddress)
-                ->type('#city', $faker->streetName)
-                ->type('state', $faker->streetSuffix)
-                ->type('postal_code', $faker->postcode)
+            $browser->visit(route('register.create'))
+                ->press('.planSection')
+                ->type('user[name]', $faker->firstName)
+                ->type('user[surname]', $faker->lastName)
+                ->type('user[phone]', 83998000802)
+                ->type('user[email]', $faker->email)
+                ->type('user[password]', $password)
+                ->type('user[password_confirmation]', $password)
+                ->click('#next_btn')
+                ->type('address[label]', $faker->name)
+                ->type('address[owner_name]', $faker->firstName)
+                ->type('address[owner_surname]', $faker->lastName)
+                ->type('address[phone]', $faker->phoneNumber)
+                ->type('address[company_name]', $faker->company)
+                ->type('address[number]', $faker->buildingNumber)
+                ->type('address[postal_code]', $faker->postcode)
+                ->type('#map', 'Rua rita porfirio chaves')
+                ->waitFor('.pac-item')
+                ->click('.pac-item')
+                ->pause(400)
+                ->click('#next_btn')
                 ->click('#submit-button')
-                ->assertPathIsNot('/register');
+                ->pause(15000);
+
+//                ->click('#section-button')
+//                //Address form
+//                ->assertSee('Address')
+//                ->type('#label-name', 'Default Address')
+//                ->type('owner_name', $faker->firstName)
+//                ->type('owner_surname', $faker->lastName)
+//                ->type('phone', $faker->phoneNumber)
+//                ->type('company_name', $faker->company)
+//                ->type('address', $faker->streetAddress)
+//                ->type('#city', $faker->streetName)
+//                ->type('state', $faker->streetSuffix)
+//                ->type('postal_code', $faker->postcode)
+//                ->click('#submit-button')
+//                ->assertPathIsNot('/register');
         });
     }
 

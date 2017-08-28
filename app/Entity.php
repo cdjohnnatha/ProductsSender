@@ -12,4 +12,6 @@ class Entity extends Model
     use LogsActivity;
 
     protected $dates = ['deleted_at'];
+
+
 }

@@ -40,7 +40,7 @@ class User extends Authenticatable
 
     public function address()
     {
-        return $this->morphMany('App\Address', 'addressable');
+        return $this->morphMany(Address::class, 'addressable');
     }
 
     public function subscription()

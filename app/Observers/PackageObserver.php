@@ -17,24 +17,38 @@ class PackageObserver
 {
     public function created(Package $package)
     {
-        event(new PackageNotification($package, 'Registered new package'));
-        User::find($package->object_owner)
-            ->notify(new PackageNotifications($package, 'TESTING'));
+        $message = [
+            'header' => 'Package #'.$package->id.' was registered',
+            'body' => 'You have a new package at '.$package->warehouse->address->label];
+
+        event(new PackageNotification($package, $message));
+
+            User::find($package->object_owner)->notify(new PackageNotifications($package, $message));
     }
 
     public function updated(Package $package)
     {
         event(new PackageNotification($package, 'Updated a package'));
         User::find($package->object_owner)
-            ->notify(new PackageNotifications($package, 'TESTING'));
+            ->notify(new PackageNotifications($package, [
+                'header' => 'Package #'.$package->id.' was updated',
+                'body' => 'Message TEST'
+            ]));
     }
 
-    public function deleting(Package $package)
-    {
-        foreach ($package->pictures() as $picture)
-        {
-            Storage::delete($picture->name);
-            $picture->delete();
+    public function deleting(Package $package){
+        $package->load('pictures');
+        if(!is_null($package->pictures)) {
+            foreach($package->pictures as $picture) {
+                Storage::delete(config('constants.files.full_public_path').$picture->name);
+                $picture->delete();
+                activity()
+                    ->performedOn($picture)
+                    ->withProperty('package_id', $package->id)
+                    ->withProperty('file_name', $picture->name)
+                    ->log('The package id is :properties.package_id,
+                            removing filename :properties.file_name');
+            }
         }
     }
 }

@@ -73,7 +73,7 @@
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-key"></i></span>
         <label class="control-label">{{__('common.titles.password')}}</label>
-        <input type="text" class="form-control" name="user[password]"
+        <input type="password" class="form-control" name="user[password]"
                value="{{ old('password') }}">
 
 
@@ -90,7 +90,7 @@
 
     <div class="form-group col-sm-6 {{ $errors->has('password_confirmation') ? ' has-error' : '' }} label-floating">
       <label class="control-label">{{__('common.titles.password_confirm')}}</label>
-      <input type="text" class="form-control" name="password_confirmation">
+      <input type="password" class="form-control" name="user[password_confirmation]">
     </div>
   </section>
 </article>

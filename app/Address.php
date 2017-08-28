@@ -3,16 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Activitylog\Traits\LogsActivity;
-
-
-Relation::morphMap([
-   'user' => 'App\User',
-    'admin' => 'App\Admin',
-    'warehouse' => 'App\Warehouse',
-]);
 
 class Address extends Model
 {
