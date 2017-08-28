@@ -32,6 +32,14 @@
             {{__('common.titles.package')}}
           </a>
         </li>
+
+        <li class="{{ Route::is('user.address.*') ? 'active' : '' }}">
+          <a href="{{Route('user.address.index')}}">
+            <i class="zmdi zmdi-pin"></i>
+            {{__('common.titles.address')}}
+          </a>
+        </li>
+
       </ul>
     </div>
   </nav>

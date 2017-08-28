@@ -21,7 +21,19 @@ return [
         'dashboard' => 'Dashboard',
         'admin' => 'Admin',
         'warehouse' => 'Warehouse',
-        'package' => 'Package'
+        'package' => 'Package',
+        'informations' => 'Informations',
+        'image_gallery' => 'Image Gallery',
+        'general' => 'general',
+        'order_info' => 'Order Info',
+        'comments' => 'Comments',
+        'address' => 'Address',
+        'account' => 'Account',
+        'settings' => 'Settings',
+    ],
+
+    'holyship' => [
+        'name' => 'Holyship',
     ],
 
     'calendar' => [

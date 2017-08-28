@@ -7,6 +7,7 @@ use App\Admin;
 use App\User;
 use App\Warehouse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
 {
@@ -36,14 +37,18 @@ class AddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $id)
+    public function index(Request $request, $id = null)
     {
+        if(is_null($id)){
+            $id = Auth::user()->id;
+        }
         $morph = $this->getClass($request)::with('address')->findOrFail($id);
-        $default = $this->getClass($request)::with([
+        $disabled_default = $this->getClass($request)::with([
             'address' => function($query){
                 $query->where('default_address', true);
-            }])->findOrFail($id);
-        return  view('address.index', compact('morph', 'default'));
+            }])->findOrFail($id)->count();
+
+        return  view('address.index', compact('morph', 'disabled_default'));
     }
 
     /**
@@ -143,6 +148,21 @@ class AddressController extends Controller
         if($address->thashed()){
             return response('', 200);
         }
+    }
+
+    public function defaultAddress(Request $request, $id)
+    {
+        $previous_default = $this->getClass($request)::with([
+            'address' => function ($query) {
+                $query->where('default_address', true);
+            }])->findOrFail(Auth::user()->id)->address[0];
+        $previous_default->default_address = false;
+        $address = Address::findOrFail($id);
+        $address->default_address = true;
+        if ($previous_default->save() && $address->save()) {
+            return redirect(Route('user.address.index'));
+        }
+
     }
 
     private function getClass($request)

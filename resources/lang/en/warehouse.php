@@ -12,6 +12,10 @@ return [
         'select_warehouse' => 'Select warehouse'
     ],
 
+    'titles' => [
+        'warehouses_address' => 'Address Warehouses'
+    ]
+
 
 
 ];

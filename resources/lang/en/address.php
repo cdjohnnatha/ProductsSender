@@ -17,7 +17,9 @@ return [
     ],
 
     'label' => [
-        'type_address' => 'Please type your address'
+        'type_address' => 'Please type your address',
+        'short_description' => 'All your addresses can be found here.',
+        'filter_address' => 'Filter address'
     ]
 
 ];
