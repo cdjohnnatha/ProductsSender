@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\AddressGeonameCode;
 use App\Admin;
 use App\User;
 use App\Warehouse;
@@ -46,12 +47,8 @@ class AddressController extends Controller
             $id = Auth::user()->id;
         }
         $morph = $this->getClass($request)::with('address')->findOrFail($id);
-        $disabled_default = $this->getClass($request)::with([
-            'address' => function($query){
-                $query->where('default_address', true);
-            }])->findOrFail($id)->count();
-
-        return  view('address.index', compact('morph', 'disabled_default'));
+        $warehouses = Warehouse::with('address')->get();
+        return  view('address.index', compact('morph', 'warehouses'));
     }
 
     /**
@@ -80,7 +77,8 @@ class AddressController extends Controller
         $address = new Address($request->input('address'));
         $object = $polymorph::find($id);
         if($object->address()->save($address)){
-            return back();
+            $request->session()->flash('status', __('statusMessage.status.address.created', ['attribute' => $address->label]));
+            return redirect($this->getType($request).'address.index');
         }
     }
 
@@ -104,7 +102,8 @@ class AddressController extends Controller
      */
     public function edit($id)
     {
-        //
+        $address = Address::with('geonames')->findOrFail($id);
+        return view('address.create', compact('address'));
     }
 
     /**
@@ -114,29 +113,27 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id = null , $address_id = null)
+    public function update(Request $request, $id = null)
     {
+//        dd($request->input());
         $this->validate($request, $this->rules());
 
-        if(is_null($address_id)){
-            $address = Address::findOrFail($id);
-        }
-        else{
-            $address = Address::findOrFail($address_id);
-        }
-        $address->label = $request->input('label');
-        $address->owner_name = $request->input('owner_name');
-        $address->owner_surname = $request->input('owner_surname');
-        $address->company_name = $request->input('company_name');
-        $address->country = $request->input('country');
-        $address->address = $request->input('address');
-        $address->city = $request->input('city');
-        $address->state = $request->input('state');
-        $address->postal_code = $request->input('postal_code');
-        $address->phone = $request->input('phone');
+        $address = Address::with('geonames')->findOrFail($id);
+        $address->fill($request->input('address'));
 
-        if($address->save()){
-            return response('', 200);
+        $request->session()->flash('status', __('statusMessage.status.address.updated', ['attribute' => $address->label]));
+
+        if(is_null($address->geonames)) {
+            $geonames = new AddressGeonameCode($request->input('geonames'));
+            if($address->save() && $address->geonames()->save($geonames)){
+                return redirect(Route('user.address.index'));
+            }
+
+        } else {
+            $address->geonames->fill($request->input('geonames'));
+            if($address->save() && $address->geonames->save()){
+                return redirect(Route('user.address.index'));
+            }
         }
     }
 
@@ -146,12 +143,13 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $address = Address::findOrFail($id);
         $address->delete();
         if($address->thashed()){
-            return response('', 200);
+            $request->session()->flash('status', __('statusMessage.status.address.create', ['attribute' => $address->label]));
+            return redirect(Route($this->getType($request).'.address.index'));
         }
     }
 
