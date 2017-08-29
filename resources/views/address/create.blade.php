@@ -14,7 +14,7 @@
         </header>
         @if(Request::is('*/edit'))
             <?php $action = 'user.address.update' ?>
-            <form action="{{route($action, $subscription->id)}}" role="form" method="POST">
+            <form action="{{route($action, $address->id)}}" role="form" method="POST">
                 <input name="_method" type="hidden" value="PUT">
                 @else
                     <?php $action = 'user.address.store' ?>

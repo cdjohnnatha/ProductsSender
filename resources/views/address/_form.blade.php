@@ -107,15 +107,23 @@
 
   </section>
 
-  <section class="form-group col-sm-7{{ $errors->has('address.formatted_address') ? ' has-error' : '' }} label-floating">
+  <section class="form-group col-sm-7 label-floating {{
+      $errors->has('address.formatted_address') ||
+      $errors->has('geonames.country') ||
+      $errors->has('geonames.city') ||
+      $errors->has('geonames.state') ||
+      $errors->has('address.city') ||
+      $errors->has('address.state') ||
+      $errors->has('address.country') ||
+      $errors->has('address.street')  ? ' has-error' : '' }}">
     <div class="input-group">
       <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
       <label class="control-label">{{__('address.label.type_address')}}</label>
       <autocomplete-address set_address="{{ $address->formatted_address or old('address.formatted_address')}}"></autocomplete-address>
-      @if ($errors->has('address.formatted_address'))
+      @if ($errors->has(['address.formatted_address', 'geonames.country']))
         <span class="help-block">
           <strong class="text-danger" class="alert-danger">
-            {{ $errors->first('address.formatted_address') }}
+            {{ $errors->first('address.formatted_address') || __('statusMessage.errors.address_autocomplete') }}
           </strong>
         </span>
       @endif
