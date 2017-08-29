@@ -27,8 +27,8 @@
           <div class="col-sm-4 container-card-front" style="z-index: 1;">
             <div class="card-container">
               <div class="card card-flip pricing-card">
-                <section class="card-front {{$subscription->principal ? 'feature-pricing-card' : ''}}" style="height: 40em;">
-                  <div class="card-heading">
+                <section class="card-front {{$subscription->principal ? 'feature-pricing-card' : ''}}" style="height: 34em;">
+                  <div class="card-heading" style="padding-top: 25px;">
                     <div class="card-title">
                       <h1>
                         <sup>$</sup>
@@ -45,13 +45,13 @@
                     </div>
                   </div>
                   <div class="card-body">
-                    <ul class="pricing-feature-list">
+                    <ul class="pricing-feature-list" style="padding-bottom: 0;">
                       @foreach($subscription->benefits as $benefit)
                         <li class="pricing-feature">{{$benefit->message or ''}}</li>
                       @endforeach
                     </ul>
                   </div>
-                  <div class="card-footer text-center">
+                  <div class="card-footer text-center" style="padding-top: 0;">
                     <button class="btn {{$subscription->principal ? 'btn-primary' : 'btn-info '}} btn-round planSection"
                         id="{{$subscription->id}}">
                       Choose plan
@@ -68,8 +68,8 @@
           <div class="col-sm-4">
             <div class="card-container">
               <div class="card card-flip pricing-card">
-                <section class="card-back" style="height: 40em;">
-                  <div class="card-heading">
+                <section class="card-back" style="height: 34em;">
+                  <div class="card-heading" style="padding-top: 25px;">
                     <div class="card-title">
                       <h1>
                         <sup>$</sup>
@@ -85,13 +85,13 @@
                     </div>
                   </div>
                   <div class="card-body">
-                    <ul class="pricing-feature-list">
+                    <ul class="pricing-feature-list" style="padding-bottom: 0;">
                       @foreach($per_year->benefits as $benefit)
                         <li class="pricing-feature">{{$benefit->message or ''}}</li>
                       @endforeach
                     </ul>
                   </div>
-                  <div class="card-footer text-center">
+                  <div class="card-footer text-center" style="padding-top: 0;">
                     <button class="btn {{$per_year->principal ? 'btn-primary' : 'btn-info '}} btn-round planSection"
                             id="{{$per_year->id}}">
                       Choose plan</button>

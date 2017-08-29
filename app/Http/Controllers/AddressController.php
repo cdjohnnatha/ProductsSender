@@ -77,7 +77,10 @@ class AddressController extends Controller
         $address = new Address($request->input('address'));
         $object = $polymorph::find($id);
         if($object->address()->save($address)){
-            $request->session()->flash('status', __('statusMessage.status.address.created', ['attribute' => $address->label]));
+            $request->session()->flash('status',
+                __('statusMessage.global_message.attribute.created', [
+                    'attribute' => $address->label,
+                    'entity' => __('common.titles.address')]));
             return redirect($this->getType($request).'address.index');
         }
     }
@@ -121,7 +124,10 @@ class AddressController extends Controller
         $address = Address::with('geonames')->findOrFail($id);
         $address->fill($request->input('address'));
 
-        $request->session()->flash('status', __('statusMessage.status.address.updated', ['attribute' => $address->label]));
+        $request->session()->flash('status',
+            __('statusMessage.global_message.entity.updated', [
+                'attribute' => $address->label,
+                'entity' => __('common.titles.address')]));
 
         if(is_null($address->geonames)) {
             $geonames = new AddressGeonameCode($request->input('geonames'));
@@ -148,7 +154,11 @@ class AddressController extends Controller
         $address = Address::findOrFail($id);
         $address->delete();
         if($address->thashed()){
-            $request->session()->flash('status', __('statusMessage.status.address.create', ['attribute' => $address->label]));
+            $request->session()->flash('status',
+                __('statusMessage.status.address.create', [
+                    'attribute' => $address->label,
+                    'entity' => __('common.titles.address')]));
+
             return redirect(Route($this->getType($request).'.address.index'));
         }
     }

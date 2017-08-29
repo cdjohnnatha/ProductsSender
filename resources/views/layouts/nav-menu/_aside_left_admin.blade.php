@@ -38,14 +38,20 @@
         </li>
         <li class="{{ Route::is('admin.packages.*') ? 'active' : '' }}">
           <a href="{{Route('admin.packages.index')}}">
-            <i class="zmdi zmdi-inbox"></i>
+            <i class="zmdi zmdi-shopping-basket"></i>
             {{__('common.titles.package')}}
           </a>
         </li>
 
         <li class="{{ Route::is('admin.subscriptions.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.subscriptions.index')}}"><i class="zmdi zmdi-tag"></i>
-            {{__('common.titles.subscription')}}
+          <a href="{{Route('admin.subscriptions.index')}}"><i class="zmdi zmdi-card-membership"></i>
+            {{__('common.titles.plan')}}
+          </a>
+        </li>
+
+        <li class="{{ Route::is('admin.offeredservices.*') ? 'active' : '' }}">
+          <a href="{{Route('admin.offeredservices.index')}}"><i class="zmdi zmdi-tag"></i>
+            {{__('common.titles.offered_services')}}
           </a>
         </li>
       </ul>

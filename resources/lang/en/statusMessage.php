@@ -1,11 +1,20 @@
 <?php
 
 return [
-    'status' => [
+    'global_message' => [
+        'attribute' => [
+            'created' => 'The :entity :attribute was created successfully',
+            'updated' => 'The :entity :attribute was updated successfully',
+            'deleted' => 'The :entity :attribute was deleted successfully',
+        ],
+
+        'entity' =>[
+            'created' => 'The :entity was created successfully',
+            'updated' => 'The :entity was updated successfully',
+            'deleted' => 'The :entity was deleted successfully',
+        ],
+
         'subscription' => [
-            'created' => 'The plan # :attribute was updated successfully',
-            'updated' => 'The plan # :attribute was created successfully',
-            'deleted' => 'The plan # :attribute was deleted successfully',
             'active' => 'The active status of plan # :attribute was changed successfully',
             'principal_offer' => 'The principal offer status of plan # :attribute was changed successfully',
         ],

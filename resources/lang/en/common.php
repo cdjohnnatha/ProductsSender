@@ -30,6 +30,12 @@ return [
         'address' => 'Address',
         'account' => 'Account',
         'settings' => 'Settings',
+        'description' => 'Description',
+        'offered_services' => 'Offered Services',
+    ],
+
+    'short_description' => [
+      'main' => 'You can find here all the :entity.'
     ],
 
     'holyship' => [
