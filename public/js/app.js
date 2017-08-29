@@ -11350,7 +11350,6 @@ window.Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_touch___default.a, { name: 'v-tou
 * or customize the JavaScript scaffolding to fit your unique needs.
 */
 
-Vue.component('nested-messages', __webpack_require__(46));
 Vue.component('warehouses-select', __webpack_require__(52));
 Vue.component('status-select', __webpack_require__(57));
 
@@ -11359,6 +11358,7 @@ Vue.component('user-additional-names', __webpack_require__(67));
 Vue.component('autocomplete-address', __webpack_require__(72));
 Vue.component('vue-google-autocomplete', __webpack_require__(12));
 Vue.component('select-subscription', __webpack_require__(77));
+Vue.component('plan-offers', __webpack_require__(82));
 Vue.component('plan-offers', __webpack_require__(82));
 
 
@@ -53821,90 +53821,9 @@ if (true) {
 
 
 /***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(47)
-}
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(50),
-  /* template */
-  __webpack_require__(51),
-  /* styles */
-  injectStyle,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/Subscriptions/NestedBenefitsMessage.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] NestedBenefitsMessage.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0b42e407", Component.options)
-  } else {
-    hotAPI.reload("data-v-0b42e407", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(48);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("46ff6353", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0b42e407\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NestedBenefitsMessage.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0b42e407\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NestedBenefitsMessage.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 46 */,
+/* 47 */,
+/* 48 */,
 /* 49 */
 /***/ (function(module, exports) {
 
@@ -53938,184 +53857,8 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 50 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        editing: Array
-    },
-    data: function data() {
-        return {
-            benefits: [{ 'message': '', 'id': '' }],
-            deleted: [{ 'message': '', 'id': '' }]
-        };
-    },
-    created: function created() {
-        if (this.editing == null || this.editing.length == 0) {
-            return this.benefits;
-        } else {
-            return this.benefits = this.editing;
-        }
-    },
-
-
-    methods: {
-        addMessage: function addMessage() {
-            console.log('pressed');
-            if (this.benefits.length - 1 >= 0 && this.benefits[this.benefits.length - 1].message.length > 0) {
-                this.benefits.push({ message: '', id: '' });
-            }
-        },
-        removeMessage: function removeMessage(index) {
-            if (this.editing != null) {
-                axios.post('/admin/benefits/' + this.benefits[index].id, {
-                    '_method': 'delete'
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            }
-            if (this.benefits.length - 1 > 0) this.benefits.splice(index, 1);
-        }
-    }
-
-});
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', {
-    staticClass: "form-group"
-  }, [_c('div', {
-    staticClass: "input-group col-sm-1"
-  }, [_c('h4', [_vm._v("Benefits")]), _vm._v(" "), _c('span', {
-    staticClass: "input-group-btn",
-    on: {
-      "click": _vm.addMessage
-    }
-  }, [_vm._m(0)])]), _vm._v(" "), _vm._l((_vm.benefits), function(benefit, index) {
-    return _c('div', {
-      staticClass: "form-group col-sm-6 label-floating"
-    }, [_c('div', {
-      staticClass: "input-group"
-    }, [_vm._m(1, true), _vm._v(" "), _c('label', {
-      staticClass: "control-label"
-    }, [_vm._v("What is offered")]), _vm._v(" "), _c('input', {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: (benefit.message),
-        expression: "benefit.message"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        "name": 'benefits[' + index + '][message]',
-        "type": "text",
-        "id": 'input-message-' + index,
-        "required": ""
-      },
-      domProps: {
-        "value": (benefit.message)
-      },
-      on: {
-        "input": function($event) {
-          if ($event.target.composing) { return; }
-          benefit.message = $event.target.value
-        }
-      }
-    }), _vm._v(" "), _c('div', {
-      attrs: {
-        "hidden": true
-      }
-    }, [_c('input', {
-      attrs: {
-        "type": "number",
-        "name": 'benefits[' + index + '][id]'
-      },
-      domProps: {
-        "value": benefit.id
-      }
-    })]), _vm._v(" "), _c('span', {
-      staticClass: "input-group-btn",
-      on: {
-        "click": function($event) {
-          _vm.removeMessage(index)
-        }
-      }
-    }, [_vm._m(2, true)])])])
-  })], 2)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('button', {
-    staticClass: "btn btn-info btn-fab animate-fab btn-fab-sm",
-    attrs: {
-      "type": "button",
-      "id": "addMessage"
-    }
-  }, [_c('span', [_c('i', {
-    staticClass: "zmdi zmdi-plus"
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('span', {
-    staticClass: "input-group-addon"
-  }, [_c('i', {
-    staticClass: "zmdi zmdi-check"
-  })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('button', {
-    staticClass: "btn btn-warning btn-fab animate-fab btn-fab-sm",
-    attrs: {
-      "type": "button"
-    }
-  }, [_c('span', {
-    staticClass: "input-group-addon"
-  }, [_c('i', {
-    staticClass: "zmdi zmdi-minus"
-  })])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-0b42e407", module.exports)
-  }
-}
-
-/***/ }),
+/* 50 */,
+/* 51 */,
 /* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
