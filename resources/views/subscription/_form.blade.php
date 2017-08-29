@@ -2,7 +2,7 @@
   <section class="row">
     <section class="form-group col-sm-6 label-floating {{ $errors->has('title') ? ' has-error' : '' }}">
       <div class="input-group">
-        <span class="input-group-addon"><i class="zmdi zmdi-mall"></i></span>
+        <span class="input-group-addon"><i class="zmdi zmdi-card-membership"></i></span>
         <label class="control-label">{{__('plans.form.name')}}</label>
         <input type="text" class="form-control" name="subscription[title]"
                value="{{$subscription->title or old('title')}}">
@@ -53,7 +53,12 @@
     </section>
 
   </section>
-
+  <section class="row form-group">
+    <div class="col-sm-12">
+      <label class="control-label">{{__('common.titles.period')}}</label>
+      <plan-offers></plan-offers>
+    </div>
+  </section>
   <section class="row">
     @for($count = 0; $count < 8; $count++)
       <section class="form-group col-sm-6 label-floating {{ $errors->has('benefits') ? ' has-error' : '' }}">
