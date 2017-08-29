@@ -27,6 +27,7 @@ class Package extends Entity
         'deleted_at',
         'status_id'
     ];
+
     protected static $logAttributes = [
         'width',
         'height',

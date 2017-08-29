@@ -50,8 +50,8 @@ class SubscriptionController extends Controller
                 $request->input('benefits')
             );
             $request->session()->flash('status',
-                __('statusMessage.status.subscription.created',
-                    ['attribute' => $subscription->id]));
+                __('statusMessage.global_message.entity.created',
+                    ['entity' => 'Plan']));
 
             return redirect(route('admin.subscriptions.index'));
         }
@@ -83,8 +83,8 @@ class SubscriptionController extends Controller
             }
 
             $request->session()->flash('status',
-                __('statusMessage.status.subscription.updated',
-                    ['attribute' => $subscription->id]));
+                __('statusMessage.globa_message.attribute.updated',
+                    ['attribute' => $subscription->id, 'entity' => 'Plan']));
 
             return redirect(route('admin.subscriptions.index'));
         }
@@ -105,7 +105,7 @@ class SubscriptionController extends Controller
         $subscription->active = $request->exists('active');
         if( $subscription->save()) {
             $request->session()->flash('status',
-                __('statusMessage.status.subscription.active',
+                __('statusMessage.global_message.subscription.active',
                 ['attribute' => $subscription->id]));
 
             return redirect(route('admin.subscriptions.index'));
@@ -118,7 +118,7 @@ class SubscriptionController extends Controller
         $subscription->principal = $request->exists('principal');
         if( $subscription->save()) {
             $request->session()->flash('status',
-                __('statusMessage.status.subscription.principal_offer',
+                __('statusMessage.global_message.subscription.principal_offer',
                     ['attribute' => $subscription->id]));
             return redirect(route('admin.subscriptions.index'));
         }
