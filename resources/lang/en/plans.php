@@ -7,7 +7,7 @@ return [
     ],
 
     'subscription' => [
-        'benefits' => 'Name for benefit'
+        'benefits' => 'Brief benefit description'
     ],
 
     'index' => [

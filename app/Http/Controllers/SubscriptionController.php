@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Benefit;
+use App\OfferedService;
 use App\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,10 +31,14 @@ class SubscriptionController extends Controller
             ->where('period', 1)
             ->count();
 
+        $services = OfferedService::all();
+
         return view('subscription.index',
-            compact('subscriptions',
-                         'allow_activation_month',
-                            'allow_activation_year'));
+            compact(
+                'subscriptions',
+                     'allow_activation_month',
+                        'allow_activation_year',
+                        'services'));
     }
 
     public function create()
