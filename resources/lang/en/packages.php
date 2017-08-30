@@ -21,7 +21,7 @@ return [
     'index' => [
         'title_package' => 'Packages',
         'short_description' => 'All your packages can be found here.',
-        'short_show_description' => 'Here you can see your package information'
+        'short_show_description' => 'Here you can see your package information',
 
     ],
 

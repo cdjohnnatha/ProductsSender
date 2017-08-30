@@ -14,7 +14,7 @@
                 <span class="pull-left"><img src="img/profiles/11.jpg" alt="" class="img-circle max-w-40 m-r-10 "></span>
                 <div class="list-group-item-body">
                   <div class="list-group-item-heading">{{notify.message.header}}</div>
-                  <div class="list-group-item-text">{{notify.message}}</div>
+                  <div class="list-group-item-text">{{notify.message.body}}</div>
                 </div>
               </li>
             </ul>

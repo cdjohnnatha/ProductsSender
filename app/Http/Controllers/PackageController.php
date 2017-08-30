@@ -41,13 +41,14 @@ class PackageController extends Controller
         if (auth()->guard('web')->user()){
             $field = 'object_owner';
             $id = Auth::user()->id;
+            $packages = Package::where($field, $id)->get();
         } else {
             $field = 'warehouse_id';
             $id = Auth::user()->warehouse_id;
         }
 
 
-        $packages = Package::with(
+        $packages_warehouse = Package::with(
             ['status' =>
                 function($query){
                     $query->where([
@@ -57,9 +58,13 @@ class PackageController extends Controller
                 },
                 'status',
                 'pictures'
-                ])->where($field, '=', $id)->get();
+                , 'warehouse'])->where($field, '=', $id)->get();
 
-        return view('package.index', compact('packages'));
+        if (auth()->guard('web')->user()) {
+            return view('package.index_user', compact('packages_warehouse', 'packages'));
+        } else {
+            return view('package.index', compact('packages_warehouse'));
+        }
     }
 
     public function create()

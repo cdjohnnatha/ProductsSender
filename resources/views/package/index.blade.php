@@ -70,7 +70,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($packages as $package)
+                            @foreach($packages_warehouse as $package)
                                 <tr>
                                     <td>{{$package->id}}</td>
                                     <td>
