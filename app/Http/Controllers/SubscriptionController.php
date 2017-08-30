@@ -15,7 +15,9 @@ class SubscriptionController extends Controller
     {
         return [
             'subscription.title' => 'required|string',
-            'benefits' => 'required|array|size:8'
+            'subscription.discounts' => 'required|string',
+            'subscription.slots' => 'required|string',
+            'benefits' => 'required|array|size:6'
         ];
     }
 
@@ -88,7 +90,7 @@ class SubscriptionController extends Controller
             }
 
             $request->session()->flash('status',
-                __('statusMessage.globa_message.attribute.updated',
+                __('statusMessage.global_message.attribute.updated',
                     ['attribute' => $subscription->id, 'entity' => 'Plan']));
 
             return redirect(route('admin.subscriptions.index'));

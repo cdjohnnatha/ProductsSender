@@ -15,7 +15,7 @@
             <form class="form floating-label">
               <div class="form-wizard-nav">
                 <div class="progress" style="width: 75%;">
-                  <div class="progress-bar" style="width:0%;"></div>
+                  <div class="progress-bar" style="width:0;"></div>
                 </div>
                 <ul class="nav nav-justified nav-pills">
                   <li class="active">

@@ -30,7 +30,6 @@ Vue.component('autocomplete-address', require('./components/Utils/AutocompleteAd
 Vue.component('vue-google-autocomplete', require('vue-google-autocomplete'));
 Vue.component('select-subscription', require('./components/Utils/SelectSubscription.vue'));
 Vue.component('plan-offers', require('./components/Utils/PlanOffers.vue'));
-Vue.component('plan-offers', require('./components/Utils/PlanOffers.vue'));
 
 
 

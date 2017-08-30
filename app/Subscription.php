@@ -11,7 +11,9 @@ class Subscription extends Entity
     protected $fillable = [
         'title',
         'amount',
-        'period'
+        'period',
+        'slots',
+        'discounts',
     ];
 
     protected $hidden = [

@@ -4,6 +4,8 @@ return [
     'form' => [
         'form_name' => 'Form plans',
         'name' => 'Give a name for this plan',
+        'discounts' => 'Discounts',
+        'slot_quantity' => 'Slots'
     ],
 
     'subscription' => [

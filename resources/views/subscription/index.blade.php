@@ -61,6 +61,8 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>{{__('common.titles.titles')}}</th>
+                                    <th>{{__('plans.form.discounts')}} %</th>
+                                    <th>{{__('plans.form.slot_quantity')}}</th>
                                     <th>{{__('common.titles.period')}}</th>
                                     <th>{{__('common.titles.active')}}</th>
                                     <th>{{__('common.titles.principal_offer')}}</th>
@@ -76,8 +78,10 @@
                             <tbody>
                             @foreach($subscriptions as $subscription)
                                 <tr>
-                                    <td class="col-sm-2">{{$subscription->id}}</td>
+                                    <td>{{$subscription->id}}</td>
                                     <td>{{$subscription->title}}</td>
+                                    <td align="center">{{$subscription->discounts}}</td>
+                                    <td align="center">{{$subscription->slots}}</td>
                                     <td>{{$subscription->period ? 'Year' : 'Month'}}</td>
                                     <td class="col-xs-1">
                                         <form action="{{Route('admin.subscriptions.active', $subscription->id)}}"

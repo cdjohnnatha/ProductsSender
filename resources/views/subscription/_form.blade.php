@@ -53,14 +53,43 @@
     </section>
 
   </section>
-  <section class="row form-group">
-    <div class="col-sm-12">
-      <label class="control-label">{{__('common.titles.period')}}</label>
-      <plan-offers></plan-offers>
-    </div>
+  <section class="row">
+    <section class="form-group col-sm-6 label-floating {{ $errors->has('subscription.discounts') ? ' has-error' : '' }}">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-money"></i></span>
+        <label class="control-label" for="discounts">{{__('plans.form.discounts')}}</label>
+        <input type="number" min="0.00" step="0.01" name="subscription[discounts]" id="discounts" class="form-control">
+
+        @if ($errors->has('subscription.discounts'))
+          <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('subscription.discounts') }}
+            </strong>
+          </span>
+        @endif
+      </div>
+    </section>
+
+    <section class="form-group col-sm-6 label-floating {{ $errors->has('subscription.slots') ? ' has-error' : '' }}">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-view-module"></i></span>
+        <label class="control-label" for="slots">{{__('plans.form.slot_quantity')}}</label>
+        <input type="number" min="0" step="1" name="subscription[slots]" id="slots" class="form-control">
+
+        @if ($errors->has('subscription.slots'))
+          <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('subscription.slots') }}
+            </strong>
+          </span>
+        @endif
+      </div>
+
+    </section>
+
   </section>
   <section class="row">
-    @for($count = 0; $count < 8; $count++)
+    @for($count = 0; $count < 6; $count++)
       <section class="form-group col-sm-6 label-floating {{ $errors->has('benefits') ? ' has-error' : '' }}">
         <div class="input-group">
           <span class="input-group-addon"><i class="zmdi zmdi-star-outline"></i></span>
