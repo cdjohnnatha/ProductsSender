@@ -22,7 +22,9 @@ class User extends Authenticatable
         'country',
         'email',
         'subscriptions_id',
-        'phone'
+        'phone',
+        'rg',
+        'cpf'
     ];
 
     /**

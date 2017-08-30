@@ -26,6 +26,8 @@ class UserTest extends DuskTestCase
                 ->press('.planSection')
                 ->type('user[name]', $faker->firstName)
                 ->type('user[surname]', $faker->lastName)
+                ->type('user[rg]', '0000.000')
+                ->type('user[cpf]', '000.000.000-00')
                 ->type('user[phone]', 83998000802)
                 ->type('user[email]', $faker->email)
                 ->type('user[password]', $password)
@@ -44,22 +46,7 @@ class UserTest extends DuskTestCase
                 ->pause(400)
                 ->click('#next_btn')
                 ->click('#submit-button')
-                ->pause(15000);
-
-//                ->click('#section-button')
-//                //Address form
-//                ->assertSee('Address')
-//                ->type('#label-name', 'Default Address')
-//                ->type('owner_name', $faker->firstName)
-//                ->type('owner_surname', $faker->lastName)
-//                ->type('phone', $faker->phoneNumber)
-//                ->type('company_name', $faker->company)
-//                ->type('address', $faker->streetAddress)
-//                ->type('#city', $faker->streetName)
-//                ->type('state', $faker->streetSuffix)
-//                ->type('postal_code', $faker->postcode)
-//                ->click('#submit-button')
-//                ->assertPathIsNot('/register');
+                ->pause(4000);
         });
     }
 

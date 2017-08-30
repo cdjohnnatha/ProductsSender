@@ -32,8 +32,7 @@ class RegisterController extends Controller
 
     protected function redirectTo()
     {
-
-        return route('user.dashboard', Auth::user()->id);
+        return route('user.dashboard');
     }
     /**
      * Create a new controller instance.
@@ -51,6 +50,8 @@ class RegisterController extends Controller
         return [
             'user.name' => 'required|string|max:255',
             'user.surname' => 'required|string|max:255',
+            'user.rg' => 'required|string',
+            'user.cpf' => 'required|string',
             'user.email' => 'required|string|email|max:255|unique:users,email',
             'user.phone' => 'required|string',
             'user.password' => 'required|string|min:6|confirmed',
@@ -107,10 +108,10 @@ class RegisterController extends Controller
         $address->default_address = true;
 
         if($user->save() && $user->address()->save($address) && $user->wallet()->save(new Wallet())
-            && $user->address[0]->geonames()->save($geonames)){
-                return redirect(route('user.dashboard', $user->id));
+            && $user->address[0]->geonames()->save($geonames)) {
+            $request->session()->flash('status', 'User was successfully registered!');
+            return redirect('/');
         }
-
         return back();
     }
 

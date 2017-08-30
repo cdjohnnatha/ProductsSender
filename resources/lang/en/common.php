@@ -32,6 +32,8 @@ return [
         'settings' => 'Settings',
         'description' => 'Description',
         'offered_services' => 'Offered Services',
+        'rg' => 'RG',
+        'cpf' => 'CPF',
     ],
 
     'short_description' => [

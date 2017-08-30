@@ -31,8 +31,44 @@
     </div>
 
   </section>
-  <section class="row">
 
+  <section class="row">
+    <div class="form-group col-sm-6 label-floating {{ $errors->has('user.rg') ? ' has-error' : '' }}">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
+        <label class="control-label" for="rg">{{__('common.titles.rg')}}</label>
+        <input type="text" class="form-control" name="user[rg]"
+               value="{{ $user->rg or old('user.rg') }}" id="rg">
+
+        @if ($errors->has('user.rg'))
+          <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('user.rg') }}
+            </strong>
+          </span>
+        @endif
+      </div>
+    </div>
+    <div class="form-group col-sm-6 label-floating {{ $errors->has('user.cpf') ? ' has-error' : '' }}">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
+        <label class="control-label">{{__('common.titles.cpf')}}</label>
+        <input type="text" class="form-control" name="user[cpf]"
+               value="{{ $user->cpf or old('user.cpf') }}">
+
+        @if ($errors->has('user.cpf'))
+          <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('user.cpf') }}
+            </strong>
+          </span>
+        @endif
+      </div>
+    </div>
+
+  </section>
+
+  <section class="row">
     <section class="form-group col-sm-7 {{ $errors->has('user.email') ? ' has-error' : '' }} label-floating">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
