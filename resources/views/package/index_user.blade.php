@@ -27,7 +27,7 @@
         </div>
         <ul class="card-actions right-top">
           <li>
-            <a href="javascript:void(0)" class="btn btn-info btn-flat">
+            <a href="{{route('user.incoming.create')}}" class="btn btn-info btn-flat">
               <i class="zmdi zmdi-notifications-add"></i>
               Inform incoming package
             </a>

@@ -91,27 +91,6 @@ class PackageController extends Controller
 
     }
 
-    public function warehousePackages()
-    {
-        $packages = Package::with(
-            ['status' =>
-                function($query){
-                    $query->where([
-                        ['status', 'like', 'WAREHOUSE%'],
-                        ['status', '!=', 'WAREHOUSE_SENT'],
-                    ]);
-            }])->where(
-            'warehouse_id',
-            '=',
-            Auth::user()->default_warehouse_id
-        )->get();
-
-        return response()->json([
-           'packages' => $packages
-        ]);
-
-    }
-
 
     public function show($id)
     {
@@ -151,6 +130,16 @@ class PackageController extends Controller
         }
     }
 
+
+    public function destroy($id)
+    {
+        $package = Package::findOrFail($id);
+        $package->delete();
+        if($package->trashed()){
+            return redirect(route('admin.packages.index'));
+        }
+    }
+
     public function changeStatus(Request $request)
     {
         $package = Package::findOrFail($request->input('id'));
@@ -159,15 +148,6 @@ class PackageController extends Controller
 
         if($package->save()){
             return response('status updated to '.$status->status, '200');
-        }
-    }
-
-    public function destroy($id)
-    {
-        $package = Package::findOrFail($id);
-        $package->delete();
-        if($package->trashed()){
-            return redirect(route('admin.packages.index'));
         }
     }
 

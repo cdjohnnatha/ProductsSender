@@ -21,7 +21,6 @@ window.Vue.use(VueTouch, { name: 'v-touch' });
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('warehouses-select', require('./components/Warehouse/WarehouseSelect.vue'));
 Vue.component('status-select', require('./components/Utils/Status.vue'));
 
 Vue.component('user-notifications', require('./components/Users/NotificationsBar.vue'));
@@ -30,6 +29,7 @@ Vue.component('autocomplete-address', require('./components/Utils/AutocompleteAd
 Vue.component('vue-google-autocomplete', require('vue-google-autocomplete'));
 Vue.component('select-subscription', require('./components/Utils/SelectSubscription.vue'));
 Vue.component('plan-offers', require('./components/Utils/PlanOffers.vue'));
+Vue.component('custom-clearance-form', require('./components/Packages/CustomClearanceForm.vue'));
 
 
 

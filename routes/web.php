@@ -53,6 +53,7 @@ Route::group(['middleware' => ['web']], function() {
 
 //        Route::resource('packages', 'UserPackageController');
 
+        Route::resource('incoming', 'IncomingPackagesController');
         Route::resource('notifications', 'UserNotificationsController');
         Route::get('/unread', 'Api\UserNotificationsApiController@unread')->name('notifications.unread');
 

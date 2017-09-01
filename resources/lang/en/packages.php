@@ -28,6 +28,18 @@ return [
     'notification' => [
         'updated_warehouse' => 'Package was updated at warehouse',
         'created_warehouse' => 'Package was identified at warehouse'
+    ],
+
+    'incoming' => [
+        'form' => [
+            'title_form' => 'Identify your incoming packages',
+            'title_description' => 'Make your packages being processing fast',
+            'provider' => 'Provider',
+            'addressee' => 'Addressee',
+            'track_number' => 'Track Number',
+            'goods_custom_clearance' => 'Goods Custom Clearance',
+            'services' => 'Services'
+        ]
     ]
 
 ];

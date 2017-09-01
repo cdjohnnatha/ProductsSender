@@ -48,11 +48,6 @@
                     </ul>
                 </header>
                 <div class="card-body p-0">
-                    <div class="alert alert-info m-20 hidden-md hidden-lg" role="alert">
-                        <p>
-                            Heads up! You can Swipe table Left to Right on Mobile devices.
-                        </p>
-                    </div>
                     <div class="table-responsive">
                         <table id="productsTable" class="mdl-data-table product-table m-t-30" cellspacing="0" width="100%">
                             <thead>
