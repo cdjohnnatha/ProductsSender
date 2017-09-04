@@ -13,6 +13,9 @@ return [
         'remove'   => 'Remove',
         'update' => 'Update',
         'show' => 'Show',
+        'next' => 'Next',
+        'previous' => 'Previous',
+        'confirm' => 'Confirm'
     ],
 
 

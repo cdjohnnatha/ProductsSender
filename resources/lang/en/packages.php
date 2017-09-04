@@ -38,7 +38,8 @@ return [
             'addressee' => 'Addressee',
             'track_number' => 'Track Number',
             'goods_custom_clearance' => 'Goods Custom Clearance',
-            'services' => 'Services'
+            'services' => 'Services',
+            'small_marketing_services' => 'Save up to 20% if you buy it now'
         ]
     ]
 

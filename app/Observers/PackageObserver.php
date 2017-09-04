@@ -20,15 +20,11 @@ class PackageObserver
         $message = [
             'header' => 'Package #'.$package->id.' was registered',
             'body' => 'You have a new package at '.$package->warehouse->address->label];
-
-        event(new PackageNotification($package, $message));
-
             User::find($package->object_owner)->notify(new PackageNotifications($package, $message));
     }
 
     public function updated(Package $package)
     {
-        event(new PackageNotification($package, 'Updated a package'));
         User::find($package->object_owner)
             ->notify(new PackageNotifications($package, [
                 'header' => 'Package #'.$package->id.' was updated',

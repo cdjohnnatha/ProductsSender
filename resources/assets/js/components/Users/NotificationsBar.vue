@@ -52,26 +52,31 @@
         methods: {
             listen(){
                 window.Echo.private('App.User.' + this.data_id)
-                .listen('PackageNotification', (e) => {
-                    this.$store.commit('add_notification', e.data);
-                    console.log(e);
-                });
+                    .notification((notification) => {
+                        this.$store.commit('add_notification', notification);
+                        this.addAlertStatus();
+                        console.log(notification);
+                    });
             },
 
             unreadNotifications() {
                 axios.get(this.prefixUrl + 'unread').then( response => {
                     response.data.unread.forEach(notifications => {
                        this.$store.commit('add_notification', notifications.data);
-                       console.log(notifications);
+//                       console.log(notifications);
+                        this.addAlertStatus();
                     });
-                    this.notificationsBarSize = this.unread_notifications;
-                    if(this.unread_notifications > 0){
-                        $('#notification_span').addClass('status danger');
-                    }
                 }).catch(function (error) {
                     console.log(error);
                 });
 
+            },
+
+            addAlertStatus(){
+                this.notificationsBarSize = this.unread_notifications;
+                if(this.unread_notifications > 0){
+                    $('#notification_span').addClass('status danger');
+                }
             },
         }
 

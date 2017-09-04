@@ -64,18 +64,18 @@
   </section>
 
   <section class="row">
-    <section class="form-group label-floating {{ $errors->has('incoming.track_number') ? ' has-error' : '' }}">
+    <section class="form-group label-floating {{ $errors->has('incoming.description') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-comment-edit"></i></span>
         <label class="control-label">{{__('common.titles.description')}}</label>
-        <textarea tabindex="2" class="form-control" name="incoming[note]">
+        <textarea tabindex="2" class="form-control" name="incoming[description]">
           {{$incoming->track_number or old('incoming.track_number')}}
         </textarea>
 
-        @if ($errors->has('incoming.note'))
+        @if ($errors->has('incoming.description'))
           <span class="help-block">
             <strong class="text-danger" class="alert-danger">
-              {{ $errors->first('incoming.note') }}
+              {{ $errors->first('incoming.description') }}
             </strong>
           </span>
         @endif

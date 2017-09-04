@@ -54064,7 +54064,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54130,9 +54130,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         listen: function listen() {
             var _this = this;
 
-            window.Echo.private('App.User.' + this.data_id).listen('PackageNotification', function (e) {
-                _this.$store.commit('add_notification', e.data);
-                console.log(e);
+            window.Echo.private('App.User.' + this.data_id).notification(function (notification) {
+                _this.$store.commit('add_notification', notification);
+                _this.addAlertStatus();
+                console.log(notification);
             });
         },
         unreadNotifications: function unreadNotifications() {
@@ -54141,15 +54142,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(this.prefixUrl + 'unread').then(function (response) {
                 response.data.unread.forEach(function (notifications) {
                     _this2.$store.commit('add_notification', notifications.data);
-                    console.log(notifications);
+                    //                       console.log(notifications);
+                    _this2.addAlertStatus();
                 });
-                _this2.notificationsBarSize = _this2.unread_notifications;
-                if (_this2.unread_notifications > 0) {
-                    $('#notification_span').addClass('status danger');
-                }
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        addAlertStatus: function addAlertStatus() {
+            this.notificationsBarSize = this.unread_notifications;
+            if (this.unread_notifications > 0) {
+                $('#notification_span').addClass('status danger');
+            }
         }
     }
 
@@ -55400,7 +55404,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n.remove-file{\n    color:red;\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n#total_title{\n  text-align: center;\n}\n#total_value{\n  text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -55411,6 +55415,9 @@ exports.push([module.i, "\n.remove-file{\n    color:red;\n    cursor: pointer;\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -55491,7 +55498,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             total: 0
         };
     },
-    created: function created() {},
+    created: function created() {
+        if (this.customClearances.length <= 0) {
+            this.customClearances.push({
+                description: '',
+                manufacture_country: '',
+                quantity: 1,
+                unit_price: 0.00,
+                total_price: 0.0
+            });
+        }
+    },
 
 
     methods: {
@@ -55504,15 +55521,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         description: '',
                         manufacture_country: '',
                         quantity: 1,
-                        unit_price: 0,
+                        unit_price: 0.00,
                         total_price: 0.0
                     });
                 }
             });
         },
         removeFieldGoods: function removeFieldGoods(index) {
-            this.customClearances.splice(index, 1);
-            this.calculateGlobalTotal();
+            if (this.customClearances.length > 1) {
+                this.customClearances.splice(index, 1);
+                this.calculateGlobalTotal();
+            }
         },
         calculateTotal: function calculateTotal(index) {
             this.customClearances[index].total_price = this.customClearances[index].quantity * this.customClearances[index].unit_price;
@@ -55546,14 +55565,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v("\n    Goods Clearance\n    "), _c('button', {
     staticClass: "btn btn-primary btn-fab btn-fab-sm",
     attrs: {
-      "type": "button"
+      "type": "button",
+      "id": "add_custom_clearance_button"
     },
     on: {
       "click": _vm.newGoodsField
     }
   }, [_c('i', {
     staticClass: "zmdi zmdi-plus"
-  })]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c('section', {
+  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('small', [_vm._v("1- Click at button + to add more goods")]), _vm._v(" "), _c('small', [_vm._v("2- Check if the total value is equal to your bills")]), _vm._v(" "), _c('small', [_vm._v("3- Write everything which are contained in box and we check for you if everything are there.")])]), _vm._v(" "), _c('section', {
     staticClass: "card-body p-0"
   }, [_c('div', {
     staticClass: "table-responsive"
@@ -55569,25 +55589,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "id": "goods"
       }
-    }, [_c('td', {
-      class: {
-        'has-error': _vm.errors.has('description')
-      }
-    }, [_c('input', {
+    }, [_c('td', [_c('input', {
       directives: [{
         name: "model",
         rawName: "v-model",
         value: (goods.description),
         expression: "goods.description"
-      }, {
-        name: "validate",
-        rawName: "v-validate",
-        value: ('required'),
-        expression: "'required'"
       }],
       staticClass: "form-control",
       attrs: {
-        "type": "text"
+        "type": "text",
+        "name": 'custom_clearance[' + index + '][description]'
       },
       domProps: {
         "value": (goods.description)
@@ -55598,9 +55610,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           goods.description = $event.target.value
         }
       }
-    }), _vm._v(" "), (_vm.errors.has('description')) ? _c('span', {
-      staticClass: "text-danger"
-    }, [_c('strong', [_vm._v(_vm._s(_vm.errors.first('description')))])]) : _vm._e()]), _vm._v(" "), _c('td', [_c('input', {
+    })]), _vm._v(" "), _c('td', [_c('input', {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -55611,7 +55621,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "type": "number",
         "min": "1",
-        "value": "1"
+        "value": "1",
+        "name": 'custom_clearance[' + index + '][quantity]'
       },
       domProps: {
         "value": (goods.quantity)
@@ -55635,9 +55646,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "form-control",
       attrs: {
         "type": "number",
-        "min": "0.01",
-        "value": "0.00",
-        "step": "0.01"
+        "min": "0.00",
+        "step": "0.01",
+        "name": 'custom_clearance[' + index + '][unit_price]'
       },
       domProps: {
         "value": (goods.unit_price)
@@ -55655,7 +55666,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "form-control",
       attrs: {
         "type": "number",
+        "id": "total_value",
         "disabled": ""
+      },
+      domProps: {
+        "value": goods.total_price
+      }
+    }), _vm._v(" "), _c('input', {
+      attrs: {
+        "type": "hidden",
+        "name": 'custom_clearance[' + index + '][total_unit]'
       },
       domProps: {
         "value": goods.total_price
@@ -55673,23 +55693,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('i', {
       staticClass: "zmdi zmdi-minus"
     })])])])
-  })), _vm._v(" "), _c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": "custom_clearance"
-    },
-    domProps: {
-      "value": _vm.clearanceJson
-    }
-  })])])]), _vm._v(" "), _c('div', {
+  }))])])]), _vm._v(" "), _c('div', {
     staticClass: "row form-group"
   }, [_vm._m(2), _vm._v(" "), _c('div', {
     staticClass: "col-xs-6 col-sm-1 p-0"
   }, [_c('span', {
     staticClass: "block p-b-5 cart-total"
-  }, [_vm._v(_vm._s(_vm.total))])])])])
+  }, [_vm._v("\n        " + _vm._s(_vm.total))])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('small', [_vm._v("Click at button + to add more goods "), _c('mark', [_vm._v("but first, type the description")])])
+  return _c('small', [_c('mark', [_vm._v("0- All values must be written in U.S dollars.")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', {
     staticClass: "col-sm-6"
@@ -55698,8 +55710,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Quantity")]), _vm._v(" "), _c('th', {
     staticClass: "col-sm-2"
   }, [_vm._v("Unit Price")]), _vm._v(" "), _c('th', {
-    staticClass: "col-sm-2"
-  }, [_vm._v("Total")])])])
+    staticClass: "col-sm-2",
+    attrs: {
+      "id": "total_title"
+    }
+  }, [_vm._v("Total unit")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-xs-6 col-sm-11 text-right "

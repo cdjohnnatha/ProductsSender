@@ -2,13 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\IncomingPackages;
 use App\OfferedService;
 use App\Warehouse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Tests\Browser\OfferedServicesTest;
 
 class IncomingPackagesController extends Controller
 {
+
+    public function rules()
+    {
+        return [
+          'incoming.provider' => 'nullable',
+          'incoming.addressee' => 'required',
+          'incoming.track_number' => 'required|string',
+          'incoming.note' => 'nullable',
+          'warehouse_id' => 'required',
+          'custom_clearance' => 'required|array|min:1',
+          'custom_clearance.*.description' => 'required|string',
+          'custom_clearance.*.quantity' => 'required|integer',
+          'custom_clearance.*.unit_price' => 'required',
+          'custom_clearance.*.total_unit' => 'required',
+
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +59,14 @@ class IncomingPackagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, $this->rules());
+        $incoming = new IncomingPackages($request->input('incoming'));
+        $incoming->warehouse_id = $request->input('warehouse_id');
+        $incoming->total_goods = $request->input('total_goods');
+        if($incoming->save()){
+            $incoming->goodsDeclaration()->createMany($request->input('custom_clearance'));
+            $incoming->additionalService()->createMany($request->input('additional_service'));
+        }
     }
 
     /**

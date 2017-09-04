@@ -27,7 +27,7 @@ class AddSlotsAndDiscountsToSubscriptions extends Migration
     public function down()
     {
         Schema::table('subscriptions', function (Blueprint $table) {
-            $table->dropColumn('decimal');
+            $table->dropColumn('discounts');
             $table->dropColumn('slots');
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIncomingPackagesTable extends Migration
+class CreateGoodsDeclaration extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateIncomingPackagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('incoming_packages', function (Blueprint $table) {
+        Schema::create('goods_declarations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('warehouse_id');
-            $table->string('provider', 50);
-            $table->string('addressee', 50);
-            $table->string('track_number', 50);
-            $table->string('description');
-            $table->decimal('total_goods');
+            $table->string('description', 250);
+            $table->integer('quantity');
+            $table->decimal('unit_price');
+            $table->decimal('total_unit');
+            $table->integer('incoming_packages_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +32,6 @@ class CreateIncomingPackagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('incoming_packages');
+        Schema::dropIfExists('goods_declarations');
     }
 }
