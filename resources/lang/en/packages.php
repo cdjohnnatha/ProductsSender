@@ -39,7 +39,7 @@ return [
             'track_number' => 'Track Number',
             'goods_custom_clearance' => 'Goods Custom Clearance',
             'services' => 'Services',
-            'small_marketing_services' => 'Save up to 20% if you buy it now'
+            'small_marketing_services' => 'Your plan offer to save up to :discount% if you buy those services now'
         ]
     ]
 

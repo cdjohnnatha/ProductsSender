@@ -67,7 +67,8 @@
                           Services
                         </h2>
                         @if(Auth::user()->subscription->amount > 0)
-                          <small style="color: #ff5722;">{{__('packages.incoming.form.small_marketing_services')}}</small>
+                          <small style="color: #ff5722;">{{__('packages.incoming.form.small_marketing_services',
+                          ['discount'=> Auth::user()->subscription->discounts])}}</small>
                         @endif
                         @include('services._checkbox')
                       </section>

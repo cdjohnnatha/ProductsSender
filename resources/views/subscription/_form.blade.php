@@ -58,7 +58,8 @@
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-money"></i></span>
         <label class="control-label" for="discounts">{{__('plans.form.discounts')}}</label>
-        <input type="number" min="0.00" step="0.01" name="subscription[discounts]" id="discounts" class="form-control">
+        <input type="number" min="0.00" step="0.01" name="subscription[discounts]" id="discounts" class="form-control"
+            value="{{$subscription->discounts or old('subscription.discounts')}}">
 
         @if ($errors->has('subscription.discounts'))
           <span class="help-block">
@@ -74,7 +75,8 @@
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-view-module"></i></span>
         <label class="control-label" for="slots">{{__('plans.form.slot_quantity')}}</label>
-        <input type="number" min="0" step="1" name="subscription[slots]" id="slots" class="form-control">
+        <input type="number" min="0" step="1" name="subscription[slots]" id="slots" class="form-control"
+               value="{{$subscription->slots or old('subscription.slots')}}">
 
         @if ($errors->has('subscription.slots'))
           <span class="help-block">
