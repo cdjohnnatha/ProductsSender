@@ -5,7 +5,7 @@
     <span>
       <li v-for="(notify, index) in all_notifications">
         <div class="card">
-          <a href="javascript:void(0)" class="pull-right dismiss" data-dismiss="close">
+          <a href="javascript:void(0)" class="pull-right dismiss" data-dismiss="close" @click="dismiss()">
             <i class="zmdi zmdi-close"></i>
           </a>
           <div class="card-body" @click="showPackage(notify)">
@@ -80,8 +80,15 @@
             },
 
             showPackage(package_id){
-              console.log(package_id);
-//              window.location = '/user/packages/' + package_id.package;
+              console.log(package_id.id);
+              axios.patch('/user/notifications/'+package_id.id).then( response => {
+                  console.log(response);
+              });
+              window.location = '/user/packages/' + package_id.data.package;
+            },
+
+            dismiss(index){
+              alert('clicked');
             },
         }
 

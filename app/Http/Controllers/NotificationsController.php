@@ -24,6 +24,13 @@ class NotificationsController extends Controller
         return redirect(route('user.packages.show', [$id]));
     }
 
+    public function update(Request $request, $id)
+    {
+        $notification = DatabaseNotification::find($id);
+        $notification->markAsRead();
+        return back();
+    }
+
     public function destroy($id)
     {
         $notification = DatabaseNotification::find($id);

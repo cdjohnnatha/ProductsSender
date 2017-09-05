@@ -54064,7 +54064,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54156,8 +54156,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         showPackage: function showPackage(package_id) {
-            console.log(package_id);
-            //              window.location = '/user/packages/' + package_id.package;
+            console.log(package_id.id);
+            axios.patch('/user/notifications/' + package_id.id).then(function (response) {
+                console.log(response);
+            });
+            window.location = '/user/packages/' + package_id.data.package;
+        },
+        dismiss: function dismiss(index) {
+            alert('clicked');
         }
     }
 
@@ -54176,7 +54182,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('span', _vm._l((_vm.all_notifications), function(notify, index) {
     return _c('li', [_c('div', {
       staticClass: "card"
-    }, [_vm._m(0, true), _vm._v(" "), _c('div', {
+    }, [_c('a', {
+      staticClass: "pull-right dismiss",
+      attrs: {
+        "href": "javascript:void(0)",
+        "data-dismiss": "close"
+      },
+      on: {
+        "click": function($event) {
+          _vm.dismiss()
+        }
+      }
+    }, [_c('i', {
+      staticClass: "zmdi zmdi-close"
+    })]), _vm._v(" "), _c('div', {
       staticClass: "card-body",
       on: {
         "click": function($event) {
@@ -54195,17 +54214,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "list-group-item-text"
     }, [_vm._v(_vm._s(notify.data.message.body))])])])])])])])
   }))])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('a', {
-    staticClass: "pull-right dismiss",
-    attrs: {
-      "href": "javascript:void(0)",
-      "data-dismiss": "close"
-    }
-  }, [_c('i', {
-    staticClass: "zmdi zmdi-close"
-  })])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

@@ -17,7 +17,13 @@
       <td class="col-xs-2">{{Carbon\Carbon::parse($notification->created_at)->format('d/m/Y')}}</td>
       <td>
         @if(is_null($notification->read_at))
-          <a href=""><i class="zmdi zmdi-circle"></i></a>
+          <a href="javascript:void(0)" onclick="$('#readForm-{{$notification->id}}').submit();">
+            <i class="zmdi zmdi-circle"></i>
+          </a>
+          <form action="{{route('user.notifications.update', $notification->id)}}" role="form" method="POST" id="readForm-{{$notification->id}}">
+            <input name="_method" type="hidden" value="PUT">
+            {{ csrf_field() }}
+          </form>
         @else
           <i class="zmdi zmdi-circle-o"></i>
         @endif

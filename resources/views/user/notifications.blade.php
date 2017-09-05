@@ -15,7 +15,7 @@
       </div>
     </header>
     <header class="card-heading">
-      <h2 class="card-title">{{__('common.titles.package')}}</h2>
+      <h2 class="card-title">{{__('notification.titles.main_title')}}</h2>
       <small class="dataTables_info">{{__('common.titles.unread')}}</small>
       <div class="card-search">
         <div id="productsTable_wrapper" class="form-group label-floating is-empty">
@@ -27,7 +27,6 @@
     </header>
 
     <section class="tab-content  p-20">
-
       <section class="tab-pane fadeIn" id="tab-1">
         <div class="row">
           <div class="card card-data-tables product-table-wrapper">
