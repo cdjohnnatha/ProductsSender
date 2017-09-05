@@ -8,13 +8,13 @@
           <a href="javascript:void(0)" class="pull-right dismiss" data-dismiss="close">
             <i class="zmdi zmdi-close"></i>
           </a>
-          <div class="card-body">
+          <div class="card-body" @click="showPackage(notify)">
             <ul class="list-group ">
               <li class="list-group-item ">
-                <span class="pull-left"><img src="img/profiles/11.jpg" alt="" class="img-circle max-w-40 m-r-10 "></span>
+                <!--<span class="pull-left"><img src="img/profiles/11.jpg" alt="" class="img-circle max-w-40 m-r-10 "></span>-->
                 <div class="list-group-item-body">
-                  <div class="list-group-item-heading">{{notify.message.header}}</div>
-                  <div class="list-group-item-text">{{notify.message.body}}</div>
+                  <div class="list-group-item-heading">{{notify.data.message.header}}</div>
+                  <div class="list-group-item-text">{{notify.data.message.body}}</div>
                 </div>
               </li>
             </ul>
@@ -62,8 +62,8 @@
             unreadNotifications() {
                 axios.get(this.prefixUrl + 'unread').then( response => {
                     response.data.unread.forEach(notifications => {
-                       this.$store.commit('add_notification', notifications.data);
-//                       console.log(notifications);
+                       this.$store.commit('add_notification', notifications);
+                       console.log(notifications);
                         this.addAlertStatus();
                     });
                 }).catch(function (error) {
@@ -77,6 +77,11 @@
                 if(this.unread_notifications > 0){
                     $('#notification_span').addClass('status danger');
                 }
+            },
+
+            showPackage(package_id){
+              console.log(package_id);
+//              window.location = '/user/packages/' + package_id.package;
             },
         }
 

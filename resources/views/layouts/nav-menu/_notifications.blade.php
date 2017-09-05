@@ -15,7 +15,7 @@
       <h5>NOTIFICATIONS</h5>
       <ul class="card-actions icons right-top">
         <li>
-          <a href="javascript:void(0)">
+          <a href="{{route('user.notifications.mark.all')}}">
             <i class="zmdi zmdi-check-all"></i>
           </a>
         </li>
@@ -25,7 +25,7 @@
       <user-notifications :data_id="{{Auth::user()->id}}"></user-notifications>
     @endif
     <li class="dropdown-menu-footer">
-      <a href="javascript:void(0)">
+      <a href="{{route('user.notifications.index')}}">
         All notifications
       </a>
     </li>

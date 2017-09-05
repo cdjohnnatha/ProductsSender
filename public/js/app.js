@@ -54064,7 +54064,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54141,8 +54141,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get(this.prefixUrl + 'unread').then(function (response) {
                 response.data.unread.forEach(function (notifications) {
-                    _this2.$store.commit('add_notification', notifications.data);
-                    //                       console.log(notifications);
+                    _this2.$store.commit('add_notification', notifications);
+                    console.log(notifications);
                     _this2.addAlertStatus();
                 });
             }).catch(function (error) {
@@ -54154,6 +54154,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.unread_notifications > 0) {
                 $('#notification_span').addClass('status danger');
             }
+        },
+        showPackage: function showPackage(package_id) {
+            console.log(package_id);
+            //              window.location = '/user/packages/' + package_id.package;
         }
     }
 
@@ -54173,18 +54177,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', [_c('div', {
       staticClass: "card"
     }, [_vm._m(0, true), _vm._v(" "), _c('div', {
-      staticClass: "card-body"
+      staticClass: "card-body",
+      on: {
+        "click": function($event) {
+          _vm.showPackage(notify)
+        }
+      }
     }, [_c('ul', {
       staticClass: "list-group "
     }, [_c('li', {
       staticClass: "list-group-item "
-    }, [_vm._m(1, true), _vm._v(" "), _c('div', {
+    }, [_c('div', {
       staticClass: "list-group-item-body"
     }, [_c('div', {
       staticClass: "list-group-item-heading"
-    }, [_vm._v(_vm._s(notify.message.header))]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(notify.data.message.header))]), _vm._v(" "), _c('div', {
       staticClass: "list-group-item-text"
-    }, [_vm._v(_vm._s(notify.message.body))])])])])])])])
+    }, [_vm._v(_vm._s(notify.data.message.body))])])])])])])])
   }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('a', {
@@ -54195,16 +54204,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "zmdi zmdi-close"
-  })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('span', {
-    staticClass: "pull-left"
-  }, [_c('img', {
-    staticClass: "img-circle max-w-40 m-r-10 ",
-    attrs: {
-      "src": "img/profiles/11.jpg",
-      "alt": ""
-    }
   })])
 }]}
 module.exports.render._withStripped = true

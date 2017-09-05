@@ -34,6 +34,8 @@ return [
         'offered_services' => 'Offered Services',
         'rg' => 'RG',
         'cpf' => 'CPF',
+        'unread' => 'Unread',
+        'message' => 'Message',
     ],
 
     'short_description' => [
@@ -48,6 +50,7 @@ return [
         'month' => 'Month',
         'year' => 'Year',
         'day' => 'Day',
+        'date' => 'Date',
     ]
 
 ];
