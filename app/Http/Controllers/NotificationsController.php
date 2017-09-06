@@ -10,7 +10,6 @@ class NotificationsController extends Controller
 {
     public function index()
     {
-
         $notifications = Auth::user()->notifications;
         $unreadNotifications = Auth::user()->unreadNotifications;
         return view('user.notifications', compact('notifications', 'unreadNotifications'));
@@ -37,6 +36,15 @@ class NotificationsController extends Controller
         $notification->markAsRead();
         return redirect(route('user.packages.show', [$id]));
 
+    }
+
+    public function readShow($id)
+    {
+        $notification = DatabaseNotification::find($id);
+        if(is_null($notification->read_at))
+            $notification->markAsRead();
+
+        return redirect(route('user.packages.show', $notification->data['package']));
     }
 
     public function unread()

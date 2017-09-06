@@ -52,7 +52,7 @@ Route::group(['middleware' => ['web']], function() {
         Route::resource('notifications', 'NotificationsController');
         Route::get('read-all', 'NotificationsController@markAll')->name('notifications.mark.all');
         Route::get('/unread', 'Api\UserNotificationsApiController@unread')->name('notifications.unread');
-
+        Route::get('/show-package/{notification}', 'NotificationsController@readShow')->name('notifications.read.show');
 
     });
 

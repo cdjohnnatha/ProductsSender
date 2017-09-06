@@ -15,4 +15,10 @@ class UserNotificationsApiController extends Controller
             'unread' => Auth::user()->unreadNotifications
         ]);
     }
+
+    public function update(Request $request, $id)
+    {
+        $notification = DatabaseNotification::find($id);
+        $notification->markAsRead();
+    }
 }

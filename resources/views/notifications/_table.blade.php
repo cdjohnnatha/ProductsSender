@@ -10,7 +10,7 @@
   @foreach($notifications as $notification)
     <tr>
       <td class="col-xs-7">
-        <a href="{{route('user.packages.show', $notification->data['package'])}}">
+        <a href="{{route('user.notifications.read.show', $notification->id)}}">
           {{$notification->data['message']['header']}}
         </a>
       </td>
