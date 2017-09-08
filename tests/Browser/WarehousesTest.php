@@ -20,7 +20,7 @@ class WarehousesTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $admin = Admin::all();
             $faker = \Faker\Factory::create();
-            $browser->loginAs($admin, 'admin')
+            $browser->loginAs($admin[0], 'admin')
                 ->visit(route('admin.warehouses.create'))
                 ->type('warehouse[storage_time]', $faker->numberBetween(0, 60))
                 ->type('warehouse[box_price]', $faker->randomFloat(2, 0, 8))
@@ -28,11 +28,11 @@ class WarehousesTest extends DuskTestCase
                 ->type('address[postal_code]', $faker->postcode)
                 ->type('address[number]', $faker->buildingNumber)
                 ->type('address[label]', $faker->company)
-                ->select('admin_id')
+                ->type('address[company_name]', $faker->company)
                 ->type('#map', 'Rua rita porfirio chaves')
                 ->waitFor('.pac-item')
                 ->click('.pac-item')
-                ->pause(500)
+                ->pause(1500)
                 ->press('#submit-button')
                 ->waitForLocation('/admin/warehouses');
         });

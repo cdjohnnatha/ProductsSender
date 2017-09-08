@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OfferedService extends Entity
+class GoodsDeclaration extends Entity
 {
     protected $fillable = [
-        'title',
-        'price',
         'description',
+        'quantity',
+        'unit_price',
+        'total_unit',
     ];
 }

@@ -15,4 +15,5 @@ class UserNotificationsApiController extends Controller
             'unread' => Auth::user()->unreadNotifications
         ]);
     }
+
 }

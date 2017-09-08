@@ -49,7 +49,6 @@ class AdminTest extends DuskTestCase
                 ->click('#submit-button')
                 ->waitForLocation('/admin');
         });
-
     }
 
     /**

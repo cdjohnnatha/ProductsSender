@@ -46,6 +46,8 @@
                   </div>
                   <div class="card-body">
                     <ul class="pricing-feature-list" style="padding-bottom: 0;">
+                      <li class="pricing-feature">Slots: {{$subscription->slots}}</li>
+                      <li class="pricing-feature">Discounts in our services: {{$subscription->discounts}}</li>
                       @foreach($subscription->benefits as $benefit)
                         <li class="pricing-feature">{{$benefit->message or ''}}</li>
                       @endforeach
@@ -86,6 +88,8 @@
                   </div>
                   <div class="card-body">
                     <ul class="pricing-feature-list" style="padding-bottom: 0;">
+                      <li class="pricing-feature">Slots: {{$subscription->slots}}</li>
+                      <li class="pricing-feature">Discounts in our services: {{$subscription->discounts}}</li>
                       @foreach($per_year->benefits as $benefit)
                         <li class="pricing-feature">{{$benefit->message or ''}}</li>
                       @endforeach

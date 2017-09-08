@@ -91,5 +91,11 @@
                 </div>
             </div>
         </div>
+        <script src="{{ asset('js/layout/vendor.bundle.js') }}"></script>
+        <script src="{{ asset('js/layout/app.bundle.js') }}"></script>
+        <script src="{{ asset('js/layout/alerts.js') }}"></script>
+        @if(Session::has('status'))
+            <script>alertify.success("{{ Session::get('status')}}");</script>
+        @endif
     </body>
 </html>

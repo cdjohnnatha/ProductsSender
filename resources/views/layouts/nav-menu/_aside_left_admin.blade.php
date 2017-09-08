@@ -49,9 +49,15 @@
           </a>
         </li>
 
-        <li class="{{ Route::is('admin.offeredservices.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.offeredservices.index')}}"><i class="zmdi zmdi-tag"></i>
-            {{__('common.titles.offered_services')}}
+        <li class="{{ Route::is('admin.services.*') ? 'active' : '' }}">
+          <a href="{{Route('admin.services.index')}}"><i class="zmdi zmdi-tag"></i>
+            {{__('common.titles.services')}}
+          </a>
+        </li>
+
+        <li class="{{ Route::is('admin.incoming.*') ? 'active' : '' }}">
+          <a href="{{Route('admin.incoming.index')}}"><i class="zmdi zmdi-truck"></i>
+            {{__('common.titles.incoming_package')}}
           </a>
         </li>
       </ul>

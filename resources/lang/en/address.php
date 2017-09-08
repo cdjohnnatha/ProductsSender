@@ -14,7 +14,8 @@ return [
         'postal_code'   => 'Postal Code ',
         'country'   => 'Country',
         'number'   => 'Number',
-        'form' => 'Address form'
+        'form' => 'Address form',
+        'addressee' => 'Addressee'
     ],
 
     'label' => [

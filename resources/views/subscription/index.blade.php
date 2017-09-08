@@ -61,6 +61,8 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>{{__('common.titles.titles')}}</th>
+                                    <th>{{__('plans.form.discounts')}} %</th>
+                                    <th>{{__('plans.form.slot_quantity')}}</th>
                                     <th>{{__('common.titles.period')}}</th>
                                     <th>{{__('common.titles.active')}}</th>
                                     <th>{{__('common.titles.principal_offer')}}</th>
@@ -76,9 +78,11 @@
                             <tbody>
                             @foreach($subscriptions as $subscription)
                                 <tr>
-                                    <td class="col-sm-2">{{$subscription->id}}</td>
+                                    <td>{{$subscription->id}}</td>
                                     <td>{{$subscription->title}}</td>
-                                    <td>{{$subscription->period ? 'Year' : 'Month'}}</td>
+                                    <td align="center">{{$subscription->discounts}}</td>
+                                    <td align="center">{{$subscription->slots}}</td>
+                                    <td>{{$subscription->period == 1 ? 'Year' : 'Month'}}</td>
                                     <td class="col-xs-1">
                                         <form action="{{Route('admin.subscriptions.active', $subscription->id)}}"
                                               role="form" method="POST" id="form-active-{{$subscription->id}}">
@@ -86,7 +90,7 @@
                                             <div class="togglebutton m-b-15 ">
                                                 <label>
                                                     <input type="checkbox" name="active"
-                                                           class="toggle-primary"
+                                                           class="{{$subscription->period == 1 ? 'toggle-info' : 'toggle-primary'}}"
                                                            {{($allow_activation_month == 3 && $subscription->active == 0 && $subscription->period == 0) ? 'disabled' : ''}}
                                                            {{($allow_activation_year == 3 && $subscription->active == 0 && $subscription->period == 1) ? 'disabled' : ''}}
                                                            {{$subscription->active ? 'checked' : ''}}

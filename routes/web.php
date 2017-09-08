@@ -33,16 +33,11 @@ Route::group(['middleware' => ['web']], function() {
         'prefix' => 'user'
     ], function() {
         Route::get('/dashboard', 'UserController@dashboard')->name('dashboard');
-        Route::get('/notifications', 'UserNotificationsController@notifications')->name('notifications');
+        Route::get('/notifications', 'NotificationsController@notifications')->name('notifications');
 
         Route::resource('address', 'AddressController');
         Route::post('address/{address}/default', 'AddressController@defaultAddress')->name('address.default');
         Route::resource('packages', 'PackageController', ['only' => ['show', 'index', 'destroy']]);
-        Route::resource('notifications', 'UserNotificationsController', ['only' => [
-            'index',
-            'destroy',
-            'show'
-        ]]);
 
         Route::resource('additional-names', 'AdditionalNamesController', ['only' => [
             'index',
@@ -53,9 +48,11 @@ Route::group(['middleware' => ['web']], function() {
 
 //        Route::resource('packages', 'UserPackageController');
 
-        Route::resource('notifications', 'UserNotificationsController');
+        Route::resource('incoming', 'IncomingPackagesController');
+        Route::resource('notifications', 'NotificationsController');
+        Route::get('read-all', 'NotificationsController@markAll')->name('notifications.mark.all');
         Route::get('/unread', 'Api\UserNotificationsApiController@unread')->name('notifications.unread');
-
+        Route::get('/show-package/{notification}', 'NotificationsController@readShow')->name('notifications.read.show');
 
     });
 

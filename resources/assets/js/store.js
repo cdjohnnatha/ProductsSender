@@ -11,7 +11,11 @@ export const store = new Vuex.Store({
     mutations: {
         add_notification(state, notification){
             state.unread.push(notification);
-        }
+        },
+
+        rvm_notification(state, index){
+            state.unread.splice(index, 1);
+        },
     },
 
     getters: {

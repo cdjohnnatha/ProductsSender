@@ -29,9 +29,9 @@ class WarehouseController extends Controller
             'address.formatted_address' => 'required',
             'address.postal_code' => 'required',
             'address.default_address' => 'boolean',
-//            'geonames.city' => 'required',
-//            'geonames.state' => 'required',
-//            'geonames.country' => 'required'
+            'geonames.city' => 'required',
+            'geonames.state' => 'required',
+            'geonames.country' => 'required'
         ];
     }
 

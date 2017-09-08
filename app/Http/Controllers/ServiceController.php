@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\OfferedService;
+use App\Service;
 use Illuminate\Http\Request;
 
-class OfferedServiceController extends Controller
+class ServiceController extends Controller
 {
-
     private function rules()
     {
         return [
@@ -23,8 +22,8 @@ class OfferedServiceController extends Controller
      */
     public function index()
     {
-        $services = OfferedService::all();
-        return view('services.index', compact('services'));
+        $services = Service::all();
+        return view('service.index', compact('services'));
     }
 
     /**
@@ -34,7 +33,7 @@ class OfferedServiceController extends Controller
      */
     public function create()
     {
-        return view('services.create');
+        return view('service.create');
     }
 
     /**
@@ -46,13 +45,12 @@ class OfferedServiceController extends Controller
     public function store(Request $request)
     {
         $this->validate( $request, $this->rules());
-        $services = new OfferedService($request->input('service'));
-        if($services->save()){
+        $service = new Service($request->input('service'));
+        if($service->save()){
             $request->session()->flash('status',
                 __('statusMessage.global_message.entity.created', [
-                    'entity' => __('common.titles.offered_services')
-                ]));
-            return redirect(Route('admin.offeredservices.index'));
+                    'entity' => __('common.titles.services')]));
+            return redirect(Route('admin.services.index'));
         }
     }
 
@@ -75,8 +73,8 @@ class OfferedServiceController extends Controller
      */
     public function edit($id)
     {
-        $service = OfferedService::findOrFail($id);
-        return view('services.create', compact('service'));
+        $service = Service::findOrFail($id);
+        return view('service.create', compact('service'));
     }
 
     /**
@@ -89,15 +87,14 @@ class OfferedServiceController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate( $request, $this->rules() );
-        $service = OfferedService::findOrFail($id);
+        $service = Service::findOrFail($id);
         $service->fill($request->input('service'));
         if($service->save()){
             $request->session()->flash('status',
                 __('statusMessage.global_message.attribute.updated', [
-                    'entity' => __('common.titles.offered_services'),
-                    'attribute' => $service->id
-                ]));
-            return redirect(Route('admin.offeredservices.index'));
+                    'entity' => __('common.titles.service'),
+                    'attribute' => $service->id]));
+            return redirect(Route('admin.service.index'));
         }
     }
 
@@ -109,7 +106,7 @@ class OfferedServiceController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $service = OfferedService::findOrFail($id);
+        $service = Service::findOrFail($id);
         $service->delete();
         if($service->trashed()){
             $request->session()->flash('status',

@@ -14,18 +14,18 @@ class SubscriptionTest extends DuskTestCase
     /**
      * @group subscriptions
      * @group subscriptionsRegister
-     * @all
      */
     public function testRegisterSubscription()
     {
         $this->browse(function (Browser $browser) {
             $admin = Admin::find(1);
             $faker = \Faker\Factory::create();
-            $country = $faker->country;
             $browser->loginAs($admin, 'admin')
                 ->visit(route('admin.subscriptions.create'))
                 ->type('subscription[title]', $faker->word)
-                ->type('subscription[amount]', $faker->randomFloat(2, 1, 5))
+                ->type('subscription[amount]', $faker->randomFloat(2, 1, 2))
+                ->type('subscription[discounts]', $faker->randomFloat(2, 1, 5))
+                ->type('subscription[slots]', $faker->randomNumber())
                 ->press('.toggle')
                 ->type('#benefit-0', $faker->words)
                 ->type('#benefit-1', $faker->words)
@@ -33,8 +33,7 @@ class SubscriptionTest extends DuskTestCase
                 ->type('#benefit-3', $faker->words)
                 ->type('#benefit-4', $faker->words)
                 ->type('#benefit-5', $faker->words)
-                ->type('#benefit-6', $faker->words)
-                ->type('#benefit-7', $faker->words)
+                ->click('.check')
                 ->press('#submit-button')
                 ->pause(5000)
                 ->waitForLocation('/admin/subscriptions');
@@ -44,22 +43,26 @@ class SubscriptionTest extends DuskTestCase
 
     /**
      * @group subscriptions
-     * @all
      */
     public function testEditSubscription()
     {
         $this->browse(function (Browser $browser) {
             $admin = Admin::find(1);
             $faker = \Faker\Factory::create();
-            $country = $faker->country;
             $edit = Subscription::orderBy('id', 'desc')->first();
             $browser->loginAs($admin, 'admin')
                 ->visit(route('admin.subscriptions.edit', $edit->id))
                 ->type('subscription[title]', $faker->word)
-                ->type('subscription[amount]', $faker->randomFloat(2, 1, 10))
-                ->type('#input-message-0', $faker->word)
-                ->type('#input-message-1', $faker->word)
-                ->type('#input-message-2', $faker->word)
+                ->type('subscription[amount]', $faker->randomFloat(2, 1, 5))
+                ->type('subscription[discounts]', $faker->randomFloat(2, 1, 5))
+                ->type('subscription[slots]', $faker->randomNumber())
+                ->press('.toggle')
+                ->type('#benefit-0', $faker->words)
+                ->type('#benefit-1', $faker->words)
+                ->type('#benefit-2', $faker->words)
+                ->type('#benefit-3', $faker->words)
+                ->type('#benefit-4', $faker->words)
+                ->type('#benefit-5', $faker->words)
                 ->press('#submit-button')
                 ->waitForLocation('/admin/subscriptions');
         });
@@ -68,7 +71,6 @@ class SubscriptionTest extends DuskTestCase
     /**
      * @group subscriptionsDelete
      * @group subscriptions
-     * @all
      */
     public function testDeleteSubscription()
     {

@@ -31,11 +31,21 @@ return [
         'account' => 'Account',
         'settings' => 'Settings',
         'description' => 'Description',
-        'offered_services' => 'Offered Services',
+        'services' => 'Services',
+        'rg' => 'RG',
+        'cpf' => 'CPF',
+        'unread' => 'Unread',
+        'message' => 'Message',
+        'incoming_package' => 'Incoming Package',
+        'track_number' => 'Track Number',
+        'incoming' => 'Incoming',
+        'provider' => 'Provider',
+        'addon' => 'Addon',
+        'goods' => 'Goods',
     ],
 
     'short_description' => [
-      'main' => 'You can find here all the :entity.'
+      'main' => 'Here you can find here all the :entity.'
     ],
 
     'holyship' => [
@@ -46,6 +56,13 @@ return [
         'month' => 'Month',
         'year' => 'Year',
         'day' => 'Day',
+        'date' => 'Date',
+        'created_at' => 'Created At'
+    ],
+
+    'status' => [
+        'unregistered' => 'Unregistered',
+        'registered' => 'Registered',
     ]
 
 ];

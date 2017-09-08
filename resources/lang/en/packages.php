@@ -21,13 +21,30 @@ return [
     'index' => [
         'title_package' => 'Packages',
         'short_description' => 'All your packages can be found here.',
-        'short_show_description' => 'Here you can see your package information'
+        'short_show_description' => 'Here you can see your package information',
 
     ],
 
     'notification' => [
         'updated_warehouse' => 'Package was updated at warehouse',
         'created_warehouse' => 'Package was identified at warehouse'
+    ],
+
+    'incoming' => [
+        'form' => [
+            'title_form' => 'Identify your incoming packages',
+            'title_description' => 'Make your packages being processing fast',
+            'provider' => 'Provider',
+            'addressee' => 'Addressee',
+            'track_number' => 'Track Number',
+            'goods_custom_clearance' => 'Goods Custom Clearance',
+            'service' => 'Services',
+            'small_marketing_services' => 'Your plan offer to save up to :discount% if you buy those service now'
+        ]
+    ],
+
+    'goods' => [
+        'short_description_check' => 'The goods is just for clarify what have in the package'
     ]
 
 ];

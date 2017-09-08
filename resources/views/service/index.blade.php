@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('panel_header')
-    Packages on warehouse
+    {{__('common.titles.services')}}
 @endsection
 
 
@@ -11,8 +11,8 @@
         <div class="col-xs-12">
             <div class="card card-data-tables product-table-wrapper">
                 <header class="card-heading">
-                    <h2 class="card-title">{{__('common.titles.offered_services')}}</h2>
-                    <small class="dataTables_info">{{__('common.short_description.main', [ 'entity' => 'services' ])}}</small>
+                    <h2 class="card-title">{{__('common.titles.services')}}</h2>
+                    <small class="dataTables_info">{{__('common.short_description.main', [ 'entity' => __('common.titles.services') ])}}</small>
 
                     <div class="card-search">
                         <div id="productsTable_wrapper" class="form-group label-floating is-empty">
@@ -39,7 +39,7 @@
                                 <th class="col-sm-1">Price</th>
                                 <th class="col-sm-2">Short description</th>
                                 <th data-orderable="false" class="col-xs-2">
-                                    <a href="{{Route('admin.offeredservices.create')}}">
+                                    <a href="{{Route('admin.services.create')}}">
                                         <button class="btn btn-primary btn-fab  animate-fab"><i class="zmdi zmdi-plus"></i></button>
                                     </a>
                                 </th>
@@ -53,7 +53,7 @@
                                     <td>{{$service->price}}</td>
                                     <td>{{$service->description}}</td>
                                     <td>
-                                        @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'admin.offeredservices' ,'id' => $service->id])
+                                        @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'admin.services' ,'id' => $service->id])
                                     </td>
                                 </tr>
                             @endforeach
