@@ -38,6 +38,10 @@ return [
         'message' => 'Message',
         'incoming_package' => 'Incoming Package',
         'track_number' => 'Track Number',
+        'incoming' => 'Incoming',
+        'provider' => 'Provider',
+        'addon' => 'Addon',
+        'goods' => 'Goods',
     ],
 
     'short_description' => [
@@ -53,6 +57,12 @@ return [
         'year' => 'Year',
         'day' => 'Day',
         'date' => 'Date',
+        'created_at' => 'Created At'
+    ],
+
+    'status' => [
+        'unregistered' => 'Unregistered',
+        'registered' => 'Registered',
     ]
 
 ];

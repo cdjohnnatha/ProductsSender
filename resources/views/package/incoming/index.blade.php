@@ -10,7 +10,7 @@
         <header class="card-body p-0">
             <div class="tabpanel">
                 <ul class="nav nav-tabs nav-tabs-right">
-                    <li class="active" role="presentation"><a href="#tab-1" data-toggle="tab" aria-expanded="true">Index</a></li>
+                    <li class="active" role="presentation"><a href="#tab-1" data-toggle="tab" aria-expanded="true">{{__('common.titles.incoming')}}</a></li>
                     <li class="presentation" role="presentation"><a href="#tab-2" data-toggle="tab" aria-expanded="true">{{__('common.titles.warehouse')}}</a></li>
                 </ul>
             </div>
@@ -30,17 +30,17 @@
 
         <section class="tab-content  p-20">
 
-            <section class="tab-pane fadeIn" id="tab-1">
+            <section class="tab-pane fadeIn active" id="tab-1">
                 <div class="row">
                     <div class="card card-data-tables product-table-wrapper">
                         <div class="card-body p-0">
-                            @include('package.incoming._table', ['table_id' => 'incomingTable-all'])
+                            @include('package.incoming._table', ['table_id' => 'incoming'])
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="tab-pane fadeIn active" id="tab-2">
+            <section class="tab-pane fadeIn" id="tab-2">
                 <div class="row">
                     <div class="card card-data-tables product-table-wrapper">
                         <div class="card-body p-0">

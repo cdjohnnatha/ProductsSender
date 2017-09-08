@@ -17,4 +17,9 @@ class Addon extends Entity
         return $this->morphTo();
     }
 
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
 }

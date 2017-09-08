@@ -41,6 +41,10 @@ return [
             'service' => 'Services',
             'small_marketing_services' => 'Your plan offer to save up to :discount% if you buy those service now'
         ]
+    ],
+
+    'goods' => [
+        'short_description_check' => 'The goods is just for clarify what have in the package'
     ]
 
 ];

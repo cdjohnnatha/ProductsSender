@@ -8,6 +8,7 @@ use App\Addon;
 use App\Service;
 use App\Warehouse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IncomingPackagesController extends Controller
 {
@@ -36,7 +37,14 @@ class IncomingPackagesController extends Controller
      */
     public function index()
     {
-        $incomingPackages = IncomingPackages::all();
+        if(auth()->guard('web')->user()) {
+            $incomingPackages = IncomingPackages::where('registered', false)
+                ->where('user_id', Auth::user()->id)->get();
+        } else {
+            $incomingPackages = IncomingPackages::where('registered', false)
+                ->where('warehouse_id', Auth::user()->warehouse_id)->get();
+        }
+
         return view('package.incoming.index', compact('incomingPackages'));
     }
 
@@ -79,7 +87,8 @@ class IncomingPackagesController extends Controller
      */
     public function show($id)
     {
-        //
+        $incomingPackage = IncomingPackages::with('addons')->find($id);
+        return view('package.incoming.show', compact('incomingPackage'));
     }
 
     /**

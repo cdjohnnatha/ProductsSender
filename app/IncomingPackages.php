@@ -15,7 +15,8 @@ class IncomingPackages extends Entity
         'track_number',
         'total_goods',
         'description',
-        'warehouse_id'
+        'warehouse_id',
+        'user_id'
     ];
 
     public function addons()
@@ -23,14 +24,19 @@ class IncomingPackages extends Entity
         return $this->morphMany(Addon::class, 'addonable');
     }
 
-    public function services()
-    {
-        return $this->hasManyThrough(Addon::class, Service::class);
-    }
-
-    public function GoodsDeclaration()
+    public function goodsDeclaration()
     {
         return $this->hasMany(GoodsDeclaration::class);
+    }
+
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

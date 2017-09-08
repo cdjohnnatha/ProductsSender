@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAddonsTable extends Migration
+class AddUserToIncomingPackages extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateAddonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('addons', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('service_id');
-            $table->morphs('addonable');
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('incoming_packages', function (Blueprint $table) {
+            $table->integer('user_id');
         });
     }
 
@@ -29,6 +25,8 @@ class CreateAddonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addons');
+        Schema::table('incoming_packages', function (Blueprint $table) {
+            $table->dropColumn('user_id');
+        });
     }
 }
