@@ -31,15 +31,17 @@ return [
         'account' => 'Account',
         'settings' => 'Settings',
         'description' => 'Description',
-        'offered_services' => 'Offered Services',
+        'services' => 'Services',
         'rg' => 'RG',
         'cpf' => 'CPF',
         'unread' => 'Unread',
         'message' => 'Message',
+        'incoming_package' => 'Incoming Package',
+        'track_number' => 'Track Number',
     ],
 
     'short_description' => [
-      'main' => 'You can find here all the :entity.'
+      'main' => 'Here you can find here all the :entity.'
     ],
 
     'holyship' => [

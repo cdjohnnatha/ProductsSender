@@ -14,7 +14,10 @@ Route::group(['middleware' => ['auth:admin']], function(){
             Route::resource('packages', 'PackageController');
             Route::resource('status', 'StatusController');
             Route::resource('subscriptions', 'SubscriptionController');
-            Route::resource('offeredservices', 'OfferedServiceController');
+            Route::resource('services', 'ServiceController');
+            Route::resource('notifications', 'WarehouseNotificationsController');
+            Route::resource('incoming', 'IncomingPackagesController');
+
             Route::post('subscriptions/{subscription}/active', 'SubscriptionController@active')->name('subscriptions.active');
             Route::post('subscriptions/{subscription}/principal', 'SubscriptionController@principalOffer')->name('subscriptions.principal_offer');
 

@@ -6,8 +6,6 @@
  * Time: 10:30 AM
  */
 namespace App\Observers;
-use App\Events\Event;
-use App\Events\PackageNotification;
 use App\Notifications\PackageNotifications;
 use App\Package;
 use App\User;

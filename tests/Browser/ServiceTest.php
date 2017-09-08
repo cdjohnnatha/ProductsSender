@@ -3,15 +3,15 @@
 namespace Tests\Browser;
 
 use App\Admin;
-use App\OfferedService;
+use App\Addon;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class OfferedServicesTest extends DuskTestCase
+class ServiceTest extends DuskTestCase
 {
     /**
-     * @services
+     * @addons
      * @group registerService
      */
     public function testRegisterService()
@@ -20,25 +20,26 @@ class OfferedServicesTest extends DuskTestCase
                 $admin = Admin::find(1);
                 $faker = \Faker\Factory::create();
                 $browser->loginAs($admin, 'admin')
-                    ->visit(route('admin.offeredservices.create'))
-                    ->assertSee('Offered Services')
+                    ->visit(route('admin.services.create'))
+                    ->assertSee('Services')
                     ->type('service[title]', $faker->name)
                     ->type('service[price]', $faker->randomFloat(2, 0))
-                    ->type('service[description]', $faker->randomFloat(2, 0))
+                    ->type('service[description]', $faker->words)
                     ->press('#submit-button')
-                    ->waitForLocation('/admin/offeredservices');
+                    ->pause(5000)
+                    ->waitForLocation('/admin/services');
         });
     }
 
     /**
-     * @group services
+     * @group addons
      */
     public function testEditService()
     {
         $this->browse(function (Browser $browser) {
             $admin = Admin::find(1);
             $faker = \Faker\Factory::create();
-            $services = OfferedService::orderBy('id', 'desc')->first();
+            $services = Addon::orderBy('id', 'desc')->first();
             $browser->loginAs($admin, 'admin')
                 ->visit(route('admin.offeredservices.edit', $services->id))
                 ->assertSee('Offered Services')

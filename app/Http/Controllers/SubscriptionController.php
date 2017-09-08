@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Benefit;
-use App\OfferedService;
+use App\Addon;
+use App\Service;
 use App\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,29 +34,28 @@ class SubscriptionController extends Controller
             ->where('period', 1)
             ->count();
 
-        $services = OfferedService::all();
-
         return view('subscription.index',
             compact(
                 'subscriptions',
                      'allow_activation_month',
-                        'allow_activation_year',
-                        'services'));
+                        'allow_activation_year'));
     }
 
     public function create()
     {
-        return view('subscription.create');
+        $services = Service::all();
+        return view('subscription.create', compact('services'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, $this->rules());
         $subscription = new Subscription($request->input('subscription'));
+//        dd($request->input('additional_service'));
         if ($subscription->save()) {
-            $subscription->benefits()->createMany(
-                $request->input('benefits')
-            );
+            $subscription->benefits()->createMany($request->input('benefits'));
+            $subscription->addons()->createMany($request->input('additional_service'));
+
             $request->session()->flash('status',
                 __('statusMessage.global_message.entity.created',
                     ['entity' => 'Plan']));

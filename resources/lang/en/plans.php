@@ -5,7 +5,8 @@ return [
         'form_name' => 'Form plans',
         'name' => 'Give a name for this plan',
         'discounts' => 'Discounts',
-        'slot_quantity' => 'Slots'
+        'slot_quantity' => 'Slots',
+        'description_services_title' => 'Select which services will be included for free in this plan'
     ],
 
     'subscription' => [

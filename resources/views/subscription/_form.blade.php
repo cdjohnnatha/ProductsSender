@@ -127,6 +127,16 @@
       @endfor
   </section>
 
+  <section class="col-sm-12">
+    <div class="form-group">
+      <div class="input-group">
+        <label>Services</label><br>
+        <small><mark>{{__('plans.form.description_services_title')}}</mark></small>
+        @include('service._checkbox', ['services' => $services])
+      </div>
+    </div>
+  </section>
+
 
 </article>
 

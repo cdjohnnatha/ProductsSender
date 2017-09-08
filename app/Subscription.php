@@ -26,12 +26,18 @@ class Subscription extends Entity
         'active' => false,
         'principal' => false];
 
+
     public function benefits(){
         return $this->hasMany(Benefit::class);
     }
 
-    public function plans(){
-        return $this->hasMany(Plan::class);
+    public function addons()
+    {
+        return $this->morphMany(Addon::class, 'addonable');
     }
 
+    public function servicesIncluded()
+    {
+        return $this->hasManyThrough(Service::class, Addon::class);
+    }
 }

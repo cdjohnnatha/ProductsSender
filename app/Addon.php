@@ -4,17 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AdditionalServices extends Entity
+class Addon extends Entity
 {
-
     protected $fillable = [
-        'offered_services_id',
-        'addable_type',
-        'addable_id',
+        'service_id',
+        'addonable_id',
+        'addonable_type',
     ];
 
-    public function addable()
+    public function addonable()
     {
         return $this->morphTo();
     }
+
 }

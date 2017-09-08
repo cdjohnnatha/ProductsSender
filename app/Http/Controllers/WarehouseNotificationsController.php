@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Auth;
 
-class NotificationsController extends Controller
+class WarehouseNotificationsController extends Controller
 {
+
     public function index()
     {
         $notifications = Auth::user()->notifications;
@@ -17,9 +17,8 @@ class NotificationsController extends Controller
 
     public function show($id)
     {
-
         $notification = DatabaseNotification::find($id);
-        return redirect(route('user.packages.show', [$id]));
+        return redirect(route('admin.packages.show', [$id]));
     }
 
     public function update(Request $request, $id)
@@ -33,7 +32,7 @@ class NotificationsController extends Controller
     {
         $notification = DatabaseNotification::find($id);
         $notification->markAsRead();
-        return redirect(route('user.packages.show', [$id]));
+        return redirect(route('admin.packages.show', [$id]));
 
     }
 
@@ -43,14 +42,7 @@ class NotificationsController extends Controller
         if(is_null($notification->read_at))
             $notification->markAsRead();
 
-        return redirect(route('user.packages.show', $notification->data['package']));
-    }
-
-    public function unread()
-    {
-        return response()->json([
-            'unread' => Auth::user()->unreadNotifications
-        ]);
+        return redirect(route('admin.packages.show', $notification->data['package']));
     }
 
 

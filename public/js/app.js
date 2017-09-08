@@ -54064,7 +54064,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54075,7 +54075,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -54157,13 +54156,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         showPackage: function showPackage(package_id) {
             console.log(package_id.id);
-            axios.patch('/user/notifications/' + package_id.id).then(function (response) {
-                console.log(response);
-            });
+            axios.patch('/user/notifications/' + package_id.id).then(function (response) {});
             window.location = '/user/packages/' + package_id.data.package;
         },
-        dismiss: function dismiss(index) {
-            alert('clicked');
+        dismiss: function dismiss(index, notify) {
+            var _this3 = this;
+
+            axios.patch('/user/notifications/' + notify.id).then(function (response) {
+                _this3.$store.commit('rvm_notification', index);
+            });
         }
     }
 
@@ -54190,7 +54191,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       on: {
         "click": function($event) {
-          _vm.dismiss()
+          _vm.dismiss(index, notify)
         }
       }
     }, [_c('i', {
@@ -55768,6 +55769,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
     mutations: {
         add_notification: function add_notification(state, notification) {
             state.unread.push(notification);
+        },
+        rvm_notification: function rvm_notification(state, index) {
+            state.unread.splice(index, 1);
         }
     },
 

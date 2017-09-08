@@ -23,7 +23,7 @@ class SubscriptionTest extends DuskTestCase
             $browser->loginAs($admin, 'admin')
                 ->visit(route('admin.subscriptions.create'))
                 ->type('subscription[title]', $faker->word)
-                ->type('subscription[amount]', $faker->randomFloat(2, 1, 5))
+                ->type('subscription[amount]', $faker->randomFloat(2, 1, 2))
                 ->type('subscription[discounts]', $faker->randomFloat(2, 1, 5))
                 ->type('subscription[slots]', $faker->randomNumber())
                 ->press('.toggle')
@@ -33,7 +33,9 @@ class SubscriptionTest extends DuskTestCase
                 ->type('#benefit-3', $faker->words)
                 ->type('#benefit-4', $faker->words)
                 ->type('#benefit-5', $faker->words)
+                ->click('.check')
                 ->press('#submit-button')
+                ->pause(5000)
                 ->waitForLocation('/admin/subscriptions');
 
         });

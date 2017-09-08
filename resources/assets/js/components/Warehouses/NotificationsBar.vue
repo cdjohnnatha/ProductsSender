@@ -50,7 +50,7 @@
 
         methods: {
             listen(){
-                window.Echo.private('App.User.' + this.data_id)
+                window.Echo.private('App.Warehouse.' + this.data_id)
                     .notification((notification) => {
                         this.$store.commit('add_notification', notification);
                         this.addAlertStatus();

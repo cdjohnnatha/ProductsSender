@@ -10,7 +10,7 @@ use Illuminate\Support\ServiceProvider;
 class ObserverServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap the application services.
+     * Bootstrap the application addons.
      *
      * @return void
      */
@@ -21,7 +21,7 @@ class ObserverServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the application services.
+     * Register the application addons.
      *
      * @return void
      */

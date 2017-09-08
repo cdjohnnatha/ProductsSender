@@ -43,7 +43,7 @@
                         <li class="">
                           <a href="#tab3" data-toggle="tab" aria-expanded="false">
                             <span class="step"><i class="zmdi zmdi-shopping-cart"></i></span>
-                            <span class="title">{{__('packages.incoming.form.services')}}</span>
+                            <span class="title">{{__('addon')}}</span>
                           </a>
                         </li>
                       </ul>
@@ -70,7 +70,7 @@
                           <small style="color: #ff5722;">{{__('packages.incoming.form.small_marketing_services',
                           ['discount'=> Auth::user()->subscription->discounts])}}</small>
                         @endif
-                        @include('services._checkbox')
+                        @include('service._checkbox')
                       </section>
                     </div>
                   </div>

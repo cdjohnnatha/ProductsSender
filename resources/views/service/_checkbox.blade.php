@@ -3,7 +3,7 @@
         @foreach($services as $key => $service)
           <div class="checkbox">
             <label>
-              <input type="checkbox" value="{{$service->id}}" data-price="{{$service->price}}" name="additional_service[{{$key}}][offered_services_id]">
+              <input type="checkbox" value="{{$service->id}}" data-price="{{$service->price}}" name="additional_service[{{$key}}][service_id]">
                 {{$service->title.' - '}}
                 <small>
                   ({{$service->description}}) -
@@ -13,22 +13,25 @@
             </label>
           </div>
         @endforeach
+        <input type="hidden" name="total_goods" id="total_service_input" value="0.00">
     </div>
-    <div class="row">
-      <div class="col-xs-6 col-sm-11 text-right ">
-        <span class="block p-b-5 md-text-grey">{{__('payments.titles.sub_total')}}:</span>
-        <span class="block p-b-5 md-text-grey">{{__('payments.titles.discounts')}}:</span>
-        <span class="block p-b-5 p-t-5">{{__('payments.titles.total')}}:</span>
+    @if(auth()->guard('web')->user())
+      <div class="row">
+        <div class="col-xs-6 col-sm-11 text-right ">
+          <span class="block p-b-5 md-text-grey">{{__('payments.titles.sub_total')}}:</span>
+          <span class="block p-b-5 md-text-grey">{{__('payments.titles.discounts')}}:</span>
+          <span class="block p-b-5 p-t-5">{{__('payments.titles.total')}}:</span>
+        </div>
+        <div class="col-xs-6 col-sm-1 p-0">
+          <span class="block p-b-5" id="services_first_value">0.00</span>
+          <span class="block p-b-5" id="discount_services">0.00</span>
+          <span class="block p-b-5 cart-total" id="total_services">0.00</span>
+        </div>
       </div>
-      <div class="col-xs-6 col-sm-1 p-0">
-        <span class="block p-b-5" id="services_first_value">0.00</span>
-        <span class="block p-b-5" id="discount_services">0.00</span>
-        <span class="block p-b-5 cart-total" id="total_services">0.00</span>
-        <input type="hidden" name="total_goods" id="total_service_input">
-      </div>
-    </div>
+    @endif
 </article>
 
+@if(auth()->guard('web')->user())
 @section('footerJS')
   <script>
     var total, discounts;
@@ -54,3 +57,4 @@
     });
   </script>
 @endsection
+@endif

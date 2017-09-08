@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class IncomingPackages extends Entity
 {
 
+    protected $attributes = array('registered' => false);
+
     protected $fillable = [
         'provider',
         'addressee',
@@ -16,14 +18,14 @@ class IncomingPackages extends Entity
         'warehouse_id'
     ];
 
-    public function additionalService()
+    public function addons()
     {
-        return $this->morphMany(AdditionalServices::class, 'addable');
+        return $this->morphMany(Addon::class, 'addonable');
     }
 
     public function services()
     {
-        return $this->hasManyThrough(AdditionalServices::class, 'offered_services_id');
+        return $this->hasManyThrough(Addon::class, Service::class);
     }
 
     public function GoodsDeclaration()

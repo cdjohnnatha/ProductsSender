@@ -16,9 +16,4 @@ class UserNotificationsApiController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
-    {
-        $notification = DatabaseNotification::find($id);
-        $notification->markAsRead();
-    }
 }

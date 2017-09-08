@@ -3,7 +3,7 @@
     <div class="form-group col-sm-8 label-floating {{ $errors->has('service.title') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-assignment-account"></i></span>
-        <label class="control-label">{{__('offeredService.form.title')}}</label>
+        <label class="control-label">{{__('service.form.service_name')}}</label>
         <input type="text" class="form-control" name="service[title]" value="{{$service->title or old('service.title')}}">
 
         @if ($errors->has('service.title'))
@@ -33,12 +33,13 @@
     </div>
   </section>
   <section>
-    <div class="form-group label-floating {{ $errors->has('service.price') ? ' has-error' : '' }}">
+    <div class="form-group label-floating {{ $errors->has('service.description') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-assignment"></i></span>
         <label class="control-label">{{__('common.titles.description')}}</label>
-        <textarea  class="form-control" tabindex="2" name="service[description]"
-                   >{{$service->description or old('service.description')}}</textarea>
+        <textarea  class="form-control" tabindex="2" name="service[description]">
+          {{$service->description or old('service.description')}}
+        </textarea>
 
         @if ($errors->has('service.description'))
           <span class="help-block">

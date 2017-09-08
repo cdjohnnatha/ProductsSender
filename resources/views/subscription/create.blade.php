@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('panel_header')
-  {{__('plans.index.titles')}}
+  {{__('plans.index.title')}}
 @endsection
 
 @section('content')
@@ -23,6 +23,7 @@
               {{ csrf_field() }}
               <section class="card-body">
                 @include('subscription._form')
+
               </section>
               <footer class="card-footer text-right">
                 @include('layouts.formButtons._form_save_edit', ['url' => Route('admin.subscriptions.index')])

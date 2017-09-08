@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class OfferedService extends Entity
+class Service extends Entity
 {
     protected $fillable = [
         'title',

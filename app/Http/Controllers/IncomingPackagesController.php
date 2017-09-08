@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\IncomingPackages;
-use App\OfferedService;
+use App\Notifications\IncomingPackageNotification;
+use App\Addon;
+use App\Service;
 use App\Warehouse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Tests\Browser\OfferedServicesTest;
 
 class IncomingPackagesController extends Controller
 {
@@ -36,7 +36,8 @@ class IncomingPackagesController extends Controller
      */
     public function index()
     {
-        //
+        $incomingPackages = IncomingPackages::all();
+        return view('package.incoming.index', compact('incomingPackages'));
     }
 
     /**
@@ -47,7 +48,7 @@ class IncomingPackagesController extends Controller
     public function create()
     {
         $warehouses = Warehouse::all();
-        $services = OfferedService::all();
+        $services = Service::all();
         return view('package.incoming.create', compact('warehouses', 'services'));
     }
 
@@ -65,7 +66,8 @@ class IncomingPackagesController extends Controller
         $incoming->total_goods = $request->input('total_goods');
         if($incoming->save()){
             $incoming->goodsDeclaration()->createMany($request->input('custom_clearance'));
-            $incoming->additionalService()->createMany($request->input('additional_service'));
+            $incoming->addons()->createMany($request->input('additional_service'));
+            Warehouse::find($incoming->warehouse_id)->notify(new IncomingPackageNotification($incoming));
         }
     }
 

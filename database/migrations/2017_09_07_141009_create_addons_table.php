@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdditionalServices extends Migration
+class CreateAddonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateAdditionalServices extends Migration
      */
     public function up()
     {
-        Schema::create('additional_services', function (Blueprint $table) {
+        Schema::create('addons', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('offered_services_id');
-            $table->morphs('addable');
+            $table->integer('service_id');
+            $table->morphs('addonable');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -29,6 +28,6 @@ class CreateAdditionalServices extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('additional_services');
+        Schema::dropIfExists('addons');
     }
 }
