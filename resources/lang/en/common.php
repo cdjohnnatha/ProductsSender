@@ -42,6 +42,7 @@ return [
         'provider' => 'Provider',
         'addon' => 'Addon',
         'goods' => 'Goods',
+        'users' => 'Users',
     ],
 
     'short_description' => [

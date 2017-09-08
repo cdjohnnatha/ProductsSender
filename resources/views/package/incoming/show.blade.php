@@ -6,12 +6,17 @@
       <div class="col-xs-12">
         <div class="card">
           <header class="card-heading">
-            <h2 class="card-title">{{__('common.titles.incoming_package')}} No. {{$incomingPackage->id}}</h2>
+            <h2 class="card-title">
+              {{__('common.titles.incoming_package')}} No. {{$incomingPackage->id}} -
+              {{$incomingPackage->registered ? __('common.status.registered') : __('common.status.unregistered')}}
+            </h2>
             <small>{{Carbon\Carbon::parse($incomingPackage->created_at)->format('d/m/Y')}}</small>
           </header>
           <div class="card-body p-50 p-t-10 invoice">
-            <h1><img src="{{asset('/img/holyship-logo.jpg')}}" alt='logo' style="width: 15%;"/></h1>
             <div class="row">
+              <div class="col-xs-6">
+                <h1><img src="{{asset('/img/logo/holyship.png')}}" alt='logo' style="width: 40%;"/></h1>
+              </div>
               <div class="col-xs-6">
                 <h3>{{__('common.titles.warehouse')}}</h3>
                 <address class="address">
@@ -99,7 +104,7 @@
               <div class="row">
                 <div class="col-xs-3">
                   <div class="logo">
-                    <h2><img src="{{asset('/img/holyship-logo.jpg')}}" alt='logo' style="width: 50%" /></h2>
+                    <h2><img src="{{asset('/img/logo/holyship-square.png')}}" alt='logo'/></h2>
                   </div>
                 </div>
               </div>
