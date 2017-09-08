@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\Admin;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\DB;
 use Tests\DuskTestCase;
@@ -47,6 +48,47 @@ class UserTest extends DuskTestCase
                 ->click('#next_btn')
                 ->click('#submit-button')
                 ->pause(4000);
+        });
+    }
+
+    /**
+     * @group userRegisterAdmin
+     * @group CRUDS
+     */
+    public function testRegisterByAdm()
+    {
+
+        $this->browse(function (Browser $browser) {
+            $faker = \Faker\Factory::create();
+            $country = $faker->countryCode;
+            $password = $faker->password(6, 10);
+            $browser->loginAs(Admin::first(), 'admin')
+                ->visit(route('admin.users.create'))
+                ->press('.planSection')
+                ->type('user[name]', $faker->firstName)
+                ->type('user[surname]', $faker->lastName)
+                ->type('user[rg]', '0000.000')
+                ->type('user[cpf]', '000.000.000-00')
+                ->type('user[phone]', 83998000802)
+                ->type('user[email]', $faker->email)
+                ->type('user[password]', $password)
+                ->type('user[password_confirmation]', $password)
+                ->click('#next_btn')
+                ->type('address[label]', $faker->name)
+                ->type('address[owner_name]', $faker->firstName)
+                ->type('address[owner_surname]', $faker->lastName)
+                ->type('address[phone]', $faker->phoneNumber)
+                ->type('address[company_name]', $faker->company)
+                ->type('address[number]', $faker->buildingNumber)
+                ->type('address[postal_code]', $faker->postcode)
+                ->type('#map', 'Rua rita porfirio chaves')
+                ->waitFor('.pac-item')
+                ->click('.pac-item')
+                ->pause(400)
+                ->click('#next_btn')
+                ->click('#submit-button')
+                ->waitForLocation('admin/users')
+                ->pause(50000);
         });
     }
 

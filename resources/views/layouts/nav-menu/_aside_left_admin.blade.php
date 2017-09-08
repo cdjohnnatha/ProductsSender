@@ -31,6 +31,13 @@
             {{__('common.titles.admin')}}
           </a>
         </li>
+
+        <li class="{{ Route::is('admin.users.*') ? 'active' : '' }}">
+          <a href="{{Route('admin.users.index')}}"><i class="zmdi zmdi-accounts"></i>
+            {{__('common.titles.users')}}
+          </a>
+        </li>
+
         <li class="{{ Route::is('admin.warehouses.*') ? 'active' : '' }}">
           <a href="{{Route('admin.warehouses.index')}}"><i class="zmdi zmdi-store"></i>
             {{__('common.titles.warehouse')}}
