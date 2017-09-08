@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Subscription;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -34,7 +35,24 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('auth.register');
+        $subscriptions_active_month = Subscription::with('benefits')
+            ->where('active',  1)
+            ->where('period', 0)
+            ->orderBy('amount')
+            ->limit(3)
+            ->get();
+
+        $subscriptions_active_year = Subscription::with('benefits')
+            ->where('active',  1)
+            ->where('period', 1)
+            ->limit(3)
+            ->orderBy('amount')
+            ->get();
+
+
+        return view('auth.register',
+            compact('subscriptions_active_month',
+                'subscriptions_active_year'));
     }
 
     public function show($id)

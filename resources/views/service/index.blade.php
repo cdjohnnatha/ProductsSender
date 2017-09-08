@@ -46,17 +46,19 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($services as $service)
-                                <tr>
-                                    <td>{{$service->id}}</td>
-                                    <td>{{$service->title}}</td>
-                                    <td>{{$service->price}}</td>
-                                    <td>{{$service->description}}</td>
-                                    <td>
-                                        @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'admin.services' ,'id' => $service->id])
-                                    </td>
-                                </tr>
-                            @endforeach
+                            @if($services)
+                                @foreach($services as $service)
+                                    <tr>
+                                        <td>{{$service->id}}</td>
+                                        <td>{{$service->title}}</td>
+                                        <td>{{$service->price}}</td>
+                                        <td>{{$service->description}}</td>
+                                        <td>
+                                            @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'admin.services' ,'id' => $service->id])
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                         </table>
                     </div>

@@ -122,6 +122,11 @@ class IncomingPackagesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $incomingPackage = IncomingPackages::find($id);
+        $incomingPackage->delete();
+
+        if($incomingPackage->trashed()){
+            return redirect(route('admin.incoming.index'));
+        }
     }
 }

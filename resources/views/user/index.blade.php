@@ -58,7 +58,7 @@
                                     <th class="col-xs-2">Email</th>
                                     <th class="col-xs-2">{{ __('common.titles.subscription') }}</th>
                                     <th class="col-xs-2">{{ __('common.titles.phone') }}</th>
-                                    <th data-orderable="false" class="col-xs-2">
+                                    <th data-orderable="false" class="col-xs-3">
                                         <a href="{{Route('admin.users.create')}}">
                                             <button class="btn btn-primary btn-fab  animate-fab"><i class="zmdi zmdi-plus"></i></button>
                                         </a>
@@ -74,8 +74,8 @@
                                             <td>{{ $user->subscription['title']}}</td>
                                             <td>{{ $user->phone }}</td>
                                             <td class="col-sm-3">
-                                                @include('layouts.formButtons._form_edit_delete',
-                                                        array('prefix_name' => 'admin.users', 'id' => $user->id))
+                                                @include('layouts.formButtons._form_all',
+                                                    array('prefix_name' => 'admin.users', 'id' => $user->id))
                                             </td>
                                         </tr>
                                     @endforeach
