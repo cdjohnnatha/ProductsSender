@@ -110,7 +110,7 @@
             <a href="javascript:void(0)" data-toggle="dropdown" aria-expanded="false">
 								<span class="meta">
 									<span class="avatar">
-										<img src="{{asset('img/holyship-logo.jpg')}}" alt="" class="img-circle max-w-35">
+										<img src="{{asset('img/logo/holyship-circle.png')}}" alt="" class="img-circle max-w-35">
 										<i class="badge mini success status"></i>
 									</span>
 									<span class="name">{{Auth::user()->name}}</span>
