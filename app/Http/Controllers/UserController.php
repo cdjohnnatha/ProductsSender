@@ -67,23 +67,28 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        return view('user.edit')->with('user', User::find($id));
+        $user = User::find($id);
+        if(auth()->guard('admin')->user()){
+            $subscriptions = Subscription::all();
+            return view('user.edit', compact('user', 'subscriptions'));
+        }
+        return view('user.edit')->with('user', $user);
     }
 
     public function update(Request $request, $id)
     {
-
         $this->validate($request,[
-            'users.name' => 'bail|required|min:3',
-            'users.surname' => 'required|string',
-            'users.email' => [
+            'user.name' => 'bail|required|min:3',
+            'user.surname' => 'required|string',
+            'user.rg' => 'required|string',
+            'user.cpf' => 'required|string',
+            'user.email' => [
                 'required',
                 Rule::unique('users')->ignore($id),
             ],
-            'users.phone' => 'required|numeric',
-            'users.country' => 'required',
-            'users.password' => 'nullable|confirmed',
-            'users.subscription_id' => 'required',
+            'user.phone' => 'required|numeric',
+            'user.password' => 'nullable|confirmed',
+            'user.subscription_id' => 'required',
         ]);
         $user = User::findOrFail($id);
         if(is_null($request->password)){

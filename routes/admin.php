@@ -11,6 +11,7 @@ Route::group(['middleware' => ['auth:admin']], function(){
             Route::get('/dashboard', 'AdminDashboardController@index')->name('dashboard');
             Route::resource('users', 'UserController');
             Route::resource('warehouses', 'WarehouseController');
+            Route::get('/packages/create/{incoming?}', 'PackageController@create')->name('packages.create.incoming');
             Route::resource('packages', 'PackageController');
             Route::resource('status', 'StatusController');
             Route::resource('subscriptions', 'SubscriptionController');

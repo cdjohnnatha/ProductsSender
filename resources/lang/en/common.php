@@ -43,10 +43,11 @@ return [
         'addon' => 'Addon',
         'goods' => 'Goods',
         'users' => 'Users',
+        'custom_clearance' => 'Custom Clearance'
     ],
 
     'short_description' => [
-      'main' => 'Here you can find here all the :entity.'
+      'main' => 'Here you can find all the :entity.'
     ],
 
     'holyship' => [

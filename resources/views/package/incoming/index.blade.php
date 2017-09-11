@@ -18,13 +18,6 @@
         <header class="card-heading">
             <h2 class="card-title">{{__('common.titles.incoming_package')}}</h2>
             <small class="dataTables_info">{{__('common.short_description.main', ['entity' => 'incoming package'])}}</small>
-            <div class="card-search">
-                <div id="productsTable_wrapper" class="form-group label-floating is-empty">
-                    <i class="zmdi zmdi-search search-icon-left"></i>
-                    <input type="text" class="form-control filter-input" placeholder="Filter Packages..." autocomplete="off">
-                    <a href="javascript:void(0)" class="close-search" data-card-search="close" data-toggle="tooltip" data-placement="top" title="Close"><i class="zmdi zmdi-close"></i></a>
-                </div>
-            </div>
 
         </header>
 

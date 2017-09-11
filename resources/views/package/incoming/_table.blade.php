@@ -24,11 +24,20 @@
       <td>{{Carbon\Carbon::parse($incoming->created_at)->format('d/m/Y')}}</td>
       <td>
         <section>
-          <a href="#" class="icon" onclick="window.location=''" data-toggle="tooltip"
-             data-placement="top" title="{{__('buttons.titles.register')}}">
-            <i class="zmdi zmdi-assignment-check"></i>
-          </a>
-          @include('layouts.formButtons._form_all', ['prefix_name' => 'admin.incoming' ,'id' => $incoming->id])
+
+          @if(auth()->guard('web')->user())
+            <?php $prefix_name = 'user.incoming' ?>
+          @else
+            <?php $prefix_name = 'admin.incoming' ?>
+
+            <a href="#" class="icon" onclick="window.location='{{route('admin.packages.create.incoming', $incoming->id)}}'" data-toggle="tooltip"
+               data-placement="top" title="{{__('buttons.titles.register')}}">
+              <i class="zmdi zmdi-assignment-check"></i>
+            </a>
+          @endif
+
+          @include('layouts.formButtons._form_all', ['prefix_name' => $prefix_name ,'id' => $incoming->id])
+
         </section>
       </td>
     </tr>
