@@ -42,9 +42,9 @@
                     </td>
                     <td >
                         <span>
-                            <input type="number" id="total_value" class="form-control" v-bind:value="goods.total_price" disabled>
+                            <input type="number" id="total_value" class="form-control" v-bind:value="goods.total_unit" disabled>
                             <input type="hidden" v-bind:name="'custom_clearance[' + index + '][total_unit]'"
-                                   v-bind:value="goods.total_price">
+                                   v-bind:value="goods.total_unit">
                         </span>
                     </td>
                     <th>
@@ -90,11 +90,12 @@
                         description: '',
                         quantity: 1,
                         unit_price: 0.00,
-                        total_price: 0.0
+                        total_unit: 0.0
                     });
                 }
             } else{
                 this.customClearances = this.editing;
+                this.calculateGlobalTotal();
             }
 
         },
@@ -107,15 +108,20 @@
                             description: '',
                             quantity: 1,
                             unit_price: 0.00,
-                            total_price: 0.0
+                            total_unit: 0.0
                         });
                     }
                 });
             },
 
             removeFieldGoods(index){
-                if(this.editing.length > 0){
-
+                console.log(this.customClearances[index].id);
+                if(this.editing.length > 0 && this.customClearances[index].hasOwnProperty('id')){
+                    axios.post('/user/goods/' + this.customClearances[index].id, {
+                        '_method': 'delete'
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
                 }
 
                 if(this.customClearances.length > 1){
@@ -125,7 +131,7 @@
             },
 
             calculateTotal(index){
-                this.customClearances[index].total_price = this.customClearances[index].quantity *
+                this.customClearances[index].total_unit = this.customClearances[index].quantity *
                     this.customClearances[index].unit_price;
                 this.calculateGlobalTotal();
             },
@@ -134,8 +140,10 @@
                 var count;
                 this.total = 0;
                 for(count = 0; count < this.customClearances.length; count++){
-                    this.total += this.customClearances[count].total_price;
+                    this.total += parseFloat(this.customClearances[count].total_unit);
                 }
+
+                this.total = parseFloat(this.total).toFixed(2);
             }
 
         },

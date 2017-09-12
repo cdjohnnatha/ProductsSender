@@ -42,6 +42,7 @@
           <input type="text" class="form-control" name="address[owner_name]"
                  value="{{ $address->owner_name or old('address.owner_name') }}">
         </div>
+
         @if ($errors->has('address.owner_name'))
           <span class="help-block">
             <strong class="text-danger" class="alert-danger">

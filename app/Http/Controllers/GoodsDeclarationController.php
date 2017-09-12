@@ -81,7 +81,7 @@ class GoodsDeclarationController extends Controller
     public function destroy($id)
     {
         $goods = GoodsDeclaration::find($id);
-        $goods->destroy();
+        $goods->delete();
 
         if($goods->trashed()){
             return back();

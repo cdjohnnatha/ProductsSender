@@ -55515,11 +55515,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     description: '',
                     quantity: 1,
                     unit_price: 0.00,
-                    total_price: 0.0
+                    total_unit: 0.0
                 });
             }
         } else {
             this.customClearances = this.editing;
+            this.calculateGlobalTotal();
         }
     },
 
@@ -55534,13 +55535,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         description: '',
                         quantity: 1,
                         unit_price: 0.00,
-                        total_price: 0.0
+                        total_unit: 0.0
                     });
                 }
             });
         },
         removeFieldGoods: function removeFieldGoods(index) {
-            if (this.editing.length > 0) {}
+            console.log(this.customClearances[index].id);
+            if (this.editing.length > 0 && this.customClearances[index].hasOwnProperty('id')) {
+                axios.post('/user/goods/' + this.customClearances[index].id, {
+                    '_method': 'delete'
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
 
             if (this.customClearances.length > 1) {
                 this.customClearances.splice(index, 1);
@@ -55548,15 +55556,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         calculateTotal: function calculateTotal(index) {
-            this.customClearances[index].total_price = this.customClearances[index].quantity * this.customClearances[index].unit_price;
+            this.customClearances[index].total_unit = this.customClearances[index].quantity * this.customClearances[index].unit_price;
             this.calculateGlobalTotal();
         },
         calculateGlobalTotal: function calculateGlobalTotal() {
             var count;
             this.total = 0;
             for (count = 0; count < this.customClearances.length; count++) {
-                this.total += this.customClearances[count].total_price;
+                this.total += parseFloat(this.customClearances[count].total_unit);
             }
+
+            this.total = parseFloat(this.total).toFixed(2);
         }
     },
     computed: {
@@ -55705,7 +55715,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "disabled": ""
       },
       domProps: {
-        "value": goods.total_price
+        "value": goods.total_unit
       }
     }), _vm._v(" "), _c('input', {
       attrs: {
@@ -55713,7 +55723,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "name": 'custom_clearance[' + index + '][total_unit]'
       },
       domProps: {
-        "value": goods.total_price
+        "value": goods.total_unit
       }
     })])]), _vm._v(" "), _c('th', [_c('button', {
       staticClass: "btn btn-warning btn-fab btn-fab-sm",

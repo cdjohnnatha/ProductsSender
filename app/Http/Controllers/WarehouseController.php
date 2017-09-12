@@ -20,7 +20,6 @@ class WarehouseController extends Controller
             'address.label' => 'bail|required|min:3',
             'admin_id' => 'required|min:1',
             'address.phone' => 'required',
-            'address.company_name' => 'nullable',
             'address.city' => 'required',
             'address.state' => 'required',
             'address.country' => 'required',

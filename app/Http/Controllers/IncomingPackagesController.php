@@ -16,16 +16,16 @@ class IncomingPackagesController extends Controller
     public function rules()
     {
         return [
-          'incoming.provider' => 'nullable',
-          'incoming.addressee' => 'required',
-          'incoming.track_number' => 'required|string',
-          'incoming.note' => 'nullable',
-          'warehouse_id' => 'required',
-          'custom_clearance' => 'required|array|min:1',
-          'custom_clearance.*.description' => 'required|string',
-          'custom_clearance.*.quantity' => 'required|integer',
-          'custom_clearance.*.unit_price' => 'required',
-          'custom_clearance.*.total_unit' => 'required',
+            'incoming.provider' => 'nullable',
+            'incoming.addressee' => 'required',
+            'incoming.track_number' => 'required|string',
+            'incoming.note' => 'nullable',
+            'warehouse_id' => 'required',
+            'custom_clearance' => 'required|array|min:1',
+            'custom_clearance.*.description' => 'required|string',
+            'custom_clearance.*.quantity' => 'required|integer',
+            'custom_clearance.*.unit_price' => 'required',
+            'custom_clearance.*.total_unit' => 'required',
 
         ];
     }
@@ -37,7 +37,7 @@ class IncomingPackagesController extends Controller
      */
     public function index()
     {
-        if(auth()->guard('web')->user()) {
+        if (auth()->guard('web')->user()) {
             $incomingPackages = IncomingPackages::where('registered', false)
                 ->where('user_id', Auth::user()->id)->get();
         } else {
@@ -63,7 +63,7 @@ class IncomingPackagesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -72,7 +72,7 @@ class IncomingPackagesController extends Controller
         $incoming = new IncomingPackages($request->input('incoming'));
         $incoming->warehouse_id = $request->input('warehouse_id');
         $incoming->total_goods = $request->input('total_goods');
-        if($incoming->save()){
+        if ($incoming->save()) {
             $incoming->goodsDeclaration()->createMany($request->input('custom_clearance'));
             $incoming->addons()->createMany($request->input('additional_service'));
             Warehouse::find($incoming->warehouse_id)->notify(new IncomingPackageNotification($incoming));
@@ -82,7 +82,7 @@ class IncomingPackagesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -94,7 +94,7 @@ class IncomingPackagesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -108,19 +108,35 @@ class IncomingPackagesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        dd($request->input());
+        $this->validate($request, $this->rules());
+        $incoming = IncomingPackages::find($id);
+
+        foreach ($request->input('custom_clearance') as $goods) {
+            if (isset($goods->id)) {
+                $incoming->goodsDeclaration()->updateOrCreate(
+                    ['id' => $goods['id']],
+                    $goods
+                );
+            } else {
+                $incoming->goodsDeclaration()->create($goods);
+            }
+        }
+        $incoming->fill($request->input('incoming'));
+
+        if ($incoming->save())
+            return redirect(route('user.packages.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -128,7 +144,7 @@ class IncomingPackagesController extends Controller
         $incomingPackage = IncomingPackages::find($id);
         $incomingPackage->delete();
 
-        if($incomingPackage->trashed()){
+        if ($incomingPackage->trashed()) {
             return redirect(route('admin.incoming.index'));
         }
     }
