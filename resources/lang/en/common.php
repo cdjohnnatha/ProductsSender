@@ -58,6 +58,7 @@ return [
         'month' => 'Month',
         'year' => 'Year',
         'day' => 'Day',
+        'days' => 'Days',
         'date' => 'Date',
         'created_at' => 'Created At'
     ],

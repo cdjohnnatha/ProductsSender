@@ -62,11 +62,6 @@
           </a>
         </li>
 
-        <li class="{{ Route::is('admin.incoming.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.incoming.index')}}"><i class="zmdi zmdi-truck"></i>
-            {{__('common.titles.incoming_package')}}
-          </a>
-        </li>
       </ul>
     </div>
   </nav>

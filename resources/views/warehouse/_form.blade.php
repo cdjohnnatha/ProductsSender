@@ -10,10 +10,9 @@
         {{ $errors->has('warehouse.storage_time') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-alarm"></i></span>
-        <label class="control-label">{{__('warehouse.form.storage_time')}}</label>
+        <label class="control-label">{{__('warehouse.form.storage_time').' ('. __('common.calendar.days').')'}}</label>
         <input type="number" min="0" name="warehouse[storage_time]" class="form-control"
                value="{{ $warehouse->storage_time or old('warehouse.storage_time') }}">
-
         @if ($errors->has('warehouse.storage_time'))
           <span class="help-block">
             <strong class="text-danger" class="alert-danger">
