@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('panel_header')
-  Package #{{$package->id}}
+  {{__('common.titles.package')}} #{{$package->id}}
 @endsection
 
 
@@ -53,7 +53,9 @@
       </section>
 
       <section class="tab-pane" id="tab-6">
-        @include('package.incoming._show', ['incomingPackage' => $package->goods])
+        @if(!is_null($package->goods))
+          @include('package.incoming._show', ['incomingPackage' => $package->goods])
+        @endif
       </section>
     </section>
     @include('package.fragments._photoswipe_element')

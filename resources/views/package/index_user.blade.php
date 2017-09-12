@@ -34,7 +34,7 @@
           <li>
             <a href="javascript:void(0)" class="btn btn-info btn-flat">
               <i class="zmdi zmdi-group"></i>
-              {{__('buttons.titles.merge_packages')}}
+              Merge packages
             </a>
           </li>
         </ul>

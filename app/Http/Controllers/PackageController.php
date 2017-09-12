@@ -113,12 +113,12 @@ class PackageController extends Controller
 
     public function show($id)
     {
-        $package = Package::find($id);
-        $package->load('pictures');
-        $package->load('warehouse');
-        $package->load('status');
-        $package->load('user');
-        $package->load('goods');
+        $package = Package::with([
+            'pictures',
+            'warehouse',
+            'status',
+            'user',
+            'goods'])->find($id);
         return view('package.show', compact('package'));
     }
 

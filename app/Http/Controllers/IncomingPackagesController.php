@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Auth;
 class IncomingPackagesController extends Controller
 {
 
+    private $pagePrefix;
+
+    public function __construct()
+    {
+
+        $this->pagePrefix = 'package.incoming.';
+    }
+
+
     public function rules()
     {
         return [
@@ -45,7 +54,7 @@ class IncomingPackagesController extends Controller
                 ->where('warehouse_id', Auth::user()->warehouse_id)->get();
         }
 
-        return view('package.incoming.index', compact('incomingPackages'));
+        return view($this->pagePrefix.'index', compact('incomingPackages'));
     }
 
     /**
@@ -57,7 +66,7 @@ class IncomingPackagesController extends Controller
     {
         $warehouses = Warehouse::all();
         $services = Service::all();
-        return view('package.incoming.create', compact('warehouses', 'services'));
+        return view($this->pagePrefix.'create', compact('warehouses', 'services'));
     }
 
     /**
@@ -88,7 +97,7 @@ class IncomingPackagesController extends Controller
     public function show($id)
     {
         $incomingPackage = IncomingPackages::with('addons')->find($id);
-        return view('package.incoming.show', compact('incomingPackage'));
+        return view($this->pagePrefix.'show', compact('incomingPackage'));
     }
 
     /**
@@ -102,7 +111,7 @@ class IncomingPackagesController extends Controller
         $incoming = IncomingPackages::with('goodsDeclaration')->find($id);
         $warehouses = Warehouse::all();
         $services = Service::all();
-        return view('package.incoming.create', compact('incoming', 'warehouses', 'services'));
+        return view($this->pagePrefix.'create', compact('incoming', 'warehouses', 'services'));
     }
 
     /**
@@ -118,7 +127,7 @@ class IncomingPackagesController extends Controller
         $incoming = IncomingPackages::find($id);
 
         foreach ($request->input('custom_clearance') as $goods) {
-            if (isset($goods->id)) {
+            if (isset($goods['id'])) {
                 $incoming->goodsDeclaration()->updateOrCreate(
                     ['id' => $goods['id']],
                     $goods
@@ -128,9 +137,15 @@ class IncomingPackagesController extends Controller
             }
         }
         $incoming->fill($request->input('incoming'));
+        if ($incoming->save()){
+            if(auth()->guard('web')->user()){
+                $userType = 'user';
+            } else {
+                $userType = 'admin';
+            }
+            return redirect(route($userType.'.packages.index'));
+        }
 
-        if ($incoming->save())
-            return redirect(route('user.packages.index'));
     }
 
     /**
@@ -145,7 +160,12 @@ class IncomingPackagesController extends Controller
         $incomingPackage->delete();
 
         if ($incomingPackage->trashed()) {
-            return redirect(route('admin.incoming.index'));
+            if(auth()->guard('web')->user()){
+                $userType = 'user';
+            } else {
+                $userType = 'admin';
+            }
+            return redirect(route($userType.'.incoming.index'));
         }
     }
 }

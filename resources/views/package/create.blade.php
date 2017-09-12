@@ -32,11 +32,11 @@
           </header>
           @if(Request::is('*/edit'))
                   <?php $action = 'admin.packages.update' ?>
-                  <form action="{{route($action, $package->id)}}" role="form" method="POST" enctype="multipart/form-data">
+                  <form action="{{route($action, $package->id)}}" role="form" method="POST">
                   <input name="_method" type="hidden" value="PUT">
               @else
                   <?php $action = 'admin.packages.store' ?>
-                  <form action="{{route($action)}}" role="form" method="POST" enctype="multipart/form-data">
+                  <form action="{{route($action)}}" role="form" method="POST">
               @endif
                   {{ csrf_field() }}
                   <section class="card-body">
