@@ -27,6 +27,9 @@
                     <td>
                         <input type="text" v-model="goods.description" class="form-control"
                                v-bind:name="'custom_clearance[' + index + '][description]'">
+
+                        <input v-if="editing.length != 0" type="hidden" v-model="goods.id" class="form-control"
+                               v-bind:name="'custom_clearance[' + index + '][id]'">
                     </td>
                     <td>
                         <input type="number" min="1" value="1" v-model="goods.quantity" @change="calculateTotal(index)"
@@ -69,27 +72,31 @@
 <script>
     export default {
         props: {
-            customClearances: {
-                default: function(){ return [] },
-                type: Array
+            editing: {
+                default: Array
             }
         },
         data(){
             return {
               total: 0,
+                customClearances: []
             }
         },
 
         created() {
-            if(this.customClearances.length <= 0) {
-                this.customClearances.push({
-                    description: '',
-                    manufacture_country: '',
-                    quantity: 1,
-                    unit_price: 0.00,
-                    total_price: 0.0
-                });
+            if(this.editing.length <= 0) {
+                if (this.customClearances.length <= 0) {
+                    this.customClearances.push({
+                        description: '',
+                        quantity: 1,
+                        unit_price: 0.00,
+                        total_price: 0.0
+                    });
+                }
+            } else{
+                this.customClearances = this.editing;
             }
+
         },
 
         methods: {
@@ -98,7 +105,6 @@
                     if (result) {
                         this.customClearances.push({
                             description: '',
-                            manufacture_country: '',
                             quantity: 1,
                             unit_price: 0.00,
                             total_price: 0.0
@@ -108,6 +114,10 @@
             },
 
             removeFieldGoods(index){
+                if(this.editing.length > 0){
+
+                }
+
                 if(this.customClearances.length > 1){
                     this.customClearances.splice(index, 1);
                     this.calculateGlobalTotal();

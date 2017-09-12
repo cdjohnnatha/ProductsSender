@@ -49,6 +49,9 @@ class PackageController extends Controller
         } else {
             $field = 'warehouse_id';
             $id = Auth::user()->warehouse_id;
+            $incomingPackages = IncomingPackages::where('registered', false)
+                ->where('warehouse_id', Auth::user()->warehouse_id)->get();
+
         }
 
 
@@ -71,7 +74,7 @@ class PackageController extends Controller
         if (auth()->guard('web')->user()) {
             return view('package.index_user', compact('packages_warehouse', 'packages', 'incomingPackages'));
         } else {
-            return view('package.index', compact('packages_warehouse'));
+            return view('package.index', compact('packages_warehouse', 'incomingPackages'));
         }
     }
 

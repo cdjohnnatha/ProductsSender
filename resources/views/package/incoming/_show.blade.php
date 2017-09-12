@@ -1,8 +1,8 @@
-<div id="content_wrapper" class="card-overlay invoice-page" style="padding-top: 0;">
+<article id="content_wrapper" class="card-overlay invoice-page" style="padding-top: 0;">
   <div id="content" class="container">
     <div class="row">
       <div class="col-xs-12">
-        <div class="card">
+        <div>
           <div class="card-body p-50 p-t-10 invoice">
             <div class="row">
               <div class="col-xs-6">
@@ -84,7 +84,7 @@
                 </div>
               </div>
                 @if(auth()->guard('web')->user())
-                  <a href="{{route('user.incoming.index')}}" class="btn btn-primary btn-round pull-right m-t-20 m-b-20">Ok</a>
+                  <a href="{{route('user.packages.index')}}" class="btn btn-primary btn-round pull-right m-t-20 m-b-20">Ok</a>
                 @else
                   <a href="" class="btn btn-info btn-round pull-right m-t-20 m-b-20
                     {{$incomingPackage->registered ? 'disabled' : ''}}">Register Package</a>
@@ -107,4 +107,4 @@
       </div>
     </div>
   </div>
-</div>
+</article>

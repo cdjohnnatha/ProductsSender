@@ -45,8 +45,7 @@ Route::group(['middleware' => ['web']], function() {
             'destroy'
         ]]);
 
-
-//        Route::resource('packages', 'UserPackageController');
+        Route::resource('goods', 'GoodsDeclarationController', ['only' => ['destroy']]);
 
         Route::resource('incoming', 'IncomingPackagesController');
         Route::resource('notifications', 'NotificationsController');

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('panel_header')
-    Packages
+    {{__('common.titles.packages')}}
 @endsection
 
 
@@ -22,19 +22,19 @@
           <li>
             <a href="{{route('user.incoming.create')}}" class="btn btn-info btn-flat">
               <i class="zmdi zmdi-notifications-add"></i>
-              Inform incoming package
+              {{__('buttons.titles.incoming_package_inform')}}
             </a>
           </li>
           <li>
             <a href="javascript:void(0)" class="btn btn-info btn-flat">
               <i class="zmdi zmdi-mail-send"></i>
-              Send package
+              {{__('buttons.titles.send_package')}}
             </a>
           </li>
           <li>
             <a href="javascript:void(0)" class="btn btn-info btn-flat">
               <i class="zmdi zmdi-group"></i>
-              Merge packages
+              {{__('buttons.titles.merge_packages')}}
             </a>
           </li>
         </ul>

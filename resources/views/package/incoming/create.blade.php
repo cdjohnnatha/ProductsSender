@@ -58,7 +58,11 @@
                       </section>
                       <!--end #tab1 -->
                       <section class="tab-pane" id="tab2">
-                        <custom-clearance-form></custom-clearance-form>
+                        @if(Request::is('*/edit'))
+                          <custom-clearance-form :editing="{{$incoming->goodsDeclaration()->get()}}"></custom-clearance-form>
+                        @else
+                          <custom-clearance-form></custom-clearance-form>
+                        @endif
                       </section>
                       <!--end #tab2 -->
                       <section class="tab-pane" id="tab3">

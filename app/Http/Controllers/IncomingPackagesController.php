@@ -99,7 +99,10 @@ class IncomingPackagesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $incoming = IncomingPackages::with('goodsDeclaration')->find($id);
+        $warehouses = Warehouse::all();
+        $services = Service::all();
+        return view('package.incoming.create', compact('incoming', 'warehouses', 'services'));
     }
 
     /**
@@ -111,7 +114,7 @@ class IncomingPackagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->input());
     }
 
     /**

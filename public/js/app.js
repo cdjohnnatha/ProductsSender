@@ -55492,30 +55492,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        customClearances: {
-            default: function _default() {
-                return [];
-            },
-            type: Array
+        editing: {
+            default: Array
         }
     },
     data: function data() {
         return {
-            total: 0
+            total: 0,
+            customClearances: []
         };
     },
     created: function created() {
-        if (this.customClearances.length <= 0) {
-            this.customClearances.push({
-                description: '',
-                manufacture_country: '',
-                quantity: 1,
-                unit_price: 0.00,
-                total_price: 0.0
-            });
+        if (this.editing.length <= 0) {
+            if (this.customClearances.length <= 0) {
+                this.customClearances.push({
+                    description: '',
+                    quantity: 1,
+                    unit_price: 0.00,
+                    total_price: 0.0
+                });
+            }
+        } else {
+            this.customClearances = this.editing;
         }
     },
 
@@ -55528,7 +55532,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (result) {
                     _this.customClearances.push({
                         description: '',
-                        manufacture_country: '',
                         quantity: 1,
                         unit_price: 0.00,
                         total_price: 0.0
@@ -55537,6 +55540,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         removeFieldGoods: function removeFieldGoods(index) {
+            if (this.editing.length > 0) {}
+
             if (this.customClearances.length > 1) {
                 this.customClearances.splice(index, 1);
                 this.calculateGlobalTotal();
@@ -55619,7 +55624,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           goods.description = $event.target.value
         }
       }
-    })]), _vm._v(" "), _c('td', [_c('input', {
+    }), _vm._v(" "), (_vm.editing.length != 0) ? _c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (goods.id),
+        expression: "goods.id"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "hidden",
+        "name": 'custom_clearance[' + index + '][id]'
+      },
+      domProps: {
+        "value": (goods.id)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          goods.id = $event.target.value
+        }
+      }
+    }) : _vm._e()]), _vm._v(" "), _c('td', [_c('input', {
       directives: [{
         name: "model",
         rawName: "v-model",

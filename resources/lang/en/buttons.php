@@ -15,7 +15,10 @@ return [
         'show' => 'Show',
         'next' => 'Next',
         'previous' => 'Previous',
-        'confirm' => 'Confirm'
+        'confirm' => 'Confirm',
+        'incoming_package_inform' => 'Inform incoming package',
+        'send_package' => 'Send package',
+        'merge_packages' => 'Merge packages'
     ],
 
 
