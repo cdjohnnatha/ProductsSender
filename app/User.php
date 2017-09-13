@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(AdditionalNames::class);
     }
+
+    public function incomingPackages()
+    {
+        return $this->hasMany(IncomingPackages::class);
+    }
 }

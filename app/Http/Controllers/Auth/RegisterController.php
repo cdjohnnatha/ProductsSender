@@ -106,7 +106,6 @@ class RegisterController extends Controller
         $geonames = new AddressGeonameCode($request->input('geonames'));
         $user->password = bcrypt($request->input('users.password'));
         $address->default_address = true;
-        dd($request);
         if($user->save() && $user->address()->save($address) && $user->wallet()->save(new Wallet())
             && $user->address[0]->geonames()->save($geonames)) {
             $request->session()->flash('status', 'User was successfully registered!');

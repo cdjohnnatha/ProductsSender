@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\Event;
 use App\Events\PackageNotification;
+use App\IncomingPackages;
 use App\Notifications\PackageNotifications;
 use App\Package;
 use App\PackageFiles;
@@ -41,10 +42,16 @@ class PackageController extends Controller
         if (auth()->guard('web')->user()){
             $field = 'object_owner';
             $id = Auth::user()->id;
-            $packages = Package::where($field, $id)->get();
+            $packages = Package::with('goods')->where($field, $id)
+                ->orderBy('created_at', 'desc')->get();
+
+            $incomingPackages = Auth::user()->incomingPackages()->where('registered', false)->get();
         } else {
             $field = 'warehouse_id';
             $id = Auth::user()->warehouse_id;
+            $incomingPackages = IncomingPackages::where('registered', false)
+                ->where('warehouse_id', Auth::user()->warehouse_id)->get();
+
         }
 
 
@@ -57,25 +64,33 @@ class PackageController extends Controller
                     ]);
                 },
                 'status',
-                'pictures'
-                , 'warehouse'])->where($field, '=', $id)->get();
+                'pictures',
+                'warehouse',
+                'goods'])
+                ->where($field, '=', $id)
+                ->orderBy('created_at', 'desc')
+                ->get();
 
         if (auth()->guard('web')->user()) {
-            return view('package.index_user', compact('packages_warehouse', 'packages'));
+            return view('package.index_user', compact('packages_warehouse', 'packages', 'incomingPackages'));
         } else {
-            return view('package.index', compact('packages_warehouse'));
+            return view('package.index', compact('packages_warehouse', 'incomingPackages'));
         }
     }
 
-    public function create()
+    public function create($incoming = null)
     {
         $warehouses = Warehouse::with('address')->get();
         $status = Status::all();
-        return view('package.create', compact('warehouses', 'status'));
+        if(!is_null($incoming)){
+            $incoming = IncomingPackages::find($incoming);
+        }
+        return view('package.create', compact('warehouses', 'status', 'incoming'));
     }
 
     public function store(Request $request)
     {
+
         $this->validate($request, $this->rules());
         $package = new Package($request->input('package'));
         $package->status_id = $request->input('status.status_id');
@@ -84,7 +99,11 @@ class PackageController extends Controller
             if($request->hasFile('package_files')) {
                 $this->saveImage($request->file('package_files'), $package);
             }
-
+            if($request->exists('incoming')){
+                $incoming = IncomingPackages::find($request->input('incoming'));
+                $incoming->registered = true;
+                $package->goods()->save($incoming);
+            }
             $request->session()->flash('status', 'Package was successfully registered at warehouse!');
             return redirect(route('admin.packages.index'));
         }
@@ -94,18 +113,19 @@ class PackageController extends Controller
 
     public function show($id)
     {
-        $package = Package::find($id);
-        $package->load('pictures');
-        $package->load('warehouse');
-        $package->load('status');
-        $package->load('user');
+        $package = Package::with([
+            'pictures',
+            'warehouse',
+            'status',
+            'user',
+            'goods'])->find($id);
+
         return view('package.show', compact('package'));
     }
 
     public function edit($id)
     {
-        $package = Package::find($id);
-        $package->load('pictures');
+        $package = Package::with(['pictures', 'goods'])->find($id);
         $status = Status::all();
         $warehouses = Warehouse::all();
         $warehouses->load('address');
@@ -136,6 +156,9 @@ class PackageController extends Controller
         $package = Package::findOrFail($id);
         $package->delete();
         if($package->trashed()){
+            if (auth()->guard('web')->user()) {
+                return redirect(route('user.packages.index'));
+            }
             return redirect(route('admin.packages.index'));
         }
     }

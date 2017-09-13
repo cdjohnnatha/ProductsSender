@@ -11,12 +11,15 @@ Route::group(['middleware' => ['auth:admin']], function(){
             Route::get('/dashboard', 'AdminDashboardController@index')->name('dashboard');
             Route::resource('users', 'UserController');
             Route::resource('warehouses', 'WarehouseController');
+            Route::get('/packages/create/{incoming?}', 'PackageController@create')->name('packages.create.incoming');
             Route::resource('packages', 'PackageController');
             Route::resource('status', 'StatusController');
             Route::resource('subscriptions', 'SubscriptionController');
             Route::resource('services', 'ServiceController');
             Route::resource('notifications', 'WarehouseNotificationsController');
             Route::resource('incoming', 'IncomingPackagesController');
+            Route::get('/warehouse-notifications/unread', 'Api\WarehouseNotificationsApiController@unread')->name('warehouse-notifications.unread');
+            Route::resource('warehouse-notifications', 'WarehouseNotificationsController');
 
             Route::post('subscriptions/{subscription}/active', 'SubscriptionController@active')->name('subscriptions.active');
             Route::post('subscriptions/{subscription}/principal', 'SubscriptionController@principalOffer')->name('subscriptions.principal_offer');

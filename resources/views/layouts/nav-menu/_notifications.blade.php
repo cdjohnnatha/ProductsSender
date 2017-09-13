@@ -23,6 +23,8 @@
     </li>
     @if(auth()->guard('web')->user())
       <user-notifications :data_id="{{Auth::user()->id}}"></user-notifications>
+    @else
+      <warehouse-notifications :data_id="{{Auth::user()->warehouse_id}}"></warehouse-notifications>
     @endif
     <li class="dropdown-menu-footer">
       <a href="{{route('user.notifications.index')}}">

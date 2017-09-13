@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Entity
 {
 
-    protected $attributes = array('default_address' => false);
+    protected $attributes = array('default_address' => false, 'company_name' => null);
 
     protected $fillable = [
         'label',

@@ -69,24 +69,4 @@ class AdminTest extends DuskTestCase
                 ->click('#submit-button');
         });
     }
-
-    /**
-     * @admin
-     * @group delete_admin
-     */
-    public function testDeleteAdmin()
-    {
-        $this->browse(function (Browser $browser) {
-            $faker = \Faker\Factory::create();
-            $delete = Admin::orderBy('id', 'desc')->first();
-            $admin = Admin::all();
-            $browser->loginAs($admin[count($admin) - 1], 'admin')
-                ->visit(route('admin.index'))
-                ->click('#delete-button-'.$delete->id)
-                ->press('.swal2-confirm')
-                ->waitFor('.swal2-confirm')
-                ->press('.swal2-confirm')
-                ->waitForLocation('/admin');
-        });
-    }
 }

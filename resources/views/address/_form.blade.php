@@ -42,6 +42,7 @@
           <input type="text" class="form-control" name="address[owner_name]"
                  value="{{ $address->owner_name or old('address.owner_name') }}">
         </div>
+
         @if ($errors->has('address.owner_name'))
           <span class="help-block">
             <strong class="text-danger" class="alert-danger">
@@ -88,22 +89,24 @@
       </div>
     </section>
 
-    <section class="form-group col-sm-8 label-floating {{ $errors->has('address.company_name') ? ' has-error' : '' }} label-floating">
-      <div class="input-group">
-        <span class="input-group-addon"><i class="zmdi zmdi-city"></i></span>
-        <label class="control-label">{{__('address.titles.company')}}</label>
-        <input type="text" class="form-control" name="address[company_name]"
-               value="{{ $address->company_name or old('address.company_name') }}">
+    @if(!Route::is('admin.warehouses.*'))
+      <section class="form-group col-sm-8 label-floating {{ $errors->has('address.company_name') ? ' has-error' : '' }} label-floating">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="zmdi zmdi-city"></i></span>
+          <label class="control-label">{{__('address.titles.company')}}</label>
+          <input type="text" class="form-control" name="address[company_name]"
+                 value="{{ $address->company_name or old('address.company_name') }}">
 
-        @if ($errors->has('address.company_name'))
-          <span class="help-block">
-            <strong class="text-danger" class="alert-danger">
-              {{ $errors->first('address.company_name') }}
-            </strong>
-          </span>
-        @endif
-      </div>
-    </section>
+          @if ($errors->has('address.company_name'))
+            <span class="help-block">
+              <strong class="text-danger" class="alert-danger">
+                {{ $errors->first('address.company_name') }}
+              </strong>
+            </span>
+          @endif
+        </div>
+      </section>
+    @endif
 
   </section>
 
@@ -176,6 +179,8 @@
   <input type="hidden" id="geonames_city" name="geonames[city]" value="{{ $address->geonames->city or old('geonames.city')}}">
   <input type="hidden" id="geonames_state" name="geonames[state]" value="{{ $address->geonames->state or old('geonames.state')}}">
 </article>
+
+
 
 
 

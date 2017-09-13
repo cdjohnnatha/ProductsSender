@@ -16,7 +16,9 @@ class IncomingPackages extends Entity
         'total_goods',
         'description',
         'warehouse_id',
-        'user_id'
+        'user_id',
+        'package_id',
+        'registered'
     ];
 
     public function addons()
@@ -37,6 +39,11 @@ class IncomingPackages extends Entity
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
     }
 
 }

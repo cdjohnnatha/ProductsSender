@@ -2,9 +2,9 @@
   <div id="logo_wrapper">
     <ul>
       <li class="logo-icon">
-        <a href="index.html">
+        <a href="{{route('admin.dashboard')}}">
           <div class="logo">
-            <img src="{{asset('img/holyship-logo.jpg')}}" alt="Logo">
+            <img src="{{asset('img/logo/holyship-square.png')}}" alt="Logo">
           </div>
           <h1 class="brand-text">Holyship</h1>
         </a>
@@ -62,11 +62,6 @@
           </a>
         </li>
 
-        <li class="{{ Route::is('admin.incoming.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.incoming.index')}}"><i class="zmdi zmdi-truck"></i>
-            {{__('common.titles.incoming_package')}}
-          </a>
-        </li>
       </ul>
     </div>
   </nav>

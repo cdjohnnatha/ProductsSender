@@ -60,4 +60,9 @@ class Package extends Entity
     {
         return $this->hasMany(PackageFiles::class, 'package_id');
     }
+
+    public function goods()
+    {
+        return $this->hasOne(IncomingPackages::class, 'package_id');
+    }
 }

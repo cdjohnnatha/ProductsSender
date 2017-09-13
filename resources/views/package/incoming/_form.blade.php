@@ -69,7 +69,7 @@
         <span class="input-group-addon"><i class="zmdi zmdi-comment-edit"></i></span>
         <label class="control-label">{{__('common.titles.description')}}</label>
         <textarea tabindex="2" class="form-control" name="incoming[description]">
-          {{$incoming->track_number or old('incoming.track_number')}}
+          {{$incoming->description or old('incoming.description')}}
         </textarea>
 
         @if ($errors->has('incoming.description'))

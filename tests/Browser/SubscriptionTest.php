@@ -42,7 +42,7 @@ class SubscriptionTest extends DuskTestCase
     }
 
     /**
-     * @group subscriptions
+     * @group editSubscriptions
      */
     public function testEditSubscription()
     {

@@ -27,6 +27,9 @@
                     <td>
                         <input type="text" v-model="goods.description" class="form-control"
                                v-bind:name="'custom_clearance[' + index + '][description]'">
+
+                        <input v-if="editing.length != 0" type="hidden" v-model="goods.id" class="form-control"
+                               v-bind:name="'custom_clearance[' + index + '][id]'">
                     </td>
                     <td>
                         <input type="number" min="1" value="1" v-model="goods.quantity" @change="calculateTotal(index)"
@@ -39,9 +42,9 @@
                     </td>
                     <td >
                         <span>
-                            <input type="number" id="total_value" class="form-control" v-bind:value="goods.total_price" disabled>
+                            <input type="number" id="total_value" class="form-control" v-bind:value="goods.total_unit" disabled>
                             <input type="hidden" v-bind:name="'custom_clearance[' + index + '][total_unit]'"
-                                   v-bind:value="goods.total_price">
+                                   v-bind:value="goods.total_unit">
                         </span>
                     </td>
                     <th>
@@ -59,8 +62,9 @@
         <span class="block p-b-5 p-t-5">Total:</span>
       </div>
       <div class="col-xs-6 col-sm-1 p-0">
-        <span class="block p-b-5 cart-total">
-          {{total}}</span>
+        <span class="block p-b-5 cart-total">{{total}}</span>
+
+        <input type="hidden" name="total_goods" v-bind:value="total">
       </div>
     </div>
   </section>
@@ -69,27 +73,32 @@
 <script>
     export default {
         props: {
-            customClearances: {
-                default: function(){ return [] },
-                type: Array
+            editing: {
+                default: Array
             }
         },
         data(){
             return {
               total: 0,
+                customClearances: []
             }
         },
 
         created() {
-            if(this.customClearances.length <= 0) {
-                this.customClearances.push({
-                    description: '',
-                    manufacture_country: '',
-                    quantity: 1,
-                    unit_price: 0.00,
-                    total_price: 0.0
-                });
+            if(this.editing.length <= 0) {
+                if (this.customClearances.length <= 0) {
+                    this.customClearances.push({
+                        description: '',
+                        quantity: 1,
+                        unit_price: 0.00,
+                        total_unit: 0.0
+                    });
+                }
+            } else{
+                this.customClearances = this.editing;
+                this.calculateGlobalTotal();
             }
+
         },
 
         methods: {
@@ -98,16 +107,24 @@
                     if (result) {
                         this.customClearances.push({
                             description: '',
-                            manufacture_country: '',
                             quantity: 1,
                             unit_price: 0.00,
-                            total_price: 0.0
+                            total_unit: 0.0
                         });
                     }
                 });
             },
 
             removeFieldGoods(index){
+                console.log(this.customClearances[index].id);
+                if(this.editing.length > 0 && this.customClearances[index].hasOwnProperty('id')){
+                    axios.post('/user/goods/' + this.customClearances[index].id, {
+                        '_method': 'delete'
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
+
                 if(this.customClearances.length > 1){
                     this.customClearances.splice(index, 1);
                     this.calculateGlobalTotal();
@@ -115,7 +132,7 @@
             },
 
             calculateTotal(index){
-                this.customClearances[index].total_price = this.customClearances[index].quantity *
+                this.customClearances[index].total_unit = this.customClearances[index].quantity *
                     this.customClearances[index].unit_price;
                 this.calculateGlobalTotal();
             },
@@ -124,8 +141,10 @@
                 var count;
                 this.total = 0;
                 for(count = 0; count < this.customClearances.length; count++){
-                    this.total += this.customClearances[count].total_price;
+                    this.total += parseFloat(this.customClearances[count].total_unit);
                 }
+
+                this.total = parseFloat(this.total).toFixed(2);
             }
 
         },

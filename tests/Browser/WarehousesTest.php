@@ -28,7 +28,6 @@ class WarehousesTest extends DuskTestCase
                 ->type('address[postal_code]', $faker->postcode)
                 ->type('address[number]', $faker->buildingNumber)
                 ->type('address[label]', $faker->company)
-                ->type('address[company_name]', $faker->company)
                 ->type('#map', 'Rua rita porfirio chaves')
                 ->waitFor('.pac-item')
                 ->click('.pac-item')

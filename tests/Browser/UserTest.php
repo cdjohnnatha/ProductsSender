@@ -64,7 +64,7 @@ class UserTest extends DuskTestCase
             $password = $faker->password(6, 10);
             $browser->loginAs(Admin::first(), 'admin')
                 ->visit(route('admin.users.create'))
-                ->press('.planSection')
+//                ->press('.planSection')
                 ->type('user[name]', $faker->firstName)
                 ->type('user[surname]', $faker->lastName)
                 ->type('user[rg]', '0000.000')
@@ -87,8 +87,7 @@ class UserTest extends DuskTestCase
                 ->pause(400)
                 ->click('#next_btn')
                 ->click('#submit-button')
-                ->waitForLocation('admin/users')
-                ->pause(50000);
+                ->waitForLocation('admin/users');
         });
     }
 
@@ -129,7 +128,7 @@ class UserTest extends DuskTestCase
     }
 
     /**
-     * @group user
+     * @group userLogin
      */
     public function testLogin()
     {
@@ -138,9 +137,9 @@ class UserTest extends DuskTestCase
             $browser->visit('/login')
                 ->assertSee('Login')
                 ->type('email', $user->email)
-                ->type('password', '123456')
-                ->press('Login')
-                ->waitForLocation($this->prefixUrl.$user->id);
+                ->type('password', 'holyship123')
+                ->press('#submit')
+                ->waitForLocation($this->prefixUrl.'dashboard');
         });
     }
 

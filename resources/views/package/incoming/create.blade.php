@@ -5,12 +5,24 @@
 @endsection
 
 @section('content')
+
+    <?php
+
+      if(auth()->guard('web')->user()){
+          $action = 'user';
+      } else {
+          $action = 'admin';
+      }
+
+      $action .= '.incoming.';
+    ?>
+
   @if(Request::is('*/edit'))
-    <?php $action = 'user.incoming.update' ?>
+    <?php $action .= 'update'?>
     <form action="{{route($action, $incoming->id)}}" role="form" method="POST">
       <input name="_method" type="hidden" value="PUT">
   @else
-    <?php $action = 'user.incoming.store' ?>
+    <?php $action .= 'store' ?>
     <form action="{{route($action)}}" role="form" method="POST">
   @endif
       {{ csrf_field() }}
@@ -58,7 +70,11 @@
                       </section>
                       <!--end #tab1 -->
                       <section class="tab-pane" id="tab2">
-                        <custom-clearance-form></custom-clearance-form>
+                        @if(Request::is('*/edit'))
+                          <custom-clearance-form :editing="{{$incoming->goodsDeclaration()->get()}}"></custom-clearance-form>
+                        @else
+                          <custom-clearance-form></custom-clearance-form>
+                        @endif
                       </section>
                       <!--end #tab2 -->
                       <section class="tab-pane" id="tab3">
@@ -66,7 +82,7 @@
                           <i class="zmdi zmdi-shopping-cart"></i>
                           Services
                         </h2>
-                        @if(Auth::user()->subscription->amount > 0)
+                        @if(auth()->guard('web')->user() && Auth::user()->subscription->amount > 0)
                           <small style="color: #ff5722;">{{__('packages.incoming.form.small_marketing_services',
                           ['discount'=> Auth::user()->subscription->discounts])}}</small>
                         @endif

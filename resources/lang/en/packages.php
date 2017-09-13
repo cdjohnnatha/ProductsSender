@@ -20,8 +20,10 @@ return [
 
     'index' => [
         'title_package' => 'Packages',
+        'title_package_warehouse' => 'Warehouse\'s Packages',
         'short_description' => 'All your packages can be found here.',
         'short_show_description' => 'Here you can see your package information',
+        'short_description_warehouse' => 'Here are all the packages available on warehouses',
 
     ],
 
@@ -34,6 +36,7 @@ return [
         'form' => [
             'title_form' => 'Identify your incoming packages',
             'title_description' => 'Make your packages being processing fast',
+            'short_description' => 'You can find here the alerts created to incoming packages which are unregistered',
             'provider' => 'Provider',
             'addressee' => 'Addressee',
             'track_number' => 'Track Number',
@@ -44,7 +47,9 @@ return [
     ],
 
     'goods' => [
-        'short_description_check' => 'The goods is just for clarify what have in the package'
+        'short_description_check' => 'The goods is just for clarify what have in the package',
+        'title_goods' => 'Goods Informations',
+        'short_description_goods' => 'Here are the informations described by the user'
     ]
 
 ];

@@ -73,8 +73,7 @@
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
         <label class="control-label">Email</label>
-        <input type="email" class="form-control" name="user[email]"
-               value="{{ $user->email or old('user.email') }}">
+        <input type="email" class="form-control" name="user[email]" value="{{ $user->email or old('user.email') }}">
 
         @if ($errors->has('user.email'))
           <span class="help-block">
@@ -91,7 +90,7 @@
         <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
         <label class="control-label">{{__('common.titles.phone')}}</label>
         <input type="text" class="form-control" name="user[phone]"
-               value="{{ $user->email or old('user.email') }}">
+               value="{{ $user->phone or old('user.phone') }}">
 
         @if ($errors->has('user.phone'))
           <span class="help-block">
@@ -129,6 +128,24 @@
       <input type="password" class="form-control" name="user[password_confirmation]">
     </div>
   </section>
+  @if(Request::is('admin/*'))
+    <section>
+      <div class="form-group label-floating">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="zmdi zmdi-card-membership"></i></span>
+          <label class="control-label">{{__('common.titles.plan')}}</label>
+          <select class="select form-control" name="register[subscription_id]">
+            @foreach($subscriptions as $subscription)
+              <option value="{{$subscription->id or old('register.subscription_id')}}">
+                {{$subscription->title.' - $'.$subscription->amount }}
+                ({{$subscription->period ? __('common.calendar.year') : __('common.calendar.month')}})
+              </option>
+            @endforeach
+          </select>
+        </div>
+      </div>
+    </section>
+  @endif
 </article>
 
 
