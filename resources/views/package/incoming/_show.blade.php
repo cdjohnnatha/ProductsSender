@@ -88,7 +88,7 @@
                 @else
                   <a href="" class="btn btn-info btn-round pull-right m-t-20 m-b-20
                     {{$incomingPackage->registered ? 'disabled' : ''}}">Register Package</a>
-                  <a href="{{route('admin.incoming.index')}}" class="btn btn-warning btn-round pull-right m-t-20 m-b-20">Cancel</a>
+                  <a href="{{route('admin.packages.index')}}" class="btn btn-warning btn-round pull-right m-t-20 m-b-20">Cancel</a>
                 @endif
             </div>
             @if(auth()->guard('web')->user())

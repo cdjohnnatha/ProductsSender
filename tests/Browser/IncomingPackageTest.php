@@ -36,7 +36,7 @@ class IncomingPackageTest extends DuskTestCase
                 ->click('.check')
                 ->pause(2000)
                 ->press('#submit-button')
-                ->pause(7000);
+                ->waitForLocation('/user/packages');
         });
     }
 }

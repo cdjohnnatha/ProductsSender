@@ -4,7 +4,7 @@
       <li class="logo-icon">
         <a href="{{route('user.dashboard')}}">
           <div class="logo">
-            <img src="{{asset('img/logo/holyship-square.jpg')}}" alt="Logo">
+            <img src="{{asset('img/logo/holyship-square.png')}}" alt="Logo">
           </div>
           <h1 class="brand-text">Holyship</h1>
         </a>

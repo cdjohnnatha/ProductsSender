@@ -49,6 +49,15 @@ class UserController extends Controller
             ->orderBy('amount')
             ->get();
 
+        if(auth()->guard('admin')->user()){
+            $subscriptions= Subscription::with('benefits')
+                ->where('active',  1)
+                ->orderBy('amount')
+                ->get();
+
+            return view('auth.register', compact('user', 'subscriptions'));
+        }
+
 
         return view('auth.register',
             compact('subscriptions_active_month',
@@ -69,7 +78,11 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if(auth()->guard('admin')->user()){
-            $subscriptions = Subscription::all();
+            $subscriptions= Subscription::with('benefits')
+                ->where('active',  1)
+                ->orderBy('amount')
+                ->get();
+
             return view('user.edit', compact('user', 'subscriptions'));
         }
         return view('user.edit')->with('user', $user);

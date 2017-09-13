@@ -134,10 +134,11 @@
         <div class="input-group">
           <span class="input-group-addon"><i class="zmdi zmdi-card-membership"></i></span>
           <label class="control-label">{{__('common.titles.plan')}}</label>
-          <select class="select form-control" name="user[subscription_id]">
+          <select class="select form-control" name="register[subscription_id]">
             @foreach($subscriptions as $subscription)
-              <option value="{{$subscription->id or old('user.subscription_id')}}">
-                {{$subscription->title.' - $'.$subscription->amount}}
+              <option value="{{$subscription->id or old('register.subscription_id')}}">
+                {{$subscription->title.' - $'.$subscription->amount }}
+                ({{$subscription->period ? __('common.calendar.year') : __('common.calendar.month')}})
               </option>
             @endforeach
           </select>

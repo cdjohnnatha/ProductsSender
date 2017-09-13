@@ -13,7 +13,7 @@
             </label>
           </div>
         @endforeach
-        <input type="hidden" name="total_goods" id="total_service_input" value="0.00">
+        <input type="hidden" name="total_addons" id="total_service_input" value="0.00">
     </div>
     @if(auth()->guard('web')->user())
       <div class="row">
@@ -52,7 +52,7 @@
           $('#services_first_value').html(total);
           $('#discount_services').html(parseFloat(total * discounts).toFixed(2));
           $('#total_services').html(total - (total * discounts));
-          $('#total_services_input').val(total - (total * discounts));
+          $('#total_service_input').val(total - (total * discounts));
        });
     });
   </script>

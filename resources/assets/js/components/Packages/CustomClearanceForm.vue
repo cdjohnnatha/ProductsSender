@@ -62,8 +62,9 @@
         <span class="block p-b-5 p-t-5">Total:</span>
       </div>
       <div class="col-xs-6 col-sm-1 p-0">
-        <span class="block p-b-5 cart-total">
-          {{total}}</span>
+        <span class="block p-b-5 cart-total">{{total}}</span>
+
+        <input type="hidden" name="total_goods" v-bind:value="total">
       </div>
     </div>
   </section>

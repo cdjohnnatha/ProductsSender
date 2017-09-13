@@ -81,10 +81,14 @@ class IncomingPackagesController extends Controller
         $incoming = new IncomingPackages($request->input('incoming'));
         $incoming->warehouse_id = $request->input('warehouse_id');
         $incoming->total_goods = $request->input('total_goods');
+        $incoming->total_addons = $request->input('total_addons');
+        $incoming->user_id = Auth::user()->id;
         if ($incoming->save()) {
             $incoming->goodsDeclaration()->createMany($request->input('custom_clearance'));
             $incoming->addons()->createMany($request->input('additional_service'));
             Warehouse::find($incoming->warehouse_id)->notify(new IncomingPackageNotification($incoming));
+
+            return redirect(route('user.packages.index'));
         }
     }
 

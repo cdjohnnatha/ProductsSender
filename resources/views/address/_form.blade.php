@@ -89,7 +89,7 @@
       </div>
     </section>
 
-    @if(auth()->guard('web')->user())
+    @if(!Route::is('admin.warehouses.*'))
       <section class="form-group col-sm-8 label-floating {{ $errors->has('address.company_name') ? ' has-error' : '' }} label-floating">
         <div class="input-group">
           <span class="input-group-addon"><i class="zmdi zmdi-city"></i></span>
@@ -179,6 +179,8 @@
   <input type="hidden" id="geonames_city" name="geonames[city]" value="{{ $address->geonames->city or old('geonames.city')}}">
   <input type="hidden" id="geonames_state" name="geonames[state]" value="{{ $address->geonames->state or old('geonames.state')}}">
 </article>
+
+
 
 
 

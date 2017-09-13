@@ -30,7 +30,7 @@ class AdminPackageTest extends DuskTestCase
                 ->type('package[depth]', $faker->randomFloat(2, 1, 5))
                 ->type('package[height]', $faker->randomFloat(2, 1, 5))
                 ->type('package[quote]', $faker->words)
-                ->attach('package_files[]', '/home/claudio/Pictures/full-1.jpg')
+                ->attach('package_files[]', '/home/claudio/Pictures/packages.jpg')
                 ->press('#submit-button')
                 ->pause(1000)
                 ->waitForLocation('/admin/packages');
@@ -55,7 +55,6 @@ class AdminPackageTest extends DuskTestCase
                 ->mouseover('.withripple')
                 ->select('.withripple', 2)
                 ->type('package[object_owner]', 1)
-                ->select('status[status_id]')
                 ->type('package[weight]', $faker->randomFloat(2, 1, 5))
                 ->type('package[width]', $faker->randomFloat(2, 1, 5))
                 ->type('package[depth]', $faker->randomFloat(2, 1, 5))

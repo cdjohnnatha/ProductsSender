@@ -2,11 +2,22 @@
 
 @section('content')
 
+@if(!auth()->guard('admin')->user())
+  @include('subscription.index_user')
+@endif
 
-@include('subscription.index_user')
+@if ($errors->any())
+  <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif
 <form action="{{ route('register') }}" method="POST" id="register_form">
 
-<div id="registration_content" class="container hidden">
+<div id="registration_content" class="container {{auth()->guard('admin')->user() ? '' : 'hidden'}}">
   <div class="content-body">
     <div class="row">
       <div class="col-lg-10">

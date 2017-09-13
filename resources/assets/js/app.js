@@ -30,6 +30,7 @@ Vue.component('vue-google-autocomplete', require('vue-google-autocomplete'));
 Vue.component('select-subscription', require('./components/Utils/SelectSubscription.vue'));
 Vue.component('plan-offers', require('./components/Utils/PlanOffers.vue'));
 Vue.component('custom-clearance-form', require('./components/Packages/CustomClearanceForm.vue'));
+Vue.component('warehouse-notifications', require('./components/Warehouses/NotificationsBar.vue'));
 
 
 

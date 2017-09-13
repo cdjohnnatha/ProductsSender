@@ -51,7 +51,6 @@ class SubscriptionController extends Controller
     {
         $this->validate($request, $this->rules());
         $subscription = new Subscription($request->input('subscription'));
-//        dd($request->input('additional_service'));
         if ($subscription->save()) {
             $subscription->benefits()->createMany($request->input('benefits'));
             $subscription->addons()->createMany($request->input('additional_service'));
@@ -73,7 +72,8 @@ class SubscriptionController extends Controller
     public function edit($id)
     {
         $subscription = Subscription::with('benefits')->findOrFail($id);
-        return view('subscription.create', compact('subscription'));
+        $services = Service::all();
+        return view('subscription.create', compact('subscription', 'services'));
     }
 
     public function update(Request $request, $id)

@@ -18,6 +18,8 @@ Route::group(['middleware' => ['auth:admin']], function(){
             Route::resource('services', 'ServiceController');
             Route::resource('notifications', 'WarehouseNotificationsController');
             Route::resource('incoming', 'IncomingPackagesController');
+            Route::get('/warehouse-notifications/unread', 'Api\WarehouseNotificationsApiController@unread')->name('warehouse-notifications.unread');
+            Route::resource('warehouse-notifications', 'WarehouseNotificationsController');
 
             Route::post('subscriptions/{subscription}/active', 'SubscriptionController@active')->name('subscriptions.active');
             Route::post('subscriptions/{subscription}/principal', 'SubscriptionController@principalOffer')->name('subscriptions.principal_offer');

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('panel_header')
-    {{__('common.titles.packages')}}
+    {{__('common.titles.package')}}
 @endsection
 
 
