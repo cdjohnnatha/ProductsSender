@@ -93,22 +93,22 @@ class UserController extends Controller
         $this->validate($request,[
             'user.name' => 'bail|required|min:3',
             'user.surname' => 'required|string',
-            'user.rg' => 'required|string',
-            'user.cpf' => 'required|string',
-            'user.email' => [
+            'user.rg' => 'required',
+            'user.cpf' => 'required',
+            'email' => [
                 'required',
                 Rule::unique('users')->ignore($id),
             ],
             'user.phone' => 'required|numeric',
             'user.password' => 'nullable|confirmed',
-            'user.subscription_id' => 'required',
+            'register.subscription_id' => 'required',
         ]);
         $user = User::findOrFail($id);
         if(is_null($request->password)){
-            $tmp = $request->except('users.password');
-            $user->fill($tmp['users']);
+            $tmp = $request->except('user.password');
+            $user->fill($tmp['user']);
         } else{
-            $user->fill($request->input('users'));
+            $user->fill($request->input('user'));
         }
 
 

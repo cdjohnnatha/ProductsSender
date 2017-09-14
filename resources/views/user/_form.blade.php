@@ -73,7 +73,7 @@
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
         <label class="control-label">Email</label>
-        <input type="email" class="form-control" name="user[email]" value="{{ $user->email or old('user.email') }}">
+        <input type="email" class="form-control" name="{{Request::is('*/edit') ? 'email' : 'user[email]'}}" value="{{ $user->email or old('user.email') }}">
 
         @if ($errors->has('user.email'))
           <span class="help-block">
@@ -237,12 +237,12 @@
     {{--</div>--}}
 {{--</section>--}}
 
-{{--@if ($errors->any())--}}
-  {{--<div class="alert alert-danger">--}}
-    {{--<ul>--}}
-      {{--@foreach ($errors->all() as $error)--}}
-        {{--<li>{{ $error }}</li>--}}
-      {{--@endforeach--}}
-    {{--</ul>--}}
-  {{--</div>--}}
-{{--@endif--}}
+@if ($errors->any())
+  <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif
