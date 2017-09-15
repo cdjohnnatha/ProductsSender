@@ -88,10 +88,10 @@ class ServiceController extends Controller
         $service = Service::findOrFail($id);
         $service->fill($request->input('service'));
         if($service->save()){
-            $request->session()->flash('status',
+            $request->session()->flash('success',
                 __('statusMessage.global_message.attribute.updated', [
-                    'entity' => __('common.titles.service'),
-                    'attribute' => $service->id]));
+                'entity' => __('common.titles.service'),
+                'attribute' => $service->id]));
             return redirect(Route('admin.service.index'));
         }
     }
@@ -107,10 +107,10 @@ class ServiceController extends Controller
         $service = Service::findOrFail($id);
         $service->delete();
         if($service->trashed()){
-            $request->session()->flash('status',
+            $request->session()->flash('success',
                 __('statusMessage.global_message.attribute.deleted', [
-                    'entity' => __('common.titles.offered_services'),
-                    'attribute' => $id
+                'entity' => __('common.titles.offered_services'),
+                'attribute' => $id
                 ]));
             return redirect(route('admin.offeredservices.index'));
         }

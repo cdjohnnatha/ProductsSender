@@ -69,7 +69,7 @@
             </div>
           </section>
 
-          <section class="tab-pane fadeIn active" id="tab-3">
+          <section class="tab-pane fadeIn" id="tab-3">
             <h2 class="card-title">{{__('common.titles.package')}}</h2>
             <small class="dataTables_info">{{__('packages.incoming.form.short_description')}}</small>
 

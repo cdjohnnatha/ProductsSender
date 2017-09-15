@@ -104,7 +104,7 @@ class PackageController extends Controller
                 $incoming->registered = true;
                 $package->goods()->save($incoming);
             }
-            $request->session()->flash('success', 'Package was successfully registered at warehouse!');
+            $request->session()->flash('status', 'Package was successfully registered at warehouse!');
             return redirect(route('admin.packages.index'));
         }
 
@@ -145,7 +145,7 @@ class PackageController extends Controller
                 $this->saveImage($request->file('package_files'), $package);
             }
 
-            $request->session()->flash('success', 'Package #'.$package->id.' was successfully updated!');
+            $request->session()->flash('status', 'Package #'.$package->id.' was successfully updated!');
             return redirect(route('admin.packages.index'));
         }
     }

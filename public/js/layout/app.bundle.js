@@ -1081,8 +1081,8 @@
 	    var countryOptions = $(this).text();
 	    if ($.trim(countryOptions) === 'English') {
 	      $(this).prepend('<img src="/img/icons/flags/US.png" class="max-w-20 m-r-10" alt="" />');
-	    } else if ($.trim(countryOptions) === 'Español') {
-	      $(this).prepend('<img src="/img/icons/flags/ES.png" class="max-w-20 m-r-10" alt="" />');
+	    } else if ($.trim(countryOptions) === 'Português') {
+	      $(this).prepend('<img src="/img/icons/flags/BR.png" class="max-w-20 m-r-10" alt="" />');
 	    } else if ($.trim(countryOptions) === 'Français') {
 	      $(this).prepend('<img src="/img/icons/flags/FR.png" class="max-w-20 m-r-10" alt="" />');
 	    } else if ($.trim(countryOptions) === 'Italiano') {
