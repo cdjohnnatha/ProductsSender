@@ -59,7 +59,7 @@ class WarehouseController extends Controller
         $address->company_name = 'Holyship';
         if($warehouse->save() && $warehouse->address()->save($address)
             && $warehouse->address->geonames()->save($geonames)){
-            $request->session()->flash('status', 'Warehouse was successfully created!');
+            $request->session()->flash('success', 'Warehouse was successfully created!');
             return redirect(route('admin.warehouses.index'));
         }
     }
@@ -94,7 +94,7 @@ class WarehouseController extends Controller
 
 
         if($warehouse->save() &&  $warehouse->address->save() && $warehouse->address->geonames->save()){
-            $request->session()->flash('status', 'Warehouse #'.$warehouse->id.' was successfully updated!');
+            $request->session()->flash('success', 'Warehouse #'.$warehouse->id.' was successfully updated!');
             return redirect(route('admin.warehouses.index'));
         }
     }

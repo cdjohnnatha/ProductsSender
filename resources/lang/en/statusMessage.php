@@ -12,6 +12,7 @@ return [
             'created' => 'The :entity was created successfully',
             'updated' => 'The :entity was updated successfully',
             'deleted' => 'The :entity was deleted successfully',
+            'confirmed' => 'The :entity was confirmed successfully',
         ],
 
         'subscription' => [
@@ -37,5 +38,10 @@ return [
     ],
 
 
+    'account' => 'Account is already confirmed! Please, login',
+
+    'incoming_package' => [
+        'user_create' => 'Package created, the warehouse will be informed.'
+    ]
 
 ];

@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Address;
 use App\AddressGeonameCode;
+use App\Mail\UserRegisterConfirmation;
 use App\Subscription;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\Wallet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -106,14 +107,39 @@ class RegisterController extends Controller
         $geonames = new AddressGeonameCode($request->input('geonames'));
         $user->password = bcrypt($request->input('users.password'));
         $address->default_address = true;
+        $user->confirmation_code = base64_encode($user->email);
+        Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
         if($user->save() && $user->address()->save($address) && $user->wallet()->save(new Wallet())
             && $user->address[0]->geonames()->save($geonames)) {
-            $request->session()->flash('status', 'User was successfully registered!');
+            $request->session()->flash('info', __('email_verification.registered_message'));
+            Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
             return redirect('/');
-
-
         }
         return back();
+    }
+
+    public function confirm(Request $request, $confirmation_code)
+    {
+
+        if(!$confirmation_code){
+            $request->session()->flash('error',
+                __('statusMessage.global_message.attribute.updated', ['entity' => 'Account Confirmation']));
+            return redirect('/');
+        }
+        $user = User::where('confirmation_code', $confirmation_code)->first();
+
+        if($user){
+            if($user->confirmed){
+                $request->session()->flash('warning', __('statusMessage.account', ['entity' => __('common.titles.account')]));
+                return redirect(route('login'));
+            }
+            $user->confirmed = true;
+            $user->save();
+            $request->session()->flash('success', __('statusMessage.global_message.entity.confirmed', ['entity' => __('common.titles.account')]));
+            return redirect(route('login'));
+        }
+
+        return redirect(route('login'));
     }
 
 }

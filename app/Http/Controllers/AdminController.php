@@ -45,7 +45,7 @@ class AdminController extends Controller
         $admin->password = bcrypt($request->input('password'));
 
         if( $admin->save() ){
-            $request->session()->flash('status', 'Admin was successfully created!');
+            $request->session()->flash('success', 'Admin was successfully created!');
             return redirect(route('admin.index'));
         }
     }
@@ -84,7 +84,7 @@ class AdminController extends Controller
         }
 
         if($admin->save()){
-            $request->session()->flash('status', 'Admin was successfully created!');
+            $request->session()->flash('success', 'Admin was successfully created!');
             return redirect(route('admin.index'))->setStatusCode(200);
         }
 

@@ -87,7 +87,7 @@ class IncomingPackagesController extends Controller
             $incoming->goodsDeclaration()->createMany($request->input('custom_clearance'));
             $incoming->addons()->createMany($request->input('additional_service'));
             Warehouse::find($incoming->warehouse_id)->notify(new IncomingPackageNotification($incoming));
-
+            $request->session()->flash('info', __('statusMessage.incoming_package.user_create'));
             return redirect(route('user.packages.index'));
         }
     }
@@ -147,6 +147,9 @@ class IncomingPackagesController extends Controller
             } else {
                 $userType = 'admin';
             }
+
+            $request->session()->flash('info', __('statusMessage.global_message.entity.updated', [':entity' => __('common.titles.incoming_package')]));
+
             return redirect(route($userType.'.packages.index'));
         }
 

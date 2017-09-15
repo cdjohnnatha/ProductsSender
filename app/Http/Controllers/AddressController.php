@@ -77,7 +77,7 @@ class AddressController extends Controller
         $address = new Address($request->input('address'));
         $object = $polymorph::find($id);
         if($object->address()->save($address)){
-            $request->session()->flash('status',
+            $request->session()->flash('success',
                 __('statusMessage.global_message.attribute.created', [
                     'attribute' => $address->label,
                     'entity' => __('common.titles.address')]));
@@ -124,7 +124,7 @@ class AddressController extends Controller
         $address = Address::with('geonames')->findOrFail($id);
         $address->fill($request->input('address'));
 
-        $request->session()->flash('status',
+        $request->session()->flash('success',
             __('statusMessage.global_message.entity.updated', [
                 'attribute' => $address->label,
                 'entity' => __('common.titles.address')]));
@@ -154,7 +154,7 @@ class AddressController extends Controller
         $address = Address::findOrFail($id);
         $address->delete();
         if($address->thashed()){
-            $request->session()->flash('status',
+            $request->session()->flash('info',
                 __('statusMessage.status.address.create', [
                     'attribute' => $address->label,
                     'entity' => __('common.titles.address')]));

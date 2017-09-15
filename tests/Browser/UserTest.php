@@ -21,7 +21,6 @@ class UserTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) {
             $faker = \Faker\Factory::create();
-            $country = $faker->countryCode;
             $password = $faker->password(6, 10);
             $browser->visit(route('register.create'))
                 ->press('.planSection')
@@ -30,7 +29,7 @@ class UserTest extends DuskTestCase
                 ->type('user[rg]', '0000.000')
                 ->type('user[cpf]', '000.000.000-00')
                 ->type('user[phone]', 83998000802)
-                ->type('user[email]', $faker->email)
+                ->type('user[email]', 'cdjohnnatha@gmail.com')
                 ->type('user[password]', $password)
                 ->type('user[password_confirmation]', $password)
                 ->click('#next_btn')
@@ -60,7 +59,6 @@ class UserTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) {
             $faker = \Faker\Factory::create();
-            $country = $faker->countryCode;
             $password = $faker->password(6, 10);
             $browser->loginAs(Admin::first(), 'admin')
                 ->visit(route('admin.users.create'))

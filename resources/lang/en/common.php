@@ -50,9 +50,7 @@ return [
       'main' => 'Here you can find all the :entity.'
     ],
 
-    'holyship' => [
-        'name' => 'Holyship',
-    ],
+    'holyship' => 'Holyship',
 
     'calendar' => [
         'month' => 'Month',

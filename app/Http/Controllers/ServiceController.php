@@ -47,9 +47,7 @@ class ServiceController extends Controller
         $this->validate( $request, $this->rules());
         $service = new Service($request->input('service'));
         if($service->save()){
-            $request->session()->flash('status',
-                __('statusMessage.global_message.entity.created', [
-                    'entity' => __('common.titles.services')]));
+            $request->session()->flash('success', __('statusMessage.global_message.entity.created', ['entity' => __('common.titles.services')]));
             return redirect(Route('admin.services.index'));
         }
     }

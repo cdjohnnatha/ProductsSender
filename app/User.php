@@ -24,7 +24,8 @@ class User extends Authenticatable
         'subscriptions_id',
         'phone',
         'rg',
-        'cpf'
+        'cpf',
+        'confirmation_code'
     ];
 
     /**
