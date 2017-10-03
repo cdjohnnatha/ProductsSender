@@ -4,8 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Session;
-use League\Flysystem\Config;
-
 class Language
 {
     /**
@@ -17,10 +15,13 @@ class Language
      */
     public function handle($request, Closure $next)
     {
-        $locale = Session::(['locale' => config('app.locale')]);
-        echo "<script>alert('".$locale."')</script>";
-        app()->setLocale($locale);
 
+
+        $locale = session('locale');
+        if(is_null($locale)) {
+            $locale = 'en';
+        }
+        app()->setLocale($locale);
         return $next($request);
     }
 }

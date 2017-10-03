@@ -42,7 +42,7 @@
     <li class="select-menu hidden-xs hidden-sm">
       <select class="select form-control country" style="display:none">
         <option option="EN" value="en">English</option>
-        <option option="BR" value="pt-br">Português</option>
+        <option option="BR" value="br">Português</option>
       </select>
     </li>
     <li>
@@ -62,13 +62,13 @@
 @section('footerJS')
   <script>
       $('.country').on('change', function(){
-//         $('#language-input').val($(this).val());
-         window.location = '/locale/' + $(this).val();
-// $('#language-form').submit();
+//        $('#language-input').val($(this).val());
+        window.location = '/locale/' + $(this).val();
+//        $('#language-form').submit();
       });
   </script>
 
-  {{--<form id="language-form" action="{{ route('language') }}" method="POST">--}}
+  {{--<form id="language-form" action="{{ route('locale') }}" method="POST">--}}
     {{--{{ csrf_field() }}--}}
     {{--<input type="hidden" id="language-input" name="locale">--}}
   {{--</form>--}}

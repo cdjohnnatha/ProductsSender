@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
 {
-    public function update($locale = 'en')
+    public function update(Request $request, $locale = 'en')
     {
-        if(!in_array($locale, ['en', 'pt-br'])){
+
+        if(!in_array($locale, ['en', 'br'])){
             $locale = 'en';
         }
 
-        Session::put('locale', $locale);
+        session(['locale' => $locale]);
         return back();
     }
 }

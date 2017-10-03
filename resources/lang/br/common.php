@@ -36,13 +36,13 @@ return [
         'cpf' => 'CPF',
         'unread' => 'Unread',
         'message' => 'Message',
-        'incoming_package' => 'Incoming Package',
+        'incoming_package' => 'Pacotes a chegar',
         'track_number' => 'Track Number',
         'incoming' => 'Incoming',
         'provider' => 'Provider',
         'addon' => 'Addon',
         'goods' => 'Goods',
-        'users' => 'Users',
+        'users' => 'Usuarios',
         'custom_clearance' => 'Custom Clearance'
     ],
 

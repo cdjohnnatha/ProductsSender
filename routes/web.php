@@ -19,8 +19,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//Route::post('/language', 'LanguageController@update')->name('language');
-
 Route::get('/locale/{locale}', 'LanguageController@update')->name('locale');
 
 Route::prefix('/register')->group(function() {

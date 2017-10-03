@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -92,6 +92,7 @@
 @if(Session::has('info'))
   <script>alertify.info("{{ Session::get('status')}}");</script>
 @endif
+
 
 @yield('footerJS')
 </body>
