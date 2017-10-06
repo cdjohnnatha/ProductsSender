@@ -48,12 +48,14 @@ Route::group(['middleware' => ['web']], function() {
         ]]);
 
         Route::resource('goods', 'GoodsDeclarationController', ['only' => ['destroy']]);
-
+        Route::get('single_package/{package}', 'SinglePackageController@create')->name('single_package.create.selected');
+        Route::resource('single_package', 'SinglePackageController');
         Route::resource('incoming', 'IncomingPackagesController');
         Route::resource('notifications', 'NotificationsController');
         Route::get('read-all', 'NotificationsController@markAll')->name('notifications.mark.all');
         Route::get('/unread', 'Api\UserNotificationsApiController@unread')->name('notifications.unread');
         Route::get('/show-package/{notification}', 'NotificationsController@readShow')->name('notifications.read.show');
+
 
     });
 

@@ -1,7 +1,7 @@
 <article id="content_wrapper" class="card-overlay invoice-page" style="padding-top: 0;">
   <div id="content" class="container">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="{{Route::is('user.single_package.create.selected ') ? 'col-xs-12' : 'col-xs-10' }}">
         <div>
           <div class="card-body p-50 p-t-10 invoice">
             <div class="row">
@@ -84,14 +84,16 @@
                 </div>
               </div>
                 @if(auth()->guard('web')->user())
-                  <a href="{{route('user.packages.index')}}" class="btn btn-primary btn-round pull-right m-t-20 m-b-20">Ok</a>
+                  @if(Route::is('*/packages/*'))
+                    <a href="{{route('user.packages.index')}}" class="btn btn-primary btn-round pull-right m-t-20 m-b-20">Ok</a>
+                  @endif
                 @else
                   <a href="" class="btn btn-info btn-round pull-right m-t-20 m-b-20
                     {{$incomingPackage->registered ? 'disabled' : ''}}">Register Package</a>
                   <a href="{{route('admin.packages.index')}}" class="btn btn-warning btn-round pull-right m-t-20 m-b-20">Cancel</a>
                 @endif
             </div>
-            @if(auth()->guard('web')->user())
+            @if(auth()->guard('web')->user() && Route::is('*/packages/*'))
               <footer class="invoice-footer">
                 <div class="row">
                   <div class="col-xs-3">

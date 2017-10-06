@@ -165,14 +165,9 @@ class AddressController extends Controller
 
     public function defaultAddress(Request $request, $id)
     {
-        $previous_default = $this->getClass($request)::with([
-            'address' => function ($query) {
-                $query->where('default_address', true);
-            }])->findOrFail(Auth::user()->id)->address[0];
-        $previous_default->default_address = false;
-        $address = Address::findOrFail($id);
-        $address->default_address = true;
-        if ($previous_default->save() && $address->save()) {
+        $user = User::find(Auth::user()->id);
+        $user->default_address = $id;
+        if ($user->save()) {
             return redirect(Route('user.address.index'));
         }
 

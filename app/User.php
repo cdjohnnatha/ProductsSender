@@ -46,6 +46,11 @@ class User extends Authenticatable
         return $this->morphMany(Address::class, 'addressable');
     }
 
+    public function defaultAddress()
+    {
+        return $this->hasOne(Address::class, 'id', 'default_address');
+    }
+
     public function subscription()
     {
         return $this->belongsTo(Subscription::class);

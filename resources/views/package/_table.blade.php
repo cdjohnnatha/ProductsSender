@@ -25,12 +25,33 @@
       <td>{{$package->note}}</td>
       <td>{{Carbon\Carbon::parse($package->created_at)->format('d/m/Y')}}</td>
       <td>
+
         @if(auth()->guard('admin')->user())
           @include('layouts.formButtons._form_all', ['prefix_name' => 'admin.packages' ,'id' => $package->id])
         @else
-          @include('layouts.formButtons._form_show_delete', ['prefix_name' => 'user.packages' ,'id' => $package->id])
+           <section id="sweet_alerts_card">
+
+            <a href="#" onclick="window.location='{{Route('user.single_package.create.selected', $package->id)}}'" class="icon" data-placement="top" title="{{__('buttons.titles.send_package')}}" data-toggle="tooltip">
+              <i class="zmdi zmdi-mail-send"></i>
+            </a>
+
+            <a href="#" class="icon" onclick="window.location='{{Route("user.packages.show", $package->id)}}'" data-toggle="tooltip"
+               data-placement="top" title="{{__('buttons.titles.show')}}">
+              <i class="zmdi zmdi-search"></i>
+            </a>
+
+            <a href="javascript:void(0)" class="icon alerting-delete" id="delete-button-{{$package->id}}" formSubmitId="delete-form-{{$package->id}}"
+               data-toggle="tooltip" data-placement="top" title="{{__('buttons.titles.delete')}}">
+              <i class="zmdi zmdi-delete"></i>
+            </a>
+            <form action="{{route('user.packages.destroy', $package->id)}}" method="POST"  role="form" id="delete-form-{{$package->id}}">
+              {{ csrf_field() }}
+              {{ method_field('DELETE') }}
+            </form>
+          </section>
         @endif
       </td>
+
     </tr>
   @endforeach
   </tbody>

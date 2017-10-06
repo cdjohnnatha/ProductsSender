@@ -25,12 +25,12 @@
               {{__('buttons.titles.incoming_package_inform')}}
             </a>
           </li>
-          <li>
-            <a href="javascript:void(0)" class="btn btn-info btn-flat">
-              <i class="zmdi zmdi-mail-send"></i>
-              {{__('buttons.titles.send_package')}}
-            </a>
-          </li>
+          {{--<li>--}}
+            {{--<a href="javascript:void(0)" class="btn btn-info btn-flat">--}}
+              {{--<i class="zmdi zmdi-mail-send"></i>--}}
+              {{--{{__('buttons.titles.send_package')}}--}}
+            {{--</a>--}}
+          {{--</li>--}}
           <li>
             <a href="javascript:void(0)" class="btn btn-info btn-flat">
               <i class="zmdi zmdi-group"></i>

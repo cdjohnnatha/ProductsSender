@@ -34,4 +34,6 @@ class UserPackageController extends Controller
         return view('package.inform');
     }
 
+
+
 }

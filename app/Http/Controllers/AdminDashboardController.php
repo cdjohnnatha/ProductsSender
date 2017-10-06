@@ -9,8 +9,6 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
-//        dd(session('locale'));
-        dd( app()->getLocale());
         return view('admin.dashboard');
     }
 }
