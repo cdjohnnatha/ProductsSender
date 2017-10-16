@@ -180,6 +180,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 
+        Bmartus\LaravelShippo\LaravelShippoServiceProvider::class,
+
 
 
     ],

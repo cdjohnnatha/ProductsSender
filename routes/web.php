@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -55,6 +54,8 @@ Route::group(['middleware' => ['web']], function() {
         Route::get('read-all', 'NotificationsController@markAll')->name('notifications.mark.all');
         Route::get('/unread', 'Api\UserNotificationsApiController@unread')->name('notifications.unread');
         Route::get('/show-package/{notification}', 'NotificationsController@readShow')->name('notifications.read.show');
+        Route::post('/shipment/shipment-rates', 'Api\ShipmentApiController@shipmentRates')->name('shipment.rates');
+        Route::resource('shipment', 'Api\ShipmentApiController');
 
 
     });

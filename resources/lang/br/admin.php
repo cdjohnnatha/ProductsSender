@@ -5,8 +5,12 @@ return [
     'form' => [
         'name' => 'Nome',
         'surname'    => 'Sobrenome',
-        'country'  => 'País',
-        'phone'   => 'Telefone',
+        'country'  => 'Pais',
+        'phone'   => 'Número de Telefone',
         'actions' => 'Ações'
     ],
+
+    'error' => [
+        'select_manager' => 'É obrigatorio escolher um responsável'
+    ]
 ];

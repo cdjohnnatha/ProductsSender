@@ -1,6 +1,6 @@
 
 <section id="address_select">
-  <select class="select form-control" name="address_id">
+  <select class="select form-control" name="address_id" id="address_id">
     @foreach($addresses as $address)
       <option value="{{$address->id or old('address_id')}}">
         {{$address->label}}

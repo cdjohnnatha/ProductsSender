@@ -31,6 +31,7 @@ Vue.component('select-subscription', require('./components/Utils/SelectSubscript
 Vue.component('plan-offers', require('./components/Utils/PlanOffers.vue'));
 Vue.component('custom-clearance-form', require('./components/Packages/CustomClearanceForm.vue'));
 Vue.component('warehouse-notifications', require('./components/Warehouses/NotificationsBar.vue'));
+Vue.component('shipment-component', require('./components/Packages/Shipment.vue'));
 
 
 

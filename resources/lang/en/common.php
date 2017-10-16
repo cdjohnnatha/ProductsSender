@@ -43,7 +43,10 @@ return [
         'addon' => 'Addon',
         'goods' => 'Goods',
         'users' => 'Users',
-        'custom_clearance' => 'Custom Clearance'
+        'custom_clearance' => 'Custom Clearance',
+        'payment_method' => 'Payment Method',
+        'shipment_method' => 'Shipment Method',
+        'confirmation' => 'Confirmation'
     ],
 
     'short_description' => [

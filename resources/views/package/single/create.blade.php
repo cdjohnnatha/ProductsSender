@@ -50,7 +50,7 @@
                                 <li class="">
                                   <a href="#tab2" data-toggle="tab" aria-expanded="false">
                                     <span class="step"><i class="zmdi zmdi-assignment"></i></span>
-                                    <span class="title">{{__('packages.incoming.form.goods_custom_clearance')}}</span>
+                                    <span class="title">{{__('common.titles.custom_clearance')}}</span>
                                   </a>
                                 </li>
                               @endif
@@ -67,6 +67,24 @@
                                   <span class="title">{{__('common.titles.address')}}</span>
                                 </a>
                               </li>
+                              <li class="">
+                                <a href="#tab5" data-toggle="tab" aria-expanded="false">
+                                  <span class="step"><i class="zmdi zmdi-truck"></i></span>
+                                  <span class="title">{{__('common.titles.shipment_method')}}</span>
+                                </a>
+                              </li>
+                              <li class="">
+                                <a href="#tab6" data-toggle="tab" aria-expanded="false">
+                                  <span class="step"><i class="zmdi zmdi-card"></i></span>
+                                  <span class="title">{{__('common.titles.payment_method')}}</span>
+                                </a>
+                              </li>
+                              <li class="">
+                                <a href="#tab7" data-toggle="tab" aria-expanded="false">
+                                  <span class="step"><i class="zmdi zmdi-check"></i></span>
+                                  <span class="title">{{__('common.titles.confirmation')}}</span>
+                                </a>
+                              </li>
                             </ul>
                           </div>
                         </div>
@@ -81,6 +99,7 @@
                               @if($package->goods)
                                 <section class="tab-pane" id="tab2">
                                   @include('package.incoming._show', ['incomingPackage' => $package->goods])
+                                  <input type="hidden" value="{{$package->id}}" id="package_id" name="package_id">
                               </section>
                               @endif
                               <!--end #tab2 -->
@@ -103,6 +122,10 @@
                                   @include('address._combobox', ['addresses' => Auth::user()->address])
                                 </h2>
 
+                              </section>
+
+                              <section class="tab-pane" id="tab5">
+                                <shipment-component></shipment-component>
                               </section>
 
                             </div>
