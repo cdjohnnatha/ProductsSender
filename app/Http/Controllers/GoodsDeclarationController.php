@@ -14,7 +14,7 @@ class GoodsDeclarationController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**

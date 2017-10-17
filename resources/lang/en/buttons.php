@@ -18,7 +18,8 @@ return [
         'confirm' => 'Confirm',
         'incoming_package_inform' => 'Inform incoming package',
         'send_package' => 'Send package',
-        'merge_packages' => 'Merge packages'
+        'merge_packages' => 'Merge packages',
+        'required_custom_clearance' => 'Declare goods'
     ],
 
 

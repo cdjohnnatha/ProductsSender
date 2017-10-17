@@ -2,7 +2,7 @@
     <select class="select form-control" name="warehouse_id">
       @foreach($warehouses as $warehouse)
         <option value="{{$warehouse->id or old('warehouse_id')}}">
-            {{$warehouse->address->label}}
+            {{$warehouse->address['label']}}
         </option>
       @endforeach
     </select>
@@ -11,6 +11,6 @@
         <strong class="text-danger" class="alert-danger">
           {{ $errors->first('default_warehouse_id') }}
         </strong>
-      </span>
+    </span>
     @endif
 </section>
