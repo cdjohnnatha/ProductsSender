@@ -17,10 +17,10 @@ class ShipmentApiController extends Controller
     {
 
         $packages = Package::with('warehouse')->find($request->input('package'));
-        Log::info($packages->goods);
+        Log::info($packages->goods->goodsDeclaration);
 
         $address_from = array(
-            'name' => $packages->warehouse->address->owner_name .' '. $packages->warehouse->address->owner_surname ,
+            'name' => $packages->warehouse->address->owner_name .' '. $packages->warehouse->address->owner_surname,
             'street1' => $packages->warehouse->address->street,
             'city' => $packages->warehouse->address->city,
             'state' => $packages->warehouse->address->state,
@@ -41,24 +41,28 @@ class ShipmentApiController extends Controller
             'email' => 'cdjohnnatha@gmail.com'
         );
 
-        $item = array(
-            "description" => $packages->goods->description,
-            "quantity" => 1,
-            "net_weight" => $packages->weight,
-            "mass_unit"=> $packages->unit_measure,
-            "value_amount" => $packages->goods->total_goods,
-            "value_currency"=> "USD",
-            "metadata" => "Customs Item",
-            "origin_country" => "US"
-        );
+        $items = array();
+
+        foreach($packages->goods->goodsDeclaration as $goods){
+            $item = array(
+                "description" => $goods->description,
+                "quantity" => $goods->quantity,
+                "value_amount" => $goods->total_unit,
+                "value_currency"=> "USD",
+                "metadata" => "Customs Item",
+                "origin_country" => "US"
+            );
+            array_push($items, $item);
+        }
+
 
         $custom_declaration = array(
-            "contents_type" => "MERCHANDISE",
-            "contents_explanation" => "Shipping done easy",
+            "contents_type" => $packages->goods->content_type ? "MERCHANDISE" : 'GIFT',
+            "contents_explanation" => $packages->goods->description,
             "non_delivery_option" => "RETURN",
             "certify" => true,
             "certify_signer" => "Holyship",
-            "items" => $item,
+            "items" => $items,
             "metadata" => "Custom declarations"
         );
 
