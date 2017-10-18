@@ -50,7 +50,7 @@
                 <i class="zmdi zmdi-delete"></i>
               </a>
             @else
-               <a href="#" onclick="window.location='{{Route('user.single_package.create.selected', $package->id)}}'" class="icon" data-placement="top" title="{{__('buttons.titles.required_custom_clearance')}}" data-toggle="tooltip">
+               <a href="#" onclick="window.location='{{Route('user.goods.create', $package->id)}}'" class="icon" data-placement="top" title="{{__('buttons.titles.required_custom_clearance')}}" data-toggle="tooltip">
                  <i class="zmdi zmdi-assignment"></i>
                </a>
             @endif

@@ -24,7 +24,7 @@ class GoodsDeclarationController extends Controller
      */
     public function create()
     {
-        //
+        return view('package.goods.create');
     }
 
     /**

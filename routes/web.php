@@ -46,7 +46,7 @@ Route::group(['middleware' => ['web']], function() {
             'destroy'
         ]]);
 
-        Route::resource('goods', 'GoodsDeclarationController', ['only' => ['destroy']]);
+        Route::resource('goods', 'GoodsDeclarationController', ['only' => ['create', 'destroy']]);
         Route::get('single_package/{package}', 'SinglePackageController@create')->name('single_package.create.selected');
         Route::resource('single_package', 'SinglePackageController');
         Route::resource('incoming', 'IncomingPackagesController');
