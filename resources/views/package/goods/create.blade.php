@@ -7,14 +7,13 @@
 @section('content')
 
   <section class="card">
-
     <section class="tab-content  p-20">
       <section class="tab-pane fadeIn active" id="tab-1">
         <div class="row">
           <header class="card-heading">
             <h2 class="card-title">{{__('packages.goods.short_description_check')}}</h2>
           </header>
-
+          <form action="{{route('user.goods.store', $package_id)}}" role="form" method="POST">
             {{ csrf_field() }}
             <section class="card-body">
               <section class="row">
@@ -22,7 +21,7 @@
                   <div class="input-group">
                     <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
                     <label class="control-label">{{__('packages.incoming.form.provider')}}</label>
-                    <input type="text" class="form-control" name="incoming[provider]" value="{{$goods->provider or old('goods.provider')}}">
+                    <input type="text" class="form-control" name="goods[provider]" value="{{$goods->provider or old('goods.provider')}}">
 
                     @if ($errors->has('goods.provider'))
                       <span class="help-block">
@@ -54,27 +53,27 @@
                   </div>
                 </section>
 
-                <section class="form-group col-sm-12 label-floating {{ $errors->has('incoming.description') ? ' has-error' : '' }}">
+                <section class="form-group col-sm-12 label-floating {{ $errors->has('goods.description') ? ' has-error' : '' }}">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="zmdi zmdi-comment-edit"></i></span>
-                    <label class="control-label">{{__('common.titles.description')}}</label>
-                    <textarea tabindex="2" class="form-control" name="incoming[description]">
-                      {{$incoming->description or old('incoming.description')}}
+                    <label class="control-label">{{__('packages.goods.content_description')}}</label>
+                    <textarea tabindex="2" class="form-control" name="goods[description]">
+                      {{$goods->description or old('goods.description')}}
                     </textarea>
 
-                    @if ($errors->has('incoming.description'))
+                    @if ($errors->has('goods.description'))
                       <span class="help-block">
                         <strong class="text-danger" class="alert-danger">
-                          {{ $errors->first('incoming.description') }}
+                          {{ $errors->first('goods.description') }}
                         </strong>
                       </span>
                     @endif
                   </div>
                 </section>
 
-                <section>
+                <section class="{{ $errors->has('goods.description') ? ' has-error' : '' }}">
                   @if(Request::is('*/edit'))
-                    <custom-clearance-form :editing="{{$incoming->goodsDeclaration()->get()}}"></custom-clearance-form>
+                    {{--<custom-clearance-form :editing="{{$incoming->goodsDeclaration()->get()}}"></custom-clearance-form>--}}
                   @else
                     <custom-clearance-form></custom-clearance-form>
                   @endif
@@ -84,7 +83,7 @@
               </section>
             </section>
             <footer class="card-footer text-right">
-              @include('layouts.formButtons._form_save_edit', ['url' => Route('admin.packages.index')])
+              @include('layouts.formButtons._form_save_edit', ['url' => Route('user.goods.store', $package_id)])
             </footer>
           </form>
         </div>

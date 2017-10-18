@@ -51,7 +51,8 @@ return [
         'short_description_check' => 'The goods is just for clarify what have in the package',
         'title_goods' => 'Goods Informations',
         'short_description_goods' => 'Here are the informations described by the user',
-        'required_declaration' => 'Goods declaration required'
+        'required_declaration' => 'Goods declaration required',
+        'content_description' => 'Content Description'
     ]
 
 ];

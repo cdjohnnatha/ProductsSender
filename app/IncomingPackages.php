@@ -18,7 +18,8 @@ class IncomingPackages extends Entity
         'warehouse_id',
         'user_id',
         'package_id',
-        'registered'
+        'registered',
+        'content_type'
     ];
 
     public function addons()
