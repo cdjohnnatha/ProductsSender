@@ -73,7 +73,6 @@
 
                 <section class="{{ $errors->has('goods.description') ? ' has-error' : '' }}">
                   @if(Request::is('*/edit'))
-                    {{--<custom-clearance-form :editing="{{$incoming->goodsDeclaration()->get()}}"></custom-clearance-form>--}}
                   @else
                     <custom-clearance-form></custom-clearance-form>
                   @endif
@@ -83,7 +82,16 @@
               </section>
             </section>
             <footer class="card-footer text-right">
-              @include('layouts.formButtons._form_save_edit', ['url' => Route('user.goods.store', $package_id)])
+              <a href="{{ route('user.packages.index') }}" class="btn btn-primary btn-flat" data-toggle="tooltip"
+                 data-placement="top" title="{{__('buttons.titles.cancel')}}">Cancel</a>
+              <button type="submit" id="submit-button" class="btn btn-primary" data-toggle="tooltip"
+                      data-placement="top" title="{{__('buttons.titles.register')}}">
+                @if(Request::is('*/edit'))
+                  {{__('buttons.titles.update')}}
+                @else
+                  {{__('buttons.titles.create')}}
+                @endif
+              </button>
             </footer>
           </form>
         </div>

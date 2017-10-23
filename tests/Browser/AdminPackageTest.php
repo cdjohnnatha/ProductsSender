@@ -30,7 +30,7 @@ class AdminPackageTest extends DuskTestCase
                 ->type('package[depth]', $faker->randomFloat(2, 1, 5))
                 ->type('package[height]', $faker->randomFloat(2, 1, 5))
                 ->type('package[quote]', $faker->words)
-                ->attach('package_files[]', '/home/claudio/Pictures/packages.jpg')
+                ->attach('package_files[]', '/home/claudio/Pictures/package_1.jpg')
                 ->press('#submit-button')
                 ->pause(1000)
                 ->waitForLocation('/admin/packages');

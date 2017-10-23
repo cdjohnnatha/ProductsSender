@@ -51,6 +51,7 @@
 </template>
 
 <script>
+  var $ = require('jquery');
     export default {
         props: {
 
