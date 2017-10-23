@@ -22,7 +22,7 @@
         <form action="{{route($action, $incoming->id)}}" role="form" method="POST">
           <input name="_method" type="hidden" value="PUT">
           @else
-                <?php $action .= 'store' ?>
+            <?php $action .= 'store' ?>
             <form action="{{route($action)}}" role="form" method="POST">
               @endif
               {{ csrf_field() }}
@@ -41,7 +41,7 @@
                             <span class="step">
                               <i class="zmdi zmdi-assignment"></i>
                             </span>
-                                  <span class="title">
+                            <span class="title">
                               {{__('singlePackage.titles.title_step_1')}}
                             </span>
                                 </a>
@@ -112,7 +112,7 @@
                                   <small style="color: #ff5722;">{{__('packages.incoming.form.small_marketing_services',
                           ['discount'=> Auth::user()->subscription->discounts])}}</small>
                                 @endif
-                                @include('service._checkbox')
+                                @include('service._checkbox', ['reservation' => $package->goods])
                               </section>
 
                               <section class="tab-pane" id="tab4">
