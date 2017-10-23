@@ -110,44 +110,45 @@
 
   </section>
 
-  <section class="form-group col-sm-7 label-floating {{
-      $errors->has('address.formatted_address') ||
-      $errors->has('geonames.country') ||
-      $errors->has('geonames.city') ||
-      $errors->has('geonames.state') ||
-      $errors->has('address.city') ||
-      $errors->has('address.state') ||
-      $errors->has('address.country') ||
-      $errors->has('address.street')  ? ' has-error' : '' }}">
-    <div class="input-group">
-      <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
-      <label class="control-label">{{__('address.label.type_address')}}</label>
-      <autocomplete-address set_address="{{ $address->formatted_address or old('address.formatted_address')}}"></autocomplete-address>
-      @if ($errors->has(['address.formatted_address', 'geonames.country']))
+  <section class="row">
+    <section class="form-group col-sm-2 label-floating {{ $errors->has('address.number') ? 'has-error' : '' }}">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
+        <label class="control-label">{{__('address.titles.number')}}</label>
+        <input type="text" class="form-control" name="address[number]" value="{{ $address->number or old('address.number') }}">
+      </div>
+      @if ($errors->has('address.number'))
         <span class="help-block">
+            <strong class="text-danger" class="alert-danger">
+              {{ $errors->first('address.number') }}
+            </strong>
+          </span>
+      @endif
+    </section>
+
+    <div class="form-group col-sm-7 label-floating
+      {{
+        $errors->has('address.formatted_address') ||
+        $errors->has('geonames.country') ||
+        $errors->has('geonames.city') ||
+        $errors->has('geonames.state') ||
+        $errors->has('address.city') ||
+        $errors->has('address.state') ||
+        $errors->has('address.country') ||
+        $errors->has('address.street')  ? ' has-error' : '' }}">
+
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
+        <label class="control-label">{{__('address.label.type_address')}}</label>
+        <autocomplete-address set_address="{{ $address->formatted_address or old('address.formatted_address')}}"></autocomplete-address>
+        @if ($errors->has(['address.formatted_address', 'geonames.country']))
+          <span class="help-block">
           <strong class="text-danger" class="alert-danger">
             {{ $errors->first('address.formatted_address') || __('statusMessage.errors.address_autocomplete') }}
           </strong>
         </span>
-      @endif
-    </div>
-  </section>
-
-  <section class="row">
-    <div class="form-group col-sm-2 {{ $errors->has('address.number') ? 'has-error' : '' }} label-floating">
-      <div class="input-group">
-        <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
-        <label class="control-label">{{__('address.titles.number')}}</label>
-        <input type="text" class="form-control" name="address[number]"
-               value="{{ $address->number or old('address.number') }}">
+        @endif
       </div>
-      @if ($errors->has('address.number'))
-        <span class="help-block">
-          <strong class="text-danger" class="alert-danger">
-            {{ $errors->first('address.number') }}
-          </strong>
-        </span>
-      @endif
     </div>
 
 

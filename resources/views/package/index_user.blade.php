@@ -56,7 +56,6 @@
           </section>
 
           <section class="tab-pane fadeIn" id="tab-2">
-
             <h2 class="card-title">{{__('common.titles.package')}}</h2>
             <small class="dataTables_info">{{__('packages.index.short_description_warehouse')}}</small>
 

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('panel_header')
-    {{__('address.index.titles')}}
+    {{__('address.titles.form')}}
 @endsection
 
 @section('content')
