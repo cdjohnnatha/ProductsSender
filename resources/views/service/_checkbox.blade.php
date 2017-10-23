@@ -7,7 +7,7 @@
                 @foreach($reservation->addons as $addon)
                   <input type="checkbox" value="{{$service->id}}" data-price="{{$service->price}}"
                          name="additional_service[{{$key}}][service_id]"
-                         {{$addon->addonable_id == $service->id ? 'checked' : ''}}
+                         {{$addon->addonable_id == $service->id ? 'checked disabled' : ''}}
                          class="addons_check">
                 @endforeach
               @else
