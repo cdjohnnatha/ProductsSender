@@ -24,6 +24,7 @@ return [
         'short_description' => 'All your packages can be found here.',
         'short_show_description' => 'Here you can see your package information',
         'short_description_warehouse' => 'Here are all the packages available on warehouses',
+        'sent' => 'Sent'
 
     ],
 

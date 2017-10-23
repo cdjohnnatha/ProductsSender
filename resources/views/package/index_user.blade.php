@@ -10,9 +10,9 @@
       <header class="card-body p-0">
         <div class="tabpanel">
           <ul class="nav nav-tabs nav-tabs-right">
-            <li class="presentation" role="presentation"><a href="#tab-1" data-toggle="tab" aria-expanded="true">Index</a></li>
-            <li class="active" role="presentation"><a href="#tab-2" data-toggle="tab" aria-expanded="true">{{__('common.titles.warehouse')}}</a></li>
+            <li class="active" role="presentation"><a href="#tab-1" data-toggle="tab" aria-expanded="true">{{__('common.titles.inbox')}}</a></li>
             <li class="presentation" role="presentation"><a href="#tab-3" data-toggle="tab" aria-expanded="true">{{__('common.titles.incoming')}}</a></li>
+            <li class="presentation" role="presentation"><a href="#tab-2" data-toggle="tab" aria-expanded="true">{{__('packages.index.sent')}}</a></li>
           </ul>
         </div>
       </header>
@@ -42,20 +42,20 @@
 
         <section class="tab-content  p-20">
 
-          <section class="tab-pane fadeIn" id="tab-1">
+          <section class="tab-pane fadeIn active" id="tab-1">
             <h2 class="card-title">{{__('common.titles.package')}}</h2>
             <small class="dataTables_info">{{__('packages.index.short_description')}}</small>
 
             <div class="row">
               <div class="card card-data-tables product-table-wrapper">
                 <div class="card-body p-0">
-                  @include('package._table', ['packages' => $packages, 'table_id' => 'productsTable-all'])
+                  @include('package._table', ['packages' => $packages_warehouse, 'table_id' => 'productsTable-warehouse'])
                 </div>
               </div>
             </div>
           </section>
 
-          <section class="tab-pane fadeIn active" id="tab-2">
+          <section class="tab-pane fadeIn" id="tab-2">
 
             <h2 class="card-title">{{__('common.titles.package')}}</h2>
             <small class="dataTables_info">{{__('packages.index.short_description_warehouse')}}</small>
@@ -63,7 +63,9 @@
             <div class="row">
               <div class="card card-data-tables product-table-wrapper">
                 <div class="card-body p-0">
-                  @include('package._table', ['packages' => $packages_warehouse, 'table_id' => 'productsTable-warehouse'])
+                  @if($sent)
+                    @include('package._table', ['packages' => $sent, 'table_id' => 'productsTable-all'])
+                  @endif
                 </div>
               </div>
             </div>

@@ -42,37 +42,36 @@ class PackageController extends Controller
         if (auth()->guard('web')->user()){
             $field = 'object_owner';
             $id = Auth::user()->id;
-            $packages = Package::with('goods')->where($field, $id)
-                ->orderBy('created_at', 'desc')->get();
+            $sent = Package::with(['goods'])
+                ->where($field, $id)
+                ->where('sent', true)
+                ->orderBy('created_at', 'desc')
+                ->get();
 
             $incomingPackages = Auth::user()->incomingPackages()->where('registered', false)->get();
+
         } else {
             $field = 'warehouse_id';
             $id = Auth::user()->warehouse_id;
             $incomingPackages = IncomingPackages::where('registered', false)
-                ->where('warehouse_id', Auth::user()->warehouse_id)->get();
-
+                ->where('warehouse_id', Auth::user()->warehouse_id)
+                ->get();
         }
 
 
         $packages_warehouse = Package::with(
-            ['status' =>
-                function($query){
-                    $query->where([
-                        ['status', 'like', 'WAREHOUSE%'],
-                        ['status', '!=', 'WAREHOUSE_SENT'],
-                    ]);
-                },
+            [
                 'status',
                 'pictures',
                 'warehouse',
                 'goods'])
                 ->where($field, '=', $id)
+                ->where('sent', false)
                 ->orderBy('created_at', 'desc')
                 ->get();
 
         if (auth()->guard('web')->user()) {
-            return view('package.index_user', compact('packages_warehouse', 'packages', 'incomingPackages'));
+            return view('package.index_user', compact('packages_warehouse', 'sent', 'incomingPackages'));
         } else {
             return view('package.index', compact('packages_warehouse', 'incomingPackages'));
         }

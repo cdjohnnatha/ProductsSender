@@ -46,7 +46,8 @@ return [
         'custom_clearance' => 'Custom Clearance',
         'payment_method' => 'Payment Method',
         'shipment_method' => 'Shipment Method',
-        'confirmation' => 'Confirmation'
+        'confirmation' => 'Confirmation',
+        'inbox' => 'Inbox'
     ],
 
     'short_description' => [
