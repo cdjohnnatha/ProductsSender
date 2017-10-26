@@ -32,6 +32,7 @@ Vue.component('plan-offers', require('./components/Utils/PlanOffers.vue'));
 Vue.component('custom-clearance-form', require('./components/Packages/CustomClearanceForm.vue'));
 Vue.component('warehouse-notifications', require('./components/Warehouses/NotificationsBar.vue'));
 Vue.component('shipment-component', require('./components/Packages/Shipment.vue'));
+Vue.component('modal-address-component', require('./components/Utils/AddressModal.vue'));
 
 
 

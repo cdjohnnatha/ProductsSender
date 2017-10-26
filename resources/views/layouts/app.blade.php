@@ -78,6 +78,8 @@
 <script src="{{ asset('js/layout/app.bundle.js') }}"></script>
 <script src="{{ asset('js/layout/alerts.js') }}"></script>
 
+@yield('footerJS')
+
 @if(Session::has('success'))
   <script>alertify.success("{{ Session::get('status')}}");</script>
 @endif
@@ -95,6 +97,6 @@
 @endif
 
 
-@yield('footerJS')
+
 </body>
 </html>

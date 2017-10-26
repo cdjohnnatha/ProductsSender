@@ -3,7 +3,7 @@
         @foreach($services as $key => $service)
           <div class="checkbox">
             <label>
-              @if($reservation)
+              @if(!$reservation->addons->isEmpty())
                 @foreach($reservation->addons as $addon)
                   <input type="checkbox" value="{{$service->id}}" data-price="{{$service->price}}"
                          name="additional_service[{{$key}}][service_id]"
@@ -44,6 +44,7 @@
 @if(auth()->guard('web')->user())
 @section('footerJS')
   <script>
+    alert('test');
     var total, discounts;
     total = parseInt(0);
     discounts = {{Auth::user()->subscription->discounts}};

@@ -13,7 +13,7 @@
                 <div class="least-content">
                   <span class="checkbox">
                     <label>
-                      <input type="radio" value="" name="optionsRadios" checked>
+                      <input type="radio" v-bind:value="rate.amount" name="optionsRadios" class="shipment_value" checked>
                     </label>
                   </span>
                 </div>
@@ -79,7 +79,6 @@
               console.log(json);
               axios.post('/user/shipment/shipment-rates', json, {headers: ''}).then( response => {
                 this.rates = response.data.rates;
-                  console.log(this.rates);
               }).catch(function (error) {
                   console.log(error);
               });

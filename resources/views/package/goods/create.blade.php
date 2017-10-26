@@ -73,6 +73,7 @@
 
                 <section class="{{ $errors->has('goods.description') ? ' has-error' : '' }}">
                   @if(Request::is('*/edit'))
+                    <custom-clearance-form :editing="{{$incoming->goodsDeclaration()->get()}}"></custom-clearance-form>
                   @else
                     <custom-clearance-form></custom-clearance-form>
                   @endif

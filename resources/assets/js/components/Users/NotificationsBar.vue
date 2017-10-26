@@ -62,7 +62,7 @@
                 axios.get(this.prefixUrl + 'unread').then( response => {
                     response.data.unread.forEach(notifications => {
                        this.$store.commit('add_notification', notifications);
-                       console.log(notifications);
+//                       console.log(notifications);
                         this.addAlertStatus();
                     });
                 }).catch(function (error) {
