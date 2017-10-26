@@ -24,6 +24,8 @@ class IncomingPackageTest extends DuskTestCase
                 ->type('incoming[addressee]', $faker->name)
                 ->type('incoming[track_number]', $faker->randomNumber(8))
                 ->type('incoming[description]', $faker->words)
+                ->driver->executeScript('window.scrollTo(0, 600);');
+            $browser
                 ->pressAndWaitFor('#next_button', 1)
                 ->type('custom_clearance[0][description]', $faker->words)
                 ->type('custom_clearance[0][quantity]', $faker->numberBetween(1, 1000))
@@ -32,9 +34,12 @@ class IncomingPackageTest extends DuskTestCase
                 ->type('custom_clearance[1][description]', $faker->words)
                 ->type('custom_clearance[1][quantity]', $faker->numberBetween(1, 1000))
                 ->type('custom_clearance[1][unit_price]', $faker->randomFloat(2, 1, 10))
+                ->driver->executeScript('window.scrollTo(0, 600);');
+            $browser
                 ->pressAndWaitFor('#next_button', 1)
                 ->click('.check')
-                ->pause(2000)
+                ->driver->executeScript('window.scrollTo(0, 600);');
+            $browser
                 ->press('#submit-button')
                 ->waitForLocation('/user/packages');
         });

@@ -3,7 +3,7 @@
         @foreach($services as $key => $service)
           <div class="checkbox">
             <label>
-              @if(!$reservation->addons->isEmpty())
+              @if(!empty($reservation) && !$reservation->addons->isEmpty())
                 @foreach($reservation->addons as $addon)
                   <input type="checkbox" value="{{$service->id}}" data-price="{{$service->price}}"
                          name="additional_service[{{$key}}][service_id]"

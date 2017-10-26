@@ -23,10 +23,9 @@ class ServiceTest extends DuskTestCase
                     ->visit(route('admin.services.create'))
                     ->assertSee('Services')
                     ->type('service[title]', $faker->name)
-                    ->type('service[price]', $faker->randomFloat(2, 0))
+                    ->type('service[price]', 3.75)
                     ->type('service[description]', $faker->words)
                     ->press('#submit-button')
-                    ->pause(5000)
                     ->waitForLocation('/admin/services');
         });
     }
@@ -41,7 +40,7 @@ class ServiceTest extends DuskTestCase
             $faker = \Faker\Factory::create();
             $services = Addon::orderBy('id', 'desc')->first();
             $browser->loginAs($admin, 'admin')
-                ->visit(route('admin.offeredservices.edit', $services->id))
+                ->visit(route('admin.services.edit', $services->id))
                 ->assertSee('Offered Services')
                 ->type('service[title]', $faker->name)
                 ->type('service[price]', $faker->randomFloat(2, 0))

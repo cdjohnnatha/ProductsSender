@@ -79,19 +79,19 @@
 <script src="{{ asset('js/layout/alerts.js') }}"></script>
 
 @if(Session::has('success'))
-  <script>alertify.success("{{ Session::get('status')}}");</script>
+  <script>alertify.success("{{ Session::get('success')}}");</script>
 @endif
 
 @if(Session::has('warning'))
-  <script>alertify.warn("{{ Session::get('status')}}");</script>
+  <script>alertify.warn("{{ Session::get('warning')}}");</script>
 @endif
 
 @if(Session::has('error'))
-  <script>alertify.error("{{ Session::get('status')}}");</script>
+  <script>alertify.error("{{ Session::get('error')}}");</script>
 @endif
 
 @if(Session::has('info'))
-  <script>alertify.info("{{ Session::get('status')}}");</script>
+  <script>alertify.info("{{ Session::get('info')}}");</script>
 @endif
 
 

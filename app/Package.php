@@ -9,6 +9,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Package extends Entity
 {
 
+    protected $attributes = array('sent' => false);
+
     protected $fillable = [
         'width',
         'height',

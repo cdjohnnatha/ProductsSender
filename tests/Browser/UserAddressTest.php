@@ -29,9 +29,8 @@ class UserAddressTest extends DuskTestCase
                 ->type('#map', 'Rua rita porfirio chaves')
                 ->waitFor('.pac-item')
                 ->click('.pac-item')
-                ->pause(400)
-                ->click('#submit-button')
-                ->pause(10000);
+                ->pause(3000)
+                ->click('#submit-button');
         });
     }
 }

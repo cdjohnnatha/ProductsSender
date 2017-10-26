@@ -55,11 +55,10 @@ class WarehousesTest extends DuskTestCase
                 ->type('address[postal_code]', $faker->postcode)
                 ->type('address[number]', $faker->buildingNumber)
                 ->type('address[label]', $faker->company)
-                ->select('admin_id')
                 ->type('#map', 'Rua rita porfirio chaves')
                 ->waitFor('.pac-item')
                 ->click('.pac-item')
-                ->pause(500)
+                ->pause(1500)
                 ->press('#submit-button')
                 ->waitForLocation('/admin/warehouses');
         });

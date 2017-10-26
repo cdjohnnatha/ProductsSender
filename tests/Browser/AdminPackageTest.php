@@ -31,6 +31,8 @@ class AdminPackageTest extends DuskTestCase
                 ->type('package[height]', $faker->randomFloat(2, 1, 5))
                 ->type('package[quote]', $faker->words)
                 ->attach('package_files[]', '/home/claudio/Pictures/package_1.jpg')
+                ->driver->executeScript('window.scrollTo(0, 600);');
+            $browser
                 ->press('#submit-button')
                 ->pause(1000)
                 ->waitForLocation('/admin/packages');
@@ -61,6 +63,8 @@ class AdminPackageTest extends DuskTestCase
                 ->type('package[height]', $faker->randomFloat(2, 1, 5))
                 ->type('package[quote]', $faker->words)
                 ->attach('package_files[]', '/home/claudio/Pictures/full-1.jpg')
+                ->driver->executeScript('window.scrollTo(0, 600);');
+            $browser
                 ->press('#submit-button')
                 ->waitForLocation('/admin/packages');
         });

@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
@@ -106,14 +107,17 @@ class RegisterController extends Controller
         $address = new Address($request->input('address'));
         $geonames = new AddressGeonameCode($request->input('geonames'));
         $user->password = bcrypt($request->input('users.password'));
-        $address->default_address = true;
         $user->confirmation_code = base64_encode($user->email);
         Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
         if($user->save() && $user->address()->save($address) && $user->wallet()->save(new Wallet())
             && $user->address[0]->geonames()->save($geonames)) {
-            $request->session()->flash('info', __('email_verification.registered_message'));
-            Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
-            return redirect('/');
+            $user->default_address = $user->address[0]->id;
+            if($user->save()) {
+                $request->session()->flash('info', __('email_verification.registered_message'));
+//                Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
+                return redirect('/');
+            }
+
         }
         return back();
     }

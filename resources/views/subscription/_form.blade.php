@@ -132,7 +132,7 @@
       <div class="input-group">
         <label>Services</label><br>
         <small><mark>{{__('plans.form.description_services_title')}}</mark></small>
-        @include('service._checkbox', ['services' => $services])
+        @include('service._checkbox', ['services' => $services, 'reservation' => []])
       </div>
     </div>
   </section>

@@ -23,6 +23,8 @@ class AdminTest extends DuskTestCase
                 ->assertSee('Login')
                 ->type('email', $admin->email)
                 ->type('password', 'holyship123')
+                ->driver->executeScript('window.scrollTo(0, 600);');
+            $browser
                 ->press('#submit')
                 ->waitForLocation('/admin/dashboard');
         });
@@ -46,6 +48,8 @@ class AdminTest extends DuskTestCase
                 ->type('email', $faker->email)
                 ->type('password', '123456')
                 ->type('password_confirmation', '123456')
+                ->driver->executeScript('window.scrollTo(0, 600);');
+            $browser
                 ->click('#submit-button')
                 ->waitForLocation('/admin');
         });
@@ -66,6 +70,8 @@ class AdminTest extends DuskTestCase
                 ->type('surname', $faker->lastName)
                 ->type('phone', '9999999999')
                 ->type('email', $faker->email)
+                ->driver->executeScript('window.scrollTo(0, 600);');
+            $browser
                 ->click('#submit-button');
         });
     }

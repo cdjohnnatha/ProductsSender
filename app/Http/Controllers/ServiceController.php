@@ -92,7 +92,7 @@ class ServiceController extends Controller
                 __('statusMessage.global_message.attribute.updated', [
                 'entity' => __('common.titles.service'),
                 'attribute' => $service->id]));
-            return redirect(Route('admin.service.index'));
+            return redirect(Route('admin.services.index'));
         }
     }
 

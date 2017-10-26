@@ -27,7 +27,6 @@ class WarehouseController extends Controller
             'address.number' => 'required|string|max:15',
             'address.formatted_address' => 'required',
             'address.postal_code' => 'required',
-            'address.default_address' => 'boolean',
             'geonames.city' => 'required',
             'geonames.state' => 'required',
             'geonames.country' => 'required'
@@ -55,7 +54,6 @@ class WarehouseController extends Controller
         $admin = Admin::find($request->input('admin_id'));
         $address->owner_name = $admin->name;
         $address->owner_surname = $admin->surname;
-        $address->default_address = true;
         $address->company_name = 'Holyship';
         if($warehouse->save() && $warehouse->address()->save($address)
             && $warehouse->address->geonames()->save($geonames)){

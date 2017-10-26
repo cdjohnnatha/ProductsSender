@@ -29,7 +29,6 @@ class AddressController extends Controller
             'address.number' => 'required|string|max:15',
             'address.formatted_address' => 'required',
             'address.postal_code' => 'required',
-            'address.default_address' => 'boolean',
             'geonames.country' => 'required',
             'geonames.city' => 'required',
             'geonames.state' => 'required',
