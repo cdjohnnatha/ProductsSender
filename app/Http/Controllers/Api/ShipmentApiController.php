@@ -17,7 +17,7 @@ class ShipmentApiController extends Controller
     {
 
         $packages = Package::with('warehouse')->find($request->input('package'));
-        Log::info($packages->goods->goodsDeclaration);
+        $address = Address::find($request->input('address'));
 
         $address_from = array(
             'name' => $packages->warehouse->address->owner_name .' '. $packages->warehouse->address->owner_surname,
@@ -31,13 +31,13 @@ class ShipmentApiController extends Controller
         );
 
         $address_to = array(
-            'name' => $packages->user->name,
-            'street1' => $packages->user->defaultAddress->street,
-            'city' => $packages->user->defaultAddress->city,
-            'state' => $packages->user->defaultAddress->state,
-            'zip' => $packages->user->defaultAddress->postal_code,
+            'name' => $address->name,
+            'street1' => $address->street,
+            'city' => $address->city,
+            'state' => $address->state,
+            'zip' => $address->postal_code,
             'country' => 'BR',
-            'phone' => $packages->user->defaultAddress->phone,
+            'phone' => $address->phone,
             'email' => 'cdjohnnatha@gmail.com'
         );
 

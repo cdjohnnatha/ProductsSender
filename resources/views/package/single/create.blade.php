@@ -4,13 +4,6 @@
   {{__('singlePackage.titles.main_title')}}
 @endsection
 
-
-@section('footerJS')
-  <script>
-      console.log('test');
-  </script>
-@endsection
-
 @section('content')
     <?php
 
@@ -52,35 +45,27 @@
                     </span>
                         </a>
                       </li>
-                      @if($package->goods)
-                        <li class="">
-                          <a href="#tab2" data-toggle="tab" aria-expanded="false">
-                            <span class="step"><i class="zmdi zmdi-assignment"></i></span>
-                            <span class="title">{{__('common.titles.custom_clearance')}}</span>
-                          </a>
-                        </li>
-                      @endif
                       <li class="">
-                        <a href="#tab3" data-toggle="tab" aria-expanded="false">
+                        <a href="#tab2" data-toggle="tab" aria-expanded="false">
                           <span class="step"><i class="zmdi zmdi-shopping-cart"></i></span>
                           <span class="title">{{__('addon')}}</span>
                         </a>
                       </li>
 
                       <li class="">
-                        <a href="#tab4" data-toggle="tab" aria-expanded="false">
+                        <a href="#tab3" data-toggle="tab" aria-expanded="false">
                           <span class="step"><i class="zmdi zmdi-truck"></i></span>
                           <span class="title">{{__('common.titles.shipment_method')}}</span>
                         </a>
                       </li>
                       <li class="">
-                        <a href="#tab5" data-toggle="tab" aria-expanded="false">
+                        <a href="#tab4" data-toggle="tab" aria-expanded="false">
                           <span class="step"><i class="zmdi zmdi-card"></i></span>
                           <span class="title">{{__('common.titles.payment_method')}}</span>
                         </a>
                       </li>
                       <li class="">
-                        <a href="#tab6" data-toggle="tab" aria-expanded="false">
+                        <a href="#tab5" data-toggle="tab" aria-expanded="false">
                           <span class="step"><i class="zmdi zmdi-check"></i></span>
                           <span class="title">{{__('common.titles.confirmation')}}</span>
                         </a>
@@ -94,16 +79,15 @@
                     <div class="tab-content clearfix p-30">
                       <section class="tab-pane active" id="tab1">
                         @include('package.fragments._informations')
+                        @if($package->goods)
+                            @include('package.incoming._show', ['incomingPackage' => $package->goods])
+                            <input type="hidden" value="{{$package->id}}" id="package_id" name="package_id">
+                        @endif
                       </section>
                       <!--end #tab1 -->
-                      @if($package->goods)
-                        <section class="tab-pane" id="tab2">
-                          @include('package.incoming._show', ['incomingPackage' => $package->goods])
-                          <input type="hidden" value="{{$package->id}}" id="package_id" name="package_id">
-                      </section>
-                      @endif
+
                       <!--end #tab2 -->
-                      <section class="tab-pane" id="tab3">
+                      <section class="tab-pane" id="tab2">
                         <h2>
                           <i class="zmdi zmdi-shopping-cart"></i>
                           Services
@@ -116,7 +100,7 @@
 
                       </section>
 
-                      <section class="tab-pane" id="tab4">
+                      <section class="tab-pane" id="tab3">
                         <h2>
                           <i class="zmdi zmdi-my-location"></i>
                           Address
@@ -128,6 +112,7 @@
                                   {{$package->warehouse->address['label']}}<br>
                                   {{$package->warehouse->address['number'] . ', ' . $package->warehouse->address['formatted_address']}}<br>
                                   {{$package->warehouse->address['phone']}}<br>
+                                  <input type="hidden" id="address_id" name="address_id" value="{{Auth::user()->defaultAddress['id']}}">
                                 </address>
                               </div>
                               <div class="col-xs-6">
@@ -141,8 +126,7 @@
                               </div>
                             </div>
                         </h2>
-                        <modal-address-component :addresses="{{Auth::user()->address}}"></modal-address-component>
-                        <shipment-component></shipment-component>
+                        <shipment-component :addresses="{{Auth::user()->address}}"></shipment-component>
                       </section>
 
                       <section class="tab-pane" id="tab5">
@@ -168,6 +152,11 @@
       </div>
     </form>
     @include('package.fragments._photoswipe_element')
+@endsection
+
+@section('footerJS')
+  @parent
+
 @endsection
 
 

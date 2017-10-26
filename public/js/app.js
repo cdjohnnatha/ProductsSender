@@ -21621,7 +21621,6 @@ Vue.component('plan-offers', __webpack_require__(72));
 Vue.component('custom-clearance-form', __webpack_require__(77));
 Vue.component('warehouse-notifications', __webpack_require__(82));
 Vue.component('shipment-component', __webpack_require__(87));
-Vue.component('modal-address-component', __webpack_require__(92));
 
 
 
@@ -56104,7 +56103,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -56167,10 +56166,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var $ = __webpack_require__(6);
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: {},
+    props: {
+        addresses: Array
+    },
     data: function data() {
         return {
             total: 0,
@@ -56194,11 +56226,19 @@ var $ = __webpack_require__(6);
                 'package': packages
             };
             console.log(json);
+            console.log('ADDRESS: ' + address);
             axios.post('/user/shipment/shipment-rates', json, { headers: '' }).then(function (response) {
                 _this.rates = response.data.rates;
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        selectAddress: function selectAddress(address) {
+            $('#address_to_label').html(address.label);
+            $('#address_to_address').html(address.formatted_address);
+            $('#address_to_phone').html(address.phone);
+            $('#address_id').val(address.id);
+            this.getRates();
         }
     },
     computed: {
@@ -56214,7 +56254,7 @@ var $ = __webpack_require__(6);
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', [_c('div', {
+  return _c('section', [_c('section', [_c('div', {
     staticClass: "col-xs-12 col-sm-12"
   }, [_c('div', {
     staticClass: "card"
@@ -56251,184 +56291,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('table', {
       staticClass: "table"
     }, [_c('caption', [_vm._v("Optional table caption.")]), _vm._v(" "), _c('thead', [_c('tr', [_c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Amount " + _vm._s(rate.currency))]), _vm._v(" "), _c('th', [_vm._v("Amount " + _vm._s(rate.currency_local))]), _vm._v(" "), _c('th', [_vm._v("Days")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(rate.provider))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(rate.amount))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(rate.amount_local))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(rate.days))])])])])])])])
-  }))])])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('header', {
-    staticClass: "card-heading "
-  }, [_c('h2', {
-    staticClass: "card-title"
-  }, [_vm._v("Shipments")])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-2472b3e8", module.exports)
-  }
-}
-
-/***/ }),
-/* 92 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(93)
-}
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(95),
-  /* template */
-  __webpack_require__(96),
-  /* styles */
-  injectStyle,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/home/claudio/Documents/Workspace/PHP/holyship/resources/assets/js/components/Utils/AddressModal.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] AddressModal.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0cb3528a", Component.options)
-  } else {
-    hotAPI.reload("data-v-0cb3528a", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 93 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(94);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("959030d0", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cb3528a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AddressModal.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cb3528a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AddressModal.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 94 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 95 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        addresses: Array
-    },
-    data: function data() {
-        return {
-            additionals: [{
-                id: 0,
-                name: ''
-            }]
-        };
-    },
-    created: function created() {
-        console.log(this.addresses);
-    },
-
-
-    methods: {
-        addName: function addName() {
-            if (this.additionals.length - 1 >= 0 && this.additionals[this.additionals.length - 1].name.length > 0) {
-                this.additionals.push({ name: '', id: 0 });
-                $('#submit-button').click();
-            }
-        }
-    }
-
-});
-
-/***/ }),
-/* 96 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', [_c('div', {
+  }))])])])]), _vm._v(" "), _c('section', [_c('div', {
     staticClass: "modal fade",
     attrs: {
       "id": "basic_modal",
@@ -56443,17 +56306,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "modal-content"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
     staticClass: "modal-body"
   }, _vm._l((_vm.addresses), function(address) {
-    return _c('section', [_c('a', {
+    return _c('section', [_c('button', {
       staticClass: "btn btn-green btn-flat",
       attrs: {
-        "href": "javascript:void(0)"
+        "type": "button",
+        "data-dismiss": "modal"
+      },
+      on: {
+        "click": function($event) {
+          _vm.selectAddress(address)
+        }
       }
-    }, [_c('p', [_vm._v(_vm._s(address.label))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(address.formatted_address))])])])
-  }))])])])])
+    }, [_c('p', [_vm._v(_vm._s(address.label))]), _vm._v(" "), _c('p', {
+      staticStyle: {
+        "font-size": "80%"
+      }
+    }, [_vm._v(_vm._s(address.formatted_address))])])])
+  }))])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('header', {
+    staticClass: "card-heading "
+  }, [_c('h2', {
+    staticClass: "card-title"
+  }, [_vm._v("Shipments")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header"
   }, [_c('h4', {
@@ -56478,11 +56357,16 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-0cb3528a", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-2472b3e8", module.exports)
   }
 }
 
 /***/ }),
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
 /* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
