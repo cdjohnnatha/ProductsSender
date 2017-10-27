@@ -18,14 +18,15 @@ class DatabaseSeeder extends Seeder
             'owner_surname' => 'Testing',
             'company_name' => 'Holyship',
             'country' => 'Brasil',
-            'address' => 'Avenida Epitacio Pessoa, sem nº',
+            'street' => 'Avenida Epitacio Pessoa, sem nº',
             'city' => 'João Pessoa',
             'state' => 'PB',
             'postal_code' => '58000',
             'phone' => '08003330800',
             'addressable_id' => 1,
-            'addressable_type' => 'warehouse',
-            'default_address' => true
+            'addressable_type' => 'App\Warehouse',
+            'number' => 400,
+            'formatted_address' => 'Avenida Epitacio Pessoa, sem nº, João Pessoa, Paraiba'
         ]);
 
 
@@ -35,14 +36,15 @@ class DatabaseSeeder extends Seeder
             'owner_surname' => 'Testing',
             'company_name' => 'Holyship',
             'country' => 'Brasil',
-            'address' => 'Avenida Epitacio Pessoa, sem nº',
+            'street' => 'Avenida Epitacio Pessoa, sem nº',
             'city' => 'João Pessoa',
             'state' => 'PB',
             'postal_code' => '58000',
             'phone' => '08003330800',
             'addressable_id' => 1,
-            'addressable_type' => 'user',
-            'default_address' => true
+            'addressable_type' => 'App\User',
+            'number' => 400,
+            'formatted_address' => 'Avenida Epitacio Pessoa, sem nº, João Pessoa, Paraiba'
         ]);
 
         DB::table('addresses')->insert([
@@ -51,82 +53,106 @@ class DatabaseSeeder extends Seeder
             'owner_surname' => 'Testing',
             'company_name' => 'Holyship',
             'country' => 'Brasil',
-            'address' => 'Avenida Epitacio Pessoa, sem nº',
+            'street' => 'Avenida Epitacio Pessoa, sem nº',
             'city' => 'João Pessoa',
             'state' => 'PB',
             'postal_code' => '58000',
             'phone' => '08003330800',
             'addressable_id' => 1,
-            'addressable_type' => 'admin',
-            'default_address' => true
+            'addressable_type' => 'App\Admin',
+            'number' => 400,
+            'formatted_address' => 'Avenida Epitacio Pessoa, sem nº, João Pessoa, Paraiba'
         ]);
 
 
         //Subscriptions
         DB::table('subscriptions')->insert([
             'title' => 'Free',
-            'amount' => 0.0
+            'amount' => 0.0,
+            'active' => true,
+            'principal' => true,
+            'period' => 30,
+            'discounts' => 10.0,
+            'slots' => 5
         ]);
 
         DB::table('subscriptions')->insert([
             'title' => 'Medium',
-            'amount' => 10.00
+            'amount' => 10.00,
+            'active' => true,
+            'principal' => true,
+            'period' => 30,
+            'discounts' => 10.0,
+            'slots' => 5
         ]);
 
         DB::table('subscriptions')->insert([
             'title' => 'Pro',
-            'amount' => 20.00
+            'amount' => 20.00,
+            'active' => true,
+            'principal' => true,
+            'period' => 30,
+            'discounts' => 10.0,
+            'slots' => 5
         ]);
 
         //Benefits
         DB::table('benefits')->insert([
             'message' => 'Primeiras 10 caixas gratuitas',
-            'subscription_id' => 1
+            'subscription_id' => 1,
+            'active' => true
         ]);
 
         DB::table('benefits')->insert([
             'message' => 'Fotos das caixas.',
-            'subscription_id' => 1
+            'subscription_id' => 1,
+            'active' => true
         ]);
 
         DB::table('benefits')->insert([
             'message' => 'Seu próprio endereço nos EUA',
-            'subscription_id' => 1
+            'subscription_id' => 1,
+            'active' => true
         ]);
 
         DB::table('benefits')->insert([
             'message' => 'Seu próprio endereço nos EUA',
-            'subscription_id' => 2
+            'subscription_id' => 2,
+            'active' => true
         ]);
 
         DB::table('benefits')->insert([
             'message' => '3 fotos gratuitas de cada pacote',
-            'subscription_id' => 2
+            'subscription_id' => 2,
+            'active' => true
         ]);
 
         DB::table('benefits')->insert([
             'message' => 'Economize até 80% em fretes',
-            'subscription_id' => 2
+            'subscription_id' => 2,
+            'active' => true
         ]);
 
 
         DB::table('benefits')->insert([
             'message' => '180 dias gratuitos',
-            'subscription_id' => 3
+            'subscription_id' => 3,
+            'active' => true
         ]);
 
         DB::table('benefits')->insert([
             'message' => 'Taxa grátis para o armazém EUA',
-            'subscription_id' => 3
+            'subscription_id' => 3,
+            'active' => true
         ]);
 
         DB::table('benefits')->insert([
             'message' => 'Envios de vários pacotes',
-            'subscription_id' => 3
+            'subscription_id' => 3,
+            'active' => true
         ]);
 
         DB::table('warehouses')->insert([
-            'name' => 'Jon People',
             'storage_time' => 30,
             'box_price' => 5.00
         ]);

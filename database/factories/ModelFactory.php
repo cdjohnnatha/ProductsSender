@@ -74,14 +74,15 @@ $factory->define(App\Address::class, function (Faker\Generator $faker) {
         'owner_surname' => $faker->lastName,
         'company_name' => $faker->company,
         'country' => $faker->country,
-        'address' => $faker->address,
+        'street' => $faker->address,
         'city' => $faker->city,
         'state' => $faker->city,
         'postal_code' => $faker->postcode,
         'phone' => $faker->phoneNumber,
         'addressable_id' => $faker->numberBetween($min = 1, $max = 3),
         'addressable_type' => $type,
-        'default_address' => $faker->boolean
+        'number' => 400,
+        'formatted_address' => $faker->streetAddress
 
     ];
 });
