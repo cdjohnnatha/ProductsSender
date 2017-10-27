@@ -116,6 +116,26 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('benefits')->insert([
+            'message' => 'Primeiras 10 caixas gratuitas',
+            'subscription_id' => 1,
+            'active' => true
+        ]);
+
+        DB::table('benefits')->insert([
+            'message' => 'Primeiras 10 caixas gratuitas',
+            'subscription_id' => 1,
+            'active' => true
+        ]);
+
+        DB::table('benefits')->insert([
+            'message' => 'Primeiras 10 caixas gratuitas',
+            'subscription_id' => 1,
+            'active' => true
+        ]);
+
+        //-------- second benefit
+
+        DB::table('benefits')->insert([
             'message' => 'Seu próprio endereço nos EUA',
             'subscription_id' => 2,
             'active' => true
@@ -133,6 +153,26 @@ class DatabaseSeeder extends Seeder
             'active' => true
         ]);
 
+        DB::table('benefits')->insert([
+            'message' => '3 fotos gratuitas de cada pacote',
+            'subscription_id' => 2,
+            'active' => true
+        ]);
+
+        DB::table('benefits')->insert([
+            'message' => '3 fotos gratuitas de cada pacote',
+            'subscription_id' => 2,
+            'active' => true
+        ]);
+
+        DB::table('benefits')->insert([
+            'message' => '3 fotos gratuitas de cada pacote',
+            'subscription_id' => 2,
+            'active' => true
+        ]);
+
+        // ----- end benefit 2
+
 
         DB::table('benefits')->insert([
             'message' => '180 dias gratuitos',
@@ -142,6 +182,24 @@ class DatabaseSeeder extends Seeder
 
         DB::table('benefits')->insert([
             'message' => 'Taxa grátis para o armazém EUA',
+            'subscription_id' => 3,
+            'active' => true
+        ]);
+
+        DB::table('benefits')->insert([
+            'message' => 'Envios de vários pacotes',
+            'subscription_id' => 3,
+            'active' => true
+        ]);
+
+        DB::table('benefits')->insert([
+            'message' => 'Envios de vários pacotes',
+            'subscription_id' => 3,
+            'active' => true
+        ]);
+
+        DB::table('benefits')->insert([
+            'message' => 'Envios de vários pacotes',
             'subscription_id' => 3,
             'active' => true
         ]);
