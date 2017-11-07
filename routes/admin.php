@@ -1,13 +1,14 @@
 <?php
+Route::domain('admin.holyship.io.localhost')->group(function () {
 
-Route::get('/admin/login', 'Auth\AdminLoginController@index')->name('admin.login');
-Route::post('/admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+    Route::get('/admin/login', 'Auth\AdminLoginController@index')->name('admin.login');
+    Route::post('/admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 
-Route::group(['middleware' => ['auth:admin']], function(){
-    Route::group([
-        'as' => 'admin.',
-        'prefix' => 'admin'
-        ], function() {
+    Route::group(['middleware' => ['auth:admin']], function () {
+        Route::group([
+            'as' => 'admin.',
+            'prefix' => 'admin'
+        ], function () {
 
             Route::get('/dashboard', 'AdminDashboardController@index')->name('dashboard');
             Route::resource('users', 'UserController');
@@ -28,8 +29,8 @@ Route::group(['middleware' => ['auth:admin']], function(){
             Route::delete('benefits/{benefit}', 'BenefitController@destroy')->name('benefits.destroy');
             Route::delete('packagefiles/{pictureId}', 'PackageFilesController@destroy')->name('packagefiles.destroy');
 
+        });
+        Route::resource('admin', 'AdminController');
     });
-    Route::resource('admin', 'AdminController');
 });
-
 
