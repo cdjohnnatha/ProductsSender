@@ -20,8 +20,8 @@ class ShipmentApiController extends Controller
     {
 
         $packages = Package::with('warehouse')->find($request->input('package'));
+
         $address = Address::find($request->input('address'));
-        Log::info($packages->warehouse->address->country);
         $address_to = new \App\Library\Shipment\Address($address);
         $address_from = new \App\Library\Shipment\Address($packages->warehouse->address);
         $items = new Items($packages->goods->goodsDeclaration);
@@ -34,13 +34,5 @@ class ShipmentApiController extends Controller
             'async' => false,
             'parcels' => $parcels->getParcel()
         ));
-
-
-
-    }
-
-    public function show()
-    {
-        return response()->json('worked');
     }
 }
