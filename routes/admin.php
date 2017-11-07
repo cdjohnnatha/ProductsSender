@@ -1,5 +1,5 @@
 <?php
-Route::domain('admin.holyship.io')->group(function () {
+Route::domain('admin.holyship.io.localhost')->group(function () {
 
     Route::get('/admin/login', 'Auth\AdminLoginController@index')->name('admin.login');
     Route::post('/admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
