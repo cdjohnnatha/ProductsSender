@@ -1,6 +1,6 @@
 <?php
 
-Route::domain('app.dev.holyship.io')->group(function () {
+Route::domain('dev.holyship.io.app')->group(function () {
 
     Route::get('/', function () {
         return view('welcome');
