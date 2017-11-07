@@ -83,13 +83,17 @@ class WarehouseController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, $this->rules());
-        $warehouse = Warehouse::findOrFail($id);
-        $warehouse->load('address');
+        $warehouse = Warehouse::with('address')->find($id);
+//        $warehouse->load('address');
         $warehouse->address->load('geonames');
         $warehouse->fill($request->input('warehouse'));
         $warehouse->address->fill($request->input('address'));
-        $warehouse->address->geonames->fill($request->input('geonames'));
-
+        if(!empty($warehouse->address->geonames)){
+            $warehouse->address->geonames->fill($request->input('geonames'));
+        }
+        else{
+            $warehouse->address->geonames()->create($request->input('geonames'));
+        }
 
         if($warehouse->save() &&  $warehouse->address->save() && $warehouse->address->geonames->save()){
             $request->session()->flash('success', 'Warehouse #'.$warehouse->id.' was successfully updated!');
