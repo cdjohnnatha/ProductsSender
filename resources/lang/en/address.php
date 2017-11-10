@@ -15,7 +15,8 @@ return [
         'country'   => 'Country',
         'number'   => 'Number',
         'form' => 'Address form',
-        'addressee' => 'Addressee'
+        'addressee' => 'Addressee',
+        'street2' => 'Address Complement'
     ],
 
     'label' => [

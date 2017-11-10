@@ -16,9 +16,6 @@
       </div>
     </header>
 
-
-
-
     <section class="tab-content  p-20">
       <section class="tab-pane fadeIn active" id="tab-1">
 

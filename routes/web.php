@@ -1,6 +1,7 @@
 <?php
 
 
+
 //Route::domain('app.dev.holyship.io')->group(function () {
 
     Route::get('/', function () {
@@ -56,6 +57,4 @@
             'index'
         ]]);
     });
-
-//});
 
