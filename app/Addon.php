@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Addon extends Entity
 {
     protected $fillable = [
@@ -12,13 +10,11 @@ class Addon extends Entity
         'addonable_type',
     ];
 
-    public function addonable()
-    {
+    public function addonable(){
         return $this->morphTo();
     }
 
-    public function service()
-    {
+    public function service(){
         return $this->belongsTo(Service::class);
     }
 

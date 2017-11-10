@@ -25,6 +25,10 @@ class CreatePackagesTable extends Migration
             $table->tinyInteger('status_id');
             $table->integer('object_owner');
             $table->integer('warehouse_id');
+
+            $table->index('object_owner');
+            $table->index('warehouse_id');
+
             $table->timestamps();
             $table->softDeletes();
         });

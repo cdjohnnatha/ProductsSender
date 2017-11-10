@@ -6,11 +6,7 @@ use Illuminate\Foundation\Http\Middleware\TrimStrings as BaseTrimmer;
 
 class TrimStrings extends BaseTrimmer
 {
-    /**
-     * The names of the attributes that should not be trimmed.
-     *
-     * @var array
-     */
+    //TODO: o que é isso? porque não criar uma arquivo Helpers.php para ajudar? Ou até mesmo Support.php (laravel já tem helpers.php)
     protected $except = [
         'password',
         'password_confirmation',

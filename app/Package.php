@@ -2,13 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Package extends Entity
 {
-
     protected $attributes = array('sent' => false);
 
     protected $fillable = [
@@ -25,8 +22,6 @@ class Package extends Entity
     ];
 
     protected $hidden = [
-        'updated_at',
-        'deleted_at',
         'status_id'
     ];
 
@@ -43,28 +38,23 @@ class Package extends Entity
         'status_id'
     ];
 
-    public function user()
-    {
+    public function user(){
         return $this->belongsTo(User::class, 'object_owner');
     }
 
-    public function status()
-    {
+    public function status(){
         return $this->belongsTo(Status::class);
     }
 
-    public function warehouse()
-    {
-        return $this->belongsTo(Warehouse::class, 'warehouse_id');
+    public function warehouse(){
+        return $this->belongsTo(Warehouse::class);
     }
 
-    public function pictures()
-    {
+    public function pictures(){
         return $this->hasMany(PackageFiles::class, 'package_id');
     }
 
-    public function goods()
-    {
+    public function goods(){
         return $this->hasOne(IncomingPackages::class, 'package_id');
     }
 }

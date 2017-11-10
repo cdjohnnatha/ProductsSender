@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\IncomingPackages;
 use App\Notifications\IncomingPackageNotification;
-use App\Addon;
 use App\Service;
 use App\Warehouse;
 use Illuminate\Http\Request;
@@ -12,15 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class IncomingPackagesController extends Controller
 {
-
     private $pagePrefix;
 
-    public function __construct()
-    {
-
+    public function __construct(){
         $this->pagePrefix = 'package.incoming.';
     }
-
 
     public function rules()
     {
@@ -39,13 +34,7 @@ class IncomingPackagesController extends Controller
         ];
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+    public function index(){
         if (auth()->guard('web')->user()) {
             $incomingPackages = IncomingPackages::where('registered', false)
                 ->where('user_id', Auth::user()->id)->get();
@@ -57,26 +46,13 @@ class IncomingPackagesController extends Controller
         return view($this->pagePrefix.'index', compact('incomingPackages'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
+    public function create(){
         $warehouses = Warehouse::all();
         $services = Service::all();
         return view($this->pagePrefix.'create', compact('warehouses', 'services'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $this->validate($request, $this->rules());
         $incoming = new IncomingPackages($request->input('incoming'));
         $incoming->warehouse_id = $request->input('warehouse_id');
@@ -92,41 +68,19 @@ class IncomingPackagesController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+    public function show($id){
         $incomingPackage = IncomingPackages::with('addons')->find($id);
         return view($this->pagePrefix.'show', compact('incomingPackage'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
+    public function edit($id){
         $incoming = IncomingPackages::with('goodsDeclaration')->find($id);
         $warehouses = Warehouse::all();
         $services = Service::all();
         return view($this->pagePrefix.'create', compact('incoming', 'warehouses', 'services'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $this->validate($request, $this->rules());
         $incoming = IncomingPackages::find($id);
 
@@ -155,14 +109,7 @@ class IncomingPackagesController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
+    public function destroy($id){
         $incomingPackage = IncomingPackages::find($id);
         $incomingPackage->delete();
 

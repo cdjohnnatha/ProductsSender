@@ -77,41 +77,40 @@ class PackageController extends Controller
         }
     }
 
-    public function create($incoming = null)
-    {
+    public function create($incoming = null){
         $warehouses = Warehouse::with('address')->get();
         $status = Status::all();
-        if(!is_null($incoming)){
-            $incoming = IncomingPackages::find($incoming);
-        }
+
+        $incoming = IncomingPackages::find($incoming ?? 0);
+
         return view('package.create', compact('warehouses', 'status', 'incoming'));
     }
 
-    public function store(Request $request)
-    {
-
+    public function store(Request $request){
         $this->validate($request, $this->rules());
+
         $package = new Package($request->input('package'));
         $package->status_id = $request->input('status.status_id');
         $package->warehouse_id = $request->input('warehouse_id');
-        if($package->save()){
-            if($request->hasFile('package_files')) {
-                $this->saveImage($request->file('package_files'), $package);
-            }
-            if($request->exists('incoming')){
-                $incoming = IncomingPackages::find($request->input('incoming'));
-                $incoming->registered = true;
-                $package->goods()->save($incoming);
-            }
-            $request->session()->flash('status', 'Package was successfully registered at warehouse!');
-            return redirect(route('admin.packages.index'));
+
+        $package->save();
+
+        if($request->hasFile('package_files')) {
+            $this->saveImage($request->file('package_files'), $package);
         }
 
+        if($request->exists('incoming')){
+            $incoming = IncomingPackages::find($request->input('incoming'));
+            $incoming->registered = true;
+            $package->goods()->save($incoming);
+        }
+        $request->session()->flash('status', 'Package was successfully registered at warehouse!');
+
+        return redirect(route('admin.packages.index'));
     }
 
 
-    public function show($id)
-    {
+    public function show($id){
         $package = Package::with([
             'pictures',
             'warehouse',
@@ -122,18 +121,18 @@ class PackageController extends Controller
         return view('package.show', compact('package'));
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
         $package = Package::with(['pictures', 'goods'])->find($id);
         $status = Status::all();
         $warehouses = Warehouse::all();
         $warehouses->load('address');
+
         return view('package.create', compact('package', 'status', 'warehouses'));
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $this->validate($request, $this->rules());
+
         $package = Package::findOrFail($id);
         $package->fill($request->input('package'));
         $package->status_id = $request->input('status.status_id');
@@ -150,31 +149,26 @@ class PackageController extends Controller
     }
 
 
-    public function destroy($id)
-    {
-        $package = Package::findOrFail($id);
-        $package->delete();
-        if($package->trashed()){
-            if (auth()->guard('web')->user()) {
-                return redirect(route('user.packages.index'));
-            }
-            return redirect(route('admin.packages.index'));
-        }
+    public function destroy($id){
+        Package::findOrFail($id)->delete();
+
+        if (auth()->guard('web')->user())
+            return redirect(route('user.packages.index'));
+
+        return redirect(route('admin.packages.index'));
     }
 
-    public function changeStatus(Request $request)
-    {
+    public function changeStatus(Request $request){
         $package = Package::findOrFail($request->input('id'));
         $status = Status::where('status', $request->input('status'));
-        $package->status_id = $status->id;
 
-        if($package->save()){
-            return response('status updated to '.$status->status, '200');
-        }
+        $package->status_id = $status->id;
+        $package->save();
+
+        return response('status updated to '.$status->status, '200');
     }
 
-    private function saveImage($files, $package)
-    {
+    private function saveImage($files, $package){
         foreach ($files as $key=>$file) {
             $fileName = $package->id . date("dmYhmsu");
             $extension = explode('.', $file->getClientOriginalName())[1];
@@ -195,8 +189,6 @@ class PackageController extends Controller
                             with id:');
             }
         }
-
     }
-
 
 }

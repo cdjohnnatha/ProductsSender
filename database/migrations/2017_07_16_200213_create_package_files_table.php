@@ -15,10 +15,14 @@ class CreatePackageFilesTable extends Migration
     {
         Schema::create('package_files', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('name');
             $table->string('path');
             $table->string('type', 6);
             $table->bigInteger('package_id');
+
+            $table->index('package_id');
+
             $table->timestamps();
             $table->softDeletes();
         });

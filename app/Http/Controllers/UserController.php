@@ -9,32 +9,17 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-
-
-    private function rules()
-    {
-        return [
-            'users.name' => 'required|string',
-            'users.surname' => 'required|string',
-            'users.email' => 'required|email|string',
-            'users.password' => 'nullable|confirmed',
-            'users.subscription_id' => 'required'
-        ];
-    }
-
-    public function index()
-    {
+    public function index(){
         $users = User::with('subscription')->get();
+
         return view('user.index', compact('users'));
     }
 
-    public function dashboard()
-    {
+    public function dashboard(){
         return view('home');
     }
 
-    public function create()
-    {
+    public function create(){
         $subscriptions_active_month = Subscription::with('benefits')
             ->where('active',  1)
             ->where('period', 0)
@@ -64,8 +49,7 @@ class UserController extends Controller
                 'subscriptions_active_year'));
     }
 
-    public function show($id)
-    {
+    public function show($id){
         $user = User::with([
             'subscription',
             'address' => function($query){
@@ -74,9 +58,9 @@ class UserController extends Controller
         return view('user.perfil', compact('user'));
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
         $user = User::find($id);
+
         if(auth()->guard('admin')->user()){
             $subscriptions= Subscription::with('benefits')
                 ->where('active',  1)
@@ -88,8 +72,7 @@ class UserController extends Controller
         return view('user.edit')->with('user', $user);
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $this->validate($request,[
             'user.name' => 'bail|required|min:3',
             'user.surname' => 'required|string',
@@ -121,15 +104,12 @@ class UserController extends Controller
         }
     }
 
-
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-        $user->delete();
+    public function destroy($id){
+        User::findOrFail($id)->delete();
 
         if(auth()->guard('admin')->user()){
             return response('/admin/users', 200);
-        }else {
+        } else {
             return redirect('/');
         }
     }

@@ -15,12 +15,16 @@ class CreateIncomingPackagesTable extends Migration
     {
         Schema::create('incoming_packages', function (Blueprint $table) {
             $table->increments('id');
+
             $table->integer('warehouse_id');
             $table->string('provider', 50);
             $table->string('addressee', 50);
             $table->string('track_number', 50);
             $table->string('description');
             $table->decimal('total_goods');
+
+            $table->index('warehouse_id');
+
             $table->timestamps();
             $table->softDeletes();
         });

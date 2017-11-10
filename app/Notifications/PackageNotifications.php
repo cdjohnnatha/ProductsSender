@@ -11,9 +11,11 @@ use Illuminate\Notifications\Messages\MailMessage;
 class PackageNotifications extends Notification implements ShouldQueue
 {
     use Queueable;
+
     private $package;
     private $message;
     private $user;
+
     /**
      * Create a new notification instance.
      *

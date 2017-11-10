@@ -21,6 +21,11 @@ class CreateWarehousesTable extends Migration
             $table->integer('created_by');
             $table->integer('updated_by');
             $table->integer('address_id');
+
+            $table->index('created_by');
+            $table->index('address_id');
+            $table->index('updated_by');
+
             $table->timestamps();
             $table->softDeletes();
         });

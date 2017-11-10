@@ -1,12 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: claudio
- * Date: 8/8/17
- * Time: 10:30 AM
- */
+
 namespace App\Observers;
 use App\Notifications\PackageNotifications;
+
 use App\Package;
 use App\User;
 use Illuminate\Support\Facades\Storage;
@@ -36,12 +32,14 @@ class PackageObserver
             foreach($package->pictures as $picture) {
                 Storage::delete(config('constants.files.full_public_path').$picture->name);
                 $picture->delete();
-                activity()
-                    ->performedOn($picture)
-                    ->withProperty('package_id', $package->id)
-                    ->withProperty('file_name', $picture->name)
-                    ->log('The package id is :properties.package_id,
-                            removing filename :properties.file_name');
+
+                // TODO: que código é esse?
+//                activity()
+//                    ->performedOn($picture)
+//                    ->withProperty('package_id', $package->id)
+//                    ->withProperty('file_name', $picture->name)
+//                    ->log('The package id is :properties.package_id,
+//                            removing filename :properties.file_name');
             }
         }
     }

@@ -9,9 +9,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Admin extends Authenticatable
 {
-    use Notifiable;
-    use SoftDeletes;
-    use LogsActivity;
+    use Notifiable, SoftDeletes, LogsActivity;
 
     protected $guard = 'admin';
     /**
@@ -29,12 +27,4 @@ class Admin extends Authenticatable
         'phone',
         'warehouse_id'
     ];
-
-
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'deleted_at'
-    ];
-
 }

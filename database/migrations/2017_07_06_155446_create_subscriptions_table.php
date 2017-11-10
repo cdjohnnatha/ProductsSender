@@ -15,11 +15,18 @@ class CreateSubscriptionsTable extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 50);
+
             $table->decimal('amount');
+
+            $table->string('name', 50);
             $table->string('currency',20);
+
             $table->integer('created_by');
             $table->integer('updated_by');
+
+            $table->index('created_by');
+            $table->index('updated_by');
+
             $table->timestamps();
             $table->softDeletes();
         });

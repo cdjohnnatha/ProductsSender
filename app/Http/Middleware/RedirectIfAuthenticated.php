@@ -7,14 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
-     * @return mixed
-     */
+   //TODO: de forma alguma misturar o middleware. Segmentar por rota no arquivo de routes.php o que é de cada um
     public function handle($request, Closure $next, $guard = null)
     {
         switch($guard){
@@ -29,7 +22,6 @@ class RedirectIfAuthenticated
                 }
             break;
         }
-
 
         return $next($request);
     }

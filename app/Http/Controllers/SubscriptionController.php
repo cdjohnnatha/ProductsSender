@@ -22,8 +22,7 @@ class SubscriptionController extends Controller
         ];
     }
 
-    public function index()
-    {
+    public function index(){
         $subscriptions = Subscription::with('benefits')->get();
 
         $allow_activation_month = Subscription::where('active',  1)
@@ -41,89 +40,91 @@ class SubscriptionController extends Controller
                         'allow_activation_year'));
     }
 
-    public function create()
-    {
+    public function create(){
         $services = Service::all();
+
         return view('subscription.create', compact('services'));
     }
 
-    public function store(Request $request)
-    {
+    //TODO: $request->input('subscription') passado como requisição? sem passar pelo parâmetro da rota???
+    public function store(Request $request){
         $this->validate($request, $this->rules());
+
         $subscription = new Subscription($request->input('subscription'));
-        if ($subscription->save()) {
-            $subscription->benefits()->createMany($request->input('benefits'));
-            $subscription->addons()->createMany($request->input('additional_service'));
+        $subscription->save();
 
-            $request->session()->flash('status',
-                __('statusMessage.global_message.entity.created',
-                    ['entity' => 'Plan']));
+        $subscription->benefits()->createMany($request->input('benefits'));
+        $subscription->addons()->createMany($request->input('additional_service'));
 
-            return redirect(route('admin.subscriptions.index'));
-        }
+        $request->session()->flash('status',
+            __('statusMessage.global_message.entity.created',
+                ['entity' => 'Plan']));
+
+        return redirect(route('admin.subscriptions.index'));
     }
 
-    public function show($id)
-    {
+    public function show($id){
         $subscription = Subscription::with('benefits')->find($id);
+
         return view('subscription.show', compact('subscription'));
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
         $subscription = Subscription::with('benefits')->findOrFail($id);
         $services = Service::all();
+
         return view('subscription.create', compact('subscription', 'services'));
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $this->validate($request, $this->rules());
+
         $subscription = Subscription::with('benefits')->findOrFail($id);
         $subscription->fill($request->input('subscription'));
-        if ($subscription->save()) {
-            foreach ($request->input('benefits') as $message){
-                    $subscription->benefits()->updateOrCreate(
-                        ['id' => (int)$message['id']],
-                        ['message' => $message['message'],
-                         'active' => array_key_exists('active',$message)]);
-            }
 
-            $request->session()->flash('success',
-                __('statusMessage.global_message.attribute.updated',
-                    ['attribute' => $subscription->id, 'entity' => 'Plan']));
+        $subscription->save();
 
-            return redirect(route('admin.subscriptions.index'));
+        //TODO: regras de aplicação dentro do controlador? never...
+        foreach ($request->input('benefits') as $message){
+                $subscription->benefits()->updateOrCreate(
+                    ['id' => (int)$message['id']],
+                    ['message' => $message['message'],
+                     'active' => array_key_exists('active',$message)]);
         }
+
+        $request->session()->flash('success',
+            __('statusMessage.global_message.attribute.updated',
+                ['attribute' => $subscription->id, 'entity' => 'Plan']));
+
+        return redirect(route('admin.subscriptions.index'));
+
     }
 
-    public function destroy($id)
-    {
-        $subscription = Subscription::findOrFail($id);
-        $subscription->delete();
-        if( $subscription->trashed()) {
-            return redirect(route('admin.subscriptions.index'));
-        }
+    public function destroy($id){
+        Subscription::findOrFail($id)->delete();
+
+        return redirect(route('admin.subscriptions.index'));
     }
 
-    public function active(Request $request, $id)
-    {
+    public function active(Request $request, $id){
         $subscription = Subscription::find($id);
-        $subscription->active = $request->exists('active');
-        if( $subscription->save()) {
-            $request->session()->flash('success', __('statusMessage.global_message.subscription.active', ['attribute' => $subscription->id]));
 
-            return redirect(route('admin.subscriptions.index'));
-        }
+        $subscription->active = $request->exists('active');
+        $subscription->save();
+
+        $request->session()->flash('success', __('statusMessage.global_message.subscription.active', ['attribute' => $subscription->id]));
+        return redirect(route('admin.subscriptions.index'));
     }
 
-    public function principalOffer(Request $request, $id)
-    {
+
+    //TODO: qual o motivo de estar sempre utilizando o save ao invés do update?
+    public function principalOffer(Request $request, $id){
         $subscription = Subscription::find($id);
         $subscription->principal = $request->exists('principal');
-        if( $subscription->save()) {
-            $request->session()->flash('info', __('statusMessage.global_message.subscription.principal_offer', ['attribute' => $subscription->id]));
-            return redirect(route('admin.subscriptions.index'));
-        }
+        $subscription->save();
+
+        $request->session()->flash('info', __('statusMessage.global_message.subscription.principal_offer', ['attribute' => $subscription->id]));
+        return redirect(route('admin.subscriptions.index'));
+
     }
 }

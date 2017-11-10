@@ -15,11 +15,15 @@ class CreateGoodsDeclaration extends Migration
     {
         Schema::create('goods_declarations', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('description', 250);
             $table->integer('quantity');
             $table->decimal('unit_price');
             $table->decimal('total_unit');
             $table->integer('incoming_packages_id');
+
+            $table->index('incoming_packages_id');
+
             $table->timestamps();
             $table->softDeletes();
         });

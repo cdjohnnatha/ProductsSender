@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class AddressController extends Controller
 {
 
-
+    // TODO: a mesma rule pra create e update? nem sempre...
     public function rules()
     {
         return [
@@ -35,13 +35,7 @@ class AddressController extends Controller
         ];
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request, $id = null)
-    {
+    public function index(Request $request, $id = null){
         if(is_null($id)){
             $id = Auth::user()->id;
         }
@@ -50,24 +44,13 @@ class AddressController extends Controller
         return  view('address.index', compact('morph', 'warehouses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
+    public function create(){
         return view('address.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, $id = null)
-    {
+    //TODO: tudo errado nesse polymorph
+    // tem que separar TUDO mesmo (User / Admin / Warehouse)
+    public function store(Request $request, $id = null){
         if(is_null($id)){
             $id = Auth::user()->id;
         }
@@ -84,40 +67,19 @@ class AddressController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id, $address_id=null)
     {
         $address = Address::findOrFail($address_id);
         return $address_id;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $address = Address::with('geonames')->findOrFail($id);
         return view('address.create', compact('address'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id = null)
-    {
-//        dd($request->input());
+    public function update(Request $request, $id = null){
         $this->validate($request, $this->rules());
 
         $address = Address::with('geonames')->findOrFail($id);
@@ -142,14 +104,7 @@ class AddressController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request, $id)
-    {
+    public function destroy(Request $request, $id){
         $address = Address::findOrFail($id);
         $address->delete();
         if($address->thashed()){
@@ -162,8 +117,7 @@ class AddressController extends Controller
         }
     }
 
-    public function defaultAddress(Request $request, $id)
-    {
+    public function defaultAddress(Request $request, $id){
         $user = User::find(Auth::user()->id);
         $user->default_address = $id;
         if ($user->save()) {
@@ -172,8 +126,7 @@ class AddressController extends Controller
 
     }
 
-    private function getClass($request)
-    {
+    private function getClass($request){
         if ($request->is('warehouse/*')) {
             return Warehouse::class;
         }else if($request->is('user/*')) {
@@ -183,8 +136,7 @@ class AddressController extends Controller
         }
     }
 
-    private function getType($request)
-    {
+    private function getType($request){
         if ($request->is('warehouse/*')) {
             return 'warehouse';
         }else if($request->is('user/*')) {

@@ -15,10 +15,14 @@ class CreateAdditionalNamesTable extends Migration
     {
         Schema::create('additional_names', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('name', 100);
             $table->bigInteger('user_id');
-            $table->softDeletes();
+
+            $table->index('user_id');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

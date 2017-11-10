@@ -1,3 +1,8 @@
+<?php
+        //TODO: realizar espaçamento correto do blade
+        //ex: {{$var}} -----> {{ $var }}
+?>
+
 @extends('layouts.app')
 
 @section('panel_header')
@@ -53,10 +58,10 @@
 
               @if(Request::is('*/edit'))
                 @if(!is_null($package->goods))
-                  <input type="hidden" value="{{$package->goods->id}}" name="incoming">
+                  <input type="hidden" value="{{  $package->goods->id }}" name="incoming">
                 @endif
               @elseif(!is_null($incoming))
-                <input type="hidden" value="{{$incoming->id}}" name="incoming">
+                <input type="hidden" value="{{  $incoming->id }}" name="incoming">
               @endif
 
             </section>

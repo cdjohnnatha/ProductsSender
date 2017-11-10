@@ -11,10 +11,20 @@ use Illuminate\Support\Facades\Auth;
 
 class WarehouseController extends Controller
 {
+    public function index(){
+        $warehouses = Warehouse::with('address')->get();
 
-    public function rules()
-    {
-        return [
+        return view('warehouse.index', compact('warehouses'));
+    }
+
+    public function create(){
+        $admins = Admin::all();
+
+        return view('warehouse.create', compact('admins'));
+    }
+
+    public function store(Request $request){
+        $this->validate($request, [
             'warehouse.storage_time' => 'required|min:0',
             'warehouse.box_price' => 'required|min:0',
             'address.label' => 'bail|required|min:3',
@@ -30,49 +40,36 @@ class WarehouseController extends Controller
             'geonames.city' => 'required',
             'geonames.state' => 'required',
             'geonames.country' => 'required'
-        ];
-    }
+        ]);
 
-    public function index()
-    {
-        $warehouses = Warehouse::with('address')->get();
-        return view('warehouse.index', compact('warehouses'));
-    }
-
-    public function create()
-    {
-        $admins = Admin::all();
-        return view('warehouse.create', compact('admins'));
-    }
-
-    public function store(Request $request)
-    {
-        $this->validate($request, $this->rules());
         $warehouse = new Warehouse($request->input('warehouse'));
         $address = new Address($request->input('address'));
         $geonames = new AddressGeonameCode($request->input('geonames'));
+
         $admin = Admin::find($request->input('admin_id'));
+
         $address->owner_name = $admin->name;
         $address->owner_surname = $admin->surname;
         $address->company_name = 'Holyship';
-        if($warehouse->save() && $warehouse->address()->save($address)
-            && $warehouse->address->geonames()->save($geonames)){
-            $request->session()->flash('success', 'Warehouse was successfully created!');
-            return redirect(route('admin.warehouses.index'));
-        }
+
+        $warehouse->save();
+        $warehouse->address()->save($address);
+        $warehouse->address->geonames()->save($geonames);
+
+        $request->session()->flash('success', 'Warehouse was successfully created!');
+        return redirect(route('admin.warehouses.index'));
     }
 
-    public function show($id)
-    {
+    public function show($id){
         $warehouse = Warehouse::findOrFail($id);
+
         $warehouse->address;
         return response()->json([
             'warehouse' => $warehouse
         ]);
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
         $warehouse = Warehouse::with('address')->findOrFail($id);
         $admins = Admin::all();
         $warehouse->address->geonameCode;
@@ -80,14 +77,32 @@ class WarehouseController extends Controller
         return view('warehouse.create', compact('warehouse', 'admins'));
     }
 
-    public function update(Request $request, $id)
-    {
-        $this->validate($request, $this->rules());
+    public function update(Request $request, $id){
+        $this->validate($request, [
+            'warehouse.storage_time' => 'required|min:0',
+            'warehouse.box_price' => 'required|min:0',
+            'address.label' => 'bail|required|min:3',
+            'admin_id' => 'required|min:1',
+            'address.phone' => 'required',
+            'address.city' => 'required',
+            'address.state' => 'required',
+            'address.country' => 'required',
+            'address.street' => 'required|min:3',
+            'address.number' => 'required|string|max:15',
+            'address.formatted_address' => 'required',
+            'address.postal_code' => 'required',
+            'geonames.city' => 'required',
+            'geonames.state' => 'required',
+            'geonames.country' => 'required'
+        ]);
+
         $warehouse = Warehouse::with('address')->find($id);
-//        $warehouse->load('address');
         $warehouse->address->load('geonames');
+
         $warehouse->fill($request->input('warehouse'));
         $warehouse->address->fill($request->input('address'));
+
+        //TODO: cadê o update or create?
         if(!empty($warehouse->address->geonames)){
             $warehouse->address->geonames->fill($request->input('geonames'));
         }
@@ -95,19 +110,17 @@ class WarehouseController extends Controller
             $warehouse->address->geonames()->create($request->input('geonames'));
         }
 
-        if($warehouse->save() &&  $warehouse->address->save() && $warehouse->address->geonames->save()){
-            $request->session()->flash('success', 'Warehouse #'.$warehouse->id.' was successfully updated!');
-            return redirect(route('admin.warehouses.index'));
-        }
+        $warehouse->save();
+        $warehouse->address->save();
+        $warehouse->address->geonames->save();
+
+        $request->session()->flash('success', 'Warehouse #'.$warehouse->id.' was successfully updated!');
+        return redirect(route('admin.warehouses.index'));
     }
 
-    public function destroy($id)
-    {
-        $warehouse = Warehouse::findOrFail($id);
-        $warehouse->delete();
-        if($warehouse->trashed()){
-            return redirect(route('admin.warehouses.index'));
-        }
+    public function destroy($id){
+        Warehouse::findOrFail($id)->delete();
 
+        return redirect(route('admin.warehouses.index'));
     }
 }

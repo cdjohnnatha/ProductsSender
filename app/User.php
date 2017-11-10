@@ -9,9 +9,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-    use SoftDeletes;
-    use LogsActivity;
+    use Notifiable, SoftDeletes, LogsActivity;
 
     protected $fillable = [
         'name',
@@ -41,39 +39,31 @@ class User extends Authenticatable
         'deleted_at'
     ];
 
-    public function address()
-    {
+    public function address(){
         return $this->morphMany(Address::class, 'addressable');
     }
 
-    public function defaultAddress()
-    {
+    public function defaultAddress(){
         return $this->hasOne(Address::class, 'id', 'default_address');
     }
 
-    public function subscription()
-    {
+    public function subscription(){
         return $this->belongsTo(Subscription::class);
     }
 
-    public function wallet()
-    {
+    public function wallet(){
         return $this->hasOne(Wallet::class, 'user_id');
     }
 
-
-    public function packages()
-    {
+    public function packages(){
         return $this->hasMany(Package::class, 'object_owner');
     }
 
-    public function additionalNames()
-    {
+    public function additionalNames(){
         return $this->hasMany(AdditionalNames::class);
     }
 
-    public function incomingPackages()
-    {
+    public function incomingPackages(){
         return $this->hasMany(IncomingPackages::class);
     }
 }

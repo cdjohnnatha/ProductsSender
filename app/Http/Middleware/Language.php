@@ -15,8 +15,6 @@ class Language
      */
     public function handle($request, Closure $next)
     {
-
-
         $locale = session('locale');
         if(is_null($locale)) {
             $locale = 'en';

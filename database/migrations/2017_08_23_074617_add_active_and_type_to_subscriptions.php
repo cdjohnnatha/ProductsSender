@@ -13,10 +13,12 @@ class AddActiveAndTypeToSubscriptions extends Migration
      */
     public function up()
     {
+        //TODO: colocando INDEX em variáveis BOOLEAN???
         Schema::table('subscriptions', function (Blueprint $table) {
             $table->boolean('active');
             $table->boolean('principal');
             $table->smallInteger('period');
+
             $table->index('active', 'active_index');
             $table->index('period', 'period_index');
             $table->index('principal', 'principal_index');

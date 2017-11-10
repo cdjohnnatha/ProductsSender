@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Storage;
 class PackageFilesController extends Controller
 {
 
-    public function destroy($fileId)
-    {
+    //TODO: qual o motivo desse controlador?
+    public function destroy($fileId){
         $file = PackageFiles::findOrFail($fileId);
         Storage::delete(config('full_public_path').$file->name);
         $file->delete();

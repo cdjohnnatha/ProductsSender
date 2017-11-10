@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Subscription extends Entity
@@ -16,28 +14,20 @@ class Subscription extends Entity
         'discounts',
     ];
 
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
     protected $attributes = [
         'active' => false,
-        'principal' => false];
-
+        'principal' => false
+    ];
 
     public function benefits(){
         return $this->hasMany(Benefit::class);
     }
 
-    public function addons()
-    {
+    public function addons(){
         return $this->morphMany(Addon::class, 'addonable');
     }
 
-    public function servicesIncluded()
-    {
+    public function servicesIncluded(){
         return $this->hasManyThrough(Service::class, Addon::class);
     }
 }

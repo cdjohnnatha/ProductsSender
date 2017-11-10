@@ -9,11 +9,17 @@ use Illuminate\Http\Request;
 
 class GoodsDeclarationController extends Controller
 {
+    public function index(){
 
+    }
 
-    public function rules()
-    {
-        return [
+    public function create($id){
+        $package_id = $id;
+        return view('package.goods.create', compact('package_id'));
+    }
+
+    public function store(Request $request, $id){
+        $this->validate($request, [
             'goods.provider' => 'required',
             'goods.content_type' => 'required',
             'goods.description' => 'required|string',
@@ -23,34 +29,7 @@ class GoodsDeclarationController extends Controller
             'custom_clearance.*.unit_price' => 'required',
             'custom_clearance.*.total_unit' => 'required',
 
-        ];
-    }
-
-    public function index()
-    {
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create($id)
-    {
-        $package_id = $id;
-        return view('package.goods.create', compact('package_id'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, $id)
-    {
-        $this->validate($request, $this->rules());
+        ]);
 
         $goods = new IncomingPackages($request->input('goods'));
         $package = Package::find($id);
@@ -70,53 +49,20 @@ class GoodsDeclarationController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function show($id){
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function edit($id){
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id){
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $goods = GoodsDeclaration::find($id);
-        $goods->delete();
+    public function destroy($id){
+        GoodsDeclaration::find($id)->delete();
 
-        if($goods->trashed()){
-            return back();
-        }
+        return back();
     }
 }

@@ -17,6 +17,9 @@ class CreateAddonsTable extends Migration
             $table->increments('id');
             $table->integer('service_id');
             $table->morphs('addonable');
+
+            $table->index('service_id');
+
             $table->timestamps();
             $table->softDeletes();
         });
