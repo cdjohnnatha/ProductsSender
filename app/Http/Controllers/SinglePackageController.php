@@ -16,4 +16,9 @@ class SinglePackageController extends Controller
         return view('package.single.create', compact('package', 'services'));
     }
 
+    public function store(Request $request)
+    {
+        dd($request->input());
+    }
+
 }

@@ -25,7 +25,7 @@ class ShipmentApiController extends Controller
         $address_to = new \App\Library\Shipment\Address($address);
         $address_from = new \App\Library\Shipment\Address($packages->warehouse->address);
         $items = new Items($packages->goods->goodsDeclaration);
-        $custom_declaration = new CustomDeclaration($packages->goods, $items);
+//        $custom_declaration = new CustomDeclaration($packages->goods, $items);
         $parcels = new Parcels($packages);
 
         return $shipment = \Shippo_Shipment::create(array(
