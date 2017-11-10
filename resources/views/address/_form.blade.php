@@ -126,7 +126,7 @@
       @endif
     </section>
 
-    <div class="form-group col-sm-7 label-floating
+    <div class="form-group col-sm-5 label-floating
       {{
         $errors->has('address.formatted_address') ||
         $errors->has('geonames.country') ||
@@ -151,8 +151,25 @@
       </div>
     </div>
 
+    <div class="form-group col-sm-5 {{ $errors->has('address.street2') ? ' has-error' : '' }} label-floating">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
+        <label class="control-label">{{__('address.titles.street2')}}</label>
+        <input type="text" class="form-control" name="address[street2]"
+               value="{{ $address->street2 or old('address.street2') }}">
+      </div>
 
-    <div class="form-group col-sm-3 {{ $errors->has('address.postal_code') ? ' has-error' : '' }} label-floating">
+      @if ($errors->has('address.street2'))
+        <span class="help-block">
+          <strong class="text-danger" class="alert-danger">
+            {{ $errors->first('address.street2') }}
+          </strong>
+        </span>
+      @endif
+    </div>
+  </section>
+  <section class="row">
+    <div class="form-group col-sm-4 {{ $errors->has('address.postal_code') ? ' has-error' : '' }} label-floating">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
         <label class="control-label">{{__('address.titles.postal_code')}}</label>

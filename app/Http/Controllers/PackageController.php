@@ -54,7 +54,9 @@ class PackageController extends Controller
             $field = 'warehouse_id';
             $id = Auth::user()->warehouse_id;
             $incomingPackages = IncomingPackages::where('registered', false)
-                ->where('warehouse_id', Auth::user()->warehouse_id)
+                ->where(
+                    'warehouse_id',
+                    Auth::user()->warehouse_id)
                 ->get();
         }
 

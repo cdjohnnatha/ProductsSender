@@ -13,7 +13,7 @@
           $action = 'admin';
       }
 
-      $action .= '.incoming.';
+      $action .= '.single_package.';
     ?>
 
     @if(Request::is('*/edit'))
@@ -129,7 +129,7 @@
                         <shipment-component :addresses="{{Auth::user()->address}}"></shipment-component>
                       </section>
 
-                      <section class="tab-pane" id="tab5">
+                      <section class="tab-pane" id="tab4">
                         @include('utils._payments')
                       </section>
 

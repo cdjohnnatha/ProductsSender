@@ -16,6 +16,7 @@ class Address extends Entity
         'company_name',
         'country',
         'street',
+        'street2',
         'city',
         'state',
         'number',

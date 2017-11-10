@@ -26,6 +26,7 @@ class AddressController extends Controller
             'address.state' => 'required',
             'address.country' => 'required',
             'address.street' => 'required|min:3',
+            'address.street2' => 'nullable|string',
             'address.number' => 'required|string|max:15',
             'address.formatted_address' => 'required',
             'address.postal_code' => 'required',
@@ -80,7 +81,7 @@ class AddressController extends Controller
                 __('statusMessage.global_message.attribute.created', [
                     'attribute' => $address->label,
                     'entity' => __('common.titles.address')]));
-            return redirect($this->getType($request).'address.index');
+            return redirect(route($this->getType($request).'.address.index'));
         }
     }
 
@@ -152,13 +153,13 @@ class AddressController extends Controller
     {
         $address = Address::findOrFail($id);
         $address->delete();
-        if($address->thashed()){
+        if($address->trashed()){
             $request->session()->flash('info',
                 __('statusMessage.status.address.create', [
                     'attribute' => $address->label,
                     'entity' => __('common.titles.address')]));
 
-            return redirect(Route($this->getType($request).'.address.index'));
+            return redirect(route($this->getType($request).'.address.index'));
         }
     }
 

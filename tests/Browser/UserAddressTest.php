@@ -22,6 +22,7 @@ class UserAddressTest extends DuskTestCase
                 ->type('address[label]', $faker->name)
                 ->type('address[owner_name]', $faker->firstName)
                 ->type('address[owner_surname]', $faker->lastName)
+                ->type('address[street2]', $faker->locale)
                 ->type('address[phone]', $faker->phoneNumber)
                 ->type('address[company_name]', $faker->company)
                 ->type('address[number]', $faker->phoneNumber)
