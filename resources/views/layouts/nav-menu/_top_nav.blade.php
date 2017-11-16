@@ -62,14 +62,7 @@
 @section('footerJS')
   <script>
       $('.country').on('change', function(){
-//        $('#language-input').val($(this).val());
         window.location = '/locale/' + $(this).val();
-//        $('#language-form').submit();
       });
   </script>
-
-  {{--<form id="language-form" action="{{ route('locale') }}" method="POST">--}}
-    {{--{{ csrf_field() }}--}}
-    {{--<input type="hidden" id="language-input" name="locale">--}}
-  {{--</form>--}}
 @endsection
