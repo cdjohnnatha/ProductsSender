@@ -24,13 +24,6 @@ class Address extends Entity
         'addressable_id',
     ];
 
-    protected $hidden = [
-        'created_by',
-        'updated_by',
-        'addressable_type',
-        'addressable_id'
-    ];
-
     public function addressable(){
         return $this->morphTo();
     }

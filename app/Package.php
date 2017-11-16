@@ -21,10 +21,6 @@ class Package extends Entity
         'note'
     ];
 
-    protected $hidden = [
-        'status_id'
-    ];
-
     protected static $logAttributes = [
         'width',
         'height',

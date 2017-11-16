@@ -14,6 +14,7 @@ interface RepositoryInterface
     public function store(array $attributes);
     public function update($id, array $attributes);
     public function find($column, $attribute);
+    public function findById($attribute);
     public function destroy($id);
 
 }

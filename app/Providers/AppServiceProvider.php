@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
+use UserRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +29,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('local', 'testing')) {
             $this->app->register(DuskServiceProvider::class);
         }
+
+        $this->app->singleton(RepositoryInterface::class, UserRepository::class);
     }
 }

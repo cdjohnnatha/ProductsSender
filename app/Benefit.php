@@ -13,10 +13,6 @@ class Benefit extends Entity
         'active'
     ];
 
-    protected $hidden = [
-        'subscription_id',
-    ];
-
     public function subscription(){
         return $this->belongsTo(Subscription::class);
     }
