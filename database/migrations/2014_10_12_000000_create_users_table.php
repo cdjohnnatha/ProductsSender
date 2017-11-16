@@ -19,9 +19,17 @@ class CreateUsersTable extends Migration
             $table->string('surname', 100);
             $table->string('country', 70);
             $table->string('email')->unique();
-            $table->string('plan');
             $table->string('phone', 20);
             $table->string('password');
+            $table->string('rg');
+            $table->string('cpf');
+            $table->boolean('confirmed')->default(0);
+            $table->string('confirmation_code')->nullable();
+            $table->integer('subscription_id');
+            $table->integer('default_address')->nullable();
+
+            $table->index('default_address');
+            $table->index('subscription_id');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -15,19 +15,21 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('label');
-            $table->string('owner_name');
-            $table->string('owner_surname');
-            $table->string('company_name');
-            $table->string('country');
-            $table->string('address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('postal_code');
-            $table->string('phone');
+            $table->string('label', 30);
+            $table->string('owner_name', 50);
+            $table->string('owner_surname', 50);
+            $table->string('company_name', 50)->nullable();
+            $table->string('country', 50);
+            $table->string('street', 100);
+            $table->string('street2', 100)->nullable();
+            $table->string('city', 50);
+            $table->string('state', 50);
+            $table->string('postal_code', 20);
+            $table->string('phone', 20);
             $table->integer('addressable_id');
             $table->string('addressable_type');
-            $table->boolean('default_address');
+            $table->string('number', 15);
+            $table->string('formatted_address', 200);
             $table->timestamps();
             $table->softDeletes();
         });

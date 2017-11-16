@@ -23,11 +23,14 @@ class CreatePackagesTable extends Migration
             $table->string('weight_measure', 5);
             $table->string('note')->nullable();;
             $table->tinyInteger('status_id');
+            $table->boolean('sent')->nullable();
             $table->integer('object_owner');
             $table->integer('warehouse_id');
+            $table->integer('incoming_package_id')->nullable();
 
             $table->index('object_owner');
             $table->index('warehouse_id');
+            $table->index('incoming_package_id');
 
             $table->timestamps();
             $table->softDeletes();

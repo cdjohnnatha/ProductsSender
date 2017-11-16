@@ -19,6 +19,7 @@ class CreateBenefitsTable extends Migration
             $table->integer('subscription_id');
 
             $table->index('subscription_id');
+            $table->boolean('active');
 
             $table->timestamps();
             $table->softDeletes();

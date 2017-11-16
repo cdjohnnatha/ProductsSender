@@ -22,7 +22,14 @@ class CreateIncomingPackagesTable extends Migration
             $table->string('track_number', 50);
             $table->string('description');
             $table->decimal('total_goods');
+            $table->decimal('total_addons');
+            $table->boolean('registered');
 
+            $table->integer('package_id')->nullable();
+            $table->integer('user_id');
+
+            $table->index('user_id');
+            $table->index('package_id');
             $table->index('warehouse_id');
 
             $table->timestamps();

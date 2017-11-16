@@ -17,10 +17,12 @@ class CreateAdminTable extends Migration
             $table->increments('id');
             $table->string('name', 100);
             $table->string('surname', 100);
-            $table->string('country', 70);
             $table->string('email')->unique();
             $table->string('phone', 30);
             $table->string('password');
+            $table->integer('default_warehouse');
+
+            $table->index('default_warehouse');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -17,7 +17,7 @@ class AdminTableSeeder extends Seeder
             'email' => 'holyship@admin.com',
             'phone' => '08000800',
             'password' => Hash::make('holyship123'),
-            'warehouse_id' => 1
+            'default_warehouse' => 1
         ]);
     }
 }
