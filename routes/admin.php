@@ -1,5 +1,5 @@
 <?php
-Route::domain('admin.holyship.io.localhost')->group(function () {
+//Route::domain('admin.holyship.io.localhost')->group(function () {
 
 
 //Route::domain('admin.dev.holyship.io')->group(function () {
@@ -35,5 +35,5 @@ Route::domain('admin.holyship.io.localhost')->group(function () {
 
         });
         Route::resource('admin', 'AdminController');
-    });
+//    });
 });
