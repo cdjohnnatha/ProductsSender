@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Address;
 use App\AddressGeonameCode;
 use App\Mail\UserRegisterConfirmation;
+use App\Repositories\SubscriptionRepository;
+use App\Repositories\UserRepository;
 use App\Subscription;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -31,6 +33,8 @@ class RegisterController extends Controller
 
 
     protected $redirectTo = '/user';
+    private $subscriptions;
+    private $user;
 
     protected function redirectTo()
     {
@@ -41,9 +45,11 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepository $user, SubscriptionRepository $subscription)
     {
         $this->middleware('guest');
+        $this->subscriptions = $subscription;
+        $this->user = $user;
 
     }
 
@@ -78,72 +84,31 @@ class RegisterController extends Controller
 
     public function register()
     {
-        $subscriptions_active_month = Subscription::with('benefits')
-                                    ->where('active',  1)
-                                    ->where('period', 0)
-                                    ->orderBy('amount')
-                                    ->limit(3)
-                                    ->get();
+        $subscriptions_active_month = $this->subscriptions->getPerTimeWithBenefits('amount', 1, true, 3);
+        $subscriptions_active_year = $this->subscriptions->getPerTimeWithBenefits('amount', 12, true, 3);
 
-        $subscriptions_active_year = Subscription::with('benefits')
-            ->where('active',  1)
-            ->where('period', 1)
-            ->limit(3)
-            ->orderBy('amount')
-            ->get();
-
-
-        return view('auth.register',
-            compact('subscriptions_active_month',
-                    'subscriptions_active_year'));
+        return view('auth.register', compact('subscriptions_active_month','subscriptions_active_year'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, $this->rules());
-        $user = new User($request->input('user'));
-        $user->subscription_id = $request->input('register.subscription_id');
-        $user->country = $request->input('address.country');
-        $address = new Address($request->input('address'));
-        $geonames = new AddressGeonameCode($request->input('geonames'));
-        $user->password = bcrypt($request->input('users.password'));
-        $user->confirmation_code = base64_encode($user->email);
-        Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
-        if($user->save() && $user->address()->save($address) && $user->wallet()->save(new Wallet())
-            && $user->address[0]->geonames()->save($geonames)) {
-            $user->default_address = $user->address[0]->id;
-            if($user->save()) {
-                $request->session()->flash('info', __('email_verification.registered_message'));
-//                Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
-                return redirect('/');
-            }
-
+        if($this->user->store($request)) {
+            return redirect('/');
         }
         return back();
     }
 
     public function confirm(Request $request, $confirmation_code)
     {
-
-        if(!$confirmation_code){
+        if($this->user->confirmeAccount($confirmation_code)){
+            $request->session()->flash('success', __('statusMessage.global_message.entity.confirmed', ['entity' => __('common.titles.account')]));
+            return redirect(route('login'));
+        } else {
             $request->session()->flash('error',
                 __('statusMessage.global_message.attribute.updated', ['entity' => 'Account Confirmation']));
             return redirect('/');
         }
-        $user = User::where('confirmation_code', $confirmation_code)->first();
-
-        if($user){
-            if($user->confirmed){
-                $request->session()->flash('warning', __('statusMessage.account', ['entity' => __('common.titles.account')]));
-                return redirect(route('login'));
-            }
-            $user->confirmed = true;
-            $user->save();
-            $request->session()->flash('success', __('statusMessage.global_message.entity.confirmed', ['entity' => __('common.titles.account')]));
-            return redirect(route('login'));
-        }
-
-        return redirect(route('login'));
     }
 
 }

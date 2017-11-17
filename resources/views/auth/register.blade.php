@@ -6,15 +6,6 @@
   @include('subscription.index_user')
 @endif
 
-@if ($errors->any())
-  <div class="alert alert-danger">
-    <ul>
-      @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-@endif
 <form action="{{ route('register') }}" method="POST" id="register_form">
 
 <div id="registration_content" class="container {{auth()->guard('admin')->user() ? '' : 'hidden'}}">
@@ -52,7 +43,7 @@
 
             <div class="card-body p-0">
                  {{ csrf_field() }}
-              <input type="hidden" name="register[subscription_id]" id="subscription_id">
+              <input type="hidden" name="user[subscription_id]" id="subscription_id">
               <div class="form-wizard form-wizard-horizontal">
                 <div class="tab-content clearfix p-30">
                   <div class="tab-pane active" id="tab1">

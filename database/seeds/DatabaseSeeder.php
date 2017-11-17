@@ -74,7 +74,7 @@ class DatabaseSeeder extends Seeder
             'amount' => 0.0,
             'active' => true,
             'principal' => true,
-            'period' => 30,
+            'period' => 1,
             'discounts' => 10.0,
             'slots' => 5
         ]);
@@ -84,7 +84,7 @@ class DatabaseSeeder extends Seeder
             'amount' => 10.00,
             'active' => true,
             'principal' => true,
-            'period' => 30,
+            'period' => 1,
             'discounts' => 10.0,
             'slots' => 5
         ]);
@@ -94,7 +94,7 @@ class DatabaseSeeder extends Seeder
             'amount' => 20.00,
             'active' => true,
             'principal' => true,
-            'period' => 30,
+            'period' => 12,
             'discounts' => 10.0,
             'slots' => 5
         ]);

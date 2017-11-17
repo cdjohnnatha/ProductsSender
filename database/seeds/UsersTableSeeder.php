@@ -17,7 +17,6 @@ class UsersTableSeeder extends Seeder
             'name' => 'Holyship',
             'surname' => 'User',
             'email' => 'holyship@user.com',
-            'country' => 'Brasil',
             'phone' => '08000800',
             'password' => Hash::make('holyship123'),
             'subscription_id' => 1,
