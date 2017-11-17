@@ -51,6 +51,7 @@ class AdminTest extends DuskTestCase
                 ->driver->executeScript('window.scrollTo(0, 600);');
             $browser
                 ->click('#submit-button')
+                ->pause(6000)
                 ->waitForLocation('/admin');
         });
     }

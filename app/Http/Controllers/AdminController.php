@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
+use App\Repositories\AdminRepository;
 use App\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,22 +13,16 @@ use Illuminate\Validation\Rule;
 class AdminController extends Controller
 {
 
-    private function rules()
-    {
-        return [
-            'name' => 'bail|required|min:3',
-            'surname' => 'required',
-            'email' => 'required|string|email|max:255|unique:admins',
-            'phone' => 'required|string',
-            'warehouse_id' => 'required',
-            'password' => 'required|string|min:6|confirmed'
+    private $admin_repository;
 
-        ];
+    public function __construct(AdminRepository $model)
+    {
+        $this->admin_repository = $model;
     }
 
     public function index()
     {
-        $admins = Admin::all();
+        $admins = $this->admin_repository->getAll();
         return view('admin.index', compact('admins'));
     }
 
@@ -39,25 +34,22 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, $this->rules());
+        $this->validate($request,[
+            'name' => 'bail|required|min:3',
+            'surname' => 'required',
+            'email' => 'required|string|email|max:255|unique:admins',
+            'phone' => 'required|string',
+            'default_warehouse' => 'required',
+            'password' => 'required|string|min:6|confirmed'
+        ]);
 
-        $admin = new Admin($request->all());
-        $admin->password = bcrypt($request->input('password'));
-
-        $admin->save();
+        $this->admin_repository->store($request);
         $request->session()->flash('success', 'Admin was successfully created!');
         return redirect(route('admin.index'));
     }
 
-    public function show($id)
-    {
-        return response()->json([
-            'admin' => Admin::findOrFail($id)
-        ]);
-    }
-
     public function edit($id){
-        $admin = Admin::find($id);
+        $admin = $this->admin_repository->findById($id);
         $warehouses = Warehouse::all();
         return view('admin.create', compact('admin', 'warehouses'));
     }
@@ -71,30 +63,23 @@ class AdminController extends Controller
                 'required',
                 Rule::unique('admins')->ignore($id),
             ],
-            'phone' => 'required|numeric',
-            'warehouse_id' => 'required',
+            'phone' => 'required',
+            'default_warehouse' => 'required',
             'password' => 'nullable|confirmed'
         ]);
 
-        $admin = Admin::findOrFail($id);
 
-        if(is_null($request->password)){
-            $admin->fill($request->except('password'));
-        } else {
-            $admin->fill($request->all());
-        }
+        $this->admin_repository->update($id, $request);
 
-        if($admin->save()) {
-            $request->session()->flash('success', 'Admin was successfully created!');
-            return redirect(route('admin.index'))->setStatusCode(200);
-        }
+        $request->session()->flash('success', 'Admin was successfully updated!');
+        return redirect(route('admin.index'))->setStatusCode(200);
 
     }
 
     public function destroy($id)
     {
-        Admin::findOrFail($id)->delete();
 
+        $this->admin_repository->destroy($id);
         return redirect(route('admin.index'))->setStatusCode(200);
     }
 }
