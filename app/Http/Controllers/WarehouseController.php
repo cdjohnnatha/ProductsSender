@@ -5,25 +5,39 @@ namespace App\Http\Controllers;
 use App\Address;
 use App\AddressGeonameCode;
 use App\Admin;
+use App\Repositories\AdminRepository;
+use App\Repositories\WarehouseRepository;
 use App\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class WarehouseController extends Controller
 {
-    public function index(){
-        $warehouses = Warehouse::with('address')->get();
+
+    private $warehouse_repository;
+    private $admin_repository;
+
+    public function __construct(WarehouseRepository $warehouse_repository, AdminRepository $admin_repository)
+    {
+        $this->warehouse_repository = $warehouse_repository;
+        $this->admin_repository = $admin_repository;
+    }
+
+    public function index()
+    {
+        $warehouses = $this->warehouse_repository->getAll();
 
         return view('warehouse.index', compact('warehouses'));
     }
 
     public function create(){
-        $admins = Admin::all();
+        $admins = $this->admin_repository->getAll();
 
         return view('warehouse.create', compact('admins'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $this->validate($request, [
             'warehouse.storage_time' => 'required|min:0',
             'warehouse.box_price' => 'required|min:0',
@@ -42,37 +56,17 @@ class WarehouseController extends Controller
             'geonames.country' => 'required'
         ]);
 
-        $warehouse = new Warehouse($request->input('warehouse'));
-        $address = new Address($request->input('address'));
-        $geonames = new AddressGeonameCode($request->input('geonames'));
-
-        $admin = Admin::find($request->input('admin_id'));
-
-        $address->owner_name = $admin->name;
-        $address->owner_surname = $admin->surname;
-        $address->company_name = 'Holyship';
-
-        $warehouse->save();
-        $warehouse->address()->save($address);
-        $warehouse->address->geonames()->save($geonames);
+        $this->warehouse_repository->store($request);
 
         $request->session()->flash('success', 'Warehouse was successfully created!');
         return redirect(route('admin.warehouses.index'));
     }
 
-    public function show($id){
-        $warehouse = Warehouse::findOrFail($id);
 
-        $warehouse->address;
-        return response()->json([
-            'warehouse' => $warehouse
-        ]);
-    }
 
     public function edit($id){
-        $warehouse = Warehouse::with('address')->findOrFail($id);
-        $admins = Admin::all();
-        $warehouse->address->geonameCode;
+        $warehouse = $this->warehouse_repository->findById($id);
+        $admins = $this->admin_repository->getAll();
 
         return view('warehouse.create', compact('warehouse', 'admins'));
     }
@@ -96,31 +90,17 @@ class WarehouseController extends Controller
             'geonames.country' => 'required'
         ]);
 
-        $warehouse = Warehouse::with('address')->find($id);
-        $warehouse->address->load('geonames');
+        $this->warehouse_repository->update($id, $request);
 
-        $warehouse->fill($request->input('warehouse'));
-        $warehouse->address->fill($request->input('address'));
-
-        //TODO: cadê o update or create?
-        if(!empty($warehouse->address->geonames)){
-            $warehouse->address->geonames->fill($request->input('geonames'));
-        }
-        else{
-            $warehouse->address->geonames()->create($request->input('geonames'));
-        }
-
-        $warehouse->save();
-        $warehouse->address->save();
-        $warehouse->address->geonames->save();
-
-        $request->session()->flash('success', 'Warehouse #'.$warehouse->id.' was successfully updated!');
+        $request->session()->flash('success', 'Warehouse was successfully updated!');
         return redirect(route('admin.warehouses.index'));
     }
 
-    public function destroy($id){
-        Warehouse::findOrFail($id)->delete();
+    public function destroy($id)
+    {
+        if($this->warehouse_repository->destroy($id)) {
+            return redirect(route('admin.warehouses.index'));
+        }
 
-        return redirect(route('admin.warehouses.index'));
     }
 }
