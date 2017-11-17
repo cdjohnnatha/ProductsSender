@@ -30,7 +30,7 @@ class UserTest extends DuskTestCase
                 ->type('user[rg]', '0000.000')
                 ->type('user[cpf]', '000.000.000-00')
                 ->type('user[phone]', 83998000802)
-                ->type('user[email]', 'cdjohnnatha@gmail.com')
+                ->type('user[email]', $faker->email)
                 ->type('user[password]', $password)
                 ->type('user[password_confirmation]', $password)
                 ->click('#next_btn')
@@ -46,7 +46,8 @@ class UserTest extends DuskTestCase
                 ->click('.pac-item')
                 ->pause(800)
                 ->click('#next_btn')
-                ->click('#submit-button');
+                ->click('#submit-button')
+                ->pause(5000);
         });
     }
 

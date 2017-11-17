@@ -62,6 +62,7 @@ class RegisterController extends Controller
             'user.cpf' => 'required|string',
             'user.email' => 'required|string|email|max:255|unique:users,email',
             'user.phone' => 'required|string',
+            'user.subscription_id' => 'required',
             'user.password' => 'required|string|min:6|confirmed',
             'address.label' => 'required',
             'address.owner_name' => 'required',
@@ -77,7 +78,6 @@ class RegisterController extends Controller
             'geonames.country' => 'required',
             'geonames.city' => 'required',
             'geonames.state' => 'required',
-            'register.subscription_id' => 'required',
         ];
     }
 
@@ -94,6 +94,7 @@ class RegisterController extends Controller
     {
         $this->validate($request, $this->rules());
         if($this->user->store($request)) {
+            $request->session()->flash('info', __('email_verification.registered_message'));
             return redirect('/');
         }
         return back();

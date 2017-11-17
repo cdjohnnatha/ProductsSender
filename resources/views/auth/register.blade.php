@@ -1,7 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-
+  @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
 @if(!auth()->guard('admin')->user())
   @include('subscription.index_user')
 @endif
