@@ -24,12 +24,12 @@ class UserRepository implements RepositoryInterface
         return $this->model::with('subscription')->get();
     }
 
-    public function store(array $attributes)
+    public function store($request)
     {
         // TODO: Implement store() method.
     }
 
-    public function update($id, array $attributes)
+    public function update($id, $request)
     {
         // TODO: Implement update() method.
     }

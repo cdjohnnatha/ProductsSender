@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\SubscriptionRepository;
 use App\Repositories\UserRepository;
 use App\Subscription;
 use App\User;
@@ -11,42 +12,32 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
     private $user;
+    private $subscriptions;
 
-    public function __construct(UserRepository $user)
+    public function __construct(UserRepository $user, SubscriptionRepository $subscription)
     {
         $this->user = $user;
+        $this->subscriptions = $subscription;
     }
 
-    public function index(){
+    public function index()
+    {
         $users = $this->user->getAll();
         return view('user.index', compact('users'));
     }
 
-    public function dashboard(){
+    public function dashboard()
+    {
         return view('home');
     }
 
-    public function create(){
-        $subscriptions_active_month = Subscription::with('benefits')
-            ->where('active',  1)
-            ->where('period', 0)
-            ->orderBy('amount')
-            ->limit(3)
-            ->get();
-
-        $subscriptions_active_year = Subscription::with('benefits')
-            ->where('active',  1)
-            ->where('period', 1)
-            ->limit(3)
-            ->orderBy('amount')
-            ->get();
+    public function create()
+    {
+        $subscriptions_active_month = $this->subscriptions->getPerTimeWithBenefits('amount', true, false, 3);
+        $subscriptions_active_year = $this->subscriptions->getPerTimeWithBenefits('amount', true, true, 3);
 
         if(auth()->guard('admin')->user()){
-            $subscriptions = Subscription::with('benefits')
-                ->where('active',  1)
-                ->orderBy('amount')
-                ->get();
-
+            $subscriptions = $this->subscriptions->getAllActive();
             return view('auth.register', compact('user', 'subscriptions'));
         }
 
@@ -61,12 +52,8 @@ class UserController extends Controller
     public function edit($id){
         $user = $this->user->findById($id);
 
-        if(auth()->guard('admin')->user()){
-            $subscriptions= Subscription::with('benefits')
-                ->where('active',  1)
-                ->orderBy('amount')
-                ->get();
-
+        if(auth()->guard('admin')->user()) {
+            $subscriptions = $this->subscriptions->getAllActive();
             return view('user.edit', compact('user', 'subscriptions'));
         }
         return view('user.edit')->with('user', $user);

@@ -36,8 +36,9 @@ class AddressController extends Controller
         ];
     }
 
-    public function index(Request $request, $id = null){
-        if(is_null($id)){
+    public function index(Request $request, $id = null)
+    {
+        if(is_null($id)) {
             $id = Auth::user()->id;
         }
         $morph = $this->getClass($request)::with('address')->findOrFail($id);
@@ -45,7 +46,8 @@ class AddressController extends Controller
         return  view('address.index', compact('morph', 'warehouses'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('address.create');
     }
 

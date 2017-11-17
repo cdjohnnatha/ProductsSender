@@ -11,9 +11,8 @@ namespace App\Repositories\Interfaces;
 interface RepositoryInterface
 {
     public function getAll();
-    public function store(array $attributes);
-    public function update($id, array $attributes);
-    public function find($column, $attribute);
+    public function store($request);
+    public function update($id, $request);
     public function findById($attribute);
     public function destroy($id);
 

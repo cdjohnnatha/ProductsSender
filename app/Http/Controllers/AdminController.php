@@ -25,17 +25,20 @@ class AdminController extends Controller
         ];
     }
 
-    public function index(){
+    public function index()
+    {
         $admins = Admin::all();
         return view('admin.index', compact('admins'));
     }
 
-    public function create(){
+    public function create()
+    {
         $warehouses = Warehouse::with('address')->get();
         return view('admin.create', compact('warehouses'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $this->validate($request, $this->rules());
 
         $admin = new Admin($request->all());
@@ -46,7 +49,8 @@ class AdminController extends Controller
         return redirect(route('admin.index'));
     }
 
-    public function show($id){
+    public function show($id)
+    {
         return response()->json([
             'admin' => Admin::findOrFail($id)
         ]);
@@ -58,7 +62,8 @@ class AdminController extends Controller
         return view('admin.create', compact('admin', 'warehouses'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $this->validate($request,[
             'name' => 'bail|required|min:3',
             'surname' => 'required',
@@ -75,18 +80,19 @@ class AdminController extends Controller
 
         if(is_null($request->password)){
             $admin->fill($request->except('password'));
-        } else{
+        } else {
             $admin->fill($request->all());
         }
 
-        if($admin->save()){
+        if($admin->save()) {
             $request->session()->flash('success', 'Admin was successfully created!');
             return redirect(route('admin.index'))->setStatusCode(200);
         }
 
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         Admin::findOrFail($id)->delete();
 
         return redirect(route('admin.index'))->setStatusCode(200);

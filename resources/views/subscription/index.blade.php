@@ -82,7 +82,7 @@
                                     <td>{{$subscription->title}}</td>
                                     <td align="center">{{$subscription->discounts}}</td>
                                     <td align="center">{{$subscription->slots}}</td>
-                                    <td>{{$subscription->period == 1 ? 'Year' : 'Month'}}</td>
+                                    <td>{{$subscription->period == 1 ? 'Month' : 'Year'}}</td>
                                     <td class="col-xs-1">
                                         <form action="{{Route('admin.subscriptions.active', $subscription->id)}}"
                                               role="form" method="POST" id="form-active-{{$subscription->id}}">
@@ -90,9 +90,9 @@
                                             <div class="togglebutton m-b-15 ">
                                                 <label>
                                                     <input type="checkbox" name="active"
-                                                           class="{{$subscription->period == 1 ? 'toggle-info' : 'toggle-primary'}}"
-                                                           {{($allow_activation_month == 3 && $subscription->active == 0 && $subscription->period == 0) ? 'disabled' : ''}}
-                                                           {{($allow_activation_year == 3 && $subscription->active == 0 && $subscription->period == 1) ? 'disabled' : ''}}
+                                                           class="{{$subscription->period == 12 ? 'toggle-info' : 'toggle-primary'}}"
+                                                           {{($allow_activation_month == 3 && $subscription->active == 0 && $subscription->period == 1) ? 'disabled' : ''}}
+                                                           {{($allow_activation_year == 3 && $subscription->active == 0 && $subscription->period == 12) ? 'disabled' : ''}}
                                                            {{$subscription->active ? 'checked' : ''}}
                                                            onChange="$('#form-active-{{$subscription->id}}').submit();"
                                                            value="{{$subscription->active}}">
