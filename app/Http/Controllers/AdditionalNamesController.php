@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\AdditionalNames;
+use App\ClientExtraNames;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -12,7 +12,7 @@ class AdditionalNamesController extends Controller
 {
     protected $additionalNames;
 
-    public function __construct(AdditionalNames $additionalNames){
+    public function __construct(ClientExtraNames $additionalNames){
         $this->additionalNames = $additionalNames;
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWarehousesTable extends Migration
+class CreatePackageStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateWarehousesTable extends Migration
      */
     public function up()
     {
-        Schema::create('warehouses', function (Blueprint $table) {
+        Schema::create('package_status', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('storage_time');
-            $table->decimal('box_price');
+            $table->string('package_status_message', 40);
 
             $table->timestamps();
             $table->softDeletes();
@@ -30,6 +29,6 @@ class CreateWarehousesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('warehouses');
+        Schema::dropIfExists('package_status');
     }
 }

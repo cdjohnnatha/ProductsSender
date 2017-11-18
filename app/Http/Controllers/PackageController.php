@@ -12,7 +12,7 @@ use App\Repositories\PackageRepository;
 use App\Repositories\WarehouseRepository;
 use App\Status;
 use App\User;
-use App\Warehouse;
+use App\CompanyWarehouse;
 use Faker\Provider\File;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
@@ -109,7 +109,7 @@ class PackageController extends Controller
     public function edit($id){
         $package = Package::with(['pictures', 'goods'])->find($id);
         $status = Status::all();
-        $warehouses = Warehouse::all();
+        $warehouses = CompanyWarehouse::all();
         $warehouses->load('address');
 
         return view('package.create', compact('package', 'status', 'warehouses'));

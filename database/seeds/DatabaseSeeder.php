@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             'postal_code' => '58000',
             'phone' => '08003330800',
             'addressable_id' => 1,
-            'addressable_type' => 'App\Warehouse',
+            'addressable_type' => 'App\CompanyWarehouse',
             'number' => 400,
             'formatted_address' => 'Avenida Epitacio Pessoa, sem nº, João Pessoa, Paraiba'
         ]);

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Warehouse;
+use App\CompanyWarehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,7 +10,7 @@ class WarehouseNotificationsController extends Controller
 {
 
     public function index(){
-        $warehouse = Warehouse::find(Auth::user()->warehouse_id);
+        $warehouse = CompanyWarehouse::find(Auth::user()->warehouse_id);
 
         $notifications = $warehouse->notifications;
         $unreadNotifications = $warehouse->unreadNotifications;

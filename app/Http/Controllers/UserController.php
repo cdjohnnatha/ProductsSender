@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\SubscriptionRepository;
 use App\Repositories\UserRepository;
-use App\Subscription;
+use App\CompanySubscription;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;

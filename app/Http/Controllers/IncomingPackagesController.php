@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\IncomingPackages;
 use App\Notifications\IncomingPackageNotification;
 use App\Service;
-use App\Warehouse;
+use App\CompanyWarehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,7 +47,7 @@ class IncomingPackagesController extends Controller
     }
 
     public function create(){
-        $warehouses = Warehouse::all();
+        $warehouses = CompanyWarehouse::all();
         $services = Service::all();
         return view($this->pagePrefix.'create', compact('warehouses', 'services'));
     }
@@ -62,7 +62,7 @@ class IncomingPackagesController extends Controller
         if ($incoming->save()) {
             $incoming->goodsDeclaration()->createMany($request->input('custom_clearance'));
             $incoming->addons()->createMany($request->input('additional_service'));
-            Warehouse::find($incoming->warehouse_id)->notify(new IncomingPackageNotification($incoming));
+            CompanyWarehouse::find($incoming->warehouse_id)->notify(new IncomingPackageNotification($incoming));
             $request->session()->flash('info', __('statusMessage.incoming_package.user_create'));
             return redirect(route('user.packages.index'));
         }
@@ -75,7 +75,7 @@ class IncomingPackagesController extends Controller
 
     public function edit($id){
         $incoming = IncomingPackages::with('goodsDeclaration')->find($id);
-        $warehouses = Warehouse::all();
+        $warehouses = CompanyWarehouse::all();
         $services = Service::all();
         return view($this->pagePrefix.'create', compact('incoming', 'warehouses', 'services'));
     }

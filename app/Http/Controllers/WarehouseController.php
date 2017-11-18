@@ -7,7 +7,7 @@ use App\AddressGeonameCode;
 use App\Admin;
 use App\Repositories\AdminRepository;
 use App\Repositories\WarehouseRepository;
-use App\Warehouse;
+use App\CompanyWarehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,7 +58,7 @@ class WarehouseController extends Controller
 
         $this->warehouse_repository->store($request);
 
-        $request->session()->flash('success', 'Warehouse was successfully created!');
+        $request->session()->flash('success', 'CompanyWarehouse was successfully created!');
         return redirect(route('admin.warehouses.index'));
     }
 
@@ -92,7 +92,7 @@ class WarehouseController extends Controller
 
         $this->warehouse_repository->update($id, $request);
 
-        $request->session()->flash('success', 'Warehouse was successfully updated!');
+        $request->session()->flash('success', 'CompanyWarehouse was successfully updated!');
         return redirect(route('admin.warehouses.index'));
     }
 

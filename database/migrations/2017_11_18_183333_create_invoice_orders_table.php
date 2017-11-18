@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAddonsTable extends Migration
+class CreateInvoiceOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateAddonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('addons', function (Blueprint $table) {
+        Schema::create('invoice_orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('service_id');
-            $table->morphs('addonable');
-
-            $table->index('service_id');
+            $table->integer('order_id');
+            $table->integer('invoice_order');
 
             $table->timestamps();
             $table->softDeletes();
@@ -32,6 +30,6 @@ class CreateAddonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addons');
+        Schema::dropIfExists('invoice_orders');
     }
 }

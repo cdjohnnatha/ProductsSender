@@ -48,7 +48,7 @@
 
         methods: {
             listen() {
-                window.Echo.private('App.Warehouse.' + this.data_id)
+                window.Echo.private('App.CompanyWarehouse.' + this.data_id)
                     .notification((notification) => {
                         this.$store.commit('add_notification', notification);
                         this.addAlertStatus();

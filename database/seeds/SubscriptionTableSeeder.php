@@ -11,6 +11,6 @@ class SubscriptionTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Subscription::class, 3)->create();
+        factory(App\CompanySubscription::class, 3)->create();
     }
 }

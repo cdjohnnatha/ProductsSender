@@ -5,7 +5,7 @@ namespace App\Observers;
 class WarehouseObserver
 {
 
-//    public function deleting(Warehouse $warehouse)
+//    public function deleting(CompanyWarehouse $warehouse)
 //    {
 //        dd($warehouse->address);
 ////        $warehouse->address->geonames->delete();

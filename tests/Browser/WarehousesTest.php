@@ -3,7 +3,7 @@
 namespace Tests\Browser;
 
 use App\Admin;
-use App\Warehouse;
+use App\CompanyWarehouse;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -46,7 +46,7 @@ class WarehousesTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $admin = Admin::first();
             $faker = \Faker\Factory::create();
-            $warehouses = Warehouse::all();
+            $warehouses = CompanyWarehouse::all();
             $browser->loginAs($admin, 'admin')
                 ->visit(route('admin.warehouses.edit', $warehouses[0]->id))
                 ->type('warehouse[storage_time]', $faker->numberBetween(0, 60))

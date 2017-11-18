@@ -3,7 +3,7 @@
 namespace Tests\Browser;
 
 use App\Admin;
-use App\Subscription;
+use App\CompanySubscription;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -50,7 +50,7 @@ class SubscriptionTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $admin = Admin::find(1);
             $faker = \Faker\Factory::create();
-            $edit = Subscription::orderBy('id', 'desc')->first();
+            $edit = CompanySubscription::orderBy('id', 'desc')->first();
             $browser->loginAs($admin, 'admin')
                 ->visit(route('admin.subscriptions.edit', $edit->id))
                 ->type('subscription[title]', $faker->word)
@@ -80,7 +80,7 @@ class SubscriptionTest extends DuskTestCase
 //        $this->browse(function (Browser $browser) {
 //            $admin = Admin::all();
 //            $admin = $admin[1];
-//            $delete = Subscription::orderBy('id', 'desc')->first();
+//            $delete = CompanySubscription::orderBy('id', 'desc')->first();
 //            $browser->loginAs($admin, 'admin')
 //                ->visit(route('admin.subscriptions.index'))
 //                ->press('#delete-button-'.$delete->id)

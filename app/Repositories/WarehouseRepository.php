@@ -13,7 +13,7 @@ use App\Address;
 use App\AddressGeonameCode;
 use App\Admin;
 use App\Repositories\Interfaces\RepositoryInterface;
-use App\Warehouse;
+use App\CompanyWarehouse;
 
 class WarehouseRepository implements RepositoryInterface
 {
@@ -22,7 +22,7 @@ class WarehouseRepository implements RepositoryInterface
     private $address_model;
     private $admin_model;
 
-    public function __construct(Warehouse $model, Address $address_model, AdminRepository $admin_model, AddressGeonameCode $geoname_model)
+    public function __construct(CompanyWarehouse $model, Address $address_model, AdminRepository $admin_model, AddressGeonameCode $geoname_model)
     {
         $this->model = $model;
         $this->address_model = $address_model;

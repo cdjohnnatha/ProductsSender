@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Warehouse extends Entity
+class CompanyWarehouse extends Entity
 {
     use Notifiable;
 
@@ -16,7 +16,12 @@ class Warehouse extends Entity
 
     public function address()
     {
-        return $this->morphOne(Address::class, 'addressable');
+        return $this->hasMany(CompanyWarehouseAddress::class);
+    }
+
+    public function addons()
+    {
+        return $this->belongsToMany(CompanyWarehouseAddons::class);
     }
 
 }

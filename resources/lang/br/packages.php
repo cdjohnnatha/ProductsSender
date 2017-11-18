@@ -20,7 +20,7 @@ return [
 
     'index' => [
         'title_package' => 'Packages',
-        'title_package_warehouse' => 'Warehouse\'s Packages',
+        'title_package_warehouse' => 'CompanyWarehouse\'s Packages',
         'short_description' => 'All your packages can be found here.',
         'short_show_description' => 'Here you can see your package information',
         'short_description_warehouse' => 'Here are all the packages available on warehouses',

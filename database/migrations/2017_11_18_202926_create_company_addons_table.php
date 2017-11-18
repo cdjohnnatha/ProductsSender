@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdditionalNamesTable extends Migration
+class CreateCompanyAddonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateAdditionalNamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('additional_names', function (Blueprint $table) {
+        Schema::create('company_addons', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('name', 100);
-            $table->bigInteger('user_id');
-
-            $table->index('user_id');
-
+            $table->string('title');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +28,6 @@ class CreateAdditionalNamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('additional_names');
+        Schema::dropIfExists('company_addons');
     }
 }

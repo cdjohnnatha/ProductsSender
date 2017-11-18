@@ -4,12 +4,12 @@ namespace App;
 
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Wallet extends Entity
+class ClientWallet extends Entity
 {
     protected $attributes = array('balance' => 0);
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Client::class);
     }
 }

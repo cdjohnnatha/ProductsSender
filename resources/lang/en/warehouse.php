@@ -2,8 +2,8 @@
 
 return [
     'form' => [
-        'main_title' => 'Form Warehouse',
-        'warehouse' => 'Warehouse',
+        'main_title' => 'Form CompanyWarehouse',
+        'warehouse' => 'CompanyWarehouse',
         'title_label' => 'Name for this warehouse',
         'warehouse_in_charge' => 'Person in charge',
         'warehouse_phone' => 'Phone number for this warehouse',

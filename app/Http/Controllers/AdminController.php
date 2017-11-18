@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Admin;
 use App\Repositories\AdminRepository;
-use App\Warehouse;
+use App\CompanyWarehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +28,7 @@ class AdminController extends Controller
 
     public function create()
     {
-        $warehouses = Warehouse::with('address')->get();
+        $warehouses = CompanyWarehouse::with('address')->get();
         return view('admin.create', compact('warehouses'));
     }
 
@@ -50,7 +50,7 @@ class AdminController extends Controller
 
     public function edit($id){
         $admin = $this->admin_repository->findById($id);
-        $warehouses = Warehouse::all();
+        $warehouses = CompanyWarehouse::all();
         return view('admin.create', compact('admin', 'warehouses'));
     }
 

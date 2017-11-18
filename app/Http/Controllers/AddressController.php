@@ -6,7 +6,7 @@ use App\Address;
 use App\AddressGeonameCode;
 use App\Admin;
 use App\User;
-use App\Warehouse;
+use App\CompanyWarehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,7 +42,7 @@ class AddressController extends Controller
             $id = Auth::user()->id;
         }
         $morph = $this->getClass($request)::with('address')->findOrFail($id);
-        $warehouses = Warehouse::with('address')->get();
+        $warehouses = CompanyWarehouse::with('address')->get();
         return  view('address.index', compact('morph', 'warehouses'));
     }
 
@@ -52,7 +52,7 @@ class AddressController extends Controller
     }
 
     //TODO: tudo errado nesse polymorph
-    // tem que separar TUDO mesmo (User / Admin / Warehouse)
+    // tem que separar TUDO mesmo (User / Admin / CompanyWarehouse)
     public function store(Request $request, $id = null){
         if(is_null($id)){
             $id = Auth::user()->id;
@@ -131,7 +131,7 @@ class AddressController extends Controller
 
     private function getClass($request){
         if ($request->is('warehouse/*')) {
-            return Warehouse::class;
+            return CompanyWarehouse::class;
         }else if($request->is('user/*')) {
             return User::class;
         } else{

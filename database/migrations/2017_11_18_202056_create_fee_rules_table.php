@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBenefitsTable extends Migration
+class CreateFeeRulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateBenefitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('benefits', function (Blueprint $table) {
+        Schema::create('fee_rules', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('message');
-            $table->integer('subscription_id');
+            $table->decimal('initial_fee');
+            $table->decimal('max_weight_fee');
+            $table->decimal('overweight_fee');
+            $table->integer('warehouse_id');
 
-            $table->index('subscription_id');
-            $table->boolean('active');
-
+            $table->index('warehouse_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +33,6 @@ class CreateBenefitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('benefits');
+        Schema::dropIfExists('fee_rules');
     }
 }

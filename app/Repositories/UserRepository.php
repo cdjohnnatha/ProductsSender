@@ -12,7 +12,7 @@ use App\AddressGeonameCode;
 use App\Mail\UserRegisterConfirmation;
 use App\Repositories\Interfaces\RepositoryInterface;
 use App\User;
-use App\Wallet;
+use App\ClientWallet;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -45,7 +45,7 @@ class UserRepository implements RepositoryInterface
         Log::info($user);
         if($user->save() &&
             $user->address()->save($address) &&
-            $user->wallet()->save(new Wallet()) &&
+            $user->wallet()->save(new ClientWallet()) &&
             $user->address[0]->geonames()->save($geonames)) {
             $user->default_address = $user->address[0]->id;
             if($user->save()) {

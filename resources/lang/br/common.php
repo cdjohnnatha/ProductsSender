@@ -40,7 +40,7 @@ return [
         'track_number' => 'Número de Rastreio',
         'incoming' => 'A chegar',
         'provider' => 'Fornecedor',
-        'addon' => 'Addon',
+        'addon' => 'CompanyAddon',
         'goods' => 'Encomendas',
         'users' => 'Usuários',
         'custom_clearance' => 'Alfândega'

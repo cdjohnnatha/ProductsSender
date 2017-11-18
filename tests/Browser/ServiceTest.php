@@ -3,7 +3,7 @@
 namespace Tests\Browser;
 
 use App\Admin;
-use App\Addon;
+use App\CompanyAddon;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -38,7 +38,7 @@ class ServiceTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $admin = Admin::find(1);
             $faker = \Faker\Factory::create();
-            $services = Addon::orderBy('id', 'desc')->first();
+            $services = CompanyAddon::orderBy('id', 'desc')->first();
             $browser->loginAs($admin, 'admin')
                 ->visit(route('admin.services.edit', $services->id))
                 ->assertSee('Offered Services')

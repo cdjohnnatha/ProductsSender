@@ -15,10 +15,15 @@ class Package extends Entity
         'weight',
         'unit_measure',
         'weight_measure',
-        'object_owner',
+        'provider',
+        'addressee',
+        'track_number',
+        'total_goods',
+        'content_type',
+        'client_id',
+        'package_id',
         'warehouse_id',
         'status_id',
-        'note'
     ];
 
     protected static $logAttributes = [
@@ -30,23 +35,33 @@ class Package extends Entity
         'weight_measure',
         'object_owner',
         'warehouse_id',
-        'default_warehouse_id',
-        'status_id'
+        'default_warehouse',
+        'status_id',
+
+        'provider',
+        'addressee',
+        'track_number',
+        'total_goods',
+        'description',
+        'user_id',
+        'package_id',
+        'content_type'
+
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'object_owner');
+        return $this->belongsTo(Client::class, 'object_owner');
     }
 
-    public function status()
+    public function packageStatus()
     {
-        return $this->belongsTo(Status::class);
+        return $this->hasMany(PackageStatus::class);
     }
 
     public function warehouse()
     {
-        return $this->belongsTo(Warehouse::class);
+        return $this->belongsTo(CompanyWarehouse::class);
     }
 
     public function pictures()
@@ -58,4 +73,21 @@ class Package extends Entity
     {
         return $this->hasOne(IncomingPackages::class, 'package_id');
     }
+
+
+    public function goodsDeclaration()
+    {
+        return $this->hasMany(GoodsDeclaration::class);
+    }
+
+    public function addons()
+    {
+        return $this->morphMany(CompanyAddon::class, 'addonable');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
 }

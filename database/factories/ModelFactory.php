@@ -45,7 +45,7 @@ $factory->define(App\Admin::class, function (Faker\Generator $faker) {
 
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\Warehouse::class, function (Faker\Generator $faker) {
+$factory->define(App\CompanyWarehouse::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->company,
@@ -88,7 +88,7 @@ $factory->define(App\Address::class, function (Faker\Generator $faker) {
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\Subscription::class, function (Faker\Generator $faker) {
+$factory->define(App\CompanySubscription::class, function (Faker\Generator $faker) {
 
     return [
         'title' => $faker->company,

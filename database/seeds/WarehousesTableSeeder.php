@@ -11,6 +11,6 @@ class WarehousesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Warehouse::class, 2)->create();
+        factory(App\CompanyWarehouse::class, 2)->create();
     }
 }
