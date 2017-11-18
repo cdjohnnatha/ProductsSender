@@ -19,15 +19,18 @@ class Subscription extends Entity
         'principal' => false
     ];
 
-    public function benefits(){
+    public function benefits()
+    {
         return $this->hasMany(Benefit::class);
     }
 
-    public function addons(){
+    public function addons()
+    {
         return $this->morphMany(Addon::class, 'addonable');
     }
 
-    public function servicesIncluded(){
+    public function servicesIncluded()
+    {
         return $this->hasManyThrough(Service::class, Addon::class);
     }
 }

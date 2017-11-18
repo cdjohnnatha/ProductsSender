@@ -13,7 +13,8 @@ class Benefit extends Entity
         'active'
     ];
 
-    public function subscription(){
+    public function subscription()
+    {
         return $this->belongsTo(Subscription::class);
     }
 

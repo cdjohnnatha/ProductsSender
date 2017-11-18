@@ -14,7 +14,8 @@ class Warehouse extends Entity
         'box_price',
     ];
 
-    public function address(){
+    public function address()
+    {
         return $this->morphOne(Address::class, 'addressable');
     }
 

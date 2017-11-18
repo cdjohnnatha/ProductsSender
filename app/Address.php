@@ -24,11 +24,13 @@ class Address extends Entity
         'addressable_id',
     ];
 
-    public function addressable(){
+    public function addressable()
+    {
         return $this->morphTo();
     }
 
-    public function geonames(){
+    public function geonames()
+    {
         return $this->hasOne(AddressGeonameCode::class);
     }
 }

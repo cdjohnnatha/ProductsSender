@@ -8,6 +8,8 @@ use App\IncomingPackages;
 use App\Notifications\PackageNotifications;
 use App\Package;
 use App\PackageFiles;
+use App\Repositories\PackageRepository;
+use App\Repositories\WarehouseRepository;
 use App\Status;
 use App\User;
 use App\Warehouse;
@@ -21,6 +23,15 @@ use Spatie\Activitylog\Models\Activity;
 
 class PackageController extends Controller
 {
+
+    private $package_repository;
+    private $warehouse_repository;
+
+    public function __construct(PackageRepository $package_repository, WarehouseRepository $warehouse_repository)
+    {
+        $this->package_repository = $package_repository;
+        $this->warehouse_repository = $warehouse_repository;
+    }
 
     public function rules()
     {
@@ -40,19 +51,10 @@ class PackageController extends Controller
     public function index()
     {
         if (auth()->guard('web')->user()){
-            $field = 'object_owner';
-            $id = Auth::user()->id;
-            $sent = Package::with(['goods'])
-                ->where($field, $id)
-                ->where('sent', true)
-                ->orderBy('created_at', 'desc')
-                ->get();
-
+            $sent = $this->package_repository->getUserPackagesWithGoods('object_owner', Auth::user()->id, true);
             $incomingPackages = Auth::user()->incomingPackages()->where('registered', false)->get();
 
         } else {
-            $field = 'warehouse_id';
-            $id = Auth::user()->warehouse_id;
             $incomingPackages = IncomingPackages::where('registered', false)
                 ->where(
                     'warehouse_id',
@@ -61,16 +63,10 @@ class PackageController extends Controller
         }
 
 
-        $packages_warehouse = Package::with(
-            [
-                'status',
-                'pictures',
-                'warehouse',
-                'goods'])
-                ->where($field, '=', $id)
-                ->where('sent', false)
-                ->orderBy('created_at', 'desc')
-                ->get();
+        $packages_warehouse = $this->package_repository->getIndexPackages(
+            'warehouse_id',
+            Auth::user()->warehouse_id,
+            false);
 
         if (auth()->guard('web')->user()) {
             return view('package.index_user', compact('packages_warehouse', 'sent', 'incomingPackages'));
@@ -80,7 +76,7 @@ class PackageController extends Controller
     }
 
     public function create($incoming = null){
-        $warehouses = Warehouse::with('address')->get();
+        $warehouses = $this->warehouse_repository->getAll();
         $status = Status::all();
 
         $incoming = IncomingPackages::find($incoming ?? 0);
@@ -89,23 +85,10 @@ class PackageController extends Controller
     }
 
     public function store(Request $request){
+        dd($request->input());
         $this->validate($request, $this->rules());
 
-        $package = new Package($request->input('package'));
-        $package->status_id = $request->input('status.status_id');
-        $package->warehouse_id = $request->input('warehouse_id');
 
-        $package->save();
-
-        if($request->hasFile('package_files')) {
-            $this->saveImage($request->file('package_files'), $package);
-        }
-
-        if($request->exists('incoming')){
-            $incoming = IncomingPackages::find($request->input('incoming'));
-            $incoming->registered = true;
-            $package->goods()->save($incoming);
-        }
         $request->session()->flash('status', 'Package was successfully registered at warehouse!');
 
         return redirect(route('admin.packages.index'));

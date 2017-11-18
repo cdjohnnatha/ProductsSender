@@ -8,7 +8,8 @@ class Wallet extends Entity
 {
     protected $attributes = array('balance' => 0);
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

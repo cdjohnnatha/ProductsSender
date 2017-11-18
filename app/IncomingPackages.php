@@ -20,23 +20,28 @@ class IncomingPackages extends Entity
         'content_type'
     ];
 
-    public function addons(){
+    public function addons()
+    {
         return $this->morphMany(Addon::class, 'addonable');
     }
 
-    public function goodsDeclaration(){
+    public function goodsDeclaration()
+    {
         return $this->hasMany(GoodsDeclaration::class);
     }
 
-    public function warehouse(){
+    public function warehouse()
+    {
         return $this->belongsTo(Warehouse::class);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function package(){
+    public function package()
+    {
         return $this->belongsTo(Package::class);
     }
 

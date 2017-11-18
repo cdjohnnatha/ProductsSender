@@ -10,11 +10,13 @@ class Addon extends Entity
         'addonable_type',
     ];
 
-    public function addonable(){
+    public function addonable()
+    {
         return $this->morphTo();
     }
 
-    public function service(){
+    public function service()
+    {
         return $this->belongsTo(Service::class);
     }
 

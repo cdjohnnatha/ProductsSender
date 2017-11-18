@@ -34,23 +34,28 @@ class Package extends Entity
         'status_id'
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class, 'object_owner');
     }
 
-    public function status(){
+    public function status()
+    {
         return $this->belongsTo(Status::class);
     }
 
-    public function warehouse(){
+    public function warehouse()
+    {
         return $this->belongsTo(Warehouse::class);
     }
 
-    public function pictures(){
+    public function pictures()
+    {
         return $this->hasMany(PackageFiles::class, 'package_id');
     }
 
-    public function goods(){
+    public function goods()
+    {
         return $this->hasOne(IncomingPackages::class, 'package_id');
     }
 }
