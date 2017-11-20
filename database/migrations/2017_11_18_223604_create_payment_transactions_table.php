@@ -16,6 +16,7 @@ class CreatePaymentTransactionsTable extends Migration
         Schema::create('payment_transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('client_id');
+            $table->decimal('fee_applied');
 
             $table->index('client_id');
             $table->timestamps();
