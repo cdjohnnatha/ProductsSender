@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -14,9 +13,13 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'password',
-        'email',
         'confirmation_code'
     ];
+
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
 
 
 }

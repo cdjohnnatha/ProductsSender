@@ -14,10 +14,9 @@ class UserController extends Controller
     private $user;
     private $subscriptions;
 
-    public function __construct(UserRepository $user, SubscriptionRepository $subscription)
+    public function __construct(UserRepository $user)
     {
         $this->user = $user;
-        $this->subscriptions = $subscription;
     }
 
     public function index()
@@ -33,16 +32,13 @@ class UserController extends Controller
 
     public function create()
     {
-        $subscriptions_active_month = $this->subscriptions->getPerTimeWithBenefits('amount', true, false, 3);
-        $subscriptions_active_year = $this->subscriptions->getPerTimeWithBenefits('amount', true, true, 3);
-
         if(auth()->guard('admin')->user()){
             $subscriptions = $this->subscriptions->getAllActive();
             return view('auth.register', compact('user', 'subscriptions'));
         }
 
 
-        return view('auth.register', compact('subscriptions_active_month','subscriptions_active_year'));
+        return view('auth.register');
     }
 
     public function show($id){
