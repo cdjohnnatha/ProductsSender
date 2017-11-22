@@ -10,6 +10,7 @@ class Client extends Entity
         'phone',
         'rg',
         'cpf',
+        'user_id'
     ];
 
     public function address()
@@ -25,5 +26,15 @@ class Client extends Entity
     public function packages()
     {
         return $this->hasMany(Package::class, 'object_owner');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(ClientDocuments::class);
     }
 }

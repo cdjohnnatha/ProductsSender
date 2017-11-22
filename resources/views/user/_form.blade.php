@@ -1,30 +1,29 @@
 <article>
   <section class="row">
-    <div class="form-group col-sm-6 label-floating {{ $errors->has('user.name') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-6 label-floating {{ $errors->has('client.name') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
         <label class="control-label">{{__('common.titles.name')}}</label>
-        <input type="text" class="form-control" name="user[name]"
-               value="{{ $user->name or old('user.name') }}">
+        <input type="text" class="form-control" name="client[name]" value="{{ $client->name or old('client.name') }}">
 
-        @if ($errors->has('user.name'))
+        @if ($errors->has('client.name'))
           <span class="help-block">
             <strong class="text-danger" class="alert-danger">
-              {{ $errors->first('user.name') }}
+              {{ $errors->first('client.name') }}
             </strong>
           </span>
         @endif
       </div>
     </div>
-    <div class="form-group col-sm-6 {{ $errors->has('user.surname') ? ' has-error' : '' }} label-floating">
+    <div class="form-group col-sm-6 {{ $errors->has('client.surname') ? ' has-error' : '' }} label-floating">
       <label class="control-label">{{__('common.titles.surname')}}</label>
-      <input type="text" class="form-control" name="user[surname]"
-             value="{{ $user->surname or old('user.surname') }}">
+      <input type="text" class="form-control" name="client[surname]"
+             value="{{ $client->surname or old('client.surname') }}">
 
-      @if ($errors->has('user.surname'))
+      @if ($errors->has('client.surname'))
         <span class="help-block">
           <strong class="text-danger" class="alert-danger">
-            {{ $errors->first('user.surname') }}
+            {{ $errors->first('client.surname') }}
           </strong>
         </span>
       @endif
@@ -33,33 +32,33 @@
   </section>
 
   <section class="row">
-    <div class="form-group col-sm-6 label-floating {{ $errors->has('user.rg') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-6 label-floating {{ $errors->has('client.rg') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
         <label class="control-label" for="rg">{{__('common.titles.rg')}}</label>
-        <input type="text" class="form-control" name="user[rg]"
-               value="{{ $user->rg or old('user.rg') }}" id="rg">
+        <input type="text" class="form-control" name="client[rg]"
+               value="{{ $client->rg or old('client.rg') }}" id="rg">
 
-        @if ($errors->has('user.rg'))
+        @if ($errors->has('client.rg'))
           <span class="help-block">
             <strong class="text-danger" class="alert-danger">
-              {{ $errors->first('user.rg') }}
+              {{ $errors->first('client.rg') }}
             </strong>
           </span>
         @endif
       </div>
     </div>
-    <div class="form-group col-sm-6 label-floating {{ $errors->has('user.cpf') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-6 label-floating {{ $errors->has('client.cpf') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
         <label class="control-label">{{__('common.titles.cpf')}}</label>
-        <input type="text" class="form-control" name="user[cpf]"
-               value="{{ $user->cpf or old('user.cpf') }}">
+        <input type="text" class="form-control" name="client[cpf]"
+               value="{{ $client->cpf or old('client.cpf') }}">
 
-        @if ($errors->has('user.cpf'))
+        @if ($errors->has('client.cpf'))
           <span class="help-block">
             <strong class="text-danger" class="alert-danger">
-              {{ $errors->first('user.cpf') }}
+              {{ $errors->first('client.cpf') }}
             </strong>
           </span>
         @endif
@@ -85,17 +84,17 @@
       </div>
     </section>
 
-    <section class="form-group col-sm-5 {{ $errors->has('user.phone') ? ' has-error' : '' }} label-floating">
+    <section class="form-group col-sm-5 {{ $errors->has('client.phone') ? ' has-error' : '' }} label-floating">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
         <label class="control-label">{{__('common.titles.phone')}}</label>
-        <input type="text" class="form-control" name="user[phone]"
-               value="{{ $user->phone or old('user.phone') }}">
+        <input type="text" class="form-control" name="client[phone]"
+               value="{{ $client->phone or old('client.phone') }}">
 
-        @if ($errors->has('user.phone'))
+        @if ($errors->has('client.phone'))
           <span class="help-block">
           <strong class="text-danger" class="alert-danger">
-            {{ $errors->first('user.phone') }}
+            {{ $errors->first('client.phone') }}
           </strong>
         </span>
         @endif
@@ -128,22 +127,4 @@
       <input type="password" class="form-control" name="user[password_confirmation]">
     </div>
   </section>
-  @if(Request::is('admin/*'))
-    <section>
-      <div class="form-group label-floating">
-        <div class="input-group">
-          <span class="input-group-addon"><i class="zmdi zmdi-card-membership"></i></span>
-          <label class="control-label">{{__('common.titles.plan')}}</label>
-          <select class="select form-control" name="register[subscription_id]">
-            @foreach($subscriptions as $subscription)
-              <option value="{{$subscription->id or old('register.subscription_id')}}">
-                {{$subscription->title.' - $'.$subscription->amount }}
-                ({{$subscription->period ? __('common.calendar.year') : __('common.calendar.month')}})
-              </option>
-            @endforeach
-          </select>
-        </div>
-      </div>
-    </section>
-  @endif
 </article>

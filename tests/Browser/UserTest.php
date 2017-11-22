@@ -24,12 +24,11 @@ class UserTest extends DuskTestCase
             $faker = \Faker\Factory::create();
             $password = $faker->password(6, 10);
             $browser->visit(route('register.create'))
-                ->press('.planSection')
-                ->type('user[name]', $faker->firstName)
-                ->type('user[surname]', $faker->lastName)
-                ->type('user[rg]', '0000.000')
-                ->type('user[cpf]', '000.000.000-00')
-                ->type('user[phone]', 83998000802)
+                ->type('client[name]', $faker->firstName)
+                ->type('client[surname]', $faker->lastName)
+                ->type('client[rg]', '0000.000')
+                ->type('client[cpf]', '000.000.000-00')
+                ->type('client[phone]', 83998000802)
                 ->type('user[email]', $faker->email)
                 ->type('user[password]', $password)
                 ->type('user[password_confirmation]', $password)
@@ -46,8 +45,12 @@ class UserTest extends DuskTestCase
                 ->click('.pac-item')
                 ->pause(800)
                 ->click('#next_btn')
+                ->attach('identification_card', '/home/claudio/Pictures/package_1.jpg')
+                ->attach('usps_form', '/home/claudio/Pictures/package_1.jpg')
+                ->attach('proof_address', '/home/claudio/Pictures/CV.pdf')
+
                 ->click('#submit-button')
-                ->pause(5000);
+                ->waitForLocation('/login');
         });
     }
 

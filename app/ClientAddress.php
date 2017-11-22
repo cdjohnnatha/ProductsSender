@@ -21,4 +21,9 @@ class ClientAddress extends Model
         'phone',
         'formatted_address',
     ];
+
+    public function geonames()
+    {
+        return $this->hasOne(ClientAddressGeoname::class);
+    }
 }

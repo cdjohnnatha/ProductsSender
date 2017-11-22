@@ -5,10 +5,12 @@
  * Date: 11/10/17
  * Time: 5:52 PM
  */
+
 namespace App\Repositories;
 
 use App\Address;
-use App\AddressGeonameCode;
+use App\ClientAddressGeoname;
+use App\ClientDocuments;
 use App\Mail\UserRegisterConfirmation;
 use App\Repositories\Interfaces\RepositoryInterface;
 use App\User;
@@ -19,14 +21,11 @@ use Illuminate\Support\Facades\Mail;
 class UserRepository implements RepositoryInterface
 {
     private $model;
-    private $address_model;
-    private $geoname_model;
 
-    public function __construct(User $model, Address $address, AddressGeonameCode $geoname)
+    public function __construct(User $model)
     {
         $this->model = $model;
-        $this->address_model = $address;
-        $this->geoname_model = $geoname;
+
     }
 
     public function getAll()
@@ -36,24 +35,32 @@ class UserRepository implements RepositoryInterface
 
     public function store($request)
     {
-        $user = new $this->model($request->input('user'));
-        $address = new $this->address_model($request->input('address'));
-        $geonames = new $this->geoname_model($request->input('geonames'));
+        $user = $this->model->create($request->input('user'));
+        $user->client()->create($request->input('client'));
+        $user->client->address()->create($request->input('address'));
+//        $user->client->address->geonames()->create($request->input('geonames'));
         $user->password = bcrypt($request->input('users.password'));
         $user->confirmation_code = base64_encode($user->email);
+
+        if($request->hasFile('identification_card')){
+            $this->saveImage($request->file('identification_card'), $user);
+        }
+
+        if($request->hasFile('usps_form')){
+            $this->saveImage($request->file('usps_form'), $user);
+        }
+
+        if($request->hasFile('proof_address')){
+            $this->saveImage($request->file('proof_address'), $user);
+        }
 //        Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
-        Log::info($user);
-        if($user->save() &&
-            $user->address()->save($address) &&
-            $user->wallet()->save(new ClientWallet()) &&
-            $user->address[0]->geonames()->save($geonames)) {
-            $user->default_address = $user->address[0]->id;
-            if($user->save()) {
-//                Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
-                return true;
-            }
+        if ($user->save()) {
+//            Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
+            return true;
+
         } else {
             return false;
+
         }
     }
 
@@ -78,16 +85,16 @@ class UserRepository implements RepositoryInterface
         return $this->model::find($attribute);
     }
 
-    public function confirmeAccount($confirmation_code)
+    public function confirmAccount($confirmation_code)
     {
-        if(!$confirmation_code) {
+        if (!$confirmation_code) {
             return false;
         }
 
         $user = $this->model::where('confirmation_code', $confirmation_code)->first();
 
-        if($user) {
-            if($user->confirmed){
+        if ($user) {
+            if ($user->confirmed) {
                 return false;
             }
 
@@ -98,6 +105,30 @@ class UserRepository implements RepositoryInterface
         }
 
         return false;
-
     }
+
+    private function saveImage($file, $user)
+    {
+        Log::info($user);
+        $fileName = $user->client->id . date("dmYhmsu");
+        $extension = explode('.', $file->getClientOriginalName())[1];
+        $fileName = md5($fileName) . '.' . $extension;
+        $path = $file->storeAs('public/UserDocuments', $fileName);
+        $path = str_replace('public', 'storage', $path);
+        $picture = new ClientDocuments();
+        $picture->name = $fileName;
+        $picture->path = '/' . $path;
+
+        if ($user->client->documents()->save($picture)) {
+            activity()
+                ->performedOn($user->client)
+                ->causedBy($user)
+                ->withProperty('client_id', $user->client->id)
+                ->withProperty('file_name', $fileName)
+                ->log('The package id is :properties.package_id,
+                            the causer name is :causer.name and it was uploaded a file which is :properties.file_name
+                            with id:');
+        }
+    }
+
 }

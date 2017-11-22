@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
-use App\AddressGeonameCode;
+use App\ClientAddressGeoname;
 use App\Admin;
 use App\User;
 use App\CompanyWarehouse;
@@ -94,7 +94,7 @@ class AddressController extends Controller
                 'entity' => __('common.titles.address')]));
 
         if(is_null($address->geonames)) {
-            $geonames = new AddressGeonameCode($request->input('geonames'));
+            $geonames = new ClientAddressGeoname($request->input('geonames'));
             if($address->save() && $address->geonames()->save($geonames)){
                 return redirect(Route('user.address.index'));
             }

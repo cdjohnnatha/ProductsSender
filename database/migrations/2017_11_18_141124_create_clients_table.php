@@ -21,8 +21,10 @@ class CreateClientsTable extends Migration
             $table->string('rg');
             $table->string('cpf');
             $table->integer('default_address')->nullable();
+            $table->integer('user_id');
 
             $table->index('default_address');
+            $table->index('user_id');
             $table->timestamps();
             $table->softDeletes();
         });

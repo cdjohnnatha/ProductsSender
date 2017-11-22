@@ -18,7 +18,7 @@ class CreatePackageFilesTable extends Migration
 
             $table->string('name');
             $table->string('path');
-            $table->bigInteger('package_id');
+            $table->integer('package_id');
 
             $table->index('package_id');
 

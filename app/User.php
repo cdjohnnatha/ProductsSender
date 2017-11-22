@@ -10,7 +10,12 @@ class User extends Authenticatable
 {
     use SoftDeletes, LogsActivity;
 
+    protected $attributes = [
+        'type' => 'user'
+    ];
+
     protected $fillable = [
+        'type',
         'email',
         'password',
         'confirmation_code'
@@ -20,6 +25,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Client::class);
     }
+
 
 
 }

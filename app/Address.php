@@ -31,6 +31,6 @@ class Address extends Entity
 
     public function geonames()
     {
-        return $this->hasOne(AddressGeonameCode::class);
+        return $this->hasOne(ClientAddressGeoname::class);
     }
 }

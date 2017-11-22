@@ -10,7 +10,7 @@ namespace App\Repositories;
 
 
 use App\Address;
-use App\AddressGeonameCode;
+use App\ClientAddressGeoname;
 use App\Admin;
 use App\Repositories\Interfaces\RepositoryInterface;
 use App\CompanyWarehouse;
@@ -22,7 +22,7 @@ class WarehouseRepository implements RepositoryInterface
     private $address_model;
     private $admin_model;
 
-    public function __construct(CompanyWarehouse $model, Address $address_model, AdminRepository $admin_model, AddressGeonameCode $geoname_model)
+    public function __construct(CompanyWarehouse $model, Address $address_model, AdminRepository $admin_model, ClientAddressGeoname $geoname_model)
     {
         $this->model = $model;
         $this->address_model = $address_model;
@@ -38,7 +38,7 @@ class WarehouseRepository implements RepositoryInterface
     {
         $warehouse = $this->model::create($request->input('warehouse'));
         $address = new $this->address_model($request->input('address'));
-        $geonames = new AddressGeonameCode($request->input('geonames'));
+        $geonames = new ClientAddressGeoname($request->input('geonames'));
 
         $admin = $this->admin_model->findById($request->input('admin_id'));
 

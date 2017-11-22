@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Address;
-use App\AddressGeonameCode;
+use App\ClientAddressGeoname;
 use App\Mail\UserRegisterConfirmation;
 use App\Repositories\SubscriptionRepository;
 use App\Repositories\UserRepository;
@@ -33,7 +33,6 @@ class RegisterController extends Controller
 
 
     protected $redirectTo = '/user';
-    private $subscriptions;
     private $user;
 
     protected function redirectTo()
@@ -45,10 +44,9 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct(UserRepository $user, SubscriptionRepository $subscription)
+    public function __construct(UserRepository $user)
     {
         $this->middleware('guest');
-        $this->subscriptions = $subscription;
         $this->user = $user;
 
     }
@@ -56,14 +54,13 @@ class RegisterController extends Controller
     public function rules()
     {
         return [
-            'user.name' => 'required|string|max:255',
-            'user.surname' => 'required|string|max:255',
-            'user.rg' => 'required|string',
-            'user.cpf' => 'required|string',
             'user.email' => 'required|string|email|max:255|unique:users,email',
-            'user.phone' => 'required|string',
-            'user.subscription_id' => 'required',
             'user.password' => 'required|string|min:6|confirmed',
+            'client.name' => 'required|string|max:255',
+            'client.surname' => 'required|string|max:255',
+            'client.rg' => 'required|string',
+            'client.cpf' => 'required|string',
+            'client.phone' => 'required|string',
             'address.label' => 'required',
             'address.owner_name' => 'required',
             'address.owner_surname' => 'required|string',
@@ -75,19 +72,18 @@ class RegisterController extends Controller
             'address.country' => 'required|string',
             'address.street' => 'required|string',
             'address.formatted_address' => 'required|string',
-            'geonames.country' => 'required',
-            'geonames.city' => 'required',
-            'geonames.state' => 'required',
+            'identification_card' => 'required|image',
+            'usps_form' => 'required|image',
+            'proof_address' => 'required|file',
         ];
     }
 
 
     public function register()
     {
-        $subscriptions_active_month = $this->subscriptions->getPerTimeWithBenefits('amount', 1, true, 3);
-        $subscriptions_active_year = $this->subscriptions->getPerTimeWithBenefits('amount', 12, true, 3);
 
-        return view('auth.register', compact('subscriptions_active_month','subscriptions_active_year'));
+
+        return view('auth.register');
     }
 
     public function store(Request $request)
@@ -95,7 +91,7 @@ class RegisterController extends Controller
         $this->validate($request, $this->rules());
         if($this->user->store($request)) {
             $request->session()->flash('info', __('email_verification.registered_message'));
-            return redirect('/');
+            return redirect()->route('login');
         }
         return back();
     }

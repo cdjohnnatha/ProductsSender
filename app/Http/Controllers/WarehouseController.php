@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
-use App\AddressGeonameCode;
+use App\ClientAddressGeoname;
 use App\Admin;
 use App\Repositories\AdminRepository;
 use App\Repositories\WarehouseRepository;

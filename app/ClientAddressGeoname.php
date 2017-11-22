@@ -2,7 +2,7 @@
 
 namespace App;
 
-class AddressGeonameCode extends Entity
+class ClientAddressGeoname extends Entity
 {
     protected $fillable = [
         'country',
