@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Admin;
+use App\Http\Controllers\Controller;
 use App\Repositories\AdminRepository;
 use App\CompanyWarehouse;
 use Illuminate\Http\Request;

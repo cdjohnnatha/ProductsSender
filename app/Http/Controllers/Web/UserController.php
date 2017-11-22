@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
-use App\Repositories\SubscriptionRepository;
+use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
-use App\CompanySubscription;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;

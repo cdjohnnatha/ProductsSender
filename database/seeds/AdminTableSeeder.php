@@ -11,13 +11,10 @@ class AdminTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('admins')->insert([
-            'name' => 'Holyship',
-            'surname' => 'Team',
+        DB::table('users')->insert([
+            'type' => 'admin',
             'email' => 'holyship@admin.com',
-            'phone' => '08000800',
             'password' => Hash::make('holyship123'),
-            'default_warehouse' => 1
         ]);
     }
 }

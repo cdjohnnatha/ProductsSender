@@ -20,47 +20,42 @@
     <div class="sidebar-inner sidebar-push">
       <ul class="nav nav-pills nav-stacked">
         <li class="sidebar-header">NAVIGATION</li>
-        <li class="{{ Route::is('admin.dashboard') ? 'active' : '' }}">
-          <a href="{{route('admin.dashboard')}}">
-            <i class="zmdi zmdi-view-dashboard"></i>
-            {{__('common.titles.dashboard')}}
-          </a>
-        </li>
-        <li class="{{ Route::is('admin.index') ? 'active' : '' }}">
-          <a href="{{Route('admin.index')}}"><i class="zmdi zmdi-ticket-star"></i>
-            {{__('common.titles.admin')}}
-          </a>
-        </li>
+        {{--<li class="{{ Route::is('admin.dashboard') ? 'active' : '' }}">--}}
+          {{--<a href="{{route('admin.dashboard')}}">--}}
+            {{--<i class="zmdi zmdi-view-dashboard"></i>--}}
+            {{--{{__('common.titles.dashboard')}}--}}
+          {{--</a>--}}
+        {{--</li>--}}
+        {{--<li class="{{ Route::is('admin.index') ? 'active' : '' }}">--}}
+          {{--<a href="{{Route('admin.index')}}"><i class="zmdi zmdi-ticket-star"></i>--}}
+            {{--{{__('common.titles.admin')}}--}}
+          {{--</a>--}}
+        {{--</li>--}}
 
-        <li class="{{ Route::is('admin.users.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.users.index')}}"><i class="zmdi zmdi-accounts"></i>
-            {{__('common.titles.users')}}
-          </a>
-        </li>
+        {{--<li class="{{ Route::is('admin.users.*') ? 'active' : '' }}">--}}
+          {{--<a href="{{Route('admin.users.index')}}"><i class="zmdi zmdi-accounts"></i>--}}
+            {{--{{__('common.titles.users')}}--}}
+          {{--</a>--}}
+        {{--</li>--}}
 
-        <li class="{{ Route::is('admin.warehouses.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.warehouses.index')}}"><i class="zmdi zmdi-store"></i>
-            {{__('common.titles.warehouse')}}
-          </a>
-        </li>
-        <li class="{{ Route::is('admin.packages.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.packages.index')}}">
-            <i class="zmdi zmdi-shopping-basket"></i>
-            {{__('common.titles.package')}}
-          </a>
-        </li>
+        {{--<li class="{{ Route::is('admin.warehouses.*') ? 'active' : '' }}">--}}
+          {{--<a href="{{Route('admin.warehouses.index')}}"><i class="zmdi zmdi-store"></i>--}}
+            {{--{{__('common.titles.warehouse')}}--}}
+          {{--</a>--}}
+        {{--</li>--}}
+        {{--<li class="{{ Route::is('admin.packages.*') ? 'active' : '' }}">--}}
+          {{--<a href="{{Route('admin.packages.index')}}">--}}
+            {{--<i class="zmdi zmdi-shopping-basket"></i>--}}
+            {{--{{__('common.titles.package')}}--}}
+          {{--</a>--}}
+        {{--</li>--}}
 
-        <li class="{{ Route::is('admin.subscriptions.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.subscriptions.index')}}"><i class="zmdi zmdi-card-membership"></i>
-            {{__('common.titles.plan')}}
-          </a>
-        </li>
 
-        <li class="{{ Route::is('admin.services.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.services.index')}}"><i class="zmdi zmdi-tag"></i>
-            {{__('common.titles.services')}}
-          </a>
-        </li>
+        {{--<li class="{{ Route::is('admin.services.*') ? 'active' : '' }}">--}}
+          {{--<a href="{{Route('admin.services.index')}}"><i class="zmdi zmdi-tag"></i>--}}
+            {{--{{__('common.titles.services')}}--}}
+          {{--</a>--}}
+        {{--</li>--}}
 
       </ul>
     </div>

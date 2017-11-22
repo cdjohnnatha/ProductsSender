@@ -48,12 +48,16 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
         $this->user = $user;
-
     }
 
-    public function rules()
+    public function register()
     {
-        return [
+        return view('auth.register');
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
             'user.email' => 'required|string|email|max:255|unique:users,email',
             'user.password' => 'required|string|min:6|confirmed',
             'client.name' => 'required|string|max:255',
@@ -75,20 +79,8 @@ class RegisterController extends Controller
             'identification_card' => 'required|image',
             'usps_form' => 'required|image',
             'proof_address' => 'required|file',
-        ];
-    }
+        ]);
 
-
-    public function register()
-    {
-
-
-        return view('auth.register');
-    }
-
-    public function store(Request $request)
-    {
-        $this->validate($request, $this->rules());
         if($this->user->store($request)) {
             $request->session()->flash('info', __('email_verification.registered_message'));
             return redirect()->route('login');
@@ -100,7 +92,7 @@ class RegisterController extends Controller
     {
         if($this->user->confirmeAccount($confirmation_code)){
             $request->session()->flash('success', __('statusMessage.global_message.entity.confirmed', ['entity' => __('common.titles.account')]));
-            return redirect(route('login'));
+            return redirect()->route('login');
         } else {
             $request->session()->flash('error',
                 __('statusMessage.global_message.attribute.updated', ['entity' => 'Account Confirmation']));
