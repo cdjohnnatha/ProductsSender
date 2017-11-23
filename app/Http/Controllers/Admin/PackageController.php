@@ -25,12 +25,10 @@ class PackageController extends Controller
 {
 
     private $package_repository;
-    private $warehouse_repository;
 
-    public function __construct(PackageRepository $package_repository, WarehouseRepository $warehouse_repository)
+    public function __construct(PackageRepository $package_repository)
     {
         $this->package_repository = $package_repository;
-        $this->warehouse_repository = $warehouse_repository;
     }
 
     public function rules()
@@ -89,7 +87,7 @@ class PackageController extends Controller
         $this->validate($request, $this->rules());
 
 
-        $request->session()->flash('status', 'Package was successfully registered at warehouse!');
+        $request->session()->flash('status', 'Package was successfully registered at company_warehouse!');
 
         return redirect(route('admin.packages.index'));
     }
@@ -98,7 +96,7 @@ class PackageController extends Controller
     public function show($id){
         $package = Package::with([
             'pictures',
-            'warehouse',
+            'company_warehouse',
             'status',
             'user',
             'goods'])->find($id);

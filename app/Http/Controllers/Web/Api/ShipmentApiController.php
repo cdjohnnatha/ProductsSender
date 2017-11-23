@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Web\Api;
 
 use App\Address;
 use App\Library\Shipment\CustomDeclaration;

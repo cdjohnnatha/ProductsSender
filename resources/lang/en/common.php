@@ -20,7 +20,7 @@ return [
         'plan' => 'Plan',
         'dashboard' => 'Dashboard',
         'admin' => 'Admin',
-        'warehouse' => 'CompanyWarehouse',
+        'warehouse' => 'Company Warehouse',
         'package' => 'Package',
         'informations' => 'Informations',
         'image_gallery' => 'Image Gallery',

@@ -13,10 +13,8 @@
         Route::get('/create', 'Auth\RegisterController@register')->name('register.create');
         Route::get('/verify/{confirmationCode}', 'Auth\RegisterController@confirm')->name('confirmation_path');
     });
-
-    Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
-        Route::get('/', 'RedirectController@index');
-
+    Route::get('/', 'RedirectController@index');
+    Route::group(['namespace' => 'Web', 'middleware' => ['web', 'type:user']], function () {
         Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
             Route::get('/dashboard', 'UserController@dashboard')->name('dashboard');
             Route::get('/notifications', 'NotificationsController@notifications')->name('notifications');

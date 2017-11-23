@@ -4,7 +4,7 @@
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
         <label class="control-label">{{__('warehouse.form.select_warehouse')}}</label>
-        @include('warehouse._select')
+        @include('company_warehouse._select')
       </div>
     </div>
 

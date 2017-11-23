@@ -2,38 +2,40 @@
 
 namespace Tests\Browser;
 
-use App\Admin;
 use App\CompanyWarehouse;
+use App\User;
+use Illuminate\Contracts\Logging\Log;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class WarehousesTest extends DuskTestCase
+class CompanyWarehousesTest extends DuskTestCase
 {
 
     /**
-     * @group registerWarehouse
+     * @group registerCompanyWarehouse
      * @all
      */
-    public function testRegisterWarehouse()
+    public function testRegisterCompanyWarehouse()
     {
         $this->browse(function (Browser $browser) {
-            $admin = Admin::all();
+            $admin = User::where('type','admin')->get();
             $faker = \Faker\Factory::create();
-            $browser->loginAs($admin[0], 'admin')
-                ->visit(route('admin.warehouses.create'))
-                ->type('warehouse[storage_time]', $faker->numberBetween(0, 60))
-                ->type('warehouse[box_price]', $faker->randomFloat(2, 0, 8))
-                ->type('address[phone]', $faker->phoneNumber)
-                ->type('address[postal_code]', $faker->postcode)
-                ->type('address[number]', $faker->buildingNumber)
-                ->type('address[label]', $faker->company)
-                ->type('#map', 'Rua rita porfirio chaves')
-                ->waitFor('.pac-item')
-                ->click('.pac-item')
-                ->pause(1500)
-                ->press('#submit-button')
-                ->waitForLocation('/admin/warehouses');
+            $browser->loginAs(User::find(9))
+//                ->visit(route('admin.company-warehouses.create'));
+                ->visit('/admin/dashboard')
+                ->pause(3000);
+//                ->type('warehouse[storage_time]', $faker->numberBetween(0, 60))
+//                ->type('warehouse[box_price]', $faker->randomFloat(2, 0, 8))
+//                ->type('address[phone]', $faker->phoneNumber)
+//                ->type('address[postal_code]', $faker->postcode)
+//                ->type('address[number]', $faker->buildingNumber)
+//                ->type('address[label]', $faker->company)
+//                ->type('#map', 'Rua rita porfirio chaves')
+//                ->waitFor('.pac-item')
+//                ->click('.pac-item')
+//                ->pause(1500)
+//                ->press('#submit-button')
+//                ->waitForLocation('/admin/warehouses');
         });
     }
 

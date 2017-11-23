@@ -13,7 +13,7 @@ return [
         'state'   => 'State/province',
         'postal_code'   => 'Postal Code ',
         'country'   => 'Country',
-        'number'   => 'Number',
+        'number'   => 'House Number',
         'form' => 'Address form',
         'addressee' => 'Addressee',
         'street2' => 'Address Complement'

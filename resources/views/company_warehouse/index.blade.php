@@ -63,7 +63,7 @@
                                     <th>Country</th>
                                     <th>State</th>
                                     <th data-orderable="false" class="col-xs-2">
-                                        <a href="{{Route('admin.warehouses.create')}}">
+                                        <a href="{{Route('admin.company-warehouses.create')}}">
                                             <button class="btn btn-primary btn-fab  animate-fab"><i class="zmdi zmdi-plus"></i></button>
                                         </a>
                                     </th>

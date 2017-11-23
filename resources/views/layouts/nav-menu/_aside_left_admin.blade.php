@@ -38,11 +38,11 @@
           {{--</a>--}}
         {{--</li>--}}
 
-        {{--<li class="{{ Route::is('admin.warehouses.*') ? 'active' : '' }}">--}}
-          {{--<a href="{{Route('admin.warehouses.index')}}"><i class="zmdi zmdi-store"></i>--}}
-            {{--{{__('common.titles.warehouse')}}--}}
-          {{--</a>--}}
-        {{--</li>--}}
+        <li class="{{ Route::is('admin.company-warehouses.*') ? 'active' : '' }}">
+          <a href="{{Route('admin.company-warehouses.index')}}"><i class="zmdi zmdi-store"></i>
+            {{__('company_warehouse')}}
+          </a>
+        </li>
         {{--<li class="{{ Route::is('admin.packages.*') ? 'active' : '' }}">--}}
           {{--<a href="{{Route('admin.packages.index')}}">--}}
             {{--<i class="zmdi zmdi-shopping-basket"></i>--}}
