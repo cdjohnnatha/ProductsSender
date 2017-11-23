@@ -46,7 +46,7 @@ class CompanyWarehousesTest extends DuskTestCase
     public function testUpdateWarehouse()
     {
         $this->browse(function (Browser $browser) {
-            $admin = Admin::first();
+            $admin = '';
             $faker = \Faker\Factory::create();
             $warehouses = CompanyWarehouse::all();
             $browser->loginAs($admin, 'admin')
