@@ -1,8 +1,8 @@
 <?php
-//Route::domain('admin.holyship.io.localhost')->group(function () {
+Route::domain('admin.holyship.io.localhost')->group(function () {
 
     Auth::routes();
-
+    Route::get('/', 'RedirectController@index');
     Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
         Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
 
@@ -13,4 +13,4 @@
         });
         Route::resource('admin', 'AdminController');
     });
-//});
+});
