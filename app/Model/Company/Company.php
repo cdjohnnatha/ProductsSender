@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Model\Company;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Entity;
 
 class Company extends Entity
 {
