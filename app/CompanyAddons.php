@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Model\Company;
+namespace App;
 
-use App\Entity;
 class CompanyAddons extends Entity
 {
 

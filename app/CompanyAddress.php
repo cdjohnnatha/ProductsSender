@@ -4,10 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CompanyWarehouseAddress extends Model
+class CompanyAddress extends Model
 {
     protected $fillable = [
-        'label',
         'country',
         'street',
         'street2',
@@ -19,8 +18,8 @@ class CompanyWarehouseAddress extends Model
         'formatted_address',
     ];
 
-    public function companyWarehouse()
+    public function company()
     {
-        return $this->belongsTo(CompanyWarehouse::class);
+        return $this->belongsTo(Company::class);
     }
 }

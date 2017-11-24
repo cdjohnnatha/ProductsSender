@@ -23,7 +23,7 @@ class CompaniesController extends Controller
     public function index()
     {
         $companies = $this->company_repository->getAll();
-        return view('companies.index', compact('companies'));
+        return view('company.index', compact('companies'));
     }
 
     /**
@@ -33,7 +33,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        //
+        return view('company.create');
     }
 
     /**
@@ -44,7 +44,10 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->company_repository->store($request);
+        $request->session()->flash('success', 'Company was successfully registered!');
+
+        return redirect(route('admin.companies.index'));
     }
 
     /**
@@ -66,7 +69,8 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $company = $this->company_repository->findById($id);
+        return view('company.create')->with('company', $company);
     }
 
     /**
@@ -78,7 +82,10 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->company_repository->update($id, $request);
+
+        $request->session()->flash('success', 'Company was successfully updated!');
+        return redirect(route('admin.companies.index'));
     }
 
     /**
@@ -87,8 +94,16 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        if($this->company_repository->destroy($id)) {
+            $request->session()->flash('success', 'Company was successfully deleted!');
+            return redirect(route('admin.companies.index'));
+        } else {
+            $request->session()->flash('error', 'Problem when was deleting! Please try again');
+            return redirect(route('admin.companies.index'));
+        }
+
+
     }
 }

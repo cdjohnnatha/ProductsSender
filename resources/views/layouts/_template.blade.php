@@ -11,9 +11,9 @@
             </form>
         </nav>
     </header>
-    @if(auth()->guard('web')->user())
+    @if(auth()->user()->type == 'user')
         @include('layouts.nav-menu._aside_left_user')
-    @elseif(auth()->guard('admin')->user())
+    @elseif(auth()->user()->type == 'admin')
         @include('layouts.nav-menu._aside_left_admin')
     @endif
     <section id="content_outer_wrapper" style="padding-bottom: 0;">

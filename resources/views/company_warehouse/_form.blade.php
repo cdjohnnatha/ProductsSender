@@ -1,13 +1,13 @@
 <article>
   @if(Request::is('*/edit'))
-    @include('address._form', ['title' => __('address.titles.admin_name'), 'address' => $warehouse->address])
+    @include('company_warehouse._warehouse_address_form', ['title' => __('address.titles.admin_name'), 'address' => $warehouse->address])
   @else
-    @include('address._form', ['title' => __('address.titles.admin_name')])
+    @include('company_warehouse._warehouse_address_form', ['title' => __('address.titles.admin_name')])
   @endif
 
     <section class="row">
     <section class="form-group col-sm-6 label-floating
-        {{ $errors->has('warehouse.storage_time') ? ' has-error' : '' }}">
+        {{ $errors->has('company_warehouse') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-alarm"></i></span>
         <label class="control-label">{{__('warehouse.form.storage_time').' ('. __('common.calendar.days').')'}}</label>

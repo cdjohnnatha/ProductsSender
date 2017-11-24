@@ -25,6 +25,8 @@ class CreateCompanyWarehouseAddressesTable extends Migration
             $table->string('phone', 20);
             $table->string('number', 15);
             $table->string('formatted_address', 200);
+            $table->integer('company_warehouse_id');
+            $table->index('company_warehouse_id');
             $table->timestamps();
             $table->softDeletes();
         });

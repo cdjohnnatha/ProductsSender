@@ -1,39 +1,37 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Address;
 use App\ClientAddressGeoname;
 use App\Admin;
+use App\Http\Controllers\Controller;
 use App\Repositories\AdminRepository;
 use App\Repositories\WarehouseRepository;
 use App\CompanyWarehouse;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class WarehouseController extends Controller
+class CompanyWarehouseController extends Controller
 {
 
     private $warehouse_repository;
-    private $admin_repository;
 
-    public function __construct(WarehouseRepository $warehouse_repository, AdminRepository $admin_repository)
+    public function __construct(WarehouseRepository $warehouse_repository)
     {
         $this->warehouse_repository = $warehouse_repository;
-        $this->admin_repository = $admin_repository;
     }
 
     public function index()
     {
         $warehouses = $this->warehouse_repository->getAll();
-
-        return view('warehouse.index', compact('warehouses'));
+        return view('company_warehouse.index', compact('warehouses'));
     }
 
     public function create(){
-        $admins = $this->admin_repository->getAll();
 
-        return view('warehouse.create', compact('admins'));
+        return view('company_warehouse.create');
     }
 
     public function store(Request $request)
@@ -42,7 +40,6 @@ class WarehouseController extends Controller
             'warehouse.storage_time' => 'required|min:0',
             'warehouse.box_price' => 'required|min:0',
             'address.label' => 'bail|required|min:3',
-            'admin_id' => 'required|min:1',
             'address.phone' => 'required',
             'address.city' => 'required',
             'address.state' => 'required',

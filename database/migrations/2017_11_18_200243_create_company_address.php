@@ -21,9 +21,11 @@ class CreateCompanyAddress extends Migration
             $table->string('city', 50);
             $table->string('state', 50);
             $table->string('postal_code', 20);
-            $table->string('phone', 20);
             $table->string('number', 15);
             $table->string('formatted_address', 200);
+            $table->integer('company_id');
+
+            $table->index('company_id');
             $table->timestamps();
             $table->softDeletes();
         });

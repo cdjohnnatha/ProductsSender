@@ -21,11 +21,10 @@ Vue.component('user-notifications', require('./components/Users/NotificationsBar
 Vue.component('user-additional-names', require('./components/Users/AdditionalNames.vue'));
 Vue.component('autocomplete-address', require('./components/Utils/AutocompleteAddress.vue'));
 Vue.component('vue-google-autocomplete', require('vue-google-autocomplete'));
-Vue.component('select-subscription', require('./components/Utils/SelectSubscription.vue'));
-Vue.component('plan-offers', require('./components/Utils/PlanOffers.vue'));
 Vue.component('custom-clearance-form', require('./components/Packages/CustomClearanceForm.vue'));
 Vue.component('warehouse-notifications', require('./components/Warehouses/NotificationsBar.vue'));
 Vue.component('shipment-component', require('./components/Packages/Shipment.vue'));
+Vue.component('phones-component', require('./components/Utils/Phones.vue'));
 
 
 import VueGoogleAutocomplete from 'vue-google-autocomplete';

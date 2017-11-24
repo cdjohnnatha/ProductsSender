@@ -23,26 +23,36 @@ class CompanyRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model->all();
+        return $this->model->with('phones', 'address')->get();
     }
 
     public function store($request)
     {
-        return $this->model->create($request->all());
+        $company = $this->model->create($request->input('company'));
+        $company->address()->create($request->input('address'));
+        $company->phones()->createMany($request->input('phones'));
     }
 
     public function update($id, $request)
     {
-        // TODO: Implement update() method.
+        $company = $this->model->find($id);
+        $company->update($request->input('company'));
+        $company->address()->update($request->input('address'));
+        foreach ($request->input('phones') as $phone) {
+            $company->phones()->updateOrCreate(
+                ['id' => (int)$phone['id']],
+                ['number' => $phone['number']]);
+        }
+//        $company->phones()->updateOrCreate($request->input('phones'));
     }
 
     public function findById($attribute)
     {
-        // TODO: Implement findById() method.
+        return $this->model->with(['address', 'phones'])->find($attribute);
     }
 
     public function destroy($id)
     {
-        // TODO: Implement destroy() method.
+        return $this->model->find($id)->delete();
     }
 }

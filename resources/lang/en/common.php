@@ -20,7 +20,7 @@ return [
         'plan' => 'Plan',
         'dashboard' => 'Dashboard',
         'admin' => 'Admin',
-        'warehouse' => 'CompanyWarehouse',
+        'warehouse' => 'Company Warehouse',
         'package' => 'Package',
         'informations' => 'Informations',
         'image_gallery' => 'Image Gallery',
@@ -47,7 +47,8 @@ return [
         'payment_method' => 'Payment Method',
         'shipment_method' => 'Shipment Method',
         'confirmation' => 'Confirmation',
-        'inbox' => 'Inbox'
+        'inbox' => 'Inbox',
+        'companies' => 'Companies'
     ],
 
     'short_description' => [

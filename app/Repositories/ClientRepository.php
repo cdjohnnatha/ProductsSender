@@ -17,12 +17,13 @@ use App\User;
 use App\ClientWallet;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Symfony\Component\HttpKernel\Client;
 
-class UserRepository implements RepositoryInterface
+class ClientRepository implements RepositoryInterface
 {
     private $model;
 
-    public function __construct(User $model)
+    public function __construct(Client $model)
     {
         $this->model = $model;
 
@@ -30,7 +31,7 @@ class UserRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model::all();
+        return $this->model::with('subscription')->get();
     }
 
     public function store($request)
