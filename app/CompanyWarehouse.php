@@ -16,7 +16,7 @@ class CompanyWarehouse extends Entity
 
     public function address()
     {
-        return $this->hasMany(CompanyWarehouseAddress::class);
+        return $this->one(CompanyWarehouseAddress::class);
     }
 
     public function addons()

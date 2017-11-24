@@ -19,14 +19,11 @@ class WarehouseRepository implements RepositoryInterface
 {
 
     private $model;
-    private $address_model;
-    private $admin_model;
 
-    public function __construct(CompanyWarehouse $model, Address $address_model, AdminRepository $admin_model, ClientAddressGeoname $geoname_model)
+
+    public function __construct(CompanyWarehouse $model)
     {
         $this->model = $model;
-        $this->address_model = $address_model;
-        $this->admin_model = $admin_model;
     }
 
     public function getAll()
@@ -37,17 +34,9 @@ class WarehouseRepository implements RepositoryInterface
     public function store($request)
     {
         $warehouse = $this->model::create($request->input('warehouse'));
-        $address = new $this->address_model($request->input('address'));
-        $geonames = new ClientAddressGeoname($request->input('geonames'));
+        $warehouse->address()->create($request->input('address'));
+//        $warehouse->address->geonames()->create($request->input('geonames'));
 
-        $admin = $this->admin_model->findById($request->input('admin_id'));
-
-        $address->owner_name = $admin->name;
-        $address->owner_surname = $admin->surname;
-        $address->company_name = 'Holyship';
-
-        $warehouse->address()->save($address);
-        $warehouse->address->geonames()->save($geonames);
     }
 
     public function update($id, $request)

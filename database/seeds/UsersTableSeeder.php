@@ -19,22 +19,11 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('holyship123')
         ]);
 
-//        DB::table('addresses')->insert([
-//            'label' => 'Address of EUA',
-//            'owner_name' => 'holyship',
-//            'owner_surname' => 'holyship',
-//            'company_name' => 'holyship',
-//            'country' => 'BR',
-//            'street' => 'Rua abelardo da silva guimarães barreto',
-//            'city' => 'João Pessoa',
-//            'state' => 'Paraiba',
-//            'postal_code' => '58046110',
-//            'phone' => '+5583999999999',
-//            'addressable_id' => 1,
-//            'addressable_type' => 'App\User',
-//            'number' => 400,
-//            'formatted_address' => 'Rua abelardo da silva guimarães barreto, 400, João Pessoa, Paraiba'
-//        ]);
-//        factory(App\User::class, 10)->create();
+        DB::table('users')->insert([
+            'type' => 'admin',
+            'email' => 'holyship@admin.com',
+            'password' => Hash::make('holyship123'),
+        ]);
     }
+
 }
