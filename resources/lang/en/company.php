@@ -3,7 +3,8 @@
 return [
     'titles' => [
         'name' => 'Give a name for that company',
-        'form' => 'Company Form'
+        'form' => 'Company Form',
+        'select_company' => 'Choose a company'
 
     ],
 
@@ -13,6 +14,11 @@ return [
         'filter_address' => 'Filter address',
         'box_address' => 'Your Box Address',
         'mailing_address' => 'Your Mailing Address'
+    ],
+
+    'company_warehouse' => [
+        'title' => 'Company Warehouse',
     ]
+
 
 ];

@@ -61,7 +61,7 @@
                                     <th>Name</th>
                                     <th>City</th>
                                     <th>Country</th>
-                                    <th>State</th>
+                                    <th>Phones</th>
                                     <th data-orderable="false" class="col-xs-2">
                                         <a href="{{Route('admin.company-warehouses.create')}}">
                                             <button class="btn btn-primary btn-fab  animate-fab"><i class="zmdi zmdi-plus"></i></button>
@@ -70,15 +70,19 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($warehouses as $warehouse)
+                                @foreach($company_warehouses as $warehouse)
                                     <tr>
                                         <td>{{$warehouse->id}}</td>
-                                        <td>{{$warehouse->address['label']}}</td>
+                                        <td>{{$warehouse->name}}</td>
                                         <td>{{$warehouse->address['city']}}</td>
                                         <td>{{$warehouse->address['country']}}</td>
-                                        <td>{{$warehouse->address['state']}}</td>
                                         <td>
-                                            @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'admin.warehouses' ,'id' => $warehouse->id])
+                                            @foreach($warehouse->phones as $phone)
+                                                {{$phone->number . ' / '}}
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'admin.company-warehouses' ,'id' => $warehouse->id])
                                         </td>
                                     </tr>
                                 @endforeach

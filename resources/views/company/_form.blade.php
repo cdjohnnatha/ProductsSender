@@ -1,4 +1,4 @@
-<article>
+<article>default_warehouse
   <section class="row">
 
     <div class="form-group col-sm-6 label-floating
@@ -6,7 +6,7 @@
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-city"></i></span>
         <label class="control-label">{{__('company.titles.name')}}</label>
-        <input type="number" min="0" name="company[name]" class="form-control"
+        <input type="text" name="company[name]" class="form-control"
                value="{{ $company->name or old('company.name') }}">
         @if ($errors->has('company.name'))
           <span class="help-block">

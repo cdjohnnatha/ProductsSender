@@ -33,26 +33,33 @@ class WarehouseRepository implements RepositoryInterface
 
     public function store($request)
     {
-        $warehouse = $this->model::create($request->input('warehouse'));
+        $warehouse = $this->model::create($request->input('company_warehouse'));
         $warehouse->address()->create($request->input('address'));
+        $warehouse->phones()->createMany($request->input('phones'));
 //        $warehouse->address->geonames()->create($request->input('geonames'));
 
     }
 
     public function update($id, $request)
     {
-        $warehouse = $this->model::with('address')->find($id);
-        $warehouse->address->load('geonames');
+        $company_warehouse = $this->model::with('address')->find($id);
+//        $company_warehouse->address->load('geonames');
 
-        $warehouse->update($request->input('warehouse'));
-        $warehouse->address->update($request->input('address'));
+        $company_warehouse->update($request->input('company_warehouse'));
+        $company_warehouse->address->update($request->input('address'));
 
-        if(!empty($warehouse->address->geonames)){
-            $warehouse->address->geonames->update($request->input('geonames'));
+        foreach ($request->input('phones') as $phone) {
+            $company_warehouse->phones()->updateOrCreate(
+                ['id' => (int)$phone['id']],
+                ['number' => $phone['number']]);
         }
-        else{
-            $warehouse->address->geonames()->create($request->input('geonames'));
-        }
+
+//        if(!empty($warehouse->address->geonames)){
+//            $warehouse->address->geonames->update($request->input('geonames'));
+//        }
+//        else{
+//            $warehouse->address->geonames()->create($request->input('geonames'));
+//        }
 
     }
 

@@ -29,7 +29,7 @@
 
         <li class="{{ Route::is('admin.company-warehouses.*') ? 'active' : '' }}">
           <a href="{{Route('admin.company-warehouses.index')}}"><i class="zmdi zmdi-store"></i>
-            {{__('company_warehouse')}}
+            {{__('company.company_warehouse.title')}}
           </a>
         </li>
 

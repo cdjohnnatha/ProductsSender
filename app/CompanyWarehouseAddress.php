@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyWarehouseAddress extends Model
 {
     protected $fillable = [
-        'label',
         'country',
         'street',
         'street2',
@@ -15,7 +14,6 @@ class CompanyWarehouseAddress extends Model
         'state',
         'number',
         'postal_code',
-        'phone',
         'formatted_address',
     ];
 

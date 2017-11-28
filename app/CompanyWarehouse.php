@@ -12,16 +12,23 @@ class CompanyWarehouse extends Entity
     protected $fillable = [
         'storage_time',
         'box_price',
+        'name',
+        'company_id'
     ];
 
     public function address()
     {
-        return $this->one(CompanyWarehouseAddress::class);
+        return $this->hasOne(CompanyWarehouseAddress::class);
     }
 
     public function addons()
     {
         return $this->belongsToMany(CompanyWarehouseAddons::class);
+    }
+
+    public function phones()
+    {
+        return $this->hasMany(CompanyWarehousePhones::class);
     }
 
 }

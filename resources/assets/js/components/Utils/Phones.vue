@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="col-sm-12">
         <header class="form-group">
           <span class="btn" @click="addPhones" id="addPhones">
             <i class="zmdi zmdi-plus"></i>
