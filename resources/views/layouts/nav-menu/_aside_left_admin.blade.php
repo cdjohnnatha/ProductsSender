@@ -27,16 +27,23 @@
           </a>
         </li>
 
+        <li class="{{ Route::is('admin.companies.*') ? 'active' : '' }}">
+          <a href="{{Route('admin.companies.index')}}">
+            <i class="zmdi zmdi-city"></i>
+            {{__('common.titles.companies')}}
+          </a>
+        </li>
+
         <li class="{{ Route::is('admin.company-warehouses.*') ? 'active' : '' }}">
           <a href="{{Route('admin.company-warehouses.index')}}"><i class="zmdi zmdi-store"></i>
             {{__('company.company_warehouse.title')}}
           </a>
         </li>
 
-        <li class="{{ Route::is('admin.companies.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.companies.index')}}">
+        <li class="{{ Route::is('admin.company-addons.*') ? 'active' : '' }}">
+          <a href="{{Route('admin.company-addons.index')}}">
             <i class="zmdi zmdi-city"></i>
-            {{__('common.titles.companies')}}
+            {{__('company.company_addons.title')}}
           </a>
         </li>
 

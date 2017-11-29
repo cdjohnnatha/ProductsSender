@@ -1,13 +1,4 @@
 <article>
-  @if ($errors->any())
-    <div class="alert alert-danger">
-      <ul>
-        @foreach ($errors->all() as $error)
-          <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-  @endif
   <section class="row">
     <div class="form-group col-sm-9 label-floating {{ $errors->has('company_warehouse.name') ? 'has-error' : '' }}">
       <div class="input-group">

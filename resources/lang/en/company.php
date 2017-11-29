@@ -18,7 +18,14 @@ return [
 
     'company_warehouse' => [
         'title' => 'Company Warehouse',
+    ],
+
+    'company_addons' => [
+        'title' => 'Company Addons',
+        'form_title' => 'Give a name for that Addon'
     ]
+
+
 
 
 ];

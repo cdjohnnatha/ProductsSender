@@ -1,5 +1,5 @@
 <section id="company_select">
-    <select class="select form-control" name="company">
+    <select class="select form-control" name="{{$fieldName}}">
       @foreach($companies as $company)
         <option value="{{$company->id or old('company')}}">
             {{$company->name}}

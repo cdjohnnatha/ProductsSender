@@ -1,4 +1,4 @@
-<article>default_warehouse
+<article>
   <section class="row">
 
     <div class="form-group col-sm-6 label-floating

@@ -16,6 +16,9 @@ class CreateCompanyAddonsTable extends Migration
         Schema::create('company_addons', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->integer('company_id');
+
+            $table->index('company_id');
             $table->timestamps();
             $table->softDeletes();
         });
