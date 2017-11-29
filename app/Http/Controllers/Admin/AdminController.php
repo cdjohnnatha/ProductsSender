@@ -14,16 +14,16 @@ use Illuminate\Validation\Rule;
 class AdminController extends Controller
 {
 
-    private $admin_repository;
+    private $adminRepository;
 
     public function __construct(AdminRepository $model)
     {
-        $this->admin_repository = $model;
+        $this->adminRepository = $model;
     }
 
     public function index()
     {
-        $admins = $this->admin_repository->getAll();
+        $admins = $this->adminRepository->getAll();
         return view('admin.index', compact('admins'));
     }
 
@@ -44,13 +44,13 @@ class AdminController extends Controller
             'password' => 'required|string|min:6|confirmed'
         ]);
 
-        $this->admin_repository->store($request);
+        $this->adminRepository->store($request);
         $request->session()->flash('success', 'Admin was successfully created!');
         return redirect(route('admin.index'));
     }
 
     public function edit($id){
-        $admin = $this->admin_repository->findById($id);
+        $admin = $this->adminRepository->findById($id);
         $warehouses = CompanyWarehouse::all();
         return view('admin.create', compact('admin', 'warehouses'));
     }
@@ -70,7 +70,7 @@ class AdminController extends Controller
         ]);
 
 
-        $this->admin_repository->update($id, $request);
+        $this->adminRepository->update($id, $request);
 
         $request->session()->flash('success', 'Admin was successfully updated!');
         return redirect(route('admin.index'))->setStatusCode(200);
@@ -80,7 +80,7 @@ class AdminController extends Controller
     public function destroy($id)
     {
 
-        $this->admin_repository->destroy($id);
+        $this->adminRepository->destroy($id);
         return redirect(route('admin.index'))->setStatusCode(200);
     }
 }

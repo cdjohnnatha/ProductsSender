@@ -24,11 +24,11 @@ use Spatie\Activitylog\Models\Activity;
 class PackageController extends Controller
 {
 
-    private $package_repository;
+    private $packageRepository;
 
-    public function __construct(PackageRepository $package_repository)
+    public function __construct(PackageRepository $packageRepository)
     {
-        $this->package_repository = $package_repository;
+        $this->packageRepository = $packageRepository;
     }
 
     public function rules()
@@ -49,7 +49,7 @@ class PackageController extends Controller
     public function index()
     {
         if (auth()->guard('web')->user()){
-            $sent = $this->package_repository->getUserPackagesWithGoods('object_owner', Auth::user()->id, true);
+            $sent = $this->packageRepository->getUserPackagesWithGoods('object_owner', Auth::user()->id, true);
             $incomingPackages = Auth::user()->incomingPackages()->where('registered', false)->get();
 
         } else {
@@ -61,7 +61,7 @@ class PackageController extends Controller
         }
 
 
-        $packages_warehouse = $this->package_repository->getIndexPackages(
+        $packages_warehouse = $this->packageRepository->getIndexPackages(
             'warehouse_id',
             Auth::user()->warehouse_id,
             false);

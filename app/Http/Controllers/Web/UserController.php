@@ -44,7 +44,8 @@ class UserController extends Controller
 
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $user = $this->user->findById($id);
 
         if(auth()->guard('admin')->user()) {
@@ -86,7 +87,8 @@ class UserController extends Controller
         }
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $this->user->destroy($id);
 
         if(auth()->guard('admin')->user()){

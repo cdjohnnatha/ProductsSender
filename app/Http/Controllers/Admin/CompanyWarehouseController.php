@@ -17,25 +17,25 @@ use Illuminate\Support\Facades\Auth;
 class CompanyWarehouseController extends Controller
 {
 
-    private $warehouse_repository;
-    private $company_repository;
+    private $warehouseRepository;
+    private $companyRepository;
 
-    public function __construct(WarehouseRepository $warehouse_repository, CompanyRepository $company_repository)
+    public function __construct(WarehouseRepository $warehouseRepository, CompanyRepository $companyRepository)
     {
-        $this->warehouse_repository = $warehouse_repository;
-        $this->company_repository = $company_repository;
+        $this->warehouseRepository = $warehouseRepository;
+        $this->companyRepository = $companyRepository;
     }
 
     public function index()
     {
-        $company_warehouses = $this->warehouse_repository->getAll();
-        $companies = $this->company_repository->getAll();
+        $company_warehouses = $this->warehouseRepository->getAll();
+        $companies = $this->companyRepository->getAll();
         return view('company_warehouse.index', compact('company_warehouses', 'companies'));
     }
 
     public function create()
     {
-        $companies = $this->company_repository->getAll();
+        $companies = $this->companyRepository->getAll();
         return view('company_warehouse.create', compact('companies'));
     }
 
@@ -55,7 +55,7 @@ class CompanyWarehouseController extends Controller
             'phones' => 'required|array|min:1',
         ]);
 
-        $this->warehouse_repository->store($request);
+        $this->warehouseRepository->store($request);
 
         $request->session()->flash('success', 'CompanyWarehouse was successfully created!');
         return redirect(route('admin.company-warehouses.index'));
@@ -65,8 +65,8 @@ class CompanyWarehouseController extends Controller
 
     public function edit($id)
     {
-        $company_warehouse = $this->warehouse_repository->findById($id);
-        $companies = $this->company_repository->getAll();
+        $company_warehouse = $this->warehouseRepository->findById($id);
+        $companies = $this->companyRepository->getAll();
         return view('company_warehouse.create', compact('company_warehouse', 'companies'));
     }
 
@@ -87,7 +87,7 @@ class CompanyWarehouseController extends Controller
             'address.postal_code' => 'required',
         ]);
 
-        $this->warehouse_repository->update($id, $request);
+        $this->warehouseRepository->update($id, $request);
 
         $request->session()->flash('success', 'CompanyWarehouse was successfully updated!');
         return redirect(route('admin.company-warehouses.index'));
@@ -95,7 +95,7 @@ class CompanyWarehouseController extends Controller
 
     public function destroy($id)
     {
-        if($this->warehouse_repository->destroy($id)) {
+        if($this->warehouseRepository->destroy($id)) {
             return redirect(route('admin.company-warehouses.index'));
         }
 

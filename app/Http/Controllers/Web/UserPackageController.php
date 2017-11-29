@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Log;
 
 class UserPackageController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $packages =  Package::with(['status' => function($query) {
             $query->where([
                 ['status', 'like', 'WAREHOUSE%'],
@@ -25,13 +26,15 @@ class UserPackageController extends Controller
 
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $package = Package::findOrFail($id);
 
         return view('package.show', compact('package'));
     }
 
-    public function informPackage(){
+    public function informPackage()
+    {
         return view('package.inform');
     }
 }
