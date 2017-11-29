@@ -10,7 +10,7 @@
         @if ($errors->has('company_warehouse.name'))
           <span class="help-block">
             <strong class="text-danger" class="alert-danger">
-              {{ $errors->first('company_warehouse.name') }}
+              {{ $errors->first('warehouse') }}
               <span class="zmdi zmdi-close form-control-feedback" aria-hidden="true"></span>
             </strong>
           </span>
@@ -135,7 +135,7 @@
         <span class="input-group-addon"><i class="zmdi zmdi-money"></i></span>
         <label class="control-label">{{__('warehouse.form.box_price')}}</label>
         <input type="number" min="0.00" step="0.01" name="company_warehouse[box_price]" class="form-control" placeholder=""
-               value="{{ $company_warehouse->box_price or old('company_warehouse.box_price') }}">
+               value="{{ $company_warehouse->box_price or old('warehouse') }}">
       </div>
 
       @if ($errors->has('company_warehouse.box_price'))

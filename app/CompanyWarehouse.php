@@ -2,8 +2,8 @@
 
 namespace App;
 
+use App\Repositories\CompanyWarehouseAddons;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class CompanyWarehouse extends Entity
 {

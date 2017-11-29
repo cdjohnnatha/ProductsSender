@@ -18,11 +18,16 @@ return [
 
     'company_warehouse' => [
         'title' => 'Company Warehouse',
+        'addon' => [
+            'nav_title' => 'Company Warehouse Addons',
+            'data_info' => 'All the addons in warehouse are listed here.'
+        ]
     ],
 
     'company_addons' => [
         'title' => 'Company Addons',
-        'form_title' => 'Give a name for that Addon'
+        'form_title' => 'Give a name for that Addon',
+
     ]
 
 
