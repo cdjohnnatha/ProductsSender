@@ -59,6 +59,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
+                                    <th>Company</th>
                                     <th>City</th>
                                     <th>Country</th>
                                     <th>Phones</th>
@@ -74,6 +75,7 @@
                                     <tr>
                                         <td>{{$warehouse->id}}</td>
                                         <td>{{$warehouse->name}}</td>
+                                        <td>{{$warehouse->company->name}}</td>
                                         <td>{{$warehouse->address['city']}}</td>
                                         <td>{{$warehouse->address['country']}}</td>
                                         <td>
