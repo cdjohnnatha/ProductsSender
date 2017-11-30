@@ -58,7 +58,8 @@ class CompaniesController extends Controller
      */
     public function show($id)
     {
-        //
+        $company = $this->companyRepository->findById($id);
+        return view('company.show')->with('company', $company);
     }
 
     /**

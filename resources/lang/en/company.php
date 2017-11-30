@@ -24,9 +24,10 @@ return [
         ]
     ],
 
-    'company_addons' => [
-        'title' => 'Company Addons',
+    'addons' => [
+        'title' => 'Addons',
         'form_title' => 'Give a name for that Addon',
+        'data_info' => 'All addons are listed here for that company.'
 
     ]
 

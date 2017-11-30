@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\Company;
 use App\CompanyWarehouse;
 use App\User;
 use Illuminate\Contracts\Logging\Log;
@@ -19,21 +20,22 @@ class CompanyWarehousesTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $admin = User::where('type','admin')->get();
+            $companies = Company::all()->last();
             $faker = \Faker\Factory::create();
-            $browser->loginAs($admin[0])
-                ->visit(route('admin.company-warehouses.create'))
+            $browser->loginAs($admin->last())
+                ->visit(route('admin.companies.warehouses.create', $companies->id))
                 ->type('#map', 'Rua rita porfirio chaves')
                 ->waitFor('.pac-item')
                 ->click('.pac-item')
                 ->pause(1500)
-                ->type('company_warehouse[storage_time]', $faker->numberBetween(0, 60))
-                ->type('company_warehouse[name]', $faker->company)
-                ->type('company_warehouse[box_price]', $faker->randomFloat(2, 0, 8))
+                ->type('companyWarehouse[storage_time]', $faker->numberBetween(0, 60))
+                ->type('companyWarehouse[name]', $faker->company)
+                ->type('companyWarehouse[box_price]', $faker->randomFloat(2, 0, 8))
                 ->type('address[postal_code]', $faker->postcode)
                 ->type('address[number]', $faker->buildingNumber)
                 ->type('phones[0][number]', $faker->phoneNumber)
                 ->press('#submit-button')
-                ->waitForLocation('/admin/company-warehouses');
+                ->waitForLocation('/admin/companies/'.$companies->id);
         });
     }
 
@@ -47,21 +49,21 @@ class CompanyWarehousesTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $admin = User::where('type', 'admin')->get();
             $faker = \Faker\Factory::create();
-            $warehouses = CompanyWarehouse::all();
+            $companies = Company::all()->last();
             $browser->loginAs($admin[0])
-                ->visit(route('admin.company-warehouses.edit', $warehouses->last()->id))
+                ->visit(route('admin.companies.warehouses.edit', [$companies->id, $companies->warehouses->last()->id]))
                 ->type('#map', 'Rua rita porfirio chaves')
                 ->waitFor('.pac-item')
                 ->click('.pac-item')
                 ->pause(1500)
-                ->type('company_warehouse[storage_time]', $faker->numberBetween(0, 60))
-                ->type('company_warehouse[name]', $faker->company)
-                ->type('company_warehouse[box_price]', $faker->randomFloat(2, 0, 8))
+                ->type('companyWarehouse[storage_time]', $faker->numberBetween(0, 60))
+                ->type('companyWarehouse[name]', $faker->company)
+                ->type('companyWarehouse[box_price]', $faker->randomFloat(2, 0, 8))
                 ->type('address[postal_code]', $faker->postcode)
                 ->type('address[number]', $faker->buildingNumber)
                 ->type('phones[0][number]', $faker->phoneNumber)
                 ->press('#submit-button')
-                ->waitForLocation('/admin/company-warehouses');
+                ->waitForLocation('/admin/companies/'.$companies->id);
         });
     }
 

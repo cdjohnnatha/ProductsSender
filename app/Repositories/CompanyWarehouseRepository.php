@@ -8,14 +8,10 @@
 
 namespace App\Repositories;
 
-
-use App\Address;
-use App\ClientAddressGeoname;
-use App\Admin;
 use App\Repositories\Interfaces\RepositoryInterface;
 use App\CompanyWarehouse;
 
-class WarehouseRepository implements RepositoryInterface
+class CompanyWarehouseRepository implements RepositoryInterface
 {
 
     private $model;
@@ -33,7 +29,7 @@ class WarehouseRepository implements RepositoryInterface
 
     public function store($request)
     {
-        $warehouse = $this->model::create($request->input('company_warehouse'));
+        $warehouse = $this->model::create($request->input('companyWarehouse'));
         $warehouse->address()->create($request->input('address'));
         $warehouse->phones()->createMany($request->input('phones'));
 //        $warehouse->address->geonames()->create($request->input('geonames'));
@@ -42,14 +38,14 @@ class WarehouseRepository implements RepositoryInterface
 
     public function update($id, $request)
     {
-        $company_warehouse = $this->model::with('address')->find($id);
-//        $company_warehouse->address->load('geonames');
+        $companyWarehouse = $this->model::with('address')->find($id);
+//        $companyWarehouse->address->load('geonames');
 
-        $company_warehouse->update($request->input('company_warehouse'));
-        $company_warehouse->address->update($request->input('address'));
+        $companyWarehouse->update($request->input('companyWarehouse'));
+        $companyWarehouse->address->update($request->input('address'));
 
         foreach ($request->input('phones') as $phone) {
-            $company_warehouse->phones()->updateOrCreate(
+            $companyWarehouse->phones()->updateOrCreate(
                 ['id' => (int)$phone['id']],
                 ['number' => $phone['number']]);
         }
@@ -65,10 +61,7 @@ class WarehouseRepository implements RepositoryInterface
 
     public function findById($attribute)
     {
-        $warehouse = $this->model::with('address')->findOrFail($attribute);
-        $warehouse->address->geonameCode;
-
-        return $warehouse;
+        return $this->model::with('address')->findOrFail($attribute);
     }
 
     public function destroy($id)

@@ -9,12 +9,10 @@ use App\Http\Controllers\Controller;
 
 class CompanyAddonsController extends Controller
 {
-    private $companyRepository;
     private $companyAddonsRepository;
 
-    public function __construct(CompanyRepository $companyRepository, CompanyAddonsRepository $companyAddonsRepository)
+    public function __construct(CompanyAddonsRepository $companyAddonsRepository)
     {
-        $this->companyRepository = $companyRepository;
         $this->companyAddonsRepository = $companyAddonsRepository;
     }
 
@@ -29,10 +27,9 @@ class CompanyAddonsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($companyId)
     {
-        $companies = $this->companyRepository->getAll();
-        return view('company.addons.create', compact('companies'));
+        return view('company.addons.create')->with('companyId', $companyId);
     }
 
     /**
@@ -41,9 +38,11 @@ class CompanyAddonsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $companyId)
     {
-        $this->companyAddonsRepository->store($request);
+        if($this->companyAddonsRepository->store($request)){
+            return redirect(route('admin.companies.show', $companyId));
+        }
     }
 
     /**
@@ -63,11 +62,10 @@ class CompanyAddonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($companyId, $id)
     {
         $addon = $this->companyAddonsRepository->findById($id);
-        $companies = $this->companyRepository->getAll();
-        return view('company.addons.create', compact('addon', 'companies'));
+        return view('company.addons.create', compact('addon', 'companyId'));
     }
 
     /**
@@ -77,10 +75,10 @@ class CompanyAddonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $companyId, $id)
     {
         if($this->companyAddonsRepository->update($id, $request)){
-            return redirect(route('admin.company-addons.index'));
+            return redirect(route('admin.companies.show', $companyId));
         }
 
     }
@@ -91,10 +89,10 @@ class CompanyAddonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($companyId, $id)
     {
         if($this->companyAddonsRepository->destroy($id)){
-            return redirect(route('admin.company-addons.index'));
+            return redirect(route('admin.companies.show', $companyId));
         }
     }
 }

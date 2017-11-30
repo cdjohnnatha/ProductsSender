@@ -33,27 +33,6 @@
             {{__('common.titles.companies')}}
           </a>
         </li>
-
-        <li class="{{ Route::is('admin.companies.warehouses.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.companies.warehouses.index')}}"><i class="zmdi zmdi-store"></i>
-            {{__('company.company_warehouse.title')}}
-          </a>
-        </li>
-
-        <li class="{{ Route::is('admin.companies.addons.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.companies.addons.index')}}">
-            <i class="zmdi zmdi-city"></i>
-            {{__('company.company_addons.title')}}
-          </a>
-        </li>
-
-        <li class="{{ Route::is('admin.companies.warehouses.addons.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.companies.warehouses.addons.index')}}"><i class="zmdi zmdi-store"></i>
-            {{__('company.company_warehouse.addon.nav_title')}}
-          </a>
-        </li>
-
-
       </ul>
     </div>
   </nav>

@@ -2,49 +2,39 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Address;
-use App\ClientAddressGeoname;
-use App\Admin;
+
 use App\Http\Controllers\Controller;
-use App\Repositories\AdminRepository;
-use App\Repositories\CompanyRepository;
-use App\Repositories\WarehouseRepository;
-use App\CompanyWarehouse;
-use App\User;
+use App\Repositories\CompanyWarehouseRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CompanyWarehouseController extends Controller
 {
 
     private $warehouseRepository;
-    private $companyRepository;
 
-    public function __construct(WarehouseRepository $warehouseRepository, CompanyRepository $companyRepository)
+    public function __construct(CompanyWarehouseRepository $warehouseRepository)
     {
         $this->warehouseRepository = $warehouseRepository;
-        $this->companyRepository = $companyRepository;
     }
 
     public function index()
     {
-        $company_warehouses = $this->warehouseRepository->getAll();
-        $companies = $this->companyRepository->getAll();
-        return view('company_warehouse.index', compact('company_warehouses', 'companies'));
+
+        return view('company.warehouse.index');
     }
 
-    public function create()
+    public function create($companyId)
     {
-        $companies = $this->companyRepository->getAll();
-        return view('company_warehouse.create', compact('companies'));
+        return view('company.warehouse.create', compact('companyId'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $companyId)
     {
         $this->validate($request, [
-            'company_warehouse.storage_time' => 'required|min:0',
-            'company_warehouse.box_price' => 'required|min:0',
-            'company_warehouse.name' => 'required|string',
+            'companyWarehouse.storage_time' => 'required|min:0',
+            'companyWarehouse.box_price' => 'required|min:0',
+            'companyWarehouse.name' => 'required|string',
+            'companyWarehouse.company_id' => 'required',
             'address.city' => 'required',
             'address.state' => 'required',
             'address.country' => 'required',
@@ -58,26 +48,24 @@ class CompanyWarehouseController extends Controller
         $this->warehouseRepository->store($request);
 
         $request->session()->flash('success', 'CompanyWarehouse was successfully created!');
-        return redirect(route('admin.company-warehouses.index'));
+        return redirect(route('admin.companies.show', $companyId));
     }
 
 
 
-    public function edit($id)
+    public function edit($companyId, $id)
     {
-        $company_warehouse = $this->warehouseRepository->findById($id);
-        $companies = $this->companyRepository->getAll();
-        return view('company_warehouse.create', compact('company_warehouse', 'companies'));
+        $companyWarehouse = $this->warehouseRepository->findById($id);
+        return view('company.warehouse.create', compact('companyWarehouse', 'companyId'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $companyId, $id)
     {
-//        dd($request->input());
         $this->validate($request, [
-            'company_warehouse.storage_time' => 'required|min:0',
-            'company_warehouse.box_price' => 'required|min:0',
-            'company_warehouse.name' => 'required|string',
-            'company_warehouse.company_id' => 'required',
+            'companyWarehouse.storage_time' => 'required|min:0',
+            'companyWarehouse.box_price' => 'required|min:0',
+            'companyWarehouse.name' => 'required|string',
+            'companyWarehouse.company_id' => 'required',
             'address.city' => 'required',
             'address.state' => 'required',
             'address.country' => 'required',
@@ -90,13 +78,13 @@ class CompanyWarehouseController extends Controller
         $this->warehouseRepository->update($id, $request);
 
         $request->session()->flash('success', 'CompanyWarehouse was successfully updated!');
-        return redirect(route('admin.company-warehouses.index'));
+        return redirect(route('admin.companies.show', $companyId));
     }
 
-    public function destroy($id)
+    public function destroy($companyId, $id)
     {
         if($this->warehouseRepository->destroy($id)) {
-            return redirect(route('admin.company-warehouses.index'));
+            return redirect(route('admin.companies.warehouses.show', $companyId));
         }
 
     }

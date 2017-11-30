@@ -15,23 +15,25 @@
                     <h2 class="card-title">{{__('company.titles.form')}}</h2>
                 </header>
                 @if(Request::is('*/edit'))
-                    <?php $action = 'admin.company-addons.update' ?>
-                        <form action="{{route($action, $addon->id)}}" role="form" method="POST">
+                    <?php $action = 'admin.companies.addons.update' ?>
+                        <form action="{{route($action, [$companyId, $addon->id])}}" role="form" method="POST">
                         <input name="_method" type="hidden" value="PUT">
                     @else
-                        <?php $action = 'admin.company-addons.store' ?>
-                        <form action="{{route($action)}}" role="form" method="POST">
+                        <?php $action = 'admin.companies.addons.store' ?>
+                        <form action="{{route($action, $companyId)}}" role="form" method="POST">
                     @endif
                             {{ csrf_field() }}
                             <section class="card-body">
                                 <article>
+                                    <input type="hidden" name="addon[company_id]" value="{{$companyId}}">
                                     <section class="row">
-                                        <div class="form-group col-sm-6 label-floating {{ $errors->has('addon.title') ? ' has-error' : '' }}">
+                                        <div class="form-group col-sm-12 label-floating {{ $errors->has('addon.title') ? ' has-error' : '' }}">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="zmdi zmdi-city"></i></span>
-                                                <label class="control-label">{{__('company.company_addons.form_title')}}</label>
+                                                <label class="control-label">{{__('company.addons.form_title')}}</label>
                                                 <input type="text" name="addon[title]" class="form-control"
                                                        value="{{ $addon->title or old('addon.title') }}">
+
                                                 @if ($errors->has('addon.title'))
                                                     <span class="help-block">
                                                         <strong class="text-danger" class="alert-danger">
@@ -41,15 +43,11 @@
                                                 @endif
                                             </div>
                                         </div>
-
-                                        <div class="form-group col-sm-6">
-                                            @include('company._select', ['fieldName' => 'addon[company_id]'])
-                                        </div>
                                     </section>
                                 </article>
                             </section>
                             <footer class="card-footer text-right">
-                                @include('layouts.formButtons._form_save_edit', ['url' => Route('admin.company-addons.index')])
+                                @include('layouts.formButtons._form_save_edit', ['url' => Route('admin.companies.show', $companyId)])
                             </footer>
                         </form>
             </div>

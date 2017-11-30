@@ -21,11 +21,13 @@ class CompanyAddonTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $admin = User::where('type','admin')->get();
             $faker = \Faker\Factory::create();
+            $companies = Company::all()->last();
+
             $browser->loginAs($admin[0])
-                ->visit(route('admin.company-addons.create'))
+                ->visit(route('admin.companies.addons.create', $companies->id))
                 ->type('addon[title]', $faker->company)
                 ->press('#submit-button')
-                ->waitForLocation('/admin/company-addons');
+                ->waitForLocation('/admin/companies/'.$companies->id);
         });
     }
 
@@ -38,12 +40,12 @@ class CompanyAddonTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $admin = User::where('type','admin')->get();
             $faker = \Faker\Factory::create();
-            $addon = CompanyAddons::all();
+            $companies = Company::all()->last();
             $browser->loginAs($admin[0])
-                ->visit(route('admin.company-addons.edit', $addon->last()->id))
+                ->visit(route('admin.companies.addons.edit', [$companies->id, $companies->addons->last()->id]))
                 ->type('addon[title]', $faker->company)
                 ->press('#submit-button')
-                ->waitForLocation('/admin/company-addons');
+                ->waitForLocation('/admin/companies/'.$companies->id);
         });
     }
 

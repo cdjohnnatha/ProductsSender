@@ -23,7 +23,7 @@ class CompanyRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model->with('phones', 'address')->get();
+        return $this->model->with('phones', 'address', 'addons')->get();
     }
 
     public function store($request)
@@ -43,7 +43,6 @@ class CompanyRepository implements RepositoryInterface
                 ['id' => (int)$phone['id']],
                 ['number' => $phone['number']]);
         }
-//        $company->phones()->updateOrCreate($request->input('phones'));
     }
 
     public function findById($attribute)

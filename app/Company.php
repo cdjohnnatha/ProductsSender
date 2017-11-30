@@ -20,4 +20,14 @@ class Company extends Entity
     {
         return $this->hasOne(CompanyAddress::class);
     }
+
+    public function addons()
+    {
+        return $this->hasMany(CompanyAddons::class);
+    }
+
+    public function warehouses()
+    {
+        return $this->hasMany(CompanyWarehouse::class);
+    }
 }

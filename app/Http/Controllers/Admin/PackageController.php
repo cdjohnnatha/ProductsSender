@@ -9,7 +9,7 @@ use App\Notifications\PackageNotifications;
 use App\Package;
 use App\PackageFiles;
 use App\Repositories\PackageRepository;
-use App\Repositories\WarehouseRepository;
+use App\Repositories\CompanyWarehouseRepository;
 use App\Status;
 use App\User;
 use App\CompanyWarehouse;
