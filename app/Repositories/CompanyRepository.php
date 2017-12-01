@@ -54,4 +54,9 @@ class CompanyRepository implements RepositoryInterface
     {
         return $this->model->find($id)->delete();
     }
+
+    public function getAddons($companyId)
+    {
+        return $this->model->find($companyId)->addons()->get();
+    }
 }

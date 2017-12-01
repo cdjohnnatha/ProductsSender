@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Repositories\CompanyWarehouseAddons;
 use Illuminate\Notifications\Notifiable;
 
 class CompanyWarehouse extends Entity
@@ -23,7 +22,7 @@ class CompanyWarehouse extends Entity
 
     public function addons()
     {
-        return $this->belongsToMany(CompanyWarehouseAddons::class);
+        return $this->belongsToMany(CompanyWarehouseAddon::class);
     }
 
     public function phones()

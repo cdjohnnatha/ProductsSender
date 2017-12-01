@@ -2,17 +2,17 @@
 
 namespace App;
 
-class CompanyWarehouseAddons extends Entity
+class CompanyWarehouseAddon extends Entity
 {
     protected $fillable = [
         'price',
         'company_warehouse_id',
-        'company_addon_id'
+        'company_addons_id'
     ];
 
     public function companyWarehouse()
     {
-        return $this->belongsTo(CompanyWarehouse::class);
+        return $this->belongsToMany(CompanyWarehouse::class);
     }
 
     public function companyAddons()

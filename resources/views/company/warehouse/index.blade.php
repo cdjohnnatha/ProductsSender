@@ -34,6 +34,13 @@
                                         </td>
                                         <td>
                                             <a href="#" class="icon"
+                                               onclick="window.location='{{Route("admin.companies.warehouses.show", [$company->id, $warehouse->id])}}'"
+                                               data-toggle="tooltip"
+                                               data-placement="top" title="{{__('buttons.titles.show')}}">
+                                                <i class="zmdi zmdi-search"></i>
+                                            </a>
+
+                                            <a href="#" class="icon"
                                                onclick="window.location='{{Route("admin.companies.warehouses.edit", [$company->id, $warehouse->id])}}'"
                                                data-toggle="tooltip"
                                                data-placement="top" title="{{__('buttons.titles.edit')}}">

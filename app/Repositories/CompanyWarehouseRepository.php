@@ -61,11 +61,13 @@ class CompanyWarehouseRepository implements RepositoryInterface
 
     public function findById($attribute)
     {
-        return $this->model::with('address')->findOrFail($attribute);
+        return $this->model::with('address', 'addons')->findOrFail($attribute);
     }
 
     public function destroy($id)
     {
         return $this->model::findOrFail($id)->delete();
     }
+
+
 }

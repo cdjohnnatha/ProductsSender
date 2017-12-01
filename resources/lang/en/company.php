@@ -4,7 +4,8 @@ return [
     'titles' => [
         'name' => 'Give a name for that company',
         'form' => 'Company Form',
-        'select_company' => 'Choose a company'
+        'select_company' => 'Choose a company',
+        'company' => 'Company'
 
     ],
 
@@ -26,6 +27,7 @@ return [
 
     'addons' => [
         'title' => 'Addons',
+        'form' => 'Addons Form',
         'form_title' => 'Give a name for that Addon',
         'data_info' => 'All addons are listed here for that company.'
 

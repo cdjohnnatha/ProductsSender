@@ -51,6 +51,11 @@ class CompanyWarehouseController extends Controller
         return redirect(route('admin.companies.show', $companyId));
     }
 
+    public function show($companyId, $id)
+    {
+        $companyWarehouse = $this->warehouseRepository->findById($id);
+        return view('company.warehouse.show', compact('companyWarehouse', 'companyId'));
+    }
 
 
     public function edit($companyId, $id)

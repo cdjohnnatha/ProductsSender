@@ -8,18 +8,20 @@
 
 namespace App\Repositories;
 
-use App\CompanyWarehouseAddons;
-use App\Repositories\Interfaces\RepositoryInterface;
+use App\CompanyWarehouse;
+use App\CompanyWarehouseAddon;
 
-class CompanyWarehouseAddonRepository implements RepositoryInterface
+class CompanyWarehouseAddonRepository
 {
 
     private $model;
+    private $companyWarehouse;
 
 
-    public function __construct(CompanyWarehouseAddons $model)
+    public function __construct(CompanyWarehouseAddon $model, CompanyWarehouse $companyWarehouse)
     {
         $this->model = $model;
+        $this->companyWarehouse = $companyWarehouse;
     }
 
     public function getAll()
@@ -27,21 +29,21 @@ class CompanyWarehouseAddonRepository implements RepositoryInterface
         return $this->model::with('companyWarehouse', 'companyAddons')->get();
     }
 
-    public function store($request)
+    public function store($request, $warehouseId)
     {
 
-
+        return $this->companyWarehouse->find($warehouseId)->addons()->create($request->all());
     }
 
     public function update($id, $request)
     {
-
+        return $this->model->find($id)->update($request->input());
 
     }
 
     public function findById($attribute)
     {
-
+        return $this->model->find($attribute);
     }
 
     public function destroy($id)
