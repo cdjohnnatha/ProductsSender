@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
-class SubscriptionTableSeeder extends Seeder
+class DatabaseProductionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,7 @@ class SubscriptionTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\CompanySubscription::class, 3)->create();
+        $this->call('UsersTableSeeder');
+
     }
 }

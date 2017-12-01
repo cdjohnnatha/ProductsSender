@@ -17,8 +17,8 @@ class CreateClientsTable extends Migration
             $table->increments('id');
             $table->string('name', 100);
             $table->string('surname', 100);
-            $table->string('phone', 20);
-            $table->string('rg');
+            $table->string('identity_document');
+            $table->string('tax_document');
             $table->string('cpf');
             $table->integer('default_address')->nullable();
             $table->integer('user_id');

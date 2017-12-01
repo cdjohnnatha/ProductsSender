@@ -15,34 +15,99 @@
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
-
+    $type = $faker->numberBetween(0, 1);
     return [
-        'name' => $faker->name,
-        'surname' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'country' => $faker->country,
-        'subscription_id' => $faker->numberBetween($min = 1, $max = 2),
-        'phone' => $faker->phoneNumber,
+        'type' => $type ? 'admin' : 'user',
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
     ];
 });
 
-$factory->define(App\Admin::class, function (Faker\Generator $faker) {
-    static $password;
-
+$factory->define(App\Client::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
+        'name' => $faker->firstName,
         'surname' => $faker->lastName,
-        'email' => $faker->unique()->safeEmail,
-        'country' => $faker->country,
-        'phone' => $faker->phoneNumber,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
-        'default_warehouse_id' => 1
+        'identity_document' => $faker->numberBetween(1000000, 9999999),
+        'tax_document' => $faker->numberBetween(1000000, 9999999),
+        'default_address' => function() {
+        return factory(App\ClientAddress::class)->create()->id;
+        },
+        'user_id' => function() {
+        return factory(App\User::class)->create()->id;
+        }
     ];
 });
 
+
+$factory->define(App\ClientAddress::class, function (Faker\Generator $faker) {
+    return [
+        'label' => $faker->name,
+        'owner_name' => $faker->firstName,
+        'owner_surname' => $faker->lastName,
+        'company_name' => $faker->company,
+        'country' => $faker->country,
+        'street' => $faker->streetAddress,
+        'street2' => $faker->streetName,
+        'city' => $faker->city,
+        'state' => $faker->streetName,
+        'postal_code' => $faker->postcode,
+        'phone' => $faker->phoneNumber,
+        'number' => $faker->buildingNumber,
+        'formatted_address' => $faker->address,
+        'client_id' => function() {
+            return factory(App\Client::class)->create()->id;
+        }
+    ];
+});
+
+/*
+ * Company
+ */
+$factory->define(App\Company::class, function(Faker\Generator $faker) {
+    return [
+        'name' => $faker->company,
+    ];
+});
+
+$factory->define(App\CompanyAddress::class, function(Faker\Generator $faker) {
+    return [
+        'country' => $faker->country,
+        'street' => $faker->streetAddress,
+        'street2' => $faker->streetAddress,
+        'city' => $faker->city,
+        'state' => $faker->streetAddress,
+        'postal_code' => $faker->postcode,
+        'number' => $faker->buildingNumber,
+        'formatted_address' => $faker->address,
+        'company_id' => function() {
+            return factory(App\Company::class)->create()->id;
+        }
+    ];
+});
+
+$factory->define(App\CompanyPhone::class, function(Faker\Generator $faker) {
+    return [
+        'number' => $faker->phoneNumber,
+        'company_id' => function() {
+            return factory(App\Company::class)->create()->id;
+        }
+    ];
+});
+
+$factory->define(App\CompanyAddons::class, function(Faker\Generator $faker) {
+    return [
+        'title' => $faker->jobTitle,
+        'company_id' => function() {
+            return factory(App\Company::class)->create()->id;
+        }
+    ];
+});
+
+
+/**
+ * COMPANY WAREHOUSE
+ */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\CompanyWarehouse::class, function (Faker\Generator $faker) {
@@ -50,48 +115,48 @@ $factory->define(App\CompanyWarehouse::class, function (Faker\Generator $faker) 
     return [
         'name' => $faker->company,
         'storage_time' => $faker->numberBetween($min = 30, $max = 60),
-        'box_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 5)
+        'box_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 4),
+        'company_id' => function() {
+            return factory(App\Company::class)->create()->id;
+        }
     ];
 });
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\Address::class, function (Faker\Generator $faker) {
-    $type = $faker->numberBetween($min = 1, $max = 3);
-    switch ($type){
-        case 1:
-            $type = 'user';
-            break;
-        case 2:
-            $type = 'admin';
-            break;
-        case 3:
-            $type = 'warehouse';
-            break;
-    }
+$factory->define(App\CompanyWarehouseAddress::class, function(Faker\Generator $faker) {
     return [
-        'label' => $faker->company,
-        'owner_name' => $faker->firstName,
-        'owner_surname' => $faker->lastName,
-        'company_name' => $faker->company,
         'country' => $faker->country,
-        'street' => $faker->address,
+        'street' => $faker->streetAddress,
+        'street2' => $faker->streetAddress,
         'city' => $faker->city,
-        'state' => $faker->city,
+        'state' => $faker->streetAddress,
         'postal_code' => $faker->postcode,
-        'phone' => $faker->phoneNumber,
-        'addressable_id' => $faker->numberBetween($min = 1, $max = 3),
-        'addressable_type' => $type,
-        'number' => 400,
-        'formatted_address' => $faker->streetAddress
-
+        'number' => $faker->buildingNumber,
+        'formatted_address' => $faker->address,
+        'company_warehouse_id' => function() {
+            return factory(App\CompanyWarehouse::class)->create()->id;
+        }
     ];
 });
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\CompanySubscription::class, function (Faker\Generator $faker) {
 
+$factory->define(App\CompanyWarehousePhones::class, function(Faker\Generator $faker) {
     return [
-        'title' => $faker->company,
-        'amount' => $faker->randomFloat($nbMaxDecimals = 2, $min = 1, $max = 6),
+        'number' => $faker->phoneNumber,
+        'company_warehouse_id' => function() {
+            return factory(App\CompanyWarehouse::class)->create()->id;
+        }
     ];
 });
+
+$factory->define(App\CompanyWarehouseAddon::class, function(Faker\Generator $faker) {
+    return [
+        'title' => $faker->jobTitle,
+        'company_warehouse_id' => function() {
+            return factory(App\CompanyWarehouse::class)->create()->id;
+        },
+        'company_addons_id' => function() {
+        return factory(App\CompanyAddons::class)->create()->id;
+    }
+    ];
+});
+
