@@ -53,7 +53,7 @@
                                                 {{$phone->number.' / '}}
                                             @endforeach
                                         </td>
-                                        <td>{{$company->address->country}}</td>
+                                        <td>{{$company->address['country']}}</td>
                                         <td>
                                             @include('layouts.formButtons._form_all', ['prefix_name' => 'admin.companies' ,'id' => $company->id])
                                         </td>

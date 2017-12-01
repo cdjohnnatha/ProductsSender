@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//        $this->call('UsersTableSeeder');
+        $this->call('UsersTableSeeder');
         factory(\App\Company::class, 10)->create()->each(function($company) {
             factory(\App\CompanyPhone::class, 3)->create(['company_id' => $company->id]);
             factory(\App\CompanyAddress::class, 1)->create(['company_id' => $company->id]);
@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
                 factory(\App\CompanyWarehousePhones::class, 3)->create(['company_warehouse_id' => $warehouse->id]);
             });
         });
+
+        $this->call('StatusTableSeeder');
 
 
     }

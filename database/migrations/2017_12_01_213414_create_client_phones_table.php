@@ -16,7 +16,8 @@ class CreateClientPhonesTable extends Migration
         Schema::create('client_phones', function (Blueprint $table) {
             $table->increments('id');
             $table->string('number', 40);
-            $table->integer('client_id', 40);
+            $table->integer('client_id');
+            $table->index('client_id');
             $table->timestamps();
             $table->softDeletes();
         });
