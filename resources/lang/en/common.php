@@ -21,7 +21,7 @@ return [
         'dashboard' => 'Dashboard',
         'admin' => 'Admin',
         'warehouse' => 'Company Warehouse',
-        'package' => 'Package',
+        'packages' => 'Packages',
         'informations' => 'Informations',
         'image_gallery' => 'Image Gallery',
         'general' => 'general',

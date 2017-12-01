@@ -33,6 +33,13 @@
             {{__('common.titles.companies')}}
           </a>
         </li>
+
+        <li class="{{ Route::is('admin.packages.*') ? 'active' : '' }}">
+          <a href="{{Route('admin.packages.index')}}">
+            <i class="zmdi zmdi-city"></i>
+            {{__('common.titles.packages')}}
+          </a>
+        </li>
       </ul>
     </div>
   </nav>

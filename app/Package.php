@@ -54,9 +54,9 @@ class Package extends Entity
         return $this->belongsTo(Client::class, 'object_owner');
     }
 
-    public function packageStatus()
+    public function status()
     {
-        return $this->hasMany(PackageStatus::class);
+        return $this->belongsTo(PackageStatus::class);
     }
 
     public function warehouse()
@@ -69,20 +69,10 @@ class Package extends Entity
         return $this->hasMany(PackageFiles::class, 'package_id');
     }
 
-    public function goods()
-    {
-        return $this->hasOne(IncomingPackages::class, 'package_id');
-    }
-
 
     public function goodsDeclaration()
     {
         return $this->hasMany(GoodsDeclaration::class);
-    }
-
-    public function addons()
-    {
-        return $this->morphMany(CompanyAddon::class, 'addonable');
     }
 
     public function order()

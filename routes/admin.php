@@ -20,6 +20,8 @@
 
             });
 
+            Route::resource('/packages', 'PackagesController');
+
         });
         Route::resource('admin', 'AdminController');
     });

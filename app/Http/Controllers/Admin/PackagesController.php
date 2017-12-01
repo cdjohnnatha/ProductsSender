@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Events\Event;
 use App\Events\PackageNotification;
+use App\Http\Controllers\Controller;
 use App\IncomingPackages;
 use App\Notifications\PackageNotifications;
 use App\Package;
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Activitylog\Models\Activity;
 
-class PackageController extends Controller
+class PackagesController extends Controller
 {
 
     private $packageRepository;
@@ -48,29 +49,8 @@ class PackageController extends Controller
 
     public function index()
     {
-        if (auth()->guard('web')->user()){
-            $sent = $this->packageRepository->getUserPackagesWithGoods('object_owner', Auth::user()->id, true);
-            $incomingPackages = Auth::user()->incomingPackages()->where('registered', false)->get();
 
-        } else {
-            $incomingPackages = IncomingPackages::where('registered', false)
-                ->where(
-                    'warehouse_id',
-                    Auth::user()->warehouse_id)
-                ->get();
-        }
-
-
-        $packages_warehouse = $this->packageRepository->getIndexPackages(
-            'warehouse_id',
-            Auth::user()->warehouse_id,
-            false);
-
-        if (auth()->guard('web')->user()) {
-            return view('package.index_user', compact('packages_warehouse', 'sent', 'incomingPackages'));
-        } else {
-            return view('package.index', compact('packages_warehouse', 'incomingPackages'));
-        }
+        return view('packages.admin.index');
     }
 
     public function create($incoming = null){
@@ -151,27 +131,6 @@ class PackageController extends Controller
         return response('status updated to '.$status->status, '200');
     }
 
-    private function saveImage($files, $package){
-        foreach ($files as $key=>$file) {
-            $fileName = $package->id . date("dmYhmsu");
-            $extension = explode('.', $file->getClientOriginalName())[1];
-            $fileName = md5($fileName.$key) . '.' . $extension;
-            $path = $file->storeAs('public/PackagePictures', $fileName);
-            $path = str_replace('public', 'storage', $path);
-            $picture = new PackageFiles();
-            $picture->name = $fileName;
-            $picture->path = '/'.$path;
-            if ($package->pictures()->save($picture)) {
-                activity()
-                    ->performedOn($package)
-                    ->causedBy(Auth::user())
-                    ->withProperty('package_id', $package->id)
-                    ->withProperty('file_name', $fileName)
-                    ->log('The package id is :properties.package_id,
-                            the causer name is :causer.name and it was uploaded a file which is :properties.file_name
-                            with id:');
-            }
-        }
-    }
+
 
 }
