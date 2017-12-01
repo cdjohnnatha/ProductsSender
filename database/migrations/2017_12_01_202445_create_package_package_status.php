@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInvoiceStatusTable extends Migration
+class CreatePackagePackageStatus extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateInvoiceStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_status', function (Blueprint $table) {
+        Schema::create('package_package_status', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('message');
+            $table->integer('package_id');
+            $table->integer('status_id');
+
+            $table->index('package_id');
+            $table->index('status_id');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -28,6 +31,6 @@ class CreateInvoiceStatusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_status');
+        Schema::dropIfExists('package_package_status');
     }
 }

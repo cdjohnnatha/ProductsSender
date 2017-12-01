@@ -31,11 +31,9 @@ class CreatePackagesTable extends Migration
             $table->decimal('total_addons')->nullable();
 
             $table->integer('client_id');
-            $table->integer('status_id')->nullable();
             $table->integer('warehouse_id');
 
             $table->index('warehouse_id');
-            $table->index('status_id');
             $table->index('client_id');
 
 

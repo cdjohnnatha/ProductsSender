@@ -38,6 +38,6 @@ class CreateCompanyWarehouseAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('warehouse_addresses');
+        Schema::dropIfExists('company_warehouse_addresses');
     }
 }

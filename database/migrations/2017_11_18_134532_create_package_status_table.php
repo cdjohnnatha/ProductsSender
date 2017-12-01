@@ -15,7 +15,7 @@ class CreatePackageStatusTable extends Migration
     {
         Schema::create('package_status', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('package_status_message', 40);
+            $table->string('message', 40);
 
             $table->timestamps();
             $table->softDeletes();
