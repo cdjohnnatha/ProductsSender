@@ -24,7 +24,7 @@ class PackageRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model->paginate(50);
+        return $this->model->with('packageStatus', 'client')->paginate(50);
     }
 
     public function getCompaniesAllPackages()
@@ -34,9 +34,10 @@ class PackageRepository implements RepositoryInterface
 
     public function getIndexPackages($field, $id, $sent)
     {
-        return $this->model::with(['status', 'pictures', 'warehouse', 'goods'])
-            ->where($field, $id)
-            ->where('sent', $sent)
+        return $this->model::with([
+            'status' => function($query) {
+                $query->where('message', 'REGISTERED');
+        }])
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -45,6 +46,7 @@ class PackageRepository implements RepositoryInterface
 
     public function store($request)
     {
+        return $this->model->create($request->input('package'));
 //        $package = new $this->model::create($request->input('package'));
 //        $package->status_id = $request->input('status.status_id');
 //        $package->warehouse_id = $request->input('warehouse_id');
@@ -78,6 +80,8 @@ class PackageRepository implements RepositoryInterface
     }
 
     private function saveImage($files, $package){
+        //TODO limitar tamanho máximo de upload de arquivos
+        //TODO tratar MIMES para jpeg, png, jpg, pdf.
         foreach ($files as $key=>$file) {
             $fileName = $package->id . date("dmYhmsu");
             $extension = explode('.', $file->getClientOriginalName())[1];

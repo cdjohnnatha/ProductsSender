@@ -4,6 +4,7 @@ namespace Tests\Browser;
 
 use App\Admin;
 use App\Package;
+use App\User;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -17,14 +18,13 @@ class AdminPackageTest extends DuskTestCase
     public function testRegisterPackage()
     {
         $this->browse(function (Browser $browser) {
+            $admin = User::where('type','admin')->first();
             $faker = \Faker\Factory::create();
-            $admin = Admin::all();
-            $admin = $admin[1];
-            $browser->loginAs($admin, 'admin')
+            $browser->loginAs($admin)
                 ->visit(route('admin.packages.create'))
                 ->pressAndWaitFor('#warehouse_select', 1)
                 ->click('#warehouse_select')
-                ->type('package[object_owner]', 1)
+                ->type('package[client_id]', 1)
                 ->type('package[weight]', $faker->randomFloat(2, 1, 5))
                 ->type('package[width]', $faker->randomFloat(2, 1, 5))
                 ->type('package[depth]', $faker->randomFloat(2, 1, 5))
@@ -34,7 +34,7 @@ class AdminPackageTest extends DuskTestCase
                 ->driver->executeScript('window.scrollTo(0, 600);');
             $browser
                 ->press('#submit-button')
-                ->pause(1000)
+                ->pause(3000)
                 ->waitForLocation('/admin/packages');
         });
     }

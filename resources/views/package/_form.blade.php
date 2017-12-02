@@ -65,7 +65,7 @@
         <span class="input-group-addon"><i class="zmdi zmdi-ruler"></i></span>
         <label class="control-label">{{__('packages.form.width')}}</label>
         <input type="number" class="form-control" name="package[width]"
-               value="{{$package->width or old('package.form.width')}}" min="0.01" step="0.01">
+               value="{{ $package->width or old('package.form.width') }}" min="0.01" step="0.01">
 
         @if ($errors->has('package.width'))
           <span class="help-block">

@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Entity
 {
+    protected $fillable = [
+        'package_id',
+        'uuid'
+    ];
+
     public function packages()
     {
         return $this->hasMany(Package::class);

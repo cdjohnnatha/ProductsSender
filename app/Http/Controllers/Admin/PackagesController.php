@@ -2,25 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\Event;
-use App\Events\PackageNotification;
+
 use App\Http\Controllers\Controller;
-use App\IncomingPackages;
-use App\Notifications\PackageNotifications;
 use App\Package;
-use App\PackageFiles;
+use App\PackageStatus;
 use App\Repositories\PackageRepository;
-use App\Repositories\CompanyWarehouseRepository;
-use App\Status;
-use App\User;
 use App\CompanyWarehouse;
-use Faker\Provider\File;
-use Faker\Provider\Image;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Spatie\Activitylog\Models\Activity;
 
 class PackagesController extends Controller
 {
@@ -41,45 +29,45 @@ class PackagesController extends Controller
             'package.weight' => 'required',
             'package.unit_measure' => 'required',
             'package.weight_measure' => 'required',
-            'package.object_owner' => 'required',
-            'warehouse_id' => 'required',
-            'status.status_id' => 'required|min:1'
+            'package.client_id' => 'required',
+            'package.company_warehouse_id' => 'required',
+            'package.package_status_id' => 'required|min:1'
         ];
     }
 
     public function index()
     {
-
-        return view('packages.admin.index');
+        $warehousePackages = $this->packageRepository->getAll();
+        return view('package.admin.index', compact('warehousePackages'));
     }
 
-    public function create($incoming = null){
-        $warehouses = $this->warehouse_repository->getAll();
-        $status = Status::all();
+    public function create()
+    {
+        $warehouses = CompanyWarehouse::all();
+        $packageStatus = PackageStatus::all();
 
-        $incoming = IncomingPackages::find($incoming ?? 0);
-
-        return view('package.create', compact('warehouses', 'status', 'incoming'));
+        return view('package.admin.create', compact('warehouses', 'packageStatus'));
     }
 
-    public function store(Request $request){
-        dd($request->input());
+    public function store(Request $request)
+    {
         $this->validate($request, $this->rules());
+        $this->packageRepository->store($request);
 
-
-        $request->session()->flash('status', 'Package was successfully registered at company_warehouse!');
-
+//        $request->session()->flash('status', 'Package was successfully registered at company_warehouse!');
         return redirect(route('admin.packages.index'));
     }
 
 
-    public function show($id){
+    public function show($id)
+    {
         $package = Package::with([
             'pictures',
             'company_warehouse',
             'status',
             'user',
-            'goods'])->find($id);
+            'goods'
+        ])->find($id);
 
         return view('package.show', compact('package'));
     }

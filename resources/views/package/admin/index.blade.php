@@ -75,26 +75,21 @@
                       </tr>
                       </thead>
                       <tbody>
-                      {{--@foreach($packages_warehouse as $package)--}}
-                        {{--<tr>--}}
-                          {{--<td>{{$package->id}}</td>--}}
-                          {{--<td>--}}
-                            {{--@if(count($package->pictures) > 0)--}}
-                              {{--<img src="{{$package->pictures[0]->path}}" alt="" class="img-thumbnail"/>--}}
-                            {{--@endif--}}
-                          {{--</td>--}}
-                          {{--<td>{{$package->object_owner}}</td>--}}
-                          {{--<td><span class="label label-default">{{$package->status->status}}</span></td>--}}
-                          {{--<td>{{$package->note}}</td>--}}
-                          {{--<td>--}}
-                            {{--@if(auth()->guard('admin')->user())--}}
-                              {{--@include('layouts.formButtons._form_all', ['prefix_name' => 'admin.packages' ,'id' => $package->id])--}}
-                            {{--@else--}}
-                              {{--@include('layouts.formButtons._form_show_delete', ['prefix_name' => 'user.packages' ,'id' => $package->id])--}}
-                            {{--@endif--}}
-                          {{--</td>--}}
-                        {{--</tr>--}}
-                      {{--@endforeach--}}
+                      @foreach($warehousePackages as $package)
+                        <tr>
+                          <td>
+                            @if(count($package->pictures) > 0)
+                              <img src="{{$package->pictures[0]->path}}" alt="" class="img-thumbnail"/>
+                            @endif
+                          </td>
+                          <td>{{$package->client}}</td>
+                          <td><span class="label label-default">{{$package->packageStatus->message}}</span></td>
+                          <td>{{$package->note}}</td>
+                          <td>
+                            @include('layouts.formButtons._form_all', ['prefix_name' => 'admin.packages' ,'id' => $package->id])
+                          </td>
+                        </tr>
+                      @endforeach
                       </tbody>
                     </table>
                   </div>

@@ -4,57 +4,55 @@ namespace App;
 
 use Spatie\Activitylog\Traits\LogsActivity;
 
+//TODO Analisar se o tamanho do pacote.
+
 class Package extends Entity
 {
-    protected $attributes = array('sent' => false);
-
     protected $fillable = [
+        'provider',
+        'store_name',
+        'track_number',
+        'merchandise',
+        'content_type',
         'width',
         'height',
         'depth',
-        'weight',
         'unit_measure',
+        'weight',
         'weight_measure',
-        'provider',
-        'addressee',
-        'track_number',
         'total_goods',
-        'content_type',
+        'total_addons',
         'client_id',
-        'package_id',
-        'warehouse_id',
-        'status_id',
+        'package_status_id',
+        'company_warehouse_id',
     ];
 
     protected static $logAttributes = [
+        'provider',
+        'store_name',
+        'track_number',
+        'merchandise',
+        'content_type',
         'width',
         'height',
         'depth',
-        'weight',
         'unit_measure',
+        'weight',
         'weight_measure',
-        'object_owner',
-        'warehouse_id',
-        'default_warehouse',
-        'status_id',
-
-        'provider',
-        'addressee',
-        'track_number',
         'total_goods',
-        'description',
-        'user_id',
-        'package_id',
-        'content_type'
+        'total_addons',
+        'client_id',
+        'package_status_id',
+        'company_warehouse_id',
 
     ];
 
-    public function user()
+    public function client()
     {
-        return $this->belongsTo(Client::class, 'object_owner');
+        return $this->belongsTo(Client::class);
     }
 
-    public function status()
+    public function packageStatus()
     {
         return $this->belongsTo(PackageStatus::class);
     }

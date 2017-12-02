@@ -102,7 +102,10 @@ class IncomingPackagesController extends Controller
                 $userType = 'admin';
             }
 
-            $request->session()->flash('info', __('statusMessage.global_message.entity.updated', [':entity' => __('common.titles.incoming_package')]));
+            $request->session()->flash('info',
+                __('statusMessage.global_message.entity.updated', [
+                    ':entity' => __('common.titles.incoming_package')
+                ]));
 
             return redirect(route($userType.'.packages.index'));
         }

@@ -15,12 +15,11 @@ class CreateOrderPackagesTable extends Migration
     {
         Schema::create('order_packages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('uuid');
-            $table->integer('client_id');
+            $table->integer('order_id');
             $table->integer('package_id');
 
 
-            $table->index('client_id');
+            $table->index('order_id');
             $table->index('package_id');
             $table->timestamps();
             $table->softDeletes();

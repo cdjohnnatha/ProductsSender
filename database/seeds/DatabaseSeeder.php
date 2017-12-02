@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call('UsersTableSeeder');
+        $this->call('StatusTableSeeder');
         factory(\App\Company::class, 10)->create()->each(function($company) {
             factory(\App\CompanyPhone::class, 3)->create(['company_id' => $company->id]);
             factory(\App\CompanyAddress::class, 1)->create(['company_id' => $company->id]);
@@ -25,7 +26,7 @@ class DatabaseSeeder extends Seeder
             });
         });
 
-        $this->call('StatusTableSeeder');
+
 
 
     }

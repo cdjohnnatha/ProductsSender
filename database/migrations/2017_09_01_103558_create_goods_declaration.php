@@ -20,9 +20,9 @@ class CreateGoodsDeclaration extends Migration
             $table->integer('quantity');
             $table->decimal('unit_price');
             $table->decimal('total_unit');
-            $table->integer('incoming_packages_id');
+            $table->integer('order_id');
 
-            $table->index('incoming_packages_id');
+            $table->index('order_id');
 
             $table->timestamps();
             $table->softDeletes();
