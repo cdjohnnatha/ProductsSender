@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Client;
 
 use App\Http\Controllers\Controller;
 use App\Package;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class UserPackageController extends Controller
 {

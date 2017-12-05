@@ -3,7 +3,7 @@
 
     Auth::routes();
     Route::get('/', 'RedirectController@index');
-    Route::group(['namespace' => 'Admin', 'middleware' => ['web', 'type:admin']], function () {
+    Route::group(['namespace' => 'Web\Admin', 'middleware' => ['web', 'type:admin']], function () {
 
         Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
             Route::get('/dashboard', 'AdminDashboardController@index')->name('dashboard');
