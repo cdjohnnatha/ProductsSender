@@ -61,6 +61,7 @@ class PackagesController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->input());
         $this->validate($request, $this->rules());
         $package = $this->packageRepository->store($request);
         if($package) {

@@ -54301,7 +54301,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54318,6 +54318,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -54325,7 +54326,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            name: ""
+            name: "client not found",
+            label_info: 'label label-danger'
         };
     },
     created: function created() {
@@ -54340,9 +54342,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         findSuite: function findSuite(id) {
+            var _this = this;
+
             if (Number.isInteger(parseInt(id.key))) {
                 axios.get('/admin/api/findClient/' + id.key).then(function (response) {
                     console.log(response);
+                    if (response.data != "") {
+                        _this.name = response.data.name + ' ' + response.data.surname;
+                        _this.label_info = 'label label-success';
+                        $('#package_client_id').val(response.data.id);
+                        console.log(response.data.id);
+                    } else {
+                        _this.name = 'client not found';
+                        _this.label_info = 'label label-danger';
+                        $('#package_client_id').val(null);
+                    }
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -54360,13 +54374,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('section', [_c('input', {
     staticClass: "form-control",
     attrs: {
-      "type": "number",
-      "name": "package[client_id]"
+      "type": "number"
     },
     on: {
       "keyup": _vm.findSuite
     }
-  })])
+  }), _vm._v(" "), _c('span', {
+    class: _vm.label_info,
+    staticStyle: {
+      "font-size": "70%"
+    },
+    model: {
+      value: (_vm.name),
+      callback: function($$v) {
+        _vm.name = $$v
+      },
+      expression: "name"
+    }
+  }, [_vm._v(_vm._s(_vm.name))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

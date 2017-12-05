@@ -6,8 +6,7 @@
     Route::group(['namespace' => 'Web', 'middleware' => ['web', 'type:admin']], function () {
 
         Route::group(['namespace' => 'Api'], function () {
-//            Route::get('/findClient', 'ClientApiController@findSuite')->name('find-suite');
-
+            Route::get('/admin/api/findClient/{id}', 'ClientApiController@findSuite')->name('find-suite');
         });
 
         Route::group(['namespace' => 'Admin'], function () {

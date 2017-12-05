@@ -1,6 +1,7 @@
 <template>
   <section>
-          <input type="number" name="package[client_id]" class="form-control" @keyup="findSuite">
+          <input type="number" class="form-control" @keyup="findSuite">
+          <span style="font-size: 70%;" v-bind:class="label_info" v-model="name">{{ name }}</span>
   </section>
 </template>
 
@@ -11,7 +12,8 @@
         },
         data(){
             return {
-                name: ""
+                name: "client not found",
+                label_info: 'label label-danger'
             }
         },
 
@@ -32,6 +34,16 @@
                 if(Number.isInteger(parseInt(id.key))) {
                   axios.get('/admin/api/findClient/' + id.key).then( response => {
                       console.log(response);
+                      if(response.data != "") {
+                          this.name = response.data.name + ' ' + response.data.surname;
+                          this.label_info = 'label label-success';
+                          $('#package_client_id').val(response.data.id);
+                          console.log(response.data.id);
+                      } else {
+                          this.name = 'client not found';
+                          this.label_info = 'label label-danger';
+                          $('#package_client_id').val(null);
+                      }
                   }).catch(function (error) {
                       console.log(error);
                   });

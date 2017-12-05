@@ -9,15 +9,14 @@
 namespace App\Repositories;
 
 use App\Address;
+use App\Client;
 use App\ClientAddressGeoname;
 use App\ClientDocuments;
 use App\Mail\UserRegisterConfirmation;
 use App\Repositories\Interfaces\RepositoryInterface;
 use App\User;
-use App\ClientWallet;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Symfony\Component\HttpKernel\Client;
 
 class ClientRepository implements RepositoryInterface
 {
@@ -71,10 +70,6 @@ class ClientRepository implements RepositoryInterface
     }
 
 
-    public function find($column, $attribute)
-    {
-        // TODO: Implement find() method.
-    }
 
     public function destroy($id)
     {

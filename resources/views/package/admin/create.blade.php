@@ -58,7 +58,7 @@
                     {{--<input type="text" class="form-control" name="package[client_id]"--}}
                            {{--value="{{$package->client->id or old('package.client_id')}}">--}}
                     <findclient-component></findclient-component>
-
+                    <input type="hidden" name="package[client_id]" id="package_client_id">
                     @if ($errors->has('package.client_id'))
                       <span class="help-block">
                         <strong class="text-danger" class="alert-danger">
