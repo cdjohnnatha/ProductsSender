@@ -29,17 +29,16 @@ class PackageRepository implements RepositoryInterface
 
     public function getCompaniesAllPackages()
     {
-//        return $this->model->where()
+//        return $this->model->where('');
     }
 
-    public function getIndexPackages($field, $id, $sent)
+    public function getPackagesByStatus($statusType)
     {
-        return $this->model::with([
-            'status' => function($query) {
-                $query->where('message', 'REGISTERED');
-        }])
+        return $this->model->whereHas('packageStatus', function($query) use ($statusType) {
+                    $query->where('message','like', $statusType);
+                })
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(50);
     }
 
 

@@ -1,6 +1,6 @@
 <template>
   <section>
-          <input type="number" class="form-control" @keyup="findSuite">
+          <input type="number" class="form-control" id="find_suite" @keyup="findSuite">
           <span style="font-size: 70%;" v-bind:class="label_info" v-model="name">{{ name }}</span>
   </section>
 </template>

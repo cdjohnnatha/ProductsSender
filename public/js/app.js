@@ -54374,7 +54374,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('section', [_c('input', {
     staticClass: "form-control",
     attrs: {
-      "type": "number"
+      "type": "number",
+      "id": "find_suite"
     },
     on: {
       "keyup": _vm.findSuite

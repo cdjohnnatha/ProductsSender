@@ -47,8 +47,9 @@ class PackagesController extends Controller
 
     public function index()
     {
-        $warehousePackages = $this->packageRepository->getAll();
-        return view('package.admin.index', compact('warehousePackages'));
+        $indexPackages = $this->packageRepository->getPackagesByStatus('REGISTERED');
+        $incomingPackages = $this->packageRepository->getPackagesByStatus('INCOMING');
+        return view('package.admin.index', compact('indexPackages', 'incomingPackages'));
     }
 
     public function create()
@@ -61,7 +62,6 @@ class PackagesController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->input());
         $this->validate($request, $this->rules());
         $package = $this->packageRepository->store($request);
         if($package) {

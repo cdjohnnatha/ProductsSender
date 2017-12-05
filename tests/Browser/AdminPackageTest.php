@@ -3,6 +3,7 @@
 namespace Tests\Browser;
 
 use App\Admin;
+use App\Client;
 use App\Package;
 use App\User;
 use Tests\DuskTestCase;
@@ -20,11 +21,12 @@ class AdminPackageTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $admin = User::where('type','admin')->first();
             $faker = \Faker\Factory::create();
+            $client = Client::all()->last();
             $browser->loginAs($admin)
                 ->visit(route('admin.packages.create'))
                 ->pressAndWaitFor('#warehouse_select', 1)
                 ->click('#warehouse_select')
-                ->type('package[client_id]', 1)
+                ->type('#find_suite', $client->id)
                 ->type('package[weight]', $faker->randomFloat(2, 1, 5))
                 ->type('package[width]', $faker->randomFloat(2, 1, 5))
                 ->type('package[depth]', $faker->randomFloat(2, 1, 5))
@@ -60,7 +62,7 @@ class AdminPackageTest extends DuskTestCase
             $browser->loginAs($admin)
                 ->pressAndWaitFor('#warehouse_select', 1)
                 ->click('#warehouse_select')
-                ->type('package[client_id]', 1)
+                ->type('#find_suite', 1)
                 ->type('package[weight]', $faker->randomFloat(2, 1, 5))
                 ->type('package[width]', $faker->randomFloat(2, 1, 5))
                 ->type('package[depth]', $faker->randomFloat(2, 1, 5))
