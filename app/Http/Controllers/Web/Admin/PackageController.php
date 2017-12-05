@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web\Admin;
 
 use App\Events\Event;
 use App\Events\PackageNotification;
+use App\Http\Controllers\Controller;
 use App\IncomingPackages;
 use App\Notifications\PackageNotifications;
 use App\Package;

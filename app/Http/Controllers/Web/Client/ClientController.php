@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Client;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ClientAddressController extends Controller
+class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ClientAddressController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
