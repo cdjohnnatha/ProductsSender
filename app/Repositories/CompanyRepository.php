@@ -9,7 +9,7 @@
 namespace App\Repositories;
 
 
-use App\Company;
+use App\Entities\Company\Company;
 use App\Repositories\Interfaces\RepositoryInterface;
 
 class CompanyRepository implements RepositoryInterface

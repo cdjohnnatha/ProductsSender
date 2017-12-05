@@ -1,6 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Entities\Client;
+
+use App\Entities\Entity;
+use App\Entities\Package\Package;
+use App\Entities\User;
 
 class Client extends Entity
 {
@@ -20,7 +24,7 @@ class Client extends Entity
 
     public function defaultAddress()
     {
-        return $this->hasOne(Address::class, 'id', 'default_address');
+        return $this->hasOne(ClientAddress::class, 'id', 'default_address');
     }
 
     public function packages()

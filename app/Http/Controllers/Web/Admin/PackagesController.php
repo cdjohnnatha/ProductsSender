@@ -12,8 +12,6 @@ use App\CompanyWarehouse;
 use App\Repositories\PackageStatusRepository;
 use Illuminate\Http\Request;
 
-
-//TODO packageStatusRepository
 class PackagesController extends Controller
 {
 
@@ -68,7 +66,7 @@ class PackagesController extends Controller
         $this->validate($request, $this->rules());
         $package = $this->packageRepository->store($request);
         if($package) {
-//        $request->session()->flash('status', 'Package was successfully registered at company_warehouse!');
+        $request->session()->flash('success', 'Package was successfully registered at Warehouse!');
             return redirect(route('admin.packages.index'));
         }
     }
@@ -76,46 +74,34 @@ class PackagesController extends Controller
 
     public function show($id)
     {
-
         $package = $this->packageRepository->findById($id);
         return view('package.show', compact('package'));
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $package = $this->packageRepository->findById($id);
         $packageStatus = $this->packageStatusRepository->getAll();
         $warehouses = $this->warehouseRepository->getAll();
+
         return view('package.admin.create', compact('package', 'packageStatus', 'warehouses'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $this->validate($request, $this->rules());
         $this->packageRepository->update($id, $request);
-//        $request->session()->flash('status', 'Package #'.$package->id.' was successfully updated!');
-        return redirect(route('admin.packages.index'));
-
-    }
-
-
-    public function destroy($id){
-        Package::findOrFail($id)->delete();
-
-        if (auth()->guard('web')->user())
-            return redirect(route('user.packages.index'));
+        $request->session()->flash('success', 'Package was successfully updated!');
 
         return redirect(route('admin.packages.index'));
-    }
 
-    public function changeStatus(Request $request){
-        $package = Package::findOrFail($request->input('id'));
-        $status = Status::where('status', $request->input('status'));
-
-        $package->status_id = $status->id;
-        $package->save();
-
-        return response('status updated to '.$status->status, '200');
     }
 
 
+    public function destroy($id)
+    {
 
+        $this->packageRepository->destroy($id);
+        return redirect(route('admin.packages.index'));
+    }
 }

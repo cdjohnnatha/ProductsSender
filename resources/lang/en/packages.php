@@ -15,7 +15,10 @@ return [
         'upload_pictures' => 'Upload one or more pictures',
         'uploaded_pictures' => 'Uploaded Pictures',
         'quote' => 'Make a quote about some detail',
-        'suite' => 'Suite'
+        'suite' => 'Suite',
+        'description' => 'Package Description',
+        'provider' => 'Provider',
+        'content_type' => 'Package Content Type'
     ],
 
     'index' => [
@@ -33,21 +36,6 @@ return [
     'notification' => [
         'updated_warehouse' => 'Package was updated at warehouse',
         'created_warehouse' => 'Package was identified at warehouse'
-    ],
-
-    'incoming' => [
-        'form' => [
-            'title_form' => 'Identify your incoming packages',
-            'title_description' => 'Make your packages being processing fast',
-            'short_description' => 'You can find here the alerts created to incoming packages which are unregistered',
-            'provider' => 'Provider',
-            'addressee' => 'Addressee',
-            'track_number' => 'Track Number',
-            'goods_custom_clearance' => 'Goods Custom Clearance',
-            'service' => 'Services',
-            'small_marketing_services' => 'Your plan offer to save up to :discount% if you buy those service now',
-            'package_content' => 'Package Content'
-        ]
     ],
 
     'goods' => [

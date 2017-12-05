@@ -22,7 +22,7 @@
             <li role="presentation"><a href="#tab-5" id="galery-tab" data-toggle="tab" aria-expanded="true">Galery</a>
             </li>
           @endif
-          @if(!is_null($package->goods))
+          @if(!is_null($package->packageGoodsDeclaration()))
             <li class="presentation" role="presentation">
               <a href="#tab-6" data-toggle="tab" aria-expanded="true">
                 {{__('common.titles.custom_clearance')}}
@@ -53,8 +53,8 @@
       </section>
 
       <section class="tab-pane" id="tab-6">
-        @if(!is_null($package->goods))
-          @include('package.incoming._show', ['incomingPackage' => $package->goods])
+        @if(!is_null($package->packageGoodsDeclaration))
+          @include('package._custom_clearance')
         @endif
       </section>
     </section>

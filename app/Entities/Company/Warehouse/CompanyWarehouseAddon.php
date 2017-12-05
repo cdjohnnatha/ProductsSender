@@ -1,6 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Entities\Company\Warehouse;
+
+use App\Entities\Company\CompanyAddons;
+use App\Entities\Entity;
 
 class CompanyWarehouseAddon extends Entity
 {

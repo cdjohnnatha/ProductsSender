@@ -74,10 +74,10 @@
       <section class="tab-pane" id="tab-2">
         @if(Request::is('*/edit'))
           @if(!is_null($package->goods))
-            @include('package.incoming._show', ['incomingPackage' => $package->goods])
+            @include('package._custom_clearance', ['incomingPackage' => $package->goods])
           @endif
         @elseif(!is_null($incoming))
-            @include('package.incoming._show', ['incomingPackage' => $incoming])
+            @include('package._custom_clearance', ['incomingPackage' => $incoming])
         @endif
       </section>
     </section>

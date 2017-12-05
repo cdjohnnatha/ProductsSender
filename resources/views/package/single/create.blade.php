@@ -80,7 +80,7 @@
                       <section class="tab-pane active" id="tab1">
                         @include('package.fragments._informations')
                         @if($package->goods)
-                            @include('package.incoming._show', ['incomingPackage' => $package->goods])
+                            @include('package._custom_clearance', ['incomingPackage' => $package->goods])
                             <input type="hidden" value="{{$package->id}}" id="package_id" name="package_id">
                         @endif
                       </section>

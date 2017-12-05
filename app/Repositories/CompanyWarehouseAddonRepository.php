@@ -8,8 +8,8 @@
 
 namespace App\Repositories;
 
-use App\CompanyWarehouse;
-use App\CompanyWarehouseAddon;
+use App\Entities\Company\Warehouse\CompanyWarehouse;
+use App\Entities\Company\Warehouse\CompanyWarehouseAddon;
 
 class CompanyWarehouseAddonRepository
 {

@@ -231,7 +231,7 @@
                   <div class="form-group col-sm-6 label-floating {{ $errors->has('package.provider') ? ' has-error' : '' }}">
                     <div class="input-group">
                       <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
-                      <label class="control-label">{{__('packages.incoming.form.provider')}}</label>
+                      <label class="control-label">{{__('packages.form.provider')}}</label>
                       <input type="text" class="form-control" name="package[provider]" value="{{$package->provider or old('package.provider')}}">
 
                       @if ($errors->has('package.provider'))
@@ -247,7 +247,7 @@
                   <section class="form-group col-sm-6 label-floating {{ $errors->has('package.content_type') ? ' has-error' : '' }}">
                     <div class="input-group">
                       <span class="input-group-addon"><i class="zmdi zmdi-tag"></i></span>
-                      <label class="control-label">{{__('packages.incoming.form.package_content')}}</label>
+                      <label class="control-label">{{__('packages.form.content_type')}}</label>
 
                       <select class="select form-control" name="package[content_type]">
                         <option value="MERCHANDISE" {{ old('package.content_type') == "MERCHANDISE" ? 'selected' : '' }}>Merchandise</option>
@@ -267,7 +267,7 @@
                   <section class="form-group col-sm-12 label-floating {{ $errors->has('package.description') ? ' has-error' : '' }}">
                     <div class="input-group">
                       <span class="input-group-addon"><i class="zmdi zmdi-comment-edit"></i></span>
-                      <label class="control-label">{{__('packages.package.content_content_type')}}</label>
+                      <label class="control-label">{{__('packages.form.description')}}</label>
                       <textarea tabindex="2" class="form-control" name="package[description]">
                       {{$package->description or old('package.description')}}
                     </textarea>
@@ -294,7 +294,6 @@
             </section>
             <footer class="card-footer text-right">
                 @include('layouts.formButtons._form_save_edit', ['url' => Route('admin.packages.index')])
-
             </footer>
           </form>
         </div>

@@ -8,8 +8,8 @@
 
 namespace App\Repositories;
 
+use App\Entities\Company\Warehouse\CompanyWarehouse;
 use App\Repositories\Interfaces\RepositoryInterface;
-use App\CompanyWarehouse;
 
 class CompanyWarehouseRepository implements RepositoryInterface
 {

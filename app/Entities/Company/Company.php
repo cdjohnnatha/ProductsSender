@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Entities\Company;
 
-use App\Entity;
+use App\Entities\Company\Warehouse\CompanyWarehouse;
+use App\Entities\Entity;
 
 class Company extends Entity
 {

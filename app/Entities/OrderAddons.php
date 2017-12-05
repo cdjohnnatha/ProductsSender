@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ClientPhones extends Model
+class OrderAddons extends Entity
 {
     //
 }

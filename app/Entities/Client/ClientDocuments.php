@@ -1,7 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Entities\Client;
 
+
+use App\Entities\Entity;
 
 class ClientDocuments extends Entity
 {

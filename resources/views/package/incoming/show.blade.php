@@ -12,7 +12,7 @@
               </h2>
               <small>{{Carbon\Carbon::parse($incomingPackage->created_at)->format('d/m/Y')}}</small>
             </header>
-            @include('package.incoming._show')
+            @include('package._custom_clearance')
 
           </div>
         </div>

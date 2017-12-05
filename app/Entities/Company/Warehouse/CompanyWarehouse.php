@@ -1,7 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Entities\Company\Warehouse;
 
+use App\Entities\Company\Company;
+use App\Entities\Entity;
 use Illuminate\Notifications\Notifiable;
 
 class CompanyWarehouse extends Entity
@@ -15,17 +17,17 @@ class CompanyWarehouse extends Entity
         'company_id'
     ];
 
-    public function address()
+    public function companyWarehouseAddress()
     {
         return $this->hasOne(CompanyWarehouseAddress::class);
     }
 
-    public function addons()
+    public function companyWarehouseAddon()
     {
         return $this->belongsToMany(CompanyWarehouseAddon::class);
     }
 
-    public function phones()
+    public function companyWarehousePhones()
     {
         return $this->hasMany(CompanyWarehousePhones::class);
     }

@@ -1,16 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Entities\Company\Warehouse;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ClientAddress extends Model
+class CompanyWarehouseAddress extends Model
 {
     protected $fillable = [
-        'label',
-        'owner_name',
-        'owner_surname',
-        'company_name',
         'country',
         'street',
         'street2',
@@ -18,12 +14,11 @@ class ClientAddress extends Model
         'state',
         'number',
         'postal_code',
-        'phone',
         'formatted_address',
     ];
 
-    public function geonames()
+    public function companyWarehouse()
     {
-        return $this->hasOne(ClientAddressGeoname::class);
+        return $this->belongsTo(CompanyWarehouse::class);
     }
 }

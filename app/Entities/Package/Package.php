@@ -1,6 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Entities\Package;
+
+use App\Entities\Entity;
 
 class Package extends Entity
 {
@@ -55,7 +57,7 @@ class Package extends Entity
         return $this->belongsTo(PackageStatus::class);
     }
 
-    public function warehouse()
+    public function companyWarehouse()
     {
         return $this->belongsTo(CompanyWarehouse::class);
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Entities\Package;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Entities\Entity;
 
-class PackageStatus extends Model
+class PackageStatus extends Entity
 {
     protected $table = 'package_status';
 

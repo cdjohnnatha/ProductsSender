@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Entities\Package;
 
+use App\Entities\Entity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class PackageFiles extends Entity

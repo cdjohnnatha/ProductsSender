@@ -11,10 +11,9 @@ namespace App\Repositories;
 use App\Address;
 use App\ClientAddressGeoname;
 use App\ClientDocuments;
+use App\Entities\User;
 use App\Mail\UserRegisterConfirmation;
 use App\Repositories\Interfaces\RepositoryInterface;
-use App\User;
-use App\ClientWallet;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 

@@ -8,8 +8,7 @@
 
 namespace App\Repositories;
 
-
-use App\Admin;
+use App\Entities\Admin;
 use App\Repositories\Interfaces\RepositoryInterface;
 
 class AdminRepository implements RepositoryInterface

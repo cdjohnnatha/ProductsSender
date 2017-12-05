@@ -9,8 +9,8 @@
 namespace App\Repositories;
 
 
-use App\Package;
-use App\PackageFiles;
+use App\Entities\Package\Package;
+use App\Entities\Package\PackageFiles;
 use App\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Support\Facades\Storage;
 
@@ -82,15 +82,13 @@ class PackageRepository implements RepositoryInterface
             $this->saveImage($request->file('package_files'), $package);
         }
 
-
-
     }
 
     public function findById($attribute)
     {
         return Package::with([
             'pictures',
-            'warehouse',
+            'companyWarehouse',
             'packageStatus',
             'client',
             'packageGoodsDeclaration',
@@ -100,7 +98,7 @@ class PackageRepository implements RepositoryInterface
 
     public function destroy($id)
     {
-        // TODO: Implement destroy() method.
+        return $this->model->find($id)->delete();
     }
 
     private function saveImage($files, $package)

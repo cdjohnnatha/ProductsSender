@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Entities\Company;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Entities\Entity;
 
-class CompanyWarehouseAddress extends Model
+class CompanyAddress extends Entity
 {
     protected $fillable = [
         'country',
@@ -14,11 +14,12 @@ class CompanyWarehouseAddress extends Model
         'state',
         'number',
         'postal_code',
+        'phone',
         'formatted_address',
     ];
 
-    public function companyWarehouse()
+    public function company()
     {
-        return $this->belongsTo(CompanyWarehouse::class);
+        return $this->belongsTo(Company::class);
     }
 }

@@ -8,8 +8,7 @@
 
 namespace App\Repositories;
 
-
-use App\CompanyAddons;
+use App\Entities\Company\CompanyAddons;
 use App\Repositories\Interfaces\RepositoryInterface;
 
 class CompanyAddonsRepository implements RepositoryInterface

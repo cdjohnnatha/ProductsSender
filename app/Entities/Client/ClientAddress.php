@@ -1,11 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Entities\Client;
 
-class Address extends Entity
+use App\Entities\Entity;
+use Illuminate\Database\Eloquent\Model;
+
+class ClientAddress extends Entity
 {
-    protected $attributes = array('company_name' => null);
-
     protected $fillable = [
         'label',
         'owner_name',
@@ -20,14 +21,7 @@ class Address extends Entity
         'postal_code',
         'phone',
         'formatted_address',
-        'addressable_type',
-        'addressable_id',
     ];
-
-    public function addressable()
-    {
-        return $this->morphTo();
-    }
 
     public function geonames()
     {

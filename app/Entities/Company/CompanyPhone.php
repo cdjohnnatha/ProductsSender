@@ -1,6 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Entities\Company;
+
+use App\Entities\Entity;
 
 class CompanyPhone extends Entity
 {
