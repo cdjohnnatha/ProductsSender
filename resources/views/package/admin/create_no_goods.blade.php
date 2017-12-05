@@ -33,11 +33,11 @@
           </header>
           @if(Request::is('*/edit'))
             <?php $action = 'admin.packages.update' ?>
-              <form action="{{ route($action, $package->id) }}" role="form" method="POST" enctype="multipart/form-data">
+              <form action="{{ route($action, $package->id) }}" role="form" method="POST">
               <input name="_method" type="hidden" value="PUT">
           @else
             <?php $action = 'admin.packages.store' ?>
-            <form action="{{ route($action) }}" role="form" method="POST" enctype="multipart/form-data">
+            <form action="{{ route($action) }}" role="form" method="POST">
           @endif
             {{  csrf_field()  }}
             <section class="card-body">
@@ -55,9 +55,8 @@
                   <div class="input-group">
                     <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
                     <label class="control-label">{{__('packages.form.suite')}}</label>
-                    {{--<input type="text" class="form-control" name="package[client_id]"--}}
-                           {{--value="{{$package->client->id or old('package.client_id')}}">--}}
-                    <findclient-component></findclient-component>
+                    <input type="text" class="form-control" name="package[client_id]"
+                           value="{{$package->client or old('package.client_id')}}">
 
                     @if ($errors->has('package.client_id'))
                       <span class="help-block">
@@ -184,7 +183,7 @@
               <div class="form-group label-floating">
                 <div class="input-group col-sm-12">
                   <input type="file" class="form-control" placeholder="File Upload..." multiple
-                         name="package_files[]" id="package_files" accept="application/pdf, image/jpeg, image/jpg, image/png">
+                         name="package_files[]" id="package_files">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="zmdi zmdi-collection-image"></i></span>
                     <label class="control-label">{{__('packages.form.upload_pictures')}}</label>
@@ -215,85 +214,20 @@
                     </span>
                   @endif
                 </div>
-              </section>
+                    </section>
 
-              <!-- GOOOOODS -->
-                <section class="row">
-                  <div class="form-group col-sm-6 label-floating {{ $errors->has('package.provider') ? ' has-error' : '' }}">
-                    <div class="input-group">
-                      <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
-                      <label class="control-label">{{__('packages.incoming.form.provider')}}</label>
-                      <input type="text" class="form-control" name="package[provider]" value="{{$package->provider or old('package.provider')}}">
 
-                      @if ($errors->has('package.provider'))
-                        <span class="help-block">
-                        <strong class="text-danger" class="alert-danger">
-                          {{ $errors->first('package.provider') }}
-                        </strong>
-                      </span>
-                      @endif
-                    </div>
-                  </div>
-
-                  <section class="form-group col-sm-6 label-floating {{ $errors->has('package.content_type') ? ' has-error' : '' }}">
-                    <div class="input-group">
-                      <span class="input-group-addon"><i class="zmdi zmdi-tag"></i></span>
-                      <label class="control-label">{{__('packages.incoming.form.package_content')}}</label>
-
-                      <select class="select form-control" name="package[content_type]">
-                        <option value="MERCHANDISE" {{ old('package.content_type') == "MERCHANDISE" ? 'selected' : '' }}>Merchandise</option>
-                        <option value="GIFT" {{ old('package.content_type') == "GIFT" ? 'selected' : '' }}>Gift</option>
-                      </select>
-
-                      @if ($errors->has('package.content_type'))
-                        <span class="help-block">
-                        <strong class="text-danger" class="alert-danger">
-                          {{ $errors->first('package.content_type') }}
-                        </strong>
-                      </span>
-                      @endif
-                    </div>
                   </section>
-
-                  <section class="form-group col-sm-12 label-floating {{ $errors->has('package.description') ? ' has-error' : '' }}">
-                    <div class="input-group">
-                      <span class="input-group-addon"><i class="zmdi zmdi-comment-edit"></i></span>
-                      <label class="control-label">{{__('packages.package.content_content_type')}}</label>
-                      <textarea tabindex="2" class="form-control" name="package[description]">
-                      {{$package->description or old('package.description')}}
-                    </textarea>
-
-                      @if ($errors->has('package.description'))
-                        <span class="help-block">
-                        <strong class="text-danger" class="alert-danger">
-                          {{ $errors->first('package.description') }}
-                        </strong>
-                      </span>
-                      @endif
-                    </div>
-                  </section>
-
-                  <section class="{{ $errors->has('package.content_type') ? ' has-error' : '' }}">
-                    @if(Request::is('*/edit'))
-                      <custom-clearance-form :editing="{{ $package->packageGoodsDeclaration()->get() }}"></custom-clearance-form>
-                    @else
-                      <custom-clearance-form></custom-clearance-form>
-                    @endif
-                  </section>
-              </section>
-
-            </section>
-            <footer class="card-footer text-right">
-                @include('layouts.formButtons._form_save_edit', ['url' => Route('admin.packages.index')])
-
-            </footer>
-          </form>
+                  <footer class="card-footer text-right">
+                      @include('layouts.formButtons._form_save_edit', ['url' => Route('admin.packages.index')])
+                  </footer>
+                </form>
         </div>
       </section>
       <section class="tab-pane" id="tab-2">
         {{--@if(Request::is('*/edit'))--}}
-        {{--@if(!is_null($package->package))--}}
-        {{--@include('package.incoming._show', ['incomingPackage' => $package->package])--}}
+        {{--@if(!is_null($package->goods))--}}
+        {{--@include('package.incoming._show', ['incomingPackage' => $package->goods])--}}
         {{--@endif--}}
         {{--@elseif(!is_null($incoming))--}}
         {{--@include('package.incoming._show', ['incomingPackage' => $incoming])--}}

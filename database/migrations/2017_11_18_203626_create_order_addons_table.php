@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrderFowardAddonsTable extends Migration
+class CreateOrderAddonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateOrderFowardAddonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_foward_addons', function (Blueprint $table) {
+        Schema::create('order_addons', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('price');
-            $table->integer('order_foward_id');
+            $table->integer('order_id');
             $table->integer('company_addon_id');
 
-            $table->index('order_foward_id');
+            $table->index('order_id');
             $table->index('company_addon_id');
 
             $table->timestamps();
@@ -34,6 +34,6 @@ class CreateOrderFowardAddonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_foward_addons');
+        Schema::dropIfExists('order_addons');
     }
 }

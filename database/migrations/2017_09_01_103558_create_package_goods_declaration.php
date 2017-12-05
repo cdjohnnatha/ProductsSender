@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGoodsDeclaration extends Migration
+class CreatePackageGoodsDeclaration extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateGoodsDeclaration extends Migration
      */
     public function up()
     {
-        Schema::create('goods_declarations', function (Blueprint $table) {
+        Schema::create('package_goods_declarations', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('description', 250);
             $table->integer('quantity');
             $table->decimal('unit_price');
             $table->decimal('total_unit');
-            $table->integer('order_id');
+            $table->integer('package_id');
 
-            $table->index('order_id');
+            $table->index('package_id');
 
             $table->timestamps();
             $table->softDeletes();

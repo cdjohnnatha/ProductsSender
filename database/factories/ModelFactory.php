@@ -31,7 +31,7 @@ $factory->define(App\Client::class, function (Faker\Generator $faker) {
         'identity_document' => $faker->numberBetween(1000000, 9999999),
         'tax_document' => $faker->numberBetween(1000000, 9999999),
         'default_address' => function() {
-        return factory(App\ClientAddress::class)->create()->id;
+            return factory(App\ClientAddress::class)->create()->id;
         },
         'user_id' => function() {
         return factory(App\User::class)->create()->id;

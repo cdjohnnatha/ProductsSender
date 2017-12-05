@@ -2,10 +2,6 @@
 
 namespace App;
 
-use Spatie\Activitylog\Traits\LogsActivity;
-
-//TODO Analisar se o tamanho do pacote.
-
 class Package extends Entity
 {
     protected $fillable = [
@@ -25,6 +21,7 @@ class Package extends Entity
         'client_id',
         'package_status_id',
         'company_warehouse_id',
+        'note'
     ];
 
     protected static $logAttributes = [
@@ -44,6 +41,7 @@ class Package extends Entity
         'client_id',
         'package_status_id',
         'company_warehouse_id',
+        'note'
 
     ];
 
@@ -68,9 +66,9 @@ class Package extends Entity
     }
 
 
-    public function goodsDeclaration()
+    public function packageGoodsDeclaration()
     {
-        return $this->hasMany(GoodsDeclaration::class);
+        return $this->hasMany(PackageGoodsDeclaration::class);
     }
 
     public function order()

@@ -182,6 +182,8 @@ return [
 
         Bmartus\LaravelShippo\LaravelShippoServiceProvider::class,
 
+        \Webpatser\Uuid\UuidServiceProvider::class,
+
 
 
     ],
@@ -235,6 +237,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
+        'Uuid' => Webpatser\Uuid\Uuid::class,
 
     ],
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\GoodsDeclaration;
+use App\PackageGoodsDeclaration;
 use App\IncomingPackages;
 use App\Package;
 use Illuminate\Http\Request;
@@ -50,7 +50,7 @@ class GoodsDeclarationController extends Controller
     }
 
     public function destroy($id){
-        GoodsDeclaration::find($id)->delete();
+        PackageGoodsDeclaration::find($id)->delete();
 
         return back();
     }

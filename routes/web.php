@@ -15,19 +15,27 @@
     });
     Route::get('/', 'RedirectController@index');
     Route::group(['namespace' => 'Web', 'middleware' => ['web', 'type:user']], function () {
-        Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
-            Route::get('/dashboard', 'UserController@dashboard')->name('dashboard');
-            Route::get('/notifications', 'NotificationsController@notifications')->name('notifications');
 
-            Route::resource('packages', 'UserPackageController', ['only' => ['show', 'index', 'destroy']]);
-            Route::resource('notifications', 'NotificationsController');
-            Route::get('read-all', 'NotificationsController@markAll')->name('notifications.mark.all');
-            Route::get('/unread', 'Api\UserNotificationsApiController@unread')->name('notifications.unread');
-            Route::post('/shipment/shipment-rates', 'Api\ShipmentApiController@shipmentRates')->name('shipment.rates');
-            Route::resource('shipment', 'Api\ShipmentApiController');
+        Route::group(['namespace' => 'Api'], function () {
+            Route::get('/unread', 'UserNotificationsApiController@unread')->name('notifications.unread');
+            Route::resource('shipment', 'ShipmentApiController');
+            Route::post('/shipment/shipment-rates', 'ShipmentApiController@shipmentRates')->name('shipment.rates');
+
         });
 
-        Route::resource('user', 'UserController', ['except' => ['index']]);
+        Route::group(['namespace' => 'Client'], function () {
+            Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
+                Route::get('/dashboard', 'UserController@dashboard')->name('dashboard');
+                Route::get('/notifications', 'NotificationsController@notifications')->name('notifications');
+
+                Route::resource('packages', 'UserPackageController', ['only' => ['show', 'index', 'destroy']]);
+                Route::resource('notifications', 'NotificationsController');
+                Route::get('read-all', 'NotificationsController@markAll')->name('notifications.mark.all');
+
+            });
+
+            Route::resource('user', 'UserController', ['except' => ['index']]);
+        });
     });
 //});
 

@@ -18,7 +18,7 @@ class CreateClientAddressesTable extends Migration
             $table->string('label', 30);
             $table->string('owner_name', 50);
             $table->string('owner_surname', 50);
-            $table->string('company_name', 50);
+            $table->string('company_name', 50)->nullable();
             $table->string('country', 50);
             $table->string('street', 100);
             $table->string('street2', 100)->nullable();

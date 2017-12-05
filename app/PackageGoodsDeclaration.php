@@ -2,7 +2,7 @@
 
 namespace App;
 
-class GoodsDeclaration extends Entity
+class PackageGoodsDeclaration extends Entity
 {
     protected $fillable = [
         'description',

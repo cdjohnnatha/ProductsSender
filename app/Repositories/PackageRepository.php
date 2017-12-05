@@ -46,32 +46,45 @@ class PackageRepository implements RepositoryInterface
 
     public function store($request)
     {
-        return $this->model->create($request->input('package'));
-//        $package = new $this->model::create($request->input('package'));
-//        $package->status_id = $request->input('status.status_id');
-//        $package->warehouse_id = $request->input('warehouse_id');
-//
-//        $package->save();
-//
-//        if($request->hasFile('package_files')) {
-//            $this->saveImage($request->file('package_files'), $package);
-//        }
-//
-//        if($request->exists('incoming')){
-//            $incoming = IncomingPackages::find($request->input('incoming'));
-//            $incoming->registered = true;
-//            $package->goods()->save($incoming);
-//        }
+        $package = $this->model->create($request->input('package'));
+        if($request->has('custom_clearance')) {
+            $package->packageGoodsDeclaration()->createMany($request->input('custom_clearance'));
+        }
+
+        if($request->hasFile('package_files')) {
+            $this->saveImage($request->file('package_files'), $package);
+        }
+
+        return $package;
     }
 
     public function update($id, $request)
     {
-        // TODO: Implement update() method.
+        $package = Package::findOrFail($id);
+        $package->update($request->input('package'));
+
+        if($request->has('custom_clearance')) {
+            $package->packageGoodsDeclaration()->createMany($request->input('custom_clearance'));
+        }
+
+        if($request->hasFile('package_files')) {
+            $this->saveImage($request->file('package_files'), $package);
+        }
+
+
+
     }
 
     public function findById($attribute)
     {
-        // TODO: Implement findById() method.
+        return Package::with([
+            'pictures',
+            'warehouse',
+            'packageStatus',
+            'client',
+            'packageGoodsDeclaration',
+            'order'
+        ])->find($attribute);
     }
 
     public function destroy($id)
@@ -79,22 +92,20 @@ class PackageRepository implements RepositoryInterface
         // TODO: Implement destroy() method.
     }
 
-    private function saveImage($files, $package){
-        //TODO limitar tamanho máximo de upload de arquivos
-        //TODO tratar MIMES para jpeg, png, jpg, pdf.
+    private function saveImage($files, $package)
+    {
         foreach ($files as $key=>$file) {
             $fileName = $package->id . date("dmYhmsu");
             $extension = explode('.', $file->getClientOriginalName())[1];
             $fileName = md5($fileName.$key) . '.' . $extension;
             $path = $file->storeAs('public/PackagePictures', $fileName);
             $path = str_replace('public', 'storage', $path);
-            $picture = new PackageFiles();
-            $picture->name = $fileName;
-            $picture->path = '/'.$path;
-            if ($package->pictures()->save($picture)) {
+            $picture = $package->pictures()->create(['name' => $fileName, 'path' => '/'.$path]);
+
+            if ($picture) {
                 activity()
                     ->performedOn($package)
-                    ->causedBy(Auth::user())
+                    ->causedBy($package->client->id)
                     ->withProperty('package_id', $package->id)
                     ->withProperty('file_name', $fileName)
                     ->log('The package id is :properties.package_id,

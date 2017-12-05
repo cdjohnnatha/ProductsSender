@@ -18,7 +18,6 @@ class CreatePackagesTable extends Migration
             $table->string('provider', 50)->nullable();
             $table->string('store_name', 50)->nullable();
             $table->string('track_number', 50)->nullable();
-            $table->string('merchandise')->nullable();
             $table->string('content_type')->nullable();
             $table->decimal('width', 10, 2)->nullable();
             $table->decimal('height', 10, 2)->nullable();
@@ -26,9 +25,10 @@ class CreatePackagesTable extends Migration
             $table->string('unit_measure', 5)->nullable();
             $table->decimal('weight', 10, 2)->nullable();
             $table->string('weight_measure', 5)->nullable();
-
             $table->decimal('total_goods')->nullable();
             $table->decimal('total_addons')->nullable();
+            $table->string('note')->nullable();
+            $table->string('description')->nullable();
 
             $table->integer('client_id');
             $table->integer('package_status_id');

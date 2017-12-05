@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0",
+        "bmartus/laravel-shippo": "dev-master",
         "doctrine/dbal": "^2.5",
         "fzaninotto/faker": "^1.6",
         "guzzlehttp/guzzle": "^6.3",
@@ -18,7 +19,6 @@
         "pusher/pusher-php-server": "~2.6",
         "sentry/sentry-laravel": "^0.7.0",
         "spatie/laravel-activitylog": "^1.15",
-        "bmartus/laravel-shippo": "dev-master",
         "webpatser/laravel-uuid": "^2.0"
     },
     "require-dev": {
