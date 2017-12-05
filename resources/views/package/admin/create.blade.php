@@ -15,7 +15,18 @@
       </ul>
     </div>
   @endif
+
   <section class="card">
+    @if(Request::is('*/edit') and $package->pictures())
+      <header class="card-body p-0">
+        <div class="tabpanel">
+          <ul class="nav nav-tabs nav-tabs-right">
+            <li class="active" role="presentation"><a href="#tab-1" data-toggle="tab" aria-expanded="true">Package</a></li>
+            <li class="presentation" role="presentation"><a href="#tab-2" data-toggle="tab" aria-expanded="true">Uploads</a></li>
+          </ul>
+        </div>
+      </header>
+    @endif
     <section class="tab-content  p-20">
       <section class="tab-pane fadeIn active" id="tab-1">
         <div class="row">
@@ -55,9 +66,7 @@
                   <div class="input-group">
                     <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
                     <label class="control-label">{{__('packages.form.suite')}}</label>
-                    {{--<input type="text" class="form-control" name="package[client_id]"--}}
-                           {{--value="{{$package->client->id or old('package.client_id')}}">--}}
-                    <findclient-component></findclient-component>
+                    <findclient-component editing="{{ $package->client->id or old('package.client_id') }}"></findclient-component>
                     <input type="hidden" name="package[client_id]" id="package_client_id">
                     @if ($errors->has('package.client_id'))
                       <span class="help-block">
@@ -291,13 +300,7 @@
         </div>
       </section>
       <section class="tab-pane" id="tab-2">
-        {{--@if(Request::is('*/edit'))--}}
-        {{--@if(!is_null($package->package))--}}
-        {{--@include('package.incoming._show', ['incomingPackage' => $package->package])--}}
-        {{--@endif--}}
-        {{--@elseif(!is_null($incoming))--}}
-        {{--@include('package.incoming._show', ['incomingPackage' => $incoming])--}}
-        {{--@endif--}}
+        <uploaded-pictures-component pictures="{{ $package->pictures }}"></uploaded-pictures-component>
       </section>
     </section>
   </section>

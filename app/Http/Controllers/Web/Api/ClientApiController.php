@@ -18,6 +18,5 @@ class ClientApiController extends Controller
     {
         $client = $this->clientRepository->findById($id);
         return $client;
-
     }
 }

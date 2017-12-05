@@ -26,6 +26,8 @@ Vue.component('warehouse-notifications', require('./components/Warehouses/Notifi
 Vue.component('shipment-component', require('./components/Packages/Shipment.vue'));
 Vue.component('phones-component', require('./components/Utils/Phones.vue'));
 Vue.component('findclient-component', require('./components/Users/FindClient.vue'));
+Vue.component('uploaded-pictures-component', require('./components/Packages/UploadedPictures.vue'));
+
 
 
 import VueGoogleAutocomplete from 'vue-google-autocomplete';

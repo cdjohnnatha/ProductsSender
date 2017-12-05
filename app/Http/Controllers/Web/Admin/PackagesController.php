@@ -9,6 +9,7 @@ use App\PackageStatus;
 use App\Repositories\CompanyWarehouseRepository;
 use App\Repositories\PackageRepository;
 use App\CompanyWarehouse;
+use App\Repositories\PackageStatusRepository;
 use Illuminate\Http\Request;
 
 
@@ -22,11 +23,13 @@ class PackagesController extends Controller
 
     public function __construct(
         PackageRepository $packageRepository,
-        CompanyWarehouseRepository $companyWarehouseRepository
+        CompanyWarehouseRepository $companyWarehouseRepository,
+        PackageStatusRepository $packageStatusRepository
     )
     {
         $this->packageRepository = $packageRepository;
         $this->warehouseRepository = $companyWarehouseRepository;
+        $this->packageStatusRepository = $packageStatusRepository;
     }
 
     public function rules()
@@ -55,7 +58,7 @@ class PackagesController extends Controller
     public function create()
     {
         $warehouses = $this->warehouseRepository->getAll();
-        $packageStatus = PackageStatus::all();
+        $packageStatus = $this->packageStatusRepository->getAll();
 
         return view('package.admin.create', compact('warehouses', 'packageStatus'));
     }
@@ -80,14 +83,14 @@ class PackagesController extends Controller
 
     public function edit($id){
         $package = $this->packageRepository->findById($id);
-        $packageStatus = PackageStatus::all();
+        $packageStatus = $this->packageStatusRepository->getAll();
         $warehouses = $this->warehouseRepository->getAll();
         return view('package.admin.create', compact('package', 'packageStatus', 'warehouses'));
     }
 
     public function update(Request $request, $id){
         $this->validate($request, $this->rules());
-
+        $this->packageRepository->update($id, $request);
 //        $request->session()->flash('status', 'Package #'.$package->id.' was successfully updated!');
         return redirect(route('admin.packages.index'));
 

@@ -7,6 +7,7 @@
 
         Route::group(['namespace' => 'Api'], function () {
             Route::get('/admin/api/findClient/{id}', 'ClientApiController@findSuite')->name('find-suite');
+            Route::delete('/admin/api/deleteFile/{id}', 'PackageApiController@destroyFile')->name('delete-package-file');
         });
 
         Route::group(['namespace' => 'Admin'], function () {

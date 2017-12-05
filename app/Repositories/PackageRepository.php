@@ -10,7 +10,9 @@ namespace App\Repositories;
 
 
 use App\Package;
+use App\PackageFiles;
 use App\Repositories\Interfaces\RepositoryInterface;
+use Illuminate\Support\Facades\Storage;
 
 class PackageRepository implements RepositoryInterface
 {
@@ -63,7 +65,17 @@ class PackageRepository implements RepositoryInterface
         $package->update($request->input('package'));
 
         if($request->has('custom_clearance')) {
-            $package->packageGoodsDeclaration()->createMany($request->input('custom_clearance'));
+
+            foreach ($request->input('custom_clearance') as $goods) {
+                if (isset($goods['id'])) {
+                    $package->packageGoodsDeclaration()->updateOrCreate(
+                        ['id' => $goods['id']],
+                        $goods
+                    );
+                } else {
+                    $package->packageGoodsDeclaration()->create($goods);
+                }
+            }
         }
 
         if($request->hasFile('package_files')) {
@@ -112,5 +124,16 @@ class PackageRepository implements RepositoryInterface
                             with id:');
             }
         }
+    }
+
+    public function destroyImage($id)
+    {
+        $file = PackageFiles::find($id);
+
+        if($file) {
+            Storage::delete(config('constants.files.full_public_path').$file->name);
+        }
+
+        $file->delete();
     }
 }
