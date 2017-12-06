@@ -8,9 +8,7 @@
 
 namespace App\Repositories;
 
-use App\Address;
-use App\ClientAddressGeoname;
-use App\ClientDocuments;
+use App\Entities\Client\ClientDocuments;
 use App\Entities\User;
 use App\Mail\UserRegisterConfirmation;
 use App\Repositories\Interfaces\RepositoryInterface;

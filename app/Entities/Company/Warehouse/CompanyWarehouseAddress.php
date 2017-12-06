@@ -17,7 +17,7 @@ class CompanyWarehouseAddress extends Model
         'formatted_address',
     ];
 
-    public function companyWarehouse()
+    public function warehouse()
     {
         return $this->belongsTo(CompanyWarehouse::class);
     }

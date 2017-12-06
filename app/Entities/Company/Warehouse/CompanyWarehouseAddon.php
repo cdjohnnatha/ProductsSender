@@ -13,7 +13,7 @@ class CompanyWarehouseAddon extends Entity
         'company_addons_id'
     ];
 
-    public function companyWarehouse()
+    public function warehouses()
     {
         return $this->belongsToMany(CompanyWarehouse::class);
     }

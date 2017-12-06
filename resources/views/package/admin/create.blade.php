@@ -284,7 +284,7 @@
 
                   <section class="{{ $errors->has('package.content_type') ? ' has-error' : '' }}">
                     @if(Request::is('*/edit'))
-                      <custom-clearance-form :editing="{{ $package->packageGoodsDeclaration()->get() }}"></custom-clearance-form>
+                      <custom-clearance-form :editing="{{ $package->goodsDeclaration()->get() }}"></custom-clearance-form>
                     @else
                       <custom-clearance-form></custom-clearance-form>
                     @endif
@@ -298,9 +298,11 @@
           </form>
         </div>
       </section>
-      <section class="tab-pane" id="tab-2">
-        <uploaded-pictures-component pictures="{{ $package->pictures }}"></uploaded-pictures-component>
-      </section>
+      @if(Request::is('*/edit'))
+        <section class="tab-pane" id="tab-2">
+          <uploaded-pictures-component pictures="{{ $package->pictures }}"></uploaded-pictures-component>
+        </section>
+      @endif
     </section>
   </section>
 @endsection

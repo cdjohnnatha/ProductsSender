@@ -22,7 +22,7 @@
             <li role="presentation"><a href="#tab-5" id="galery-tab" data-toggle="tab" aria-expanded="true">Galery</a>
             </li>
           @endif
-          @if(!is_null($package->packageGoodsDeclaration()))
+          @if(!is_null($package->goodsDeclaration()))
             <li class="presentation" role="presentation">
               <a href="#tab-6" data-toggle="tab" aria-expanded="true">
                 {{__('common.titles.custom_clearance')}}

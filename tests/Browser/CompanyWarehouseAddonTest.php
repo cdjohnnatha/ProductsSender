@@ -2,9 +2,8 @@
 
 namespace Tests\Browser;
 
-use App\Company;
-use App\CompanyWarehouse;
-use App\User;
+use App\Entities\Company\Company;
+use App\Entities\User;
 use Illuminate\Contracts\Logging\Log;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;

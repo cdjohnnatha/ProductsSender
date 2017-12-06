@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
+use App\Entities\Package\Package;
 use App\Observers\PackageObserver;
 use App\Observers\WarehouseObserver;
-use App\Package;
+
 use Illuminate\Support\ServiceProvider;
 
 class ObserverServiceProvider extends ServiceProvider

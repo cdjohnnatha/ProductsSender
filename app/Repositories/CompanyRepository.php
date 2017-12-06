@@ -23,7 +23,7 @@ class CompanyRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model->with('phones', 'address', 'addons')->get();
+        return $this->model->with('phones', 'address', 'addons')->paginate(30);
     }
 
     public function store($request)

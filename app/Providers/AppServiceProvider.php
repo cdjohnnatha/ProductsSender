@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Repositories\Interfaces\RepositoryInterface;
+use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
-use UserRepository;
 
 class AppServiceProvider extends ServiceProvider
 {

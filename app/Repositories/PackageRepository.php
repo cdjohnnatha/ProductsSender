@@ -49,7 +49,7 @@ class PackageRepository implements RepositoryInterface
     {
         $package = $this->model->create($request->input('package'));
         if($request->has('custom_clearance')) {
-            $package->packageGoodsDeclaration()->createMany($request->input('custom_clearance'));
+            $package->goodsDeclaration()->createMany($request->input('custom_clearance'));
         }
 
         if($request->hasFile('package_files')) {
@@ -68,12 +68,12 @@ class PackageRepository implements RepositoryInterface
 
             foreach ($request->input('custom_clearance') as $goods) {
                 if (isset($goods['id'])) {
-                    $package->packageGoodsDeclaration()->updateOrCreate(
+                    $package->goodsDeclaration()->updateOrCreate(
                         ['id' => $goods['id']],
                         $goods
                     );
                 } else {
-                    $package->packageGoodsDeclaration()->create($goods);
+                    $package->goodsDeclaration()->create($goods);
                 }
             }
         }
@@ -91,8 +91,8 @@ class PackageRepository implements RepositoryInterface
             'companyWarehouse',
             'packageStatus',
             'client',
-            'packageGoodsDeclaration',
-            'order'
+            'goodsDeclaration',
+            'packageOrder'
         ])->find($attribute);
     }
 

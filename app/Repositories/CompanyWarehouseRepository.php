@@ -11,6 +11,8 @@ namespace App\Repositories;
 use App\Entities\Company\Warehouse\CompanyWarehouse;
 use App\Repositories\Interfaces\RepositoryInterface;
 
+
+//TODO geonames
 class CompanyWarehouseRepository implements RepositoryInterface
 {
 
@@ -24,7 +26,7 @@ class CompanyWarehouseRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model::with('address')->get();
+        return $this->model::with('address')->paginate(30);
     }
 
     public function store($request)

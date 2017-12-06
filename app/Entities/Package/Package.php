@@ -2,7 +2,10 @@
 
 namespace App\Entities\Package;
 
+use App\Entities\Client\Client;
+use App\Entities\Company\Warehouse\CompanyWarehouse;
 use App\Entities\Entity;
+use App\Entities\Order;
 
 class Package extends Entity
 {
@@ -23,7 +26,8 @@ class Package extends Entity
         'client_id',
         'package_status_id',
         'company_warehouse_id',
-        'note'
+        'note',
+        'description'
     ];
 
     protected static $logAttributes = [
@@ -68,12 +72,12 @@ class Package extends Entity
     }
 
 
-    public function packageGoodsDeclaration()
+    public function goodsDeclaration()
     {
         return $this->hasMany(PackageGoodsDeclaration::class);
     }
 
-    public function order()
+    public function packageOrder()
     {
         return $this->belongsTo(Order::class);
     }

@@ -17,17 +17,17 @@ class CompanyWarehouse extends Entity
         'company_id'
     ];
 
-    public function companyWarehouseAddress()
+    public function address()
     {
         return $this->hasOne(CompanyWarehouseAddress::class);
     }
 
-    public function companyWarehouseAddon()
+    public function addons()
     {
         return $this->belongsToMany(CompanyWarehouseAddon::class);
     }
 
-    public function companyWarehousePhones()
+    public function phones()
     {
         return $this->hasMany(CompanyWarehousePhones::class);
     }

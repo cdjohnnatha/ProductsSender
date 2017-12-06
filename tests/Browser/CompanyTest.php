@@ -2,9 +2,8 @@
 
 namespace Tests\Browser;
 
-use App\Company;
-use App\CompanyWarehouse;
-use App\User;
+use App\Entities\Company\Company;
+use App\Entities\User;
 use Illuminate\Contracts\Logging\Log;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
@@ -56,7 +55,6 @@ class CompanyTest extends DuskTestCase
                 ->type('address[postal_code]', $faker->postcode)
                 ->type('address[number]', $faker->buildingNumber)
                 ->type('phones[0][number]', $faker->phoneNumber)
-                ->press('#addPhones')
                 ->type('phones[1][number]', $faker->phoneNumber)
                 ->press('#submit-button')
                 ->waitForLocation('/admin/companies');

@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Entities\Client\Client;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Activitylog\Traits\LogsActivity;

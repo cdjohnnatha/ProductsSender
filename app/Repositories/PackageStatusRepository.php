@@ -8,6 +8,7 @@
 
 namespace App\Repositories;
 
+use App\Entities\Package\PackageStatus;
 use App\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;

@@ -11,7 +11,7 @@
         <tbody>
         <tr>
           <th>{{ __('common.titles.status') }}</th>
-          <td class="md-bg-blue-50">{{ $package->packageStatus->message }}</td>
+{{--          <td class="md-bg-blue-50">{{ $package->status->message }}</td>--}}
         </tr>
         <tr>
           <th>{{__('packages.form.dimensions')}}:</th>
