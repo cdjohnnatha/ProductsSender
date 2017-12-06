@@ -21,11 +21,11 @@
       <ul class="nav nav-pills nav-stacked">
         <li class="sidebar-header">NAVIGATION</li>
 
-        <li class="{{ Route::is('admin.companies.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.companies.index')}}"><i class="zmdi zmdi-accounts"></i>
-            {{__('common.titles.users')}}
-          </a>
-        </li>
+        {{--<li class="{{ Route::is('admin.companies.*') ? 'active' : '' }}">--}}
+          {{--<a href="{{Route('admin.companies.index')}}"><i class="zmdi zmdi-accounts"></i>--}}
+            {{--{{__('common.titles.users')}}--}}
+          {{--</a>--}}
+        {{--</li>--}}
 
         <li class="{{ Route::is('admin.companies.*') ? 'active' : '' }}">
           <a href="{{Route('admin.companies.index')}}">
