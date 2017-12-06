@@ -12,10 +12,10 @@
                 <h3>{{ __('common.titles.warehouse') }}</h3>
                 <address class="address">
                   {{ $package->companyWarehouse->name }}<br>
-                  {{ $package->companyWarehouse->companyWarehouseAddress->formatted_address }}<br>
-                  {{ $package->companyWarehouse->companyWarehouseAddress->postal_code }}<br>
+                  {{ $package->companyWarehouse->address->formatted_address }}<br>
+                  {{ $package->companyWarehouse->address->postal_code }}<br>
                   {{ __('common.titles.phone').': ' }}<br>
-                  @foreach($package->companyWarehouse->companyWarehousePhones as $phones)
+                  @foreach($package->companyWarehouse->phones as $phones)
                     {{ $phones->number . ' / ' }}
                   @endforeach
                 </address>
@@ -44,7 +44,7 @@
                   </tr>
                 </tfoot>
                 <tbody>
-                @foreach($package->packageGoodsDeclaration as $key => $goods)
+                @foreach($package->goodsDeclaration as $key => $goods)
                   <tr>
                     <th scope="row">{{ $key + 1 }}</th>
                     <td>{{ $goods->description }}</td>

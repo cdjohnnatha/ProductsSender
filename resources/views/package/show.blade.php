@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('panel_header')
-  {{__('common.titles.package')}} #{{$package->id}}
+  {{__('packages.index.package')}} #{{$package->id}}
 @endsection
 
 
@@ -53,9 +53,7 @@
       </section>
 
       <section class="tab-pane" id="tab-6">
-        @if(!is_null($package->packageGoodsDeclaration))
           @include('package._custom_clearance')
-        @endif
       </section>
     </section>
     @include('package.fragments._photoswipe_element')

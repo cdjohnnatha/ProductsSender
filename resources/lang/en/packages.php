@@ -23,6 +23,7 @@ return [
 
     'index' => [
         'title_package' => 'Packages',
+        'package' => 'Package',
         'title_package_warehouse' => 'CompanyWarehouse\'s Packages',
         'short_description' => 'All your packages can be found here.',
         'short_show_description' => 'Here you can see your package information',
