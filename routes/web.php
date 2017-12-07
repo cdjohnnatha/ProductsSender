@@ -28,7 +28,7 @@
                 Route::get('/dashboard', 'UserController@dashboard')->name('dashboard');
                 Route::get('/notifications', 'NotificationsController@notifications')->name('notifications');
 
-                Route::resource('packages', 'UserPackageController', ['only' => ['show', 'index', 'destroy']]);
+                Route::resource('packages', 'ClientPackageController');
                 Route::resource('notifications', 'NotificationsController');
                 Route::get('read-all', 'NotificationsController@markAll')->name('notifications.mark.all');
 

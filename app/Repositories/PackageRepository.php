@@ -18,15 +18,24 @@ class PackageRepository implements RepositoryInterface
 {
 
     private $model;
+    private $allRelations;
 
     public function __construct(Package $package)
     {
         $this->model = $package;
+
+        $this->allRelations = [
+            'client',
+            'packageStatus',
+            'pictures',
+            'goodsDeclaration',
+            'packageOrder'
+        ];
     }
 
     public function getAll()
     {
-        return $this->model->with('packageStatus', 'client')->paginate(50);
+        return $this->model->with($this->allRelations)->paginate(50);
     }
 
     public function getCompaniesAllPackages()
@@ -41,6 +50,26 @@ class PackageRepository implements RepositoryInterface
                 })
             ->orderBy('created_at', 'desc')
             ->paginate(50);
+    }
+
+    public function getPackagesByStatusClient($clientId, $statusType)
+    {
+        return $this->model
+            ->where('client_id', $clientId)
+            ->whereHas('packageStatus', function($query) use ($statusType) {
+                $query->where('message','like', $statusType);
+            })
+            ->with($this->allRelations)
+            ->orderBy('created_at', 'desc')
+            ->paginate(50);
+    }
+
+    public function getUserPackages($userId)
+    {
+        return $this->model
+            ->whereHas('user_id', $userId)
+            ->with($this->allRelations)
+            ->paginate(30);
     }
 
 

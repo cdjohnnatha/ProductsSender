@@ -23,13 +23,13 @@
         <li class="{{ route::is('user.dashboard') ? 'active' : '' }}">
           <a href="{{route('user.dashboard')}}">
             <i class="zmdi zmdi-view-dashboard"></i>
-            {{__('common.titles.dashboard')}}
+            {{__('nav_left_menu_client.dashboard')}}
           </a>
         </li>
         <li class="{{ Route::is('user.packages.*') ? 'active' : '' }}">
           <a href="{{Route('user.packages.index')}}">
             <i class="zmdi zmdi-inbox"></i>
-            {{__('common.titles.package')}}
+            {{__('nav_left_menu_client.packages')}}
           </a>
         </li>
 

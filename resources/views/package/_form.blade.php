@@ -1,12 +1,12 @@
 <article>
   <section class="row">
-    <div class="form-group col-sm-4 label-floating {{ $errors->has('warehouse_id') ? ' has-error' : '' }}">
-      <div class="input-group">
-        <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
-        <label class="control-label">{{__('warehouse.form.select_warehouse')}}</label>
-        @include('company_warehouse._select')
-      </div>
-    </div>
+    {{--<div class="form-group col-sm-4 label-floating {{ $errors->has('warehouse_id') ? ' has-error' : '' }}">--}}
+      {{--<div class="input-group">--}}
+        {{--<span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>--}}
+        {{--<label class="control-label">{{__('warehouse.form.select_warehouse')}}</label>--}}
+        {{--@include('company_warehouse._select')--}}
+      {{--</div>--}}
+    {{--</div>--}}
 
     <div class="form-group col-sm-4 label-floating {{ $errors->has('package.object_owner') ? ' has-error' : '' }}">
       <div class="input-group">
@@ -28,7 +28,7 @@
     <section class="form-group label-floating {{ $errors->has('package.status_id') ? ' has-error' : '' }}">
       <div class="input-group">
         <span class="input-group-addon"><i class="zmdi zmdi-traffic"></i></span>
-        @include('utils._status')
+        {{--@include('utils._status')--}}
       </div>
     </section>
   </section>
