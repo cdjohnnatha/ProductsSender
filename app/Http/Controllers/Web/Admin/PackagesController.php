@@ -39,7 +39,12 @@ class PackagesController extends Controller
             'package.client_id' => 'required',
             'package.company_warehouse_id' => 'required',
             'package.package_status_id' => 'required|min:1',
-            'package_files.*' => 'nullable|mimetypes:image/jpeg,image/png,image/jpg,application/pdf|max:5000'
+            'package_files.*' => 'nullable|mimetypes:image/jpeg,image/png,image/jpg,application/pdf|max:5000',
+            'custom_clearance' => 'required|array|min:1',
+            'custom_clearance.*.description' => 'required|string',
+            'custom_clearance.*.quantity' => 'required|integer',
+            'custom_clearance.*.unit_price' => 'required',
+            'custom_clearance.*.total_unit' => 'required',
         ];
     }
 

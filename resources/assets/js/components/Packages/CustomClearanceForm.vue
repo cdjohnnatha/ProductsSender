@@ -25,26 +25,20 @@
               <tbody>
                 <tr v-for="(goods, index) in customClearances" id="goods">
                     <td>
-                        <input type="text" v-model="goods.description" class="form-control"
-                               v-bind:name="'custom_clearance[' + index + '][description]'">
+                        <input type="text" v-model="goods.description" class="form-control" v-bind:name="'custom_clearance[' + index + '][description]'">
 
-                        <input v-if="editing.length != 0" type="hidden" v-model="goods.id" class="form-control"
-                               v-bind:name="'custom_clearance[' + index + '][id]'">
+                        <input v-if="editing.length != 0" type="hidden" v-model="goods.id" class="form-control" v-bind:name="'custom_clearance[' + index + '][id]'">
                     </td>
                     <td>
-                        <input type="number" min="1" value="1" v-model="goods.quantity" @change="calculateTotal(index)"
-                               class="form-control" v-bind:name="'custom_clearance[' + index + '][quantity]'">
+                        <input type="number" min="1" value="1" v-model="goods.quantity" @change="calculateTotal(index)" class="form-control" v-bind:name="'custom_clearance[' + index + '][quantity]'">
                     </td>
                     <td>
-                        <input type="number" min="0.00" step="0.01" v-model="goods.unit_price"
-                               @change="calculateTotal(index)" class="form-control"
-                               v-bind:name="'custom_clearance[' + index + '][unit_price]'">
+                        <input type="number" min="0.00" step="0.01" v-model="goods.unit_price" @change="calculateTotal(index)" class="form-control" v-bind:name="'custom_clearance[' + index + '][unit_price]'">
                     </td>
                     <td >
                         <span>
                             <input type="number" id="total_value" class="form-control" v-bind:value="goods.total_unit" disabled>
-                            <input type="hidden" v-bind:name="'custom_clearance[' + index + '][total_unit]'"
-                                   v-bind:value="goods.total_unit">
+                            <input type="hidden" v-bind:name="'custom_clearance[' + index + '][total_unit]'" v-bind:value="goods.total_unit">
                         </span>
                     </td>
                     <th>
@@ -62,7 +56,7 @@
         <span class="block p-b-5 p-t-5">Total:</span>
       </div>
       <div class="col-xs-6 col-sm-1 p-0">
-        <span class="block p-b-5 cart-total">{{total}}</span>
+        <span class="block p-b-5 cart-total">{{ total }}</span>
 
         <input type="hidden" name="package[total_goods]" v-bind:value="total">
       </div>
@@ -85,7 +79,8 @@
         },
 
         created() {
-            if(this.editing.length <= 0) {
+            console.log(this.editing);
+            if(this.editing == 1 || this.editing.length <= 0) {
                 if (this.customClearances.length <= 0) {
                     this.customClearances.push({
                         description: '',
@@ -95,6 +90,7 @@
                     });
                 }
             } else{
+                console.log("its warning here");
                 this.customClearances = this.editing;
                 this.calculateGlobalTotal();
             }

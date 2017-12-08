@@ -96,7 +96,7 @@
                           <small style="color: #ff5722;">{{__('packages.incoming.form.small_marketing_services',
                               ['discount'=> Auth::user()->subscription->discounts])}}</small>
                         @endif
-                        @include('service._checkbox', ['reservation' => $package->goods])
+                        @include('addons._checkbox', ['reservation' => $package->goods])
 
                       </section>
 

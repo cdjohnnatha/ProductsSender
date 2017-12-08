@@ -29,6 +29,8 @@
                 Route::get('/notifications', 'NotificationsController@notifications')->name('notifications');
 
                 Route::resource('packages', 'ClientPackageController');
+                Route::post('/packages/wizard', 'ClientPackageController@wizard')->name('packages.wizard');
+
                 Route::resource('notifications', 'NotificationsController');
                 Route::get('read-all', 'NotificationsController@markAll')->name('notifications.mark.all');
 

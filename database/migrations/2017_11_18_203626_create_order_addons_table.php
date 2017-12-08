@@ -17,10 +17,10 @@ class CreateOrderAddonsTable extends Migration
             $table->increments('id');
             $table->decimal('price');
             $table->integer('order_id');
-            $table->integer('company_addon_id');
+            $table->integer('company_warehouse_addon_id');
 
             $table->index('order_id');
-            $table->index('company_addon_id');
+            $table->index('company_warehouse_addon_id');
 
             $table->timestamps();
             $table->softDeletes();

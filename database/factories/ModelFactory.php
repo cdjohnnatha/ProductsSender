@@ -13,7 +13,19 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+use App\Entities\Client\Client;
+use App\Entities\Client\ClientAddress;
+use App\Entities\Company\Company;
+use App\Entities\Company\CompanyAddons;
+use App\Entities\Company\CompanyAddress;
+use App\Entities\Company\CompanyPhone;
+use App\Entities\Company\Warehouse\CompanyWarehouse;
+use App\Entities\Company\Warehouse\CompanyWarehouseAddon;
+use App\Entities\Company\Warehouse\CompanyWarehouseAddress;
+use App\Entities\Company\Warehouse\CompanyWarehousePhones;
+use App\Entities\User;
+
+$factory->define(User::class, function (Faker\Generator $faker) {
     static $password;
     $type = $faker->numberBetween(0, 1);
     return [
@@ -24,23 +36,23 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Client::class, function (Faker\Generator $faker) {
+$factory->define(Client::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->firstName,
         'surname' => $faker->lastName,
         'identity_document' => $faker->numberBetween(1000000, 9999999),
         'tax_document' => $faker->numberBetween(1000000, 9999999),
         'default_address' => function() {
-            return factory(App\ClientAddress::class)->create()->id;
+            return factory(ClientAddress::class)->create()->id;
         },
         'user_id' => function() {
-        return factory(App\User::class)->create()->id;
+        return factory(User::class)->create()->id;
         }
     ];
 });
 
 
-$factory->define(App\ClientAddress::class, function (Faker\Generator $faker) {
+$factory->define(ClientAddress::class, function (Faker\Generator $faker) {
     return [
         'label' => $faker->name,
         'owner_name' => $faker->firstName,
@@ -56,7 +68,7 @@ $factory->define(App\ClientAddress::class, function (Faker\Generator $faker) {
         'number' => $faker->buildingNumber,
         'formatted_address' => $faker->address,
         'client_id' => function() {
-            return factory(App\Client::class)->create()->id;
+            return factory(Client::class)->create()->id;
         }
     ];
 });
@@ -64,13 +76,13 @@ $factory->define(App\ClientAddress::class, function (Faker\Generator $faker) {
 /*
  * Company
  */
-$factory->define(App\Company::class, function(Faker\Generator $faker) {
+$factory->define(Company::class, function(Faker\Generator $faker) {
     return [
         'name' => $faker->company,
     ];
 });
 
-$factory->define(App\CompanyAddress::class, function(Faker\Generator $faker) {
+$factory->define(CompanyAddress::class, function(Faker\Generator $faker) {
     return [
         'country' => $faker->country,
         'street' => $faker->streetAddress,
@@ -81,25 +93,25 @@ $factory->define(App\CompanyAddress::class, function(Faker\Generator $faker) {
         'number' => $faker->buildingNumber,
         'formatted_address' => $faker->address,
         'company_id' => function() {
-            return factory(App\Company::class)->create()->id;
+            return factory(Company::class)->create()->id;
         }
     ];
 });
 
-$factory->define(App\CompanyPhone::class, function(Faker\Generator $faker) {
+$factory->define(CompanyPhone::class, function(Faker\Generator $faker) {
     return [
         'number' => $faker->phoneNumber,
         'company_id' => function() {
-            return factory(App\Company::class)->create()->id;
+            return factory(Company::class)->create()->id;
         }
     ];
 });
 
-$factory->define(App\CompanyAddons::class, function(Faker\Generator $faker) {
+$factory->define(CompanyAddons::class, function(Faker\Generator $faker) {
     return [
         'title' => $faker->jobTitle,
         'company_id' => function() {
-            return factory(App\Company::class)->create()->id;
+            return factory(Company::class)->create()->id;
         }
     ];
 });
@@ -110,19 +122,19 @@ $factory->define(App\CompanyAddons::class, function(Faker\Generator $faker) {
  */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\CompanyWarehouse::class, function (Faker\Generator $faker) {
+$factory->define(CompanyWarehouse::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->company,
         'storage_time' => $faker->numberBetween($min = 30, $max = 60),
         'box_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 4),
         'company_id' => function() {
-            return factory(App\Company::class)->create()->id;
+            return factory(Company::class)->create()->id;
         }
     ];
 });
 
-$factory->define(App\CompanyWarehouseAddress::class, function(Faker\Generator $faker) {
+$factory->define(CompanyWarehouseAddress::class, function(Faker\Generator $faker) {
     return [
         'country' => $faker->country,
         'street' => $faker->streetAddress,
@@ -133,29 +145,29 @@ $factory->define(App\CompanyWarehouseAddress::class, function(Faker\Generator $f
         'number' => $faker->buildingNumber,
         'formatted_address' => $faker->address,
         'company_warehouse_id' => function() {
-            return factory(App\CompanyWarehouse::class)->create()->id;
+            return factory(CompanyWarehouse::class)->create()->id;
         }
     ];
 });
 
 
-$factory->define(App\CompanyWarehousePhones::class, function(Faker\Generator $faker) {
+$factory->define(CompanyWarehousePhones::class, function(Faker\Generator $faker) {
     return [
         'number' => $faker->phoneNumber,
         'company_warehouse_id' => function() {
-            return factory(App\CompanyWarehouse::class)->create()->id;
+            return factory(CompanyWarehouse::class)->create()->id;
         }
     ];
 });
 
-$factory->define(App\CompanyWarehouseAddon::class, function(Faker\Generator $faker) {
+$factory->define(CompanyWarehouseAddon::class, function(Faker\Generator $faker) {
     return [
         'title' => $faker->jobTitle,
         'company_warehouse_id' => function() {
-            return factory(App\CompanyWarehouse::class)->create()->id;
+            return factory(CompanyWarehouse::class)->create()->id;
         },
         'company_addons_id' => function() {
-        return factory(App\CompanyAddons::class)->create()->id;
+        return factory(CompanyAddons::class)->create()->id;
     }
     ];
 });

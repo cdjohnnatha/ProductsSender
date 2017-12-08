@@ -26,7 +26,6 @@ class CreatePackagesTable extends Migration
             $table->decimal('weight', 10, 2)->nullable();
             $table->string('weight_measure', 5)->nullable();
             $table->decimal('total_goods')->nullable();
-            $table->decimal('total_addons')->nullable();
             $table->string('note')->nullable();
             $table->string('description')->nullable();
 

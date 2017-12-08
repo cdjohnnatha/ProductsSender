@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('uuid');
             $table->integer('package_id');
+            $table->decimal('total_addons')->nullable();
             $table->index('package_id');
 
             $table->timestamps();

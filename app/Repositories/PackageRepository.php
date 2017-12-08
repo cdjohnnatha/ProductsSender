@@ -78,12 +78,21 @@ class PackageRepository implements RepositoryInterface
     {
         $package = $this->model->create($request->input('package'));
         if($request->has('custom_clearance')) {
-            $package->goodsDeclaration()->createMany($request->input('custom_clearance'));
+            if( is_array($request->input('custom_clearance'))){
+                $customClearance = $request->input('custom_clearance');
+            } else {
+                $customClearance = json_decode($request->input('custom_clearance'), true);
+            }
+            $package->goodsDeclaration()->createMany($customClearance);
         }
 
         if($request->hasFile('package_files')) {
             $this->saveImage($request->file('package_files'), $package);
         }
+
+//        if($request->has('addons')) {
+//
+//        }
 
         return $package;
     }

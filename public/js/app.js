@@ -54985,12 +54985,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -55005,7 +54999,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     created: function created() {
-        if (this.editing.length <= 0) {
+        console.log(this.editing);
+        if (this.editing == 1 || this.editing.length <= 0) {
             if (this.customClearances.length <= 0) {
                 this.customClearances.push({
                     description: '',
@@ -55015,6 +55010,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             }
         } else {
+            console.log("its warning here");
             this.customClearances = this.editing;
             this.calculateGlobalTotal();
         }

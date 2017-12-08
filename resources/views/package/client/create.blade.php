@@ -35,12 +35,6 @@
                         </li>
                         <li class="">
                           <a href="#tab2" data-toggle="tab" aria-expanded="false">
-                            <span class="step"><i class="zmdi zmdi-assignment"></i></span>
-                            <span class="title">{{ __('packages.user.declare_goods') }}</span>
-                          </a>
-                        </li>
-                        <li class="">
-                          <a href="#tab3" data-toggle="tab" aria-expanded="false">
                             <span class="step"><i class="zmdi zmdi-shopping-cart"></i></span>
                             <span class="title">{{ __('addon') }}</span>
                           </a>
@@ -54,9 +48,7 @@
                     <div class="tab-content clearfix p-30">
                       <section class="tab-pane active" id="tab1">
                         @include('package.client._form')
-                      </section>
-                      <!--end #tab1 -->
-                      <section class="tab-pane" id="tab2">
+
                         @if(Request::is('*/edit'))
                           <custom-clearance-form :editing="{{ $incoming->goodsDeclaration()->get() }}"></custom-clearance-form>
                         @else
@@ -64,12 +56,12 @@
                         @endif
                       </section>
                       <!--end #tab2 -->
-                      <section class="tab-pane" id="tab3">
+                      <section class="tab-pane" id="tab2">
                         <h2>
                           <i class="zmdi zmdi-shopping-cart"></i>
                           Services
                         </h2>
-                        @include('service._checkbox')
+                        {{--@include('service._checkbox')--}}
                       </section>
                     </div>
                   </div>

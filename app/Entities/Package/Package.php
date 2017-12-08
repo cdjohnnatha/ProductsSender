@@ -5,7 +5,7 @@ namespace App\Entities\Package;
 use App\Entities\Client\Client;
 use App\Entities\Company\Warehouse\CompanyWarehouse;
 use App\Entities\Entity;
-use App\Entities\Order;
+use App\Entities\Order\Order;
 
 class Package extends Entity
 {
@@ -22,7 +22,6 @@ class Package extends Entity
         'weight',
         'weight_measure',
         'total_goods',
-        'total_addons',
         'client_id',
         'package_status_id',
         'company_warehouse_id',
@@ -43,7 +42,6 @@ class Package extends Entity
         'weight',
         'weight_measure',
         'total_goods',
-        'total_addons',
         'client_id',
         'package_status_id',
         'company_warehouse_id',
