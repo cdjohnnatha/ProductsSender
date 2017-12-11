@@ -10,7 +10,7 @@ class PackageObserver
     public function created(Package $package)
     {
 
-        $package->packageOrder()->create(['package_id' => $package->id, 'uuid' => Uuid::generate()]);
+//        $package->packageOrder()->create(['package_id' => $package->id, 'uuid' => Uuid::generate()]);
 //        $message = [
 //            'header' => 'Package #'.$package->id.' was registered',
 //            'body' => 'You have a new package at '.$package->warehouse->address->label];

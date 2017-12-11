@@ -84,8 +84,9 @@ class ClientPackageController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->input());
-        if($this->packageRepository->store($request->input())) {
+//        dd($request->input());
+//        dd($request->all());
+        if($this->packageRepository->store($request)) {
             return redirect( route('user.packages.index') );
         }
     }

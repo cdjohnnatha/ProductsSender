@@ -56,6 +56,9 @@
                           <input type="hidden" name="package[content_type]" value="{{ $package['package']['content_type'] }}">
                           <input type="hidden" name="package[description]" value="{{ $package['package']['description'] }}">
                           <input type="hidden" name="custom_clearance" value="{{ json_encode($package['custom_clearance']) }}">
+                          <input type="hidden" name="package[client_id]" value="{{ Auth::user()->client->id }}">
+                          <input type="hidden" name="package[package_status_id]" value="1">
+
                         </div>
                       </div>
                     </section>
@@ -77,7 +80,6 @@
 
   <script>
       $('#previous_button').click(function(){
-          alert('test');
           var form = $('#form_package_incoming');
           form.attr('action', '/user/packages/wizard');
           form.submit();

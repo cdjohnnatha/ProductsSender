@@ -24,9 +24,13 @@ class Order extends Entity
         return $this->belongsToMany(OrderPackage::class);
     }
 
-
     public function orderFowards()
     {
         return $this->hasMany(OrderFoward::class);
+    }
+
+    public function orderAddons()
+    {
+        return $this->hasMany(OrderAddons::class);
     }
 }

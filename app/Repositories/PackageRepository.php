@@ -12,15 +12,17 @@ namespace App\Repositories;
 use App\Entities\Package\Package;
 use App\Entities\Package\PackageFiles;
 use App\Repositories\Interfaces\RepositoryInterface;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Webpatser\Uuid\Uuid;
 
 class PackageRepository implements RepositoryInterface
 {
 
     private $model;
     private $allRelations;
-
-    public function __construct(Package $package)
+    private $companyWarehouseAddonRepository;
+    public function __construct(Package $package, CompanyWarehouseAddonRepository $companyWarehouseAddonRepository)
     {
         $this->model = $package;
 
@@ -31,6 +33,8 @@ class PackageRepository implements RepositoryInterface
             'goodsDeclaration',
             'packageOrder'
         ];
+
+        $this->companyWarehouseAddonRepository = $companyWarehouseAddonRepository;
     }
 
     public function getAll()
@@ -90,9 +94,26 @@ class PackageRepository implements RepositoryInterface
             $this->saveImage($request->file('package_files'), $package);
         }
 
-//        if($request->has('addons')) {
-//
-//        }
+        if($request->has('addons')) {
+            $order = $package->packageOrder()->create(
+                [
+                    'package_id' => $package->id,
+                    'uuid' => Uuid::generate(),
+                    'total_addons' => $request->input('total_addons')
+                ]);
+
+            foreach($request->input('addons') as $addon) {
+                $companyWarehouseAddon = $this->companyWarehouseAddonRepository->findById($addon['company_warehouse_addon_id']);
+                $order->orderAddons()->create(
+                    [
+                        'price' => $companyWarehouseAddon->price,
+                        'company_warehouse_addon_id' => $companyWarehouseAddon->id
+                ]);
+            }
+        } else {
+            $package->packageOrder()->create(['package_id' => $package->id, 'uuid' => Uuid::generate()]);
+
+        }
 
         return $package;
     }
