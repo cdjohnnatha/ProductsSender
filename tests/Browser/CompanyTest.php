@@ -20,7 +20,7 @@ class CompanyTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $admin = User::where('type','admin')->get();
             $faker = \Faker\Factory::create();
-            $browser->loginAs($admin[0])
+            $browser->loginAs($admin->last())
                 ->visit(route('admin.companies.create'))
                 ->type('#map', 'Rua rita porfirio chaves')
                 ->waitFor('.pac-item')
@@ -45,7 +45,7 @@ class CompanyTest extends DuskTestCase
             $admin = User::where('type','admin')->get();
             $faker = \Faker\Factory::create();
             $companies = Company::all();
-            $browser->loginAs($admin[0])
+            $browser->loginAs($admin->last())
                 ->visit(route('admin.companies.edit', $companies[0]->id))
                 ->type('#map', 'Rua rita porfirio chaves')
                 ->waitFor('.pac-item')
