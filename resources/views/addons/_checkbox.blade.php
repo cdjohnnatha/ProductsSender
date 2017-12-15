@@ -17,20 +17,19 @@
           <div id="price_addons"></div>
           <input type="hidden" name="total_addons" id="total_service_input" value="0.00">
     </div>
-    @if(auth()->guard('web')->user())
-      <div class="row">
-        <div class="col-xs-6 col-sm-11 text-right ">
-          <span class="block p-b-5 md-text-grey">{{ __('payments.titles.sub_total') }}:</span>
-          <span class="block p-b-5 md-text-grey">{{ __('payments.titles.discount') }}:</span>
-          <span class="block p-b-5 p-t-5">{{ __('payments.titles.total') }}:</span>
-        </div>
-        <div class="col-xs-6 col-sm-1 p-0">
-          <span class="block p-b-5" id="services_first_value">0.00</span>
-          <span class="block p-b-5" id="discount_services">0.00</span>
-          <span class="block p-b-5 cart-total" id="total_services">0.00</span>
-        </div>
-      </div>
-    @endif
+
+  <div class="row">
+    <div class="col-xs-6 col-sm-11 text-right ">
+      <span class="block p-b-5 md-text-grey">{{ __('payments.titles.sub_total') }}:</span>
+      <span class="block p-b-5 md-text-grey">{{ __('payments.titles.discount') }}:</span>
+      <span class="block p-b-5 p-t-5">{{ __('payments.titles.total') }}:</span>
+    </div>
+    <div class="col-xs-6 col-sm-1 p-0">
+      <span class="block p-b-5" id="services_first_value">0.00</span>
+      <span class="block p-b-5" id="discount_services">0.00</span>
+      <span class="block p-b-5 cart-total" id="total_services">0.00</span>
+    </div>
+  </div>
 </article>
 
 @section('footerJS')

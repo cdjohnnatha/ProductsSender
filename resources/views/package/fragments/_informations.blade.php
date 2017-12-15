@@ -5,22 +5,22 @@
       <table class="table table-hover">
         <thead>
         <tr>
-          <th colspan="2"><h2>{{ __('common.titles.informations') }}</h2></th>
+          <th colspan="2"><h2>@lang('common.titles.informations')</h2></th>
         </tr>
         </thead>
         <tbody>
         <tr>
-          <th>{{ __('common.titles.status') }}</th>
+          <th>@lang('common.titles.status')</th>
           <td class="md-bg-blue-50">{{ $package->packageStatus->message }}</td>
         </tr>
         <tr>
-          <th>{{__('packages.form.dimensions')}}:</th>
+          <th>@lang('packages.form.dimensions'):</th>
           <td>
             {{ $package->depth.' x '.$package->height.' x '.$package->width.' '.$package->unit_measure }}
           </td>
         </tr>
         <tr>
-          <th>{{ __('packages.form.weight') }}:</th>
+          <th>@lang('packages.form.weight'):</th>
           <td>{{ $package->weight.' '.$package->weight_measure }}</td>
         </tr>
         <tr>
@@ -32,4 +32,5 @@
     </section>
     <div class="clearfix"></div>
   </div>
+  <input type="hidden" name="packages_id[]" value="{{ $package->id }}">
 </section>

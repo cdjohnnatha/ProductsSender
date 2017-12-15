@@ -37,7 +37,7 @@
         @include('package.fragments._informations')
       </section>
       <section class="tab-pane fadeIn" id="tab-2">
-
+        @include('address._package_address')
       </section>
 
       <section class="tab-pane fadeIn" id="tab-3">

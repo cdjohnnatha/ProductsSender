@@ -18,11 +18,11 @@
 
     @if(Request::is('*/edit'))
         <?php $action .= 'update'?>
-        <form action="{{route($action, $incoming->id)}}" role="form" method="POST">
+        <form action="" role="form" method="POST">
           <input name="_method" type="hidden" value="PUT">
     @else
       <?php $action .= 'store' ?>
-      <form action="{{route($action)}}" role="form" method="POST">
+      <form action="" role="form" method="POST">
     @endif
       {{ csrf_field() }}
       <div id="content" class="container">
@@ -78,11 +78,13 @@
                   <div class="form-wizard form-wizard-horizontal">
                     <div class="tab-content clearfix p-30">
                       <section class="tab-pane active" id="tab1">
-                        @include('package.fragments._informations')
-                        @if($package->goods)
-                            @include('package._custom_clearance', ['incomingPackage' => $package->goods])
-                            <input type="hidden" value="{{$package->id}}" id="package_id" name="package_id">
-                        @endif
+                        @foreach($packages as $package)
+                          @include('package.fragments._informations')
+                        @endforeach
+                        {{--@if($package->goods)--}}
+                            {{--@include('package._custom_clearance', ['incomingPackage' => $package->goods])--}}
+                            {{--<input type="hidden" value="{{$package->id}}" id="package_id" name="package_id">--}}
+                        {{--@endif--}}
                       </section>
                       <!--end #tab1 -->
 
@@ -92,10 +94,6 @@
                           <i class="zmdi zmdi-shopping-cart"></i>
                           Services
                         </h2>
-                        @if(auth()->guard('web')->user() && Auth::user()->subscription->amount > 0)
-                          <small style="color: #ff5722;">{{__('packages.incoming.form.small_marketing_services',
-                              ['discount'=> Auth::user()->subscription->discounts])}}</small>
-                        @endif
                         @include('addons._checkbox', ['reservation' => $package->goods])
 
                       </section>
@@ -108,12 +106,12 @@
                             <div class="row">
                               <div class="col-xs-6">
                                 <h3>{{__('packages.index.address_from')}}</h3>
-                                <address class="address">
-                                  {{$package->warehouse->address['label']}}<br>
-                                  {{$package->warehouse->address['number'] . ', ' . $package->warehouse->address['formatted_address']}}<br>
-                                  {{$package->warehouse->address['phone']}}<br>
-                                  <input type="hidden" id="address_id" name="address_id" value="{{Auth::user()->defaultAddress['id']}}">
-                                </address>
+                                {{--<address class="address">--}}
+                                  {{--{{$package->warehouse->address['label']}}<br>--}}
+                                  {{--{{$package->warehouse->address['number'] . ', ' . $package->warehouse->address['formatted_address']}}<br>--}}
+                                  {{--{{$package->warehouse->address['phone']}}<br>--}}
+                                  {{--<input type="hidden" id="address_id" name="address_id" value="{{Auth::user()->defaultAddress['id']}}">--}}
+                                {{--</address>--}}
                               </div>
                               <div class="col-xs-6">
                                 <h3>{{__('packages.index.address_to')}}</h3>
@@ -126,11 +124,11 @@
                               </div>
                             </div>
                         </h2>
-                        <shipment-component :addresses="{{Auth::user()->address}}"></shipment-component>
+{{--                        <shipment-component :addresses="{{Auth::user()->address}}"></shipment-component>--}}
                       </section>
 
                       <section class="tab-pane" id="tab4">
-                        @include('utils._payments')
+{{--                        @include('utils._payments')--}}
                       </section>
 
                     </div>

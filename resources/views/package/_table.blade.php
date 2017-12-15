@@ -1,11 +1,10 @@
 <table id="{{$table_id}}" class="mdl-data-table product-table m-t-30" cellspacing="0" width="100%">
   <thead>
   <tr>
-    <th class="col-sm-1">Id</th>
-    <th class="col-sm-2">Picture</th>
+    <th class="col-sm-2" data-orderable="false">Picture</th>
     <th class="col-sm-2">Warehouse</th>
     <th class="col-sm-2">Status</th>
-    <th>Obs</th>
+    <th data-orderable="false">Obs</th>
     <th>Updated at</th>
     <th data-orderable="false" class="col-xs-2">
     </th>
@@ -14,7 +13,6 @@
   <tbody>
   @foreach($packages as $package)
     <tr>
-      <td>{{$package->id}}</td>
       <td>
         @if(count($package->pictures) > 0)
           <img src="{{$package->pictures[0]->path}}" alt="" class="img-thumbnail" />
@@ -34,9 +32,9 @@
 
          <section id="sweet_alerts_card">
           @if($package->goodsDeclaration)
-            {{--<a href="#" onclick="window.location='{{Route('user.single_package.create.selected', $package->id)}}'" class="icon" data-placement="top" title="{{__('buttons.titles.send_package')}}" data-toggle="tooltip">--}}
-              {{--<i class="zmdi zmdi-mail-send"></i>--}}
-            {{--</a>--}}
+            <a href="#" onclick="window.location='{{Route('user.packages.processPackageWizard', $package->id)}}'" class="icon" data-placement="top" title="{{__('buttons.titles.send_package')}}" data-toggle="tooltip">
+              <i class="zmdi zmdi-mail-send"></i>
+            </a>
 
             <a href="#" class="icon" onclick="window.location='{{Route("user.packages.show", $package->id)}}'" data-toggle="tooltip"
                data-placement="top" title="{{__('buttons.titles.show')}}">

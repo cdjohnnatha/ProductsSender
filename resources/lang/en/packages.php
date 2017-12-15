@@ -35,6 +35,8 @@ return [
         'incoming' => 'Incoming',
         'address_from' => 'Address From',
         'address_to' => 'Address to',
+        'btn_merge_packages' => 'Merge Packages',
+        'btn_send_packages' => 'Send Packages'
 
     ],
 

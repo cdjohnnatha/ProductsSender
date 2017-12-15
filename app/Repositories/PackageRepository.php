@@ -193,4 +193,23 @@ class PackageRepository implements RepositoryInterface
 
         $file->delete();
     }
+
+    public function processPackage($request)
+    {
+        $arr = Array();
+        foreach($request->input('packages_id') as $key => $index){
+            $tmp = $this->findById($index);
+
+            if($key <= 0) {
+                $warehouse = $tmp->companyWarehouse->id;
+            }
+
+            if($warehouse != $tmp->companyWarehouse->id) {
+                return false;
+            }
+            array_push($arr, $tmp);
+        }
+
+        return $arr;
+    }
 }

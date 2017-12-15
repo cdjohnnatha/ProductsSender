@@ -28,9 +28,13 @@
                 Route::get('/dashboard', 'UserController@dashboard')->name('dashboard');
                 Route::get('/notifications', 'NotificationsController@notifications')->name('notifications');
 
-                Route::resource('packages', 'ClientPackageController');
-                Route::post('/packages/wizard', 'ClientPackageController@wizard')->name('packages.wizard');
 
+                Route::group(['as' => 'packages.', 'prefix' => 'packages'], function(){
+                    Route::post('/wizard', 'ClientPackageController@wizard')->name('wizard');
+                    Route::post('/processPackageWizard', 'ClientPackageController@processPackageWizard')->name('processPackageWizard');
+                });
+
+                Route::resource('packages', 'ClientPackageController');
                 Route::resource('notifications', 'NotificationsController');
                 Route::get('read-all', 'NotificationsController@markAll')->name('notifications.mark.all');
 

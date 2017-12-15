@@ -10,6 +10,7 @@ use App\Repositories\PackageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+//TODO update incoming, edit incoming for users. destroy incoming.
 class ClientPackageController extends Controller
 {
     private $packageRepository;
@@ -76,7 +77,6 @@ class ClientPackageController extends Controller
                 break;
 
         }
-//        dd($package);
         return view($page, compact('package', 'warehouses', 'steps'));
 
 
@@ -84,8 +84,6 @@ class ClientPackageController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request->input());
-//        dd($request->all());
         if($this->packageRepository->store($request)) {
             return redirect( route('user.packages.index') );
         }
@@ -105,5 +103,58 @@ class ClientPackageController extends Controller
     public function destroy()
     {
 
+    }
+
+    public function processPackageWizard(Request $request)
+    {
+        $steps = $request->input('step');
+        $page = 'package.client.sendPackage.send_wizard_';
+
+        switch($steps) {
+            case 1:
+                $this->validate($request,
+                    [
+                        'packages_id' => 'required|array|min:1'
+                    ]
+                );
+                $steps = 2;
+                $page .= $steps;
+                $packages = $request->input('packages_id');
+                $warehouses = $this->packageRepository->findById($packages[0])->companyWarehouse;
+                return view($page, compact('packages', 'steps', 'warehouses'));
+
+
+            case 2:
+                if($request->has('next')){
+                    $steps++;
+                    $packages = $request->except('_token', 'next');
+//                    dd($packages);
+                } else {
+                    $steps--;
+                    $packages = $this->packageRepository->processPackage($request);
+                }
+                $page .= $steps;
+                break;
+            case 3:
+                dd($request->input());
+                break;
+
+            default:
+                $this->validate($request,
+                    [
+                        'packages_id' => 'required|array|min:1'
+                    ]
+                );
+
+                $packages = $this->packageRepository->processPackage($request);
+                if($packages){
+                    $steps = 1;
+                    return view('package.client.sendPackage.send_wizard_1', compact('packages', 'steps'));
+                } else {
+                    return redirect()->back();
+                }
+        }
+
+        return view($page, compact('packages', 'steps'));
     }
 }
