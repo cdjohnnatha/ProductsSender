@@ -9,12 +9,12 @@
 <div id="collapse-{{ $index }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-{{ $index }}">
     <div class="panel-body">
         <article>
-            <div class="table-responsive border-grey-bottom-1px m-b-20" name="test[]">
+            <div class="table-responsive border-grey-bottom-1px m-b-20" id="table_checkbox">
                 @foreach($warehouses->addons as $addon)
                     <div class="checkbox">
                         <label>
 
-                            <input type="checkbox" class="addons_check" value="{{ $addon->id }}" data-price="{{ $addon->price }}" name="package_addons[{{ $index }}][company_warehouse_addon_id][]">
+                            <input type="checkbox" class="addons_check" value="{{ $addon->id }}" count-value="{{ $index }}" data-price="{{ $addon->price }}" name="package_addons[{{ $index }}][company_warehouse_addon_id][]">
                             {{$addon->companyAddons->title.' - '}}
                             <small>
                                 {{--({{$service->description}}) ---}}
@@ -24,7 +24,7 @@
                         </label>
                     </div>
                 @endforeach
-                    <input type="hidden" name="package_addons[{{ $index }}][package_id]" value="{{ $packageId }}">
+                    <input type="hidden" id="package_id" value="{{ $packageId }}">
                 <div id="price_addons"></div>
             </div>
         </article>
@@ -34,17 +34,23 @@
 @section('footerJS')
     @parent
     <script>
-        var total, discounts;
+        var total, index;
         total = parseInt(0);
         $('input[type="checkbox"]').click(function(){
             $(this).each(function(){
                 var value = parseFloat($(this).attr('data-price')).toFixed(2);
-                console.log(value);
                 if($(this).is(":checked")){
                     total = parseFloat(total) + parseFloat(value);
-                    console.log('total: ' + total);
+                    index = $(this).attr('count-value');
+                    $('<input>').attr({
+                        type: 'hidden',
+                        id: 'addon_package_' + index,
+                        name: 'package_addons[' + index + '][package_id]',
+                        value: $('#package_id').val() }).appendTo($('#table_checkbox'));
                 } else {
                     total = parseFloat(total) - parseFloat(value);
+                    index = $(this).attr('package_id_index');
+                    $('#addon_package_' + index).remove();
                 }
                 total = parseFloat(total).toFixed(2);
                 updateFields(total);

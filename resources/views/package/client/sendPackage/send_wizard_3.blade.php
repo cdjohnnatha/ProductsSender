@@ -66,16 +66,20 @@
                                         @foreach($packages['packages_id'] as $package)
                                             <input type="hidden" name="packages_id[]" value="{{ $package }}">
                                         @endforeach
-                                        @foreach($packages['package_addons'] as $key => $packageAddon)
-                                            @foreach($packageAddon['company_warehouse_addon_id'] as $addon)
-                                                <input type="hidden" name="package_addons[{{ $key }}][company_warehouse_addon_id][]" value="{{ $addon }}">
+                                        @if(isset($packages['package_addons']))
+                                            @foreach($packages['package_addons'] as $key => $packageAddon)
+                                                @foreach($packageAddon['company_warehouse_addon_id'] as $addon)
+                                                    <input type="hidden" name="package_addons[{{ $key }}][company_warehouse_addon_id][]" value="{{ $addon }}">
+                                                @endforeach
+                                                <input type="hidden" name="package_addons[{{ $key }}][package_id]" value="{{ $packageAddon['package_id'] }}">
                                             @endforeach
-                                            <input type="hidden" name="package_addons[{{ $key }}][package_id]" value="{{ $packageAddon['package_id'] }}">
-                                        @endforeach
+                                        @endif
                                         <input type="hidden" name="total_addons" value="{{ $packages['total_addons'] }}">
-
+                                        <shipment-component :addresses="{{ Auth::user()->client->defaultAddress }}"></shipment-component>
 
                                     </div>
+
+                                    {{ Auth::user()->client->defaultAddress }}
                                 </div>
                             </section>
                             <footer class="card-footer">

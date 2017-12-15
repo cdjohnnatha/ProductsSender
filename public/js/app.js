@@ -55699,7 +55699,7 @@ var $ = __webpack_require__(6);
         };
     },
     created: function created() {
-        this.getRates();
+        //this.getRates();
     },
 
 

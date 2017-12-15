@@ -41,4 +41,9 @@ class Client extends Entity
     {
         return $this->hasMany(ClientDocuments::class);
     }
+
+    public function phones()
+    {
+        return $this->hasMany(ClientPhones::class);
+    }
 }

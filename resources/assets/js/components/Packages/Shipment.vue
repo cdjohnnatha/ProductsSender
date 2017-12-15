@@ -96,7 +96,7 @@
         },
 
         created() {
-            this.getRates();
+            //this.getRates();
         },
 
         methods: {

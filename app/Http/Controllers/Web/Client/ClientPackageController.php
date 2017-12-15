@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web\Client;
 
 use App\Entities\Package\Package;
 use App\Http\Controllers\Controller;
+use App\Library\Services\Shipment;
+use App\Library\Services\ShipmentInterface;
 use App\Library\WizardSteps;
 use App\Repositories\CompanyWarehouseRepository;
 use App\Repositories\PackageRepository;
@@ -15,12 +17,17 @@ class ClientPackageController extends Controller
 {
     private $packageRepository;
     private $companyWarehouseRepository;
-    private $steps;
+    private $shipment;
 
-    public function __construct(PackageRepository $packageRepository, CompanyWarehouseRepository $companyWarehouseRepository)
+    public function __construct(
+        PackageRepository $packageRepository,
+        CompanyWarehouseRepository $companyWarehouseRepository,
+        Shipment $shipment
+    )
     {
         $this->packageRepository = $packageRepository;
         $this->companyWarehouseRepository = $companyWarehouseRepository;
+        $this->shipment = $shipment;
     }
 
     public function index()
@@ -128,12 +135,12 @@ class ClientPackageController extends Controller
                 if($request->has('next')){
                     $steps++;
                     $packages = $request->except('_token', 'next');
-//                    dd($packages);
                 } else {
                     $steps--;
                     $packages = $this->packageRepository->processPackage($request);
                 }
                 $page .= $steps;
+                $packages['rates'] = $this->shipment->getRates($request->input('packages_id'), null);
                 break;
             case 3:
                 dd($request->input());
