@@ -2,19 +2,24 @@
 
 namespace App\Http\Controllers\Web\Client;
 
+use App\Repositories\Client\ClientAddressRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ClientAddressController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $clientAddressRepository;
+
+    public function __construct(ClientAddressRepository $clientAddressRepository)
+    {
+        $this->clientAddressRepository = $clientAddressRepository;
+    }
+
     public function index()
     {
-        //
+        $addresses = $this->clientAddressRepository->getAll(Auth::user()->client->id);
+        return view('user.address.index', compact('addresses'));
     }
 
     /**
@@ -24,7 +29,7 @@ class ClientAddressController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.address.create');
     }
 
     /**
@@ -35,7 +40,9 @@ class ClientAddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($this->clientAddressRepository->store(Auth::user()->client, $request)){
+            return redirect()->to(route('user.addresses.index'));
+        }
     }
 
     /**
@@ -81,5 +88,12 @@ class ClientAddressController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function defaultAddress($id)
+    {
+        if( $this->clientAddressRepository->makeDefault(Auth::user()->client, $id) ){
+            return redirect()->back();
+        }
     }
 }

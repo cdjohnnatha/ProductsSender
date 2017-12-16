@@ -2,15 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Address;
-use App\ClientAddressGeoname;
 use App\Mail\UserRegisterConfirmation;
-use App\Repositories\SubscriptionRepository;
 use App\Repositories\UserRepository;
-use App\CompanySubscription;
-use App\User;
 use App\Http\Controllers\Controller;
-use App\ClientWallet;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Log;

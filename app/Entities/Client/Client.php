@@ -14,7 +14,8 @@ class Client extends Entity
         'phone',
         'rg',
         'cpf',
-        'user_id'
+        'user_id',
+        'default_address'
     ];
 
     public function address()

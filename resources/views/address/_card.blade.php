@@ -21,7 +21,7 @@
             {{$default ? 'disabled' : ''}} onclick="$('#form-makedefault-{{$address->id}}').submit();">
             <i class="zmdi {{$default ? 'zmdi-star' : 'zmdi-star-border'}}"></i> Make default
           </a>
-          <form action="{{Route('user.address.default', $address->id)}}"
+          <form action="{{ Route('user.addresses.default', $address->id) }}"
                 role="form" method="POST" id="form-makedefault-{{$address->id}}">
             {{ csrf_field() }}
           </form>
@@ -29,7 +29,7 @@
       </ul>
       <ul class="card-actions icons right-bottom">
         <li>
-          @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'user.address', 'id' => $address->id])
+          @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'user.addresses', 'id' => $address->id])
         </li>
       </ul>
     </footer>

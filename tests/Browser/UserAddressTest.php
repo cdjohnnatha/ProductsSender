@@ -2,7 +2,7 @@
 
 namespace Tests\Browser;
 
-use App\User;
+use App\Entities\User;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -15,10 +15,10 @@ class UserAddressTest extends DuskTestCase
     public function testCreateNewAddress()
     {
         $this->browse(function (Browser $browser) {
-            $user = User::find(1);
+            $user = User::all()->first();
             $faker = \Faker\Factory::create();
-            $browser->loginAs($user,'web')
-                ->visit(route('user.address.create', $user->id))
+            $browser->loginAs($user)
+                ->visit(route('user.addresses.create'))
                 ->type('address[label]', $faker->name)
                 ->type('address[owner_name]', $faker->firstName)
                 ->type('address[owner_surname]', $faker->lastName)

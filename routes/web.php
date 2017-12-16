@@ -33,7 +33,8 @@
 
                 Route::resource('notifications', 'NotificationsController');
                 Route::get('read-all', 'NotificationsController@markAll')->name('notifications.mark.all');
-
+                Route::resource('addresses', 'ClientAddressController');
+                Route::post('addresses/default/{id}', 'ClientAddressController@defaultAddress')->name('addresses.default');
             });
 
             Route::resource('user', 'UserController', ['except' => ['index']]);

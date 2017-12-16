@@ -10,9 +10,9 @@ namespace App\Repositories;
 
 
 use App\Entities\Client\Client;
+use App\Entities\Client\ClientDocuments;
 use App\Mail\UserRegisterConfirmation;
 use App\Repositories\Interfaces\RepositoryInterface;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ClientRepository implements RepositoryInterface
@@ -27,7 +27,7 @@ class ClientRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model::with('subscription')->get();
+        return $this->model->all();
     }
 
     public function store($request)
@@ -61,21 +61,22 @@ class ClientRepository implements RepositoryInterface
         }
     }
 
-    public function update($id, $request)
+    public function update($id, $attributes)
     {
-        // TODO: Implement update() method.
+        $client = $this->findById($id);
+        return $client->update($attributes);
     }
 
 
 
     public function destroy($id)
     {
-        $this->model::findOrFail($id)->delete();
+        $this->model->findOrFail($id)->delete();
     }
 
     public function findById($attribute)
     {
-        return $this->model::find($attribute);
+        return $this->model->find($attribute);
     }
 
     public function confirmAccount($confirmation_code)
@@ -84,7 +85,7 @@ class ClientRepository implements RepositoryInterface
             return false;
         }
 
-        $user = $this->model::where('confirmation_code', $confirmation_code)->first();
+        $user = $this->model->where('confirmation_code', $confirmation_code)->first();
 
         if ($user) {
             if ($user->confirmed) {
@@ -100,9 +101,13 @@ class ClientRepository implements RepositoryInterface
         return false;
     }
 
+    private function getAddresses()
+    {
+        return $this->address;
+    }
+
     private function saveImage($file, $user)
     {
-        Log::info($user);
         $fileName = $user->client->id . date("dmYhmsu");
         $extension = explode('.', $file->getClientOriginalName())[1];
         $fileName = md5($fileName) . '.' . $extension;
