@@ -75,11 +75,9 @@
                                             @endforeach
                                         @endif
                                         <input type="hidden" name="total_addons" value="{{ $packages['total_addons'] }}">
-                                        <shipment-component :addresses="{{ Auth::user()->client->defaultAddress }}"></shipment-component>
+                                        <shipment-component :addresses="{{ Auth::user()->client->address }}"></shipment-component>
 
                                     </div>
-
-                                    {{ Auth::user()->client->defaultAddress }}
                                 </div>
                             </section>
                             <footer class="card-footer">
