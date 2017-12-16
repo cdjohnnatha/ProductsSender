@@ -2,19 +2,29 @@
 
 namespace App\Http\Controllers\Web\Client;
 
+use App\Entities\Company\Warehouse\CompanyWarehouse;
+use App\Repositories\Client\ClientAddressRepository;
+use App\Repositories\CompanyWarehouseRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ClientAddressController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $clientAddressRepository;
+    private $companyWarehouse;
+
+    public function __construct(ClientAddressRepository $clientAddressRepository, CompanyWarehouseRepository $companyWarehouse)
+    {
+        $this->clientAddressRepository = $clientAddressRepository;
+        $this->companyWarehouse = $companyWarehouse;
+    }
+
     public function index()
     {
-        //
+        $addresses = $this->clientAddressRepository->getAll(Auth::user()->client->id);
+        $warehouses = $this->companyWarehouse->getAll();
+        return view('user.address.index', compact('addresses', 'warehouses'));
     }
 
     /**
@@ -24,7 +34,7 @@ class ClientAddressController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.address.create');
     }
 
     /**
@@ -35,7 +45,9 @@ class ClientAddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($this->clientAddressRepository->store(Auth::user()->client, $request)){
+            return redirect()->to(route('user.addresses.index'));
+        }
     }
 
     /**
@@ -57,7 +69,8 @@ class ClientAddressController extends Controller
      */
     public function edit($id)
     {
-        //
+        $address = $this->clientAddressRepository->findById($id);
+        return view('user.address.create', compact('address'));
     }
 
     /**
@@ -69,7 +82,9 @@ class ClientAddressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($this->clientAddressRepository->update($id, $request->input('address'))){
+            return redirect()->to(route('user.addresses.index'));
+        }
     }
 
     /**
@@ -80,6 +95,15 @@ class ClientAddressController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if($this->clientAddressRepository->destroy($id)) {
+            return redirect()->to(route('user.addresses.index'));
+        }
+    }
+
+    public function defaultAddress($id)
+    {
+        if( $this->clientAddressRepository->makeDefault(Auth::user()->client, $id) ){
+            return redirect()->back();
+        }
     }
 }

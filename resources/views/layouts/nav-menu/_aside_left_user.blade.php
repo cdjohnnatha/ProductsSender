@@ -20,24 +20,24 @@
     <div class="sidebar-inner sidebar-push">
       <ul class="nav nav-pills nav-stacked">
         <li class="sidebar-header">NAVIGATION</li>
-        <li class="{{ route::is('user.dashboard') ? 'active' : '' }}">
-          <a href="{{route('user.dashboard')}}">
+        <li class="{{ Route::is('user.dashboard') ? 'active' : '' }}">
+          <a href="{{ Route('user.dashboard') }}">
             <i class="zmdi zmdi-view-dashboard"></i>
-            {{__('nav_left_menu_client.dashboard')}}
+            @lang('nav_left_menu_client.dashboard')
           </a>
         </li>
         <li class="{{ Route::is('user.packages.*') ? 'active' : '' }}">
-          <a href="{{Route('user.packages.index')}}">
+          <a href="{{ Route('user.packages.index') }}">
             <i class="zmdi zmdi-inbox"></i>
-            {{__('nav_left_menu_client.packages')}}
+            @lang('nav_left_menu_client.packages')
           </a>
         </li>
 
-        <li class="{{ Route::is('user.address.*') ? 'active' : '' }}">
-          {{--<a href="{{Route('user.address.index')}}">--}}
-            {{--<i class="zmdi zmdi-pin"></i>--}}
-            {{--{{__('common.titles.address')}}--}}
-          {{--</a>--}}
+        <li class="{{ Route::is('user.addresses.*') ? 'active' : '' }}">
+          <a href="{{ Route('user.addresses.index') }}">
+            <i class="zmdi zmdi-pin"></i>
+            @lang('common.titles.address')
+          </a>
         </li>
 
       </ul>

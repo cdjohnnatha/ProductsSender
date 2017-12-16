@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Admin;
+use App\Entities\Company\Warehouse\CompanyWarehouse;
 use App\Http\Controllers\Controller;
 use App\Repositories\AdminRepository;
-use App\CompanyWarehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
