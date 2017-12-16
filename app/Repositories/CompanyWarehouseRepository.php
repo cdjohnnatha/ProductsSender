@@ -26,12 +26,12 @@ class CompanyWarehouseRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model::with('address')->paginate(30);
+        return $this->model->with('address')->paginate(30);
     }
 
     public function store($request)
     {
-        $warehouse = $this->model::create($request->input('companyWarehouse'));
+        $warehouse = $this->model->create($request->input('companyWarehouse'));
         $warehouse->address()->create($request->input('address'));
         $warehouse->phones()->createMany($request->input('phones'));
 //        $warehouse->address->geonames()->create($request->input('geonames'));
@@ -40,7 +40,7 @@ class CompanyWarehouseRepository implements RepositoryInterface
 
     public function update($id, $request)
     {
-        $companyWarehouse = $this->model::with('address')->find($id);
+        $companyWarehouse = $this->model->with('address')->find($id);
 //        $companyWarehouse->address->load('geonames');
 
         $companyWarehouse->update($request->input('companyWarehouse'));
@@ -63,12 +63,12 @@ class CompanyWarehouseRepository implements RepositoryInterface
 
     public function findById($attribute)
     {
-        return $this->model::with('address', 'addons')->findOrFail($attribute);
+        return $this->model->with('address', 'addons')->findOrFail($attribute);
     }
 
     public function destroy($id)
     {
-        return $this->model::findOrFail($id)->delete();
+        return $this->model->findOrFail($id)->delete();
     }
 
 

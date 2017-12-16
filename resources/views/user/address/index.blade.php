@@ -43,23 +43,27 @@
         </div>
       </section>
       <section class="tab-pane fadeIn" id="tab-2">
-        {{--@foreach($warehouses as $warehouse)--}}
-          {{--<div class="col-lg-4">--}}
-            {{--<div class="card">--}}
-              {{--<header class="card-heading card-purple">--}}
-                {{--<h2 class="card-title">--}}
-                  {{--{{$warehouse->address['label']}}--}}
-                {{--</h2>--}}
-              {{--</header>--}}
-              {{--<div class="card-body">--}}
-                {{--<h3>{{$warehouse->address['owner_name'].' '.$warehouse->address['owner_surname']}}</h3>--}}
-                {{--<small class="dataTables_info">{{__('address.titles.phone').': '.$warehouse->address['phone']}}</small>--}}
-                {{--<p>{{$warehouse->address['formatted_address']}}--}}
-                  {{--<small class="dataTables_info">, nº {{$warehouse->address['number'].', '.__('address.titles.postal_code').': '. $warehouse->address['postal_code']}}</small></p>--}}
-              {{--</div>--}}
-            {{--</div>--}}
-          {{--</div>--}}
-        {{--@endforeach--}}
+        @foreach($warehouses as $warehouse)
+          <div class="col-lg-4">
+            <div class="card">
+              <header class="card-heading card-purple">
+                <h2 class="card-title">
+                  {{ $warehouse->name }}
+                </h2>
+              </header>
+              <div class="card-body">
+                <h3>{{ $warehouse->address['owner_name'].' '.$warehouse->address['owner_surname']}}</h3>
+                <small class="dataTables_info">{{ __('address.titles.phone').': '}}
+                  @foreach($warehouse->phones as $phone)
+                    {{ $phone->number . '/' }}
+                  @endforeach
+                </small>
+                <p>{{ $warehouse->address['formatted_address'] }}
+                  <small class="dataTables_info">, nº {{ $warehouse->address['number'].', '.__('address.titles.postal_code').': '. $warehouse->address['postal_code'] }}</small></p>
+              </div>
+            </div>
+          </div>
+        @endforeach
         <div class="clearfix"></div>
       </section>
     </section>

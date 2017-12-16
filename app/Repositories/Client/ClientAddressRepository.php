@@ -28,9 +28,10 @@ class ClientAddressRepository
         return $client->address()->create($request->input('address'));
     }
 
-    public function update($id, $request)
+    public function update($id, $attributes)
     {
-        // TODO: Implement update() method.
+        $address = $this->model->find($id);
+        return $address->update($attributes);
     }
 
     public function destroy($id)
