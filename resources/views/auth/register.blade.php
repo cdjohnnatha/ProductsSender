@@ -87,8 +87,7 @@
                                      accept="image/*">
                               <div class="input-group">
                                 <label for="">Signed USPS 1583 Form</label>
-                                <input type="text" readonly="" class="form-control"
-                                       placeholder="Upload a picture of USPS 1583 form">
+                                <input type="text" readonly="" class="form-control"placeholder="Upload a picture of USPS 1583 form">
                                 <span class="input-group-btn input-group-sm">
                               <button type="button" class="btn btn-info btn-fab btn-fab-sm">
                                 <i class="zmdi zmdi-attachment-alt"></i>

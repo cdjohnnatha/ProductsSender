@@ -10,6 +10,7 @@
 
     Route::prefix('/register')->group(function () {
         Route::post('/', 'Auth\RegisterController@store')->name('register.submit');
+        Route::post('/wizard', 'Auth\RegisterController@wizardRegister')->name('register.wizard');
         Route::get('/create', 'Auth\RegisterController@register')->name('register.create');
         Route::get('/verify/{confirmationCode}', 'Auth\RegisterController@confirm')->name('confirmation_path');
     });

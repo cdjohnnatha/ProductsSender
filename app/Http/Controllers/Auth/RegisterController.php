@@ -46,7 +46,45 @@ class RegisterController extends Controller
 
     public function register()
     {
-        return view('auth.register');
+        return view('auth.register.register_1');
+    }
+
+    public function wizardRegister(Request $request)
+    {
+        $step = $request->input('step');
+        $page = 'auth.register.register_';
+        switch($step) {
+            case 1:
+                $this->validate($request, [
+                    'user.email' => 'required|string|email|max:255|unique:users,email',
+                    'user.password' => 'required|string|min:6|confirmed',
+                    'client.name' => 'required|string|max:255',
+                    'client.surname' => 'required|string|max:255',
+                    'client.identity_document' => 'required|string',
+                    'client.tax_document' => 'required|string',
+                    'phones' => 'required|array|min:1',
+                    'step' => 'required'
+                    ]);
+                ++$step;
+                $page .= $step;
+                $data = $request->except(['_token', 'next', 'step']);
+                $data['step'] = $step;
+
+                break;
+
+            case 2:
+                if($request->has('next')) {
+                    ++$step;
+                } else {
+                    --$step;
+                }
+                $page .= $step;
+                $data = $request->except(['_token', 'previous']);
+        }
+
+        return view($page, compact('data'));
+
+
     }
 
     public function store(Request $request)

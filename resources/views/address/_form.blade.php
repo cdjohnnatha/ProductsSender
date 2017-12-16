@@ -38,7 +38,7 @@
       <div class="form-group col-sm-4 label-floating {{ $errors->has('address.owner_name') ? 'has-error' : '' }} label-floating">
         <div class="input-group">
           <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
-          <label class="control-label">{{__('common.titles.name')}}</label>
+          <label class="control-label">{{__('common.name')}}</label>
           <input type="text" class="form-control" name="address[owner_name]"
                  value="{{ $address->owner_name or old('address.owner_name') }}">
         </div>
@@ -56,7 +56,7 @@
     <div class="form-group col-sm-4 label-floating {{ $errors->has('address.owner_surname') ? ' has-error' : '' }} label-floating">
       <div class="input-group label-floating ">
         <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
-        <label class="control-label">{{__('common.titles.surname')}}</label>
+        <label class="control-label">{{__('common.surname')}}</label>
         <input type="text" class="form-control" name="address[owner_surname]"
                  value="{{ $address->owner_surname or old('address.owner_surname') }}">
       </div>
