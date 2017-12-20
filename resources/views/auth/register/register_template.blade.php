@@ -34,7 +34,7 @@
                                             <span class="title">@lang('auth.register.user_address')</span>
                                         </a>
                                     </li>
-                                    <li class="" >
+                                    <li class="" id="documents_flow">
                                         <a href="javascript:void(0);" data-toggle="tab" aria-expanded="false" disabled><span
                                                     class="step">3</span>
                                             <span class="title">@lang('auth.register.user_documents')</span>
