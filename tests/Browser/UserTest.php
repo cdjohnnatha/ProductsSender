@@ -26,12 +26,13 @@ class UserTest extends DuskTestCase
             $browser->visit(route('register.create'))
                 ->type('client[name]', $faker->firstName)
                 ->type('client[surname]', $faker->lastName)
-                ->type('client[rg]', '0000.000')
-                ->type('client[cpf]', '000.000.000-00')
-                ->type('client[phone]', 83998000802)
+                ->type('client[identity_document]', '0000.000')
+                ->type('client[tax_document]', '000.000.000-00')
+                ->type('phones[0][number]', $faker->phoneNumber)
                 ->type('user[email]', $faker->email)
                 ->type('user[password]', $password)
                 ->type('user[password_confirmation]', $password)
+
                 ->click('#next_btn')
                 ->type('address[label]', $faker->name)
                 ->type('address[owner_name]', $faker->firstName)
@@ -47,9 +48,9 @@ class UserTest extends DuskTestCase
                 ->click('#next_btn')
                 ->attach('identification_card', '/home/claudio/Pictures/package_1.jpg')
                 ->attach('usps_form', '/home/claudio/Pictures/package_1.jpg')
-                ->attach('proof_address', '/home/claudio/Pictures/CV.pdf')
+                ->attach('proof_address', '/home/claudio/Pictures/package_1.jpg')
 
-                ->click('#submit-button')
+                ->click('#register_btn')
                 ->waitForLocation('/login');
         });
     }

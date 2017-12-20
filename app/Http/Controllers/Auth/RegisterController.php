@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -46,7 +47,92 @@ class RegisterController extends Controller
 
     public function register()
     {
-        return view('auth.register');
+        $data = [];
+        return view('auth.register.register_1', compact('data'));
+    }
+
+    public function wizardRegister(Request $request)
+    {
+        $step = $request->input('step');
+        $page = 'auth.register.register_';
+
+        switch($step) {
+            case 1:
+                $validator = Validator::make($request->all(), [
+                    'user.email' => 'required|string|email|max:255|unique:users,email',
+                    'user.password' => 'required|string|min:6|confirmed',
+                    'client.name' => 'required|string|max:255',
+                    'client.surname' => 'required|string|max:255',
+                    'client.identity_document' => 'required|string',
+                    'client.tax_document' => 'required|string',
+                    'phones' => 'required|array|min:1',
+                    'step' => 'required'
+                    ]);
+                ++$step;
+                $page .= $step;
+                $data = $request->except(['_token','next']);
+                $data['step'] = $step;
+
+                break;
+
+            case 2:
+                $validator = Validator::make($request->all(), [
+                    'address.label' => 'required',
+                    'address.owner_name' => 'required',
+                    'address.owner_surname' => 'required|string',
+                    'address.city' => 'required|string',
+                    'address.state' => 'required|string',
+                    'address.postal_code' => 'required',
+                    'address.company_name' => 'nullable|string',
+                    'address.phone' => 'required|string',
+                    'address.country' => 'required|string',
+                    'address.street' => 'required|string',
+                    'address.formatted_address' => 'required|string',
+                ]);
+                if($validator->fails()){
+                    $data = $request->except(['next']);
+                    return view('auth.register.register_2', compact('data'))->withErrors($validator);
+                }
+
+                if($request->has('next')) {
+                    ++$step;
+                    $data = $request->except(['next']);
+                } else {
+                    --$step;
+                    $data = $request->except(['previous']);
+                }
+                $page .= $step;
+                $data['step'] = $step;
+
+                break;
+            case 3:
+                if($request->has('register')) {
+                    $validator = Validator::make($request->all(), [
+                        'identification_card' => 'required|image|max:5000',
+                        'usps_form' => 'required|image|max:5000',
+                        'proof_address' => 'required|image|max:5000',
+                    ]);
+                    if($validator->fails()){
+                        $data = $request->except(['next']);
+                        return view('auth.register.register_3', compact('data'))->withErrors($validator);
+                    }
+                    ++$step;
+                    if($this->user->store($request)) {
+                        $request->session()->flash('info', __('email_verification.registered_message'));
+                        return redirect()->route('login');
+                    }
+                } else {
+                    --$step;
+                    $data = $request->except(['_token', 'previous']);
+                }
+
+                $page .= $step;
+                $data['step'] = $step;
+                break;
+        }
+        return view($page, compact('data'));
+
+
     }
 
     public function store(Request $request)

@@ -11,9 +11,8 @@ class Client extends Entity
     protected $fillable = [
         'name',
         'surname',
-        'phone',
-        'rg',
-        'cpf',
+        'identity_document',
+        'tax_document',
         'user_id',
         'default_address'
     ];

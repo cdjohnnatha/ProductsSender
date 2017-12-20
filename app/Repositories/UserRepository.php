@@ -27,15 +27,15 @@ class UserRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model::all();
+        return $this->model->all();
     }
 
     public function store($request)
     {
         $user = $this->model->create($request->input('user'));
         $user->client()->create($request->input('client'));
-        $user->client->address()->create($request->input('address'));
-//        $user->client->address->geonames()->create($request->input('geonames'));
+        $address_id = $user->client->address()->create($request->input('address'));
+        $user->client()->update(['default_address' => $address_id->id]);
         $user->password = bcrypt($request->input('users.password'));
         $user->confirmation_code = base64_encode($user->email);
 
@@ -74,12 +74,12 @@ class UserRepository implements RepositoryInterface
 
     public function destroy($id)
     {
-        $this->model::findOrFail($id)->delete();
+        $this->model->findOrFail($id)->delete();
     }
 
     public function findById($attribute)
     {
-        return $this->model::find($attribute);
+        return $this->model->find($attribute);
     }
 
     public function confirmAccount($confirmation_code)
@@ -88,7 +88,7 @@ class UserRepository implements RepositoryInterface
             return false;
         }
 
-        $user = $this->model::where('confirmation_code', $confirmation_code)->first();
+        $user = $this->model->where('confirmation_code', $confirmation_code)->first();
 
         if ($user) {
             if ($user->confirmed) {
