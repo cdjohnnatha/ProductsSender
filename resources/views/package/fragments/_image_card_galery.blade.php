@@ -4,7 +4,7 @@
         <div class="col-lg-4">
           <section class="card card-gallery">
             <header class="card-heading">
-              <h2 class="card-title">{{__('common.titles.image_gallery')}}</h2>
+              <h2 class="card-title">{{__('packages.prepare_package.images_gallery')}}</h2>
             </header>
             <section class="card-body p-0">
               <div id="photo-gallery" class="gallery row" itemscope itemtype="http://schema.org/ImageGallery">

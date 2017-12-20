@@ -13,7 +13,7 @@
         <form action="" role="form" method="POST">
     @endif
         {{ csrf_field() }}
-            <input type="hidden" name="step" value="{{ $steps }}">
+            <input type="hidden" name="step" value="{{ $data['step'] }}">
 
             <div id="content" class="container">
             <div class="content-body">
@@ -66,15 +66,14 @@
                                     <div class="tab-content clearfix p-30">
                                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                             <div class="panel panel-default">
-                                                @foreach($packages as $key => $package)
+                                                @foreach($data['packages_id'] as $key => $package)
                                                     <input type="hidden" name="packages_id[]" value="{{ $package }}">
 
-                                                    @include('package.fragments._collapsible_package_addons',
-                                                    [
+                                                    @include('package.fragments._collapsible_package_addons',[
                                                         'index' => $key + 1,
-                                                        'packageId' => $package
-                                                    ]
-                                                    )
+                                                        'packageId' => $package,
+                                                        'warehouses' => $data['warehouses']
+                                                    ])
                                                 @endforeach
                                                     <input type="hidden" name="total_addons" id="total_service_input" value="0.00">
                                                     <div class="row">

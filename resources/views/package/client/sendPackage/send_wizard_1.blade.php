@@ -13,7 +13,7 @@
         <form action="" role="form" method="POST">
     @endif
         {{ csrf_field() }}
-            <input type="hidden" name="step" value="{{ $steps }}">
+            <input type="hidden" name="step" value="{{ $data['step'] }}">
             <div id="content" class="container">
             <div class="content-body">
                 <div class="row">
@@ -28,32 +28,26 @@
                                         <li class="active">
                                             <a href="#tab1" data-toggle="tab" aria-expanded="true">
                                             <span class="step"><i class="zmdi zmdi-assignment"></i> </span>
-                                            <span class="title">@lang('singlePackage.titles.title_step_1') </span>
+                                            <span class="title">@lang('packages.prepare_package.package_information') </span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0);" data-toggle="tab" aria-expanded="false">
                                                 <span class="step"><i class="zmdi zmdi-shopping-cart"></i></span>
-                                                <span class="title">@lang('addon') </span>
+                                                <span class="title">@lang('packages.prepare_package.addon') </span>
                                             </a>
                                         </li>
 
                                         <li>
                                             <a href="javascript:void(0);" data-toggle="tab" aria-expanded="false">
                                                 <span class="step"><i class="zmdi zmdi-truck"></i></span>
-                                                <span class="title"> @lang('common.titles.shipment_method') </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" data-toggle="tab" aria-expanded="false">
-                                                <span class="step"><i class="zmdi zmdi-card"></i></span>
-                                                <span class="title"> @lang('common.titles.payment_method') </span>
+                                                <span class="title"> @lang('packages.prepare_package.shipment') </span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0);" data-toggle="tab" aria-expanded="false">
                                                 <span class="step"><i class="zmdi zmdi-check"></i></span>
-                                                <span class="title"> @lang('common.titles.confirmation') </span>
+                                                <span class="title"> @lang('packages.prepare_package.confirmation') </span>
                                             </a>
                                         </li>
                                     </ul>
@@ -64,7 +58,7 @@
                                 <div class="form-wizard form-wizard-horizontal">
                                     <div class="tab-content clearfix p-30">
                                         <section class="tab-pane active" id="tab1">
-                                            @foreach($packages as $package)
+                                            @foreach($data['packages'] as $package)
                                                 @include('package.fragments._informations')
                                             @endforeach
                                         </section>
@@ -73,14 +67,7 @@
                             </section>
                             <footer class="card-footer">
                                 <ul class="pager wizard">
-                                    <li class="previous disabled">
-                                        <button type="submit" name="previous" class="btn btn-primary btn-round pull-left" disabled>
-                                            @lang('buttons.titles.previous')
-                                        </button>
-                                    </li>
-                                    <li class="next"><button type="submit" name="next" value="true" class="btn btn-primary btn-round pull-right"
-                                                        id="next_button"> @lang('buttons.titles.next') </button>
-                                    </li>
+                                    @include('layouts.formButtons.wizard._wizard_buttons', ['tagDisabled' => 'disabled', 'finish' => false])
                                 </ul>
                             </footer>
                         </div>

@@ -11,6 +11,7 @@ use App\Repositories\CompanyWarehouseRepository;
 use App\Repositories\PackageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 //TODO update incoming, edit incoming for users. destroy incoming.
 class ClientPackageController extends Controller
@@ -119,49 +120,48 @@ class ClientPackageController extends Controller
 
         switch($steps) {
             case 1:
-                $this->validate($request,
-                    [
-                        'packages_id' => 'required|array|min:1'
-                    ]
-                );
-                $steps = 2;
+                $validator = Validator::make($request->all(), [
+                    'packages_id' => 'required|array|min:1'
+                ]);
+                if($validator->fails()){
+                    $data = $request->except(['next']);
+                    return view('package.client.sendPackage.send_wizard_1', compact('data'))->withErrors($validator);
+                }
+                ++$steps;
                 $page .= $steps;
-                $packages = $request->input('packages_id');
-                $warehouses = $this->packageRepository->findById($packages[0])->companyWarehouse;
-                return view($page, compact('packages', 'steps', 'warehouses'));
+                $data['packages_id'] = $request->input('packages_id');
+                $data['step'] = $steps;
+                $data['warehouses'] = $this->packageRepository->findById($data['packages_id'][0])->companyWarehouse;
+                return view($page, compact('data'));
 
 
             case 2:
                 if($request->has('next')){
                     $steps++;
-                    $packages = $request->except('_token', 'next');
+                    $data = $request->except('_token', 'next');
+                    $data['rates'] = $this->shipment->getRates($request->input('packages_id'), null);
                 } else {
                     $steps--;
-                    $packages = $this->packageRepository->processPackage($request);
+                    $data['packages'] = $this->packageRepository->processPackage($request);
                 }
                 $page .= $steps;
-                $packages['rates'] = $this->shipment->getRates($request->input('packages_id'), null);
+                $data['step'] = $steps;
                 break;
             case 3:
-                dd($request->input());
                 break;
 
             default:
-                $this->validate($request,
-                    [
-                        'packages_id' => 'required|array|min:1'
-                    ]
-                );
-
+                $this->validate($request, ['packages_id' => 'required|array|min:1']);
                 $packages = $this->packageRepository->processPackage($request);
                 if($packages){
-                    $steps = 1;
-                    return view('package.client.sendPackage.send_wizard_1', compact('packages', 'steps'));
+                    $data['step'] = 1;
+                    $data['packages'] = $packages;
+                    return view('package.client.sendPackage.send_wizard_1', compact('data'));
                 } else {
                     return redirect()->back();
                 }
         }
 
-        return view($page, compact('packages', 'steps'));
+        return view($page, compact('data'));
     }
 }

@@ -5,12 +5,12 @@
       <table class="table table-hover">
         <thead>
         <tr>
-          <th colspan="2"><h2>@lang('common.titles.informations')</h2></th>
+          <th colspan="2"><h2>@lang('packages.prepare_package.package_information')</h2></th>
         </tr>
         </thead>
         <tbody>
         <tr>
-          <th>@lang('common.titles.status')</th>
+          <th>@lang('packages.prepare_package.status')</th>
           <td class="md-bg-blue-50">{{ $package->packageStatus->message }}</td>
         </tr>
         <tr>

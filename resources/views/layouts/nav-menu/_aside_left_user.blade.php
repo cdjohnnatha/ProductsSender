@@ -36,7 +36,7 @@
         <li class="{{ Route::is('user.addresses.*') ? 'active' : '' }}">
           <a href="{{ Route('user.addresses.index') }}">
             <i class="zmdi zmdi-pin"></i>
-            @lang('common.titles.address')
+            @lang('nav_left_menu_client.address')
           </a>
         </li>
 

@@ -50,6 +50,15 @@ return [
         'description' => 'Description'
     ],
 
+    'prepare_package' => [
+        'package_information' => 'Package Information',
+        'addon' => 'Addon',
+        'shipment' => 'Shipment',
+        'images_gallery' => 'Images Gallery',
+        'confirmation' => 'Confirmation',
+        'status' => 'Status'
+    ],
+
     'notification' => [
         'updated_warehouse' => 'Package was updated at warehouse',
         'created_warehouse' => 'Package was identified at warehouse'

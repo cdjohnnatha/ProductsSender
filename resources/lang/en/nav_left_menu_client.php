@@ -3,6 +3,7 @@
 return [
 
     'packages' => 'Packages',
-    'dashboard' => 'Dashboard'
+    'dashboard' => 'Dashboard',
+    'address' => 'Address'
 
 ];
