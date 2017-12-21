@@ -86,16 +86,17 @@
     export default {
         props: {
             addresses: Array,
+            rates: Array
         },
         data(){
             return {
               total: 0,
-              rates: {},
 
             }
         },
 
         created() {
+            console.log(this.rates[0]);
             //this.getRates();
         },
 

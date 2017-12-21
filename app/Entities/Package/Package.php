@@ -6,6 +6,7 @@ use App\Entities\Client\Client;
 use App\Entities\Company\Warehouse\CompanyWarehouse;
 use App\Entities\Entity;
 use App\Entities\Order\Order;
+use App\Entities\Order\OrderPackage;
 
 class Package extends Entity
 {
@@ -75,9 +76,9 @@ class Package extends Entity
         return $this->hasMany(PackageGoodsDeclaration::class);
     }
 
-    public function packageOrder()
+    public function orderPackage()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(OrderPackage::class);
     }
 
 }

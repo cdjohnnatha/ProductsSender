@@ -2,7 +2,7 @@
 
 
 @section('panel_header')
-    {{__('common.titles.companies')}}
+    @lang('company.adm.index.title')
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
             <div class="col-xs-12">
                 <div class="card card-data-tables product-table-wrapper">
                     <header class="card-heading">
-                        <h2 class="card-title">{{__('common.titles.companies')}}</h2>
+                        <h2 class="card-title">@lang('company.adm.index.title')</h2>
                         <small class="dataTables_info">All the companies which are registered.</small>
 
                         <div class="card-search">

@@ -15,7 +15,7 @@
                         <label>
 
                             <input type="checkbox" class="addons_check" value="{{ $addon->id }}" count-value="{{ $index }}" data-price="{{ $addon->price }}" name="package_addons[{{ $index }}][company_warehouse_addon_id][]">
-                            {{$addon->companyAddons->title.' - '}}
+                            {{ $addon->companyAddons->title.' - ' }}
                             <small>
                                 {{--({{$service->description}}) ---}}
                                 <span style="color: black;">{{ __('common.titles.price').': ' }}</span>

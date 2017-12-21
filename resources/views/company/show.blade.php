@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('panel_header')
-  {{__('common.titles.companies')}}
+  @lang('company.adm.index.title')
 @endsection
 
 @section('content')
   <div class="card">
     <header class="card-heading">
-      <h2 class="card-title">{{$company->name}}</h2>
+      <h2 class="card-title">{{ $company->name }}</h2>
     </header>
     <div class="card-body p-t-0">
       <div class="card card-transparent m-b-0">
@@ -21,8 +21,8 @@
           </div>
           <div class="tab-content  p-20">
             <div class="tab-pane fadeIn active" id="tab-5">
-              <label for="address">{{__('common.titles.address')}}</label>
-              <p>{{$company->address->formatted_address}}</p>
+              <label for="address">@lang('company.adm.show.address')</label>
+              <p>{{ $company->address->formatted_address }}</p>
             </div>
             <div class="tab-pane fadeIn" id="tab-2">
               @include('company.addons.index')

@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Entity
 {
     protected $fillable = [
-        'package_id',
-        'uuid',
-        'total_addons',
+        'uuid'
     ];
 
     public function packages()

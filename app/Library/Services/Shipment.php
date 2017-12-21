@@ -19,8 +19,6 @@ class Shipment
         $rates = array();
         Log::info($packageIds);
         foreach ($packageIds as $id) {
-
-
             $package = $this->packageRepository->findById($id);
 
             $addressFrom = array(
@@ -88,8 +86,8 @@ class Shipment
                 'address_from' => $addressFrom,
                 'async' => false,
                 'parcels' => $parcel
-            ));
-            array_push($rates, $shipment->rates);
+            ))->rates;
+            array_push($rates, $shipment);
         }
 
         return $rates;

@@ -5,7 +5,7 @@ namespace App\Entities\Order;
 use App\Entities\Entity;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderAddons extends Entity
+class OrderPackageAddons extends Entity
 {
     protected $fillable = [
         'price',

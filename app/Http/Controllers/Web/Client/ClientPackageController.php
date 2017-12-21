@@ -82,6 +82,7 @@ class ClientPackageController extends Controller
                 $steps = --$steps;
                 $page = $page . $steps;
                 $warehouses = $this->companyWarehouseRepository->getAll();
+                dd($warehouses);
                 break;
 
         }
@@ -117,7 +118,6 @@ class ClientPackageController extends Controller
     {
         $steps = $request->input('step');
         $page = 'package.client.sendPackage.send_wizard_';
-
         switch($steps) {
             case 1:
                 $validator = Validator::make($request->all(), [
@@ -142,17 +142,38 @@ class ClientPackageController extends Controller
                     $data['rates'] = $this->shipment->getRates($request->input('packages_id'), null);
                 } else {
                     $steps--;
-                    $data['packages'] = $this->packageRepository->processPackage($request);
+                    $data['packages'] = $this->packageRepository->checkWarehouse($request);
                 }
                 $page .= $steps;
                 $data['step'] = $steps;
                 break;
             case 3:
+                if($request->has('next')){
+                    $validator = Validator::make($request->all(), [
+                        'package_shipment' => 'required|array|min:'.count($request->input('packages_id'))
+                    ]);
+                    if($validator->fails()){
+                        $data = $request->except(['next']);
+                        return view('package.client.sendPackage.send_wizard_1', compact('data'))->withErrors($validator);
+                    }
+
+                    if($this->packageRepository->preparePackage($request)){
+                        return redirect()->route('user.packages.index');
+                    }
+                    $steps--;
+
+                } else {
+                    $steps--;
+                    $data = $request->except('_token', 'next');
+                    $data['warehouses'] = $this->packageRepository->findById($data['packages_id'][0])->companyWarehouse;
+                }
+                $data['step'] = $steps;
+                $page .= $steps;
                 break;
 
             default:
                 $this->validate($request, ['packages_id' => 'required|array|min:1']);
-                $packages = $this->packageRepository->processPackage($request);
+                $packages = $this->packageRepository->checkWarehouse($request);
                 if($packages){
                     $data['step'] = 1;
                     $data['packages'] = $packages;

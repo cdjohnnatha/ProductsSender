@@ -17,6 +17,7 @@ class CreateOrderFowardsTable extends Migration
             $table->increments('id');
             $table->decimal('price');
             $table->string('track_number');
+            $table->string('goshippo_shipment');
             $table->integer('order_id');
             $table->integer('address_id');
             $table->integer('provider_id');

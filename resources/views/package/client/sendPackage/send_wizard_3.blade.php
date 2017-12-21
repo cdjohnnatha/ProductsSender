@@ -1,10 +1,7 @@
-@extends('layouts.app')
+@extends('package.client.sendPackage.send_wizard_layout')
 
-@section('panel_header')
-    @lang('singlePackage.titles.main_title')
-@endsection
 
-@section('content')
+@section('preparePackageWizard')
 
     @if(Request::is('*/edit'))
         <form action=" {{ route('user.packages.processPackageWizard') }}" role="form" method="POST">
@@ -12,90 +9,92 @@
     @else
         <form action="" role="form" method="POST">
     @endif
-        {{ csrf_field() }}
-            <input type="hidden" name="step" value="{{ $steps }}">
-            <div id="content" class="container">
-            <div class="content-body">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card" id="rootwizard">
-                            <div class="card-heading">
-                                <div class="form-wizard-nav">
-                                    <div class="progress" style="width: 75%;">
-                                        <div class="progress-bar" style="width:0%;"></div>
-                                    </div>
-                                    <ul class="nav nav-justified nav-pills">
-                                        <li>
-                                            <a href="javascript:void(0);" data-toggle="tab" aria-expanded="true">
-                                            <span class="step"><i class="zmdi zmdi-assignment"></i> </span>
-                                            <span class="title">@lang('singlePackage.titles.title_step_1') </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" data-toggle="tab" aria-expanded="false">
-                                                <span class="step"><i class="zmdi zmdi-shopping-cart"></i></span>
-                                                <span class="title">@lang('addon') </span>
-                                            </a>
-                                        </li>
+            {{ csrf_field() }}
+            <input type="hidden" name="step" value="{{ $data['step'] }}">
 
-                                        <li class="active">
-                                            <a href="javascript:void(0);" data-toggle="tab" aria-expanded="false">
-                                                <span class="step"><i class="zmdi zmdi-truck"></i></span>
-                                                <span class="title"> @lang('common.titles.shipment_method') </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" data-toggle="tab" aria-expanded="false">
-                                                <span class="step"><i class="zmdi zmdi-card"></i></span>
-                                                <span class="title"> @lang('common.titles.payment_method') </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" data-toggle="tab" aria-expanded="false">
-                                                <span class="step"><i class="zmdi zmdi-check"></i></span>
-                                                <span class="title"> @lang('common.titles.confirmation') </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <section class="card-body p-0">
-                                <div class="form-wizard form-wizard-horizontal">
-                                    <div class="tab-content clearfix p-30">
-                                        @foreach($packages['packages_id'] as $package)
-                                            <input type="hidden" name="packages_id[]" value="{{ $package }}">
-                                        @endforeach
-                                        @if(isset($packages['package_addons']))
-                                            @foreach($packages['package_addons'] as $key => $packageAddon)
-                                                @foreach($packageAddon['company_warehouse_addon_id'] as $addon)
-                                                    <input type="hidden" name="package_addons[{{ $key }}][company_warehouse_addon_id][]" value="{{ $addon }}">
-                                                @endforeach
-                                                <input type="hidden" name="package_addons[{{ $key }}][package_id]" value="{{ $packageAddon['package_id'] }}">
-                                            @endforeach
-                                        @endif
-                                        <input type="hidden" name="total_addons" value="{{ $packages['total_addons'] }}">
-                                        <shipment-component :addresses="{{ Auth::user()->client->address }}"></shipment-component>
-
-                                    </div>
-                                </div>
-                            </section>
-                            <footer class="card-footer">
-                                <ul class="pager wizard">
-                                    <li class="previous disabled">
-                                        <button type="submit" name="previous" class="btn btn-primary btn-round pull-left">
-                                            @lang('buttons.titles.previous')
-                                        </button>
-                                    </li>
-                                    <li class="next"><button type="submit" name="next" value="true" class="btn btn-primary btn-round pull-right"
-                                                        id="next_button"> @lang('buttons.titles.next') </button>
-                                    </li>
-                                </ul>
-                            </footer>
+            @if(isset($data['package_addons']))
+                @foreach($data['package_addons'] as $key => $packageAddon)
+                    @foreach($packageAddon['company_warehouse_addon_id'] as $addon)
+                        <input type="hidden" name="package_addons[{{ $key }}][company_warehouse_addon_id][]" value="{{ $addon }}">
+                    @endforeach
+                    <input type="hidden" name="package_addons[{{ $key }}][package_id]" value="{{ $packageAddon['package_id'] }}">
+                @endforeach
+            @endif
+            <input type="hidden" name="total_addons" value="{{ $data['total_addons'] }}">
+            <section class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    @foreach($data['packages_id'] as $index => $package)
+                        <input type="hidden" name="packages_id[]" value="{{ $package }}">
+                        <div class="panel-heading" role="tab" id="heading-{{ $index }}">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ $index }}"
+                                   aria-expanded="false" aria-controls="collapse-{{ $index }}">
+                                    Package # {{ $package }}
+                                </a>
+                            </h4>
                         </div>
-                    </div>
+                        <div id="collapse-{{ $index }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-{{ $index }}">
+                            <div class="panel-body">
+                                <article>
+                                    <input type="hidden" name="package_shipment[{{ $index }}][package_id]" value="{{ $package }}">
+                                    <div class="table-responsive border-grey-bottom-1px m-b-20" id="table_checkbox">
+                                        @foreach($data['rates'][$index] as $rate)
+                                            <div class="list-group-item">
+                                                <div class="row-content">
+                                                    <div class="least-content">
+                                                        <span class="checkbox">
+                                                          <label>
+                                                            <input type="radio" value="{{ $rate->object_id }}" name="package_shipment[{{ $index }}][rate_id]" class="shipment_value">
+                                                            <input type="hidden" value="{{ $rate->amount }}" name="package_shipment[{{ $index }}][amount]" class="shipment_value">
+                                                          </label>
+                                                        </span>
+                                                    </div>
+                                                    <img src="{{ $rate->provider_image_75 }}" alt="">
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <caption>Optional table caption.</caption>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Type</th>
+                                                                <th>Amount {{ $rate->currency }}</th>
+                                                                <th>Amount {{ $rate->currency_local }}</th>
+                                                                <th>Days</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>{{ $rate->provider }}</td>
+                                                                <td>{{ $rate->amount }}</td>
+                                                                <td>{{ $rate->amount_local }}</td>
+                                                                <td>{{ $rate->days }}</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-            </div>
-        </div>
+            </section>
+            {{--<shipment-component :addresses="{{ Auth::user()->client->address }}" :rates="{{ json_encode($data['rates'][0]) }}"></shipment-component>--}}
+
+            <footer class="card-footer">
+                <ul class="pager wizard">
+                    @include('layouts.formButtons.wizard._wizard_buttons', ['tagDisabled' => '', 'finish' => false])
+                </ul>
+            </footer>
         </form>
+@endsection
+
+
+@section('footerJS')
+    <script>
+        $('#package_shipment').addClass('active');
+        $('#package_addon').removeClass('active');
+    </script>
 @endsection

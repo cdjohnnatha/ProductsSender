@@ -22,7 +22,9 @@ class PackageRepository implements RepositoryInterface
     private $model;
     private $allRelations;
     private $companyWarehouseAddonRepository;
-    public function __construct(Package $package, CompanyWarehouseAddonRepository $companyWarehouseAddonRepository)
+    public function __construct(
+        Package $package,
+        CompanyWarehouseAddonRepository $companyWarehouseAddonRepository)
     {
         $this->model = $package;
 
@@ -31,7 +33,7 @@ class PackageRepository implements RepositoryInterface
             'packageStatus',
             'pictures',
             'goodsDeclaration',
-            'packageOrder'
+            'orderPackage'
         ];
 
         $this->companyWarehouseAddonRepository = $companyWarehouseAddonRepository;
@@ -95,10 +97,9 @@ class PackageRepository implements RepositoryInterface
         }
 
         if($request->has('addons')) {
-            $order = $package->packageOrder()->create(
+            $order = $package->orderPackage()->create(
                 [
                     'package_id' => $package->id,
-                    'uuid' => Uuid::generate(),
                     'total_addons' => $request->input('total_addons')
                 ]);
 
@@ -111,7 +112,7 @@ class PackageRepository implements RepositoryInterface
                 ]);
             }
         } else {
-            $package->packageOrder()->create(['package_id' => $package->id, 'uuid' => Uuid::generate()]);
+            $package->orderPackage()->create(['package_id' => $package->id]);
 
         }
 
@@ -151,7 +152,7 @@ class PackageRepository implements RepositoryInterface
             'packageStatus',
             'client',
             'goodsDeclaration',
-            'packageOrder'
+            'orderPackage'
         ])->find($attribute);
     }
 
@@ -194,7 +195,7 @@ class PackageRepository implements RepositoryInterface
         $file->delete();
     }
 
-    public function processPackage($request)
+    public function checkWarehouse($request)
     {
         $arr = Array();
         foreach($request->input('packages_id') as $key => $index){
@@ -211,5 +212,10 @@ class PackageRepository implements RepositoryInterface
         }
 
         return $arr;
+    }
+
+    public function preparePackage($request)
+    {
+
     }
 }

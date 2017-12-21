@@ -31,6 +31,15 @@ return [
         'form_title' => 'Give a name for that Addon',
         'data_info' => 'All addons are listed here for that company.'
 
+    ],
+
+    'adm' => [
+        'index' => [
+            'title' => 'Companies',
+        ],
+        'show' => [
+            'address' => 'Address'
+        ]
     ]
 
 

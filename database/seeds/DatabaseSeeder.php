@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call('StatusTableSeeder');
 
 
-        factory(Company::class, 10)->create()->each(function($company) {
+        factory(Company::class, 2)->create()->each(function($company) {
             factory(CompanyPhone::class, 3)->create(['company_id' => $company->id]);
             factory(CompanyAddress::class, 1)->create(['company_id' => $company->id]);
             factory(CompanyAddons::class, 1)->create(['company_id' => $company->id]);
@@ -33,5 +33,33 @@ class DatabaseSeeder extends Seeder
                 factory(CompanyWarehousePhones::class, 3)->create(['company_warehouse_id' => $warehouse->id]);
             });
         });
+
+        DB::table('company_warehouse_addons')->insert([
+            'company_warehouse_id' => 1,
+            'company_addons_id' => 1,
+            'price' => 1.35
+        ]);
+
+        DB::table('company_warehouse_addons')->insert([
+            'company_warehouse_id' => 1,
+            'company_addons_id' => 1,
+            'price' => 2.00
+        ]);
+
+        DB::table('company_warehouse_addons')->insert([
+            'company_warehouse_id' => 2,
+            'company_addons_id' => 2,
+            'price' => 2.35
+        ]);
+
+        DB::table('company_warehouse_addons')->insert([
+            'company_warehouse_id' => 2,
+            'company_addons_id' => 2,
+            'price' => 3.00
+        ]);
+
+
+
+
     }
 }

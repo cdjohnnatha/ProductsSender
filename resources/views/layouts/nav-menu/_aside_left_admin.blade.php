@@ -2,9 +2,9 @@
   <div id="logo_wrapper">
     <ul>
       <li class="logo-icon">
-        <a href="{{route('admin.dashboard')}}">
+        <a href="{{ route('admin.dashboard') }}">
           <div class="logo">
-            <img src="{{asset('img/logo/holyship-square.png')}}" alt="Logo">
+            <img src="{{ asset('img/logo/holyship-square.png') }}" alt="Logo">
           </div>
           <h1 class="brand-text">Holyship</h1>
         </a>
@@ -20,24 +20,17 @@
     <div class="sidebar-inner sidebar-push">
       <ul class="nav nav-pills nav-stacked">
         <li class="sidebar-header">NAVIGATION</li>
-
-        {{--<li class="{{ Route::is('admin.companies.*') ? 'active' : '' }}">--}}
-          {{--<a href="{{Route('admin.companies.index')}}"><i class="zmdi zmdi-accounts"></i>--}}
-            {{--{{__('common.titles.users')}}--}}
-          {{--</a>--}}
-        {{--</li>--}}
-
         <li class="{{ Route::is('admin.companies.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.companies.index')}}">
+          <a href="{{ Route('admin.companies.index') }}">
             <i class="zmdi zmdi-city"></i>
-            {{__('common.titles.companies')}}
+            @lang('nav_left_menu_adm.companies')
           </a>
         </li>
 
         <li class="{{ Route::is('admin.packages.*') ? 'active' : '' }}">
-          <a href="{{Route('admin.packages.index')}}">
+          <a href="{{ Route('admin.packages.index') }}">
             <i class="zmdi zmdi-city"></i>
-            {{__('common.titles.packages')}}
+            @lang('nav_left_menu_adm.packages')
           </a>
         </li>
       </ul>

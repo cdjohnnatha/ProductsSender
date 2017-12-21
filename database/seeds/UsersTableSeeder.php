@@ -34,6 +34,11 @@ class UsersTableSeeder extends Seeder
             'user_id' => 1
         ]);
 
+        DB::table('client_phones')->insert([
+            'number' => '09999999999',
+            'client_id' => 1
+        ]);
+
         DB::table('client_addresses')->insert([
             'label' => 'default',
             'owner_name' => 'Holyship',
