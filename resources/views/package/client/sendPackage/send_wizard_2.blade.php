@@ -13,13 +13,14 @@
             <input type="hidden" name="step" value="{{ $data['step'] }}">
             <section class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
-                    @foreach($data['packages_id'] as $key => $package)
-                        <input type="hidden" name="packages_id[]" value="{{ $package }}">
+                    @foreach($data['packages'] as $key => $package)
+                        <input type="hidden" name="packages_id[]" value="{{ $package->id }}">
 
                         @include('package.fragments._collapsible_package_addons',[
                             'index' => $key + 1,
-                            'packageId' => $package,
-                            'warehouses' => $data['warehouses']
+                            'package' => $package,
+                            'warehouses' => $data['warehouses'],
+                            'tags' => ''
                         ])
                     @endforeach
                         <input type="hidden" name="total_addons" id="total_service_input" value="0.00">

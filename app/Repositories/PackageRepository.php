@@ -195,7 +195,7 @@ class PackageRepository implements RepositoryInterface
         $file->delete();
     }
 
-    public function checkWarehouse($request)
+    public function getPackagesCheckWarehouse($request)
     {
         $arr = Array();
         foreach($request->input('packages_id') as $key => $index){

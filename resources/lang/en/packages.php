@@ -40,6 +40,14 @@ return [
 
     ],
 
+    'show' => [
+        'general' => 'General',
+        'address' => 'Address',
+        'order_info' => 'Order Informations',
+        'comments' => 'Comments',
+        'custom_clearance' => 'Custom Clearance'
+    ],
+
     'user' => [
         'incoming_form' => 'Fill package informations',
         'declare_goods' => 'Declare your package goods',

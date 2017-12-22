@@ -4,6 +4,7 @@ return [
 
     'packages' => 'Packages',
     'dashboard' => 'Dashboard',
-    'address' => 'Address'
+    'address' => 'Address',
+    'orders' => 'Orders'
 
 ];

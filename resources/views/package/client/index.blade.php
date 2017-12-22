@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('panel_header')
-    {{ __('packages.index.title_package') }}
+    @lang('packages.index.title_package')
 @endsection
 
 

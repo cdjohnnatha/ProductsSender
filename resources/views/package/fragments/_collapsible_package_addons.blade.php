@@ -2,7 +2,7 @@
     <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ $index }}"
            aria-expanded="false" aria-controls="collapse-{{ $index }}">
-            Package #{{ $packageId }}
+            Package #{{ $package->id }}
         </a>
     </h4>
 </div>
@@ -13,8 +13,16 @@
                 @foreach($warehouses->addons as $addon)
                     <div class="checkbox">
                         <label>
-
-                            <input type="checkbox" class="addons_check" value="{{ $addon->id }}" count-value="{{ $index }}" data-price="{{ $addon->price }}" name="package_addons[{{ $index }}][company_warehouse_addon_id][]">
+                            <input type="checkbox" class="addons_check" value="{{ $addon->id }}"
+                                   count-value="{{ $index }}" data-price="{{ $addon->price }}"
+                                   name="package_addons[{{ $index }}][company_warehouse_addon_id][]"
+                                    {{ $tags }}
+                                <?php foreach($package->orderPackage->orderAddons as $checkedAddons){
+                                    if($checkedAddons->company_warehouse_addon_id == $addon->id){
+                                        echo "checked disabled";
+                                    }
+                                } ?>
+                                    >
                             {{ $addon->companyAddons->title.' - ' }}
                             <small>
                                 {{--({{$service->description}}) ---}}
@@ -24,7 +32,7 @@
                         </label>
                     </div>
                 @endforeach
-                    <input type="hidden" id="package_id" value="{{ $packageId }}">
+                    <input type="hidden" id="package_id" value="{{ $package->id }}">
                 <div id="price_addons"></div>
             </div>
         </article>

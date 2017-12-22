@@ -82,7 +82,6 @@ class ClientPackageController extends Controller
                 $steps = --$steps;
                 $page = $page . $steps;
                 $warehouses = $this->companyWarehouseRepository->getAll();
-                dd($warehouses);
                 break;
 
         }
@@ -132,6 +131,7 @@ class ClientPackageController extends Controller
                 $data['packages_id'] = $request->input('packages_id');
                 $data['step'] = $steps;
                 $data['warehouses'] = $this->packageRepository->findById($data['packages_id'][0])->companyWarehouse;
+                $data['packages'] = $this->packageRepository->getPackagesCheckWarehouse($request);
                 return view($page, compact('data'));
 
 
@@ -140,10 +140,11 @@ class ClientPackageController extends Controller
                     $steps++;
                     $data = $request->except('_token', 'next');
                     $data['rates'] = $this->shipment->getRates($request->input('packages_id'), null);
+
                 } else {
                     $steps--;
-                    $data['packages'] = $this->packageRepository->checkWarehouse($request);
                 }
+                $data['packages'] = $this->packageRepository->getPackagesCheckWarehouse($request);
                 $page .= $steps;
                 $data['step'] = $steps;
                 break;
@@ -167,13 +168,14 @@ class ClientPackageController extends Controller
                     $data = $request->except('_token', 'next');
                     $data['warehouses'] = $this->packageRepository->findById($data['packages_id'][0])->companyWarehouse;
                 }
+                $data['packages'] = $this->packageRepository->getPackagesCheckWarehouse($request);
                 $data['step'] = $steps;
                 $page .= $steps;
                 break;
 
             default:
                 $this->validate($request, ['packages_id' => 'required|array|min:1']);
-                $packages = $this->packageRepository->checkWarehouse($request);
+                $packages = $this->packageRepository->getPackagesCheckWarehouse($request);
                 if($packages){
                     $data['step'] = 1;
                     $data['packages'] = $packages;

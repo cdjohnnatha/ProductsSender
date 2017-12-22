@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('panel_header')
-  {{__('packages.index.title_package_warehouse')}}
+  @lang('packages.index.title_package_warehouse')
 @endsection
 
 
@@ -11,7 +11,7 @@
       <div class="tabpanel">
         <ul class="nav nav-tabs nav-tabs-right">
           <li class="active" role="presentation"><a href="#tab-1" data-toggle="tab" aria-expanded="true">Index</a></li>
-          <li class="presentation" role="presentation"><a href="#tab-2" data-toggle="tab" aria-expanded="true">{{__('common.titles.incoming')}}</a></li>
+          <li class="presentation" role="presentation"><a href="#tab-2" data-toggle="tab" aria-expanded="true">@lang('packages.index.incoming')</a></li>
         </ul>
       </div>
     </header>
@@ -22,8 +22,8 @@
             <div class="col-xs-12">
               <div class="card card-data-tables product-table-wrapper">
                 <header class="card-heading">
-                  <h2 class="card-title">{{__('common.titles.packages')}}</h2>
-                  <small class="dataTables_info">{{__('packages.index.short_description')}}</small>
+                  <h2 class="card-title">@lang('packages.index.title_package')</h2>
+                  <small class="dataTables_info">@lang('packages.index.short_description')</small>
 
                   <div class="card-search">
                     <div id="productsTable_wrapper" class="form-group label-floating is-empty">

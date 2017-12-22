@@ -78,7 +78,7 @@ class Package extends Entity
 
     public function orderPackage()
     {
-        return $this->belongsTo(OrderPackage::class);
+        return $this->hasOne(OrderPackage::class);
     }
 
 }

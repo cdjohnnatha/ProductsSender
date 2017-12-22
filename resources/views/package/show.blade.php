@@ -11,13 +11,13 @@
       <div class="tabpanel">
         <ul class="nav nav-tabs nav-tabs-right">
           <li class="active" role="presentation"><a href="#tab-1" data-toggle="tab"
-                                                    aria-expanded="true">{{__('common.titles.general')}}</a></li>
+                                                    aria-expanded="true">@lang('packages.show.general')</a></li>
           <li role="presentation"><a href="#tab-2" data-toggle="tab"
-                                     aria-expanded="true">{{__('common.titles.address')}}</a></li>
+                                     aria-expanded="true">@lang('packages.show.address')</a></li>
           <li role="presentation"><a href="#tab-3" data-toggle="tab"
-                                     aria-expanded="true">{{__('common.titles.order_info')}}</a></li>
+                                     aria-expanded="true">@lang('packages.show.order_info')</a></li>
           <li role="presentation"><a href="#tab-4" data-toggle="tab"
-                                     aria-expanded="true">{{__('common.titles.comments')}}</a></li>
+                                     aria-expanded="true">@lang('packages.show.comments')</a></li>
           @if(count($package->pictures) >= 8)
             <li role="presentation"><a href="#tab-5" id="galery-tab" data-toggle="tab" aria-expanded="true">Galery</a>
             </li>
@@ -25,7 +25,7 @@
           @if(!is_null($package->goodsDeclaration()))
             <li class="presentation" role="presentation">
               <a href="#tab-6" data-toggle="tab" aria-expanded="true">
-                {{__('common.titles.custom_clearance')}}
+                @lang('packages.show.custom_clearance')
               </a>
             </li>
           @endif

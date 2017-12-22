@@ -40,6 +40,13 @@
           </a>
         </li>
 
+        <li class="{{ Route::is('user.addresses.*') ? 'active' : '' }}">
+          <a href="{{ Route('user.addresses.index') }}">
+            <i class="zmdi zmdi-money"></i>
+            @lang('nav_left_menu_client.orders')
+          </a>
+        </li>
+
       </ul>
     </div>
   </nav>
