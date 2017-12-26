@@ -17,6 +17,7 @@ class CreateTableOrderPackages extends Migration
             $table->increments('id');
             $table->integer('package_id');
             $table->integer('order_id')->nullable();
+            $table->decimal('total_addons')->nullable();
 
             $table->index('package_id');
             $table->index('order_id');

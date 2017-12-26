@@ -12,6 +12,7 @@ namespace App\Repositories;
 use App\Entities\Package\Package;
 use App\Entities\Package\PackageFiles;
 use App\Repositories\Interfaces\RepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Webpatser\Uuid\Uuid;
@@ -24,12 +25,14 @@ class PackageRepository implements RepositoryInterface
     private $companyWarehouseAddonRepository;
     private $orderRepository;
     private $packageStatus;
+    private $invoiceRepository;
 
     public function __construct(
         Package $package,
         CompanyWarehouseAddonRepository $companyWarehouseAddonRepository,
         OrderRepository $orderRepository,
-        PackageStatusRepository $packageStatusRepository)
+        PackageStatusRepository $packageStatusRepository,
+        InvoiceRepository $invoiceRepository)
     {
         $this->model = $package;
 
@@ -222,10 +225,10 @@ class PackageRepository implements RepositoryInterface
 
     public function preparePackage($request)
     {
+        $order = $this->orderRepository->store(['uuid' => Uuid::generate(), 'client_id' => Auth::user()->client->id]);
         foreach ($request->input('packages_id') as $index => $packagesId) {
             $package = $this->findById($packagesId);
             $package->update(['package_status_id' => $this->packageStatus->getStatusFromMessage('PREPARING')->id]);
-            $order = $this->orderRepository->store(['uuid' => Uuid::generate(), 'total' => $request->input('total_addons')]);
             $orderPackage = $order->orderPackages()->create(['package_id' => $package->id, 'order_id' => $order->id]);
             $shipment = $request->input('package_shipment')[$index];
             $order->orderFowards()->create(
@@ -247,6 +250,9 @@ class PackageRepository implements RepositoryInterface
                         ]);
                 }
             }
+
+            $order->update(['total' => $this->orderRepository->calculateTotalOrder($order->id)]);
+            return $order;
         }
     }
 }

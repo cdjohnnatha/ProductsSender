@@ -7,7 +7,7 @@
         <form action="" role="form" method="POST">
             <input name="_method" type="hidden" value="PUT">
     @else
-        <form action="" role="form" method="POST">
+        <form action="" role="form" method="POST">1
     @endif
         {{ csrf_field() }}
             <input type="hidden" name="step" value="{{ $data['step'] }}">

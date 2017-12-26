@@ -8,17 +8,16 @@
 
 namespace App\Repositories;
 
-use App\Entities\Order\Order;
-use App\Invoice;
+use App\Entities\Invoice;
 
 class InvoiceRepository
 {
 
     private $model;
 
-    public function __construct(Invoice $order)
+    public function __construct(Invoice $invoice)
     {
-        $this->model = $order;
+        $this->model = $invoice;
     }
 
     public function getAll()

@@ -2,16 +2,16 @@
 
 namespace App\Entities\Order;
 
+use App\Entities\Client\Client;
 use App\Entities\Entity;
-use App\Entities\Package\Package;
-use Illuminate\Database\Eloquent\Model;
 
 class Order extends Entity
 {
     protected $fillable = [
         'uuid',
         'total',
-        'status'
+        'status',
+        'client_id'
     ];
 
     public function orderPackages()
@@ -24,8 +24,9 @@ class Order extends Entity
         return $this->hasMany(OrderFoward::class);
     }
 
-    public function orderAddons()
+    public function client()
     {
-        return $this->hasMany(OrderPackageAddons::class);
+        return $this->belongsTo(Client::class);
     }
+
 }

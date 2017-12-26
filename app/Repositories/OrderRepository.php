@@ -44,4 +44,32 @@ class OrderRepository
     {
         return $this->model->find($id)->delete();
     }
+
+    public function calculateTotalOrderAddons($orderId)
+    {
+        $orderPackagesArr = $this->findById($orderId)->orderPackages;
+        $total_addons = 0;
+        foreach ($orderPackagesArr as $orderPackage){
+            $total_addons += $orderPackage->orderAddons()->sum('price');
+        }
+        return $total_addons;
+    }
+
+    public function calculateTotalOrderFowards($orderId)
+    {
+        $orderPackagesArr = $this->findById($orderId)->orderFowards()->get();
+        $total_fowards = 0;
+        foreach ($orderPackagesArr as $orderFowards){
+            $total_fowards += $orderFowards->sum('price');
+        }
+        return $total_fowards;
+    }
+
+    public function calculateTotalOrder($orderId)
+    {
+        $total = $this->calculateTotalOrderFowards($orderId);
+        $total += $this->calculateTotalOrderAddons($orderId);
+
+        return $total;
+    }
 }

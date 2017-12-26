@@ -17,12 +17,15 @@
                                    count-value="{{ $index }}" data-price="{{ $addon->price }}"
                                    name="package_addons[{{ $index }}][company_warehouse_addon_id][]"
                                     {{ $tags }}
-                                <?php foreach($package->orderPackage->orderAddons as $checkedAddons){
-                                    if($checkedAddons->company_warehouse_addon_id == $addon->id){
-                                        echo "checked disabled";
-                                    }
+                                <?php
+                                    if(isset($package->orderPackage->orderAddons)){
+                                        foreach($package->orderPackage->orderAddons as $checkedAddons){
+                                            if($checkedAddons->company_warehouse_addon_id == $addon->id){
+                                                echo "checked disabled";
+                                            }
+                                        }
                                 } ?>
-                                    >
+                            >
                             {{ $addon->companyAddons->title.' - ' }}
                             <small>
                                 {{--({{$service->description}}) ---}}

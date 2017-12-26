@@ -1,8 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Entities;
 
-use Illuminate\Database\Eloquent\Model;
+
+use App\Entities\Order\Order;
+use App\invoiceStatus;
 
 class Invoice extends Entity
 {
