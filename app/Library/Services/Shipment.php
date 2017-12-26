@@ -87,6 +87,7 @@ class Shipment
                 'async' => false,
                 'parcels' => $parcel
             ))->rates;
+            
             array_push($rates, $shipment);
         }
 

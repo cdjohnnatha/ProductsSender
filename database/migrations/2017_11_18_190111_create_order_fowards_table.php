@@ -16,11 +16,11 @@ class CreateOrderFowardsTable extends Migration
         Schema::create('order_fowards', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('price');
-            $table->string('track_number');
-            $table->string('goshippo_shipment');
+            $table->string('track_number')->nullable();
+            $table->string('goshippo_shipment')->nullable();
             $table->integer('order_id');
             $table->integer('address_id');
-            $table->integer('provider_id');
+            $table->integer('provider_id')->nullable();
             $table->integer('package_id');
 
             $table->index('order_id');

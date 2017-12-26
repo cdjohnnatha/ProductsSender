@@ -25,7 +25,7 @@ class PackageStatusRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model::all();
+        return $this->model->all();
     }
 
     public function store($request)
@@ -43,12 +43,17 @@ class PackageStatusRepository implements RepositoryInterface
 
     public function destroy($id)
     {
-        return $this->model::findOrFail($id)->delete();
+        return $this->model->findOrFail($id)->delete();
     }
 
     public function findById($attribute)
     {
-        return $this->model::find($attribute);
+        return $this->model->find($attribute);
+    }
+
+    public function getStatusFromMessage($message)
+    {
+        return $this->model->where('message', 'like', $message)->first();
     }
 
 }

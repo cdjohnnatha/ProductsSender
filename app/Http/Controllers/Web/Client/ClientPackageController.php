@@ -153,24 +153,26 @@ class ClientPackageController extends Controller
                     $validator = Validator::make($request->all(), [
                         'package_shipment' => 'required|array|min:'.count($request->input('packages_id'))
                     ]);
+                    $data = $request->except(['next']);
                     if($validator->fails()){
-                        $data = $request->except(['next']);
                         return view('package.client.sendPackage.send_wizard_1', compact('data'))->withErrors($validator);
                     }
 
                     if($this->packageRepository->preparePackage($request)){
                         return redirect()->route('user.packages.index');
                     }
-                    $steps--;
+                    $steps++;
 
                 } else {
                     $steps--;
-                    $data = $request->except('_token', 'next');
+                    $data = $request->except('_token', 'previous');
                     $data['warehouses'] = $this->packageRepository->findById($data['packages_id'][0])->companyWarehouse;
                 }
                 $data['packages'] = $this->packageRepository->getPackagesCheckWarehouse($request);
                 $data['step'] = $steps;
                 $page .= $steps;
+
+                $this->packageRepository->preparePackage($request);
                 break;
 
             default:

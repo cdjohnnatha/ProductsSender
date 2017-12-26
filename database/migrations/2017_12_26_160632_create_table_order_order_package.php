@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableOrderPackages extends Migration
+class CreateTableOrderOrderPackage extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateTableOrderPackages extends Migration
      */
     public function up()
     {
-        Schema::create('order_packages', function (Blueprint $table) {
+        Schema::create('order_order_package', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('package_id');
-            $table->integer('order_id')->nullable();
+            $table->integer('order_id');
+            $table->integer('order_package_id');
 
-            $table->index('package_id');
             $table->index('order_id');
+            $table->index('order_package_id');
+
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -32,6 +32,6 @@ class CreateTableOrderPackages extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_packages');
+        Schema::dropIfExists('order_order_package');
     }
 }

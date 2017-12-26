@@ -14,7 +14,11 @@ return [
 
     'titles' => [
         'warehouses_address' => 'Address Warehouses'
-    ]
+    ],
+
+    'addons' => [
+      'price' => 'Price'
+    ],
 
 
 

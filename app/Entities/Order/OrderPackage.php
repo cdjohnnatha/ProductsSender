@@ -9,7 +9,6 @@ class OrderPackage extends Entity
 {
     protected $fillable = [
         'package_id',
-        'total_addons',
         'order_id',
     ];
 

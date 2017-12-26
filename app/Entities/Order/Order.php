@@ -9,13 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Entity
 {
     protected $fillable = [
-        'uuid'
+        'uuid',
+        'total',
+        'status'
     ];
-
-    public function packages()
-    {
-        return $this->hasMany(Package::class);
-    }
 
     public function orderPackages()
     {
@@ -29,6 +26,6 @@ class Order extends Entity
 
     public function orderAddons()
     {
-        return $this->hasMany(OrderAddons::class);
+        return $this->hasMany(OrderPackageAddons::class);
     }
 }

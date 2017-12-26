@@ -26,7 +26,7 @@
                             {{ $addon->companyAddons->title.' - ' }}
                             <small>
                                 {{--({{$service->description}}) ---}}
-                                <span style="color: black;">{{ __('common.titles.price').': ' }}</span>
+                                <span style="color: black;">@lang('warehouse.addons.price') : </span>
                                 <span style="color: #388e3c;">+{{ $addon->price }}</span>
                             </small>
                         </label>
