@@ -40,8 +40,7 @@ class IncomingPackageTest extends DuskTestCase
                 ->driver->executeScript('window.scrollTo(0, 600);');
             $browser
                 ->press('#submit-button')
-                ->waitForLocation('/user/packages')
-                ->pause(5000);
+                ->waitForLocation('/user/packages');
         });
     }
 }

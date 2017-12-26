@@ -42,7 +42,6 @@ class AdminPackageTest extends DuskTestCase
                 ->driver->executeScript('window.scrollTo(0, 600);');
             $browser
                 ->press('#submit-button')
-                ->pause(5000)
                 ->waitForLocation('/admin/packages');
         });
     }
