@@ -10,7 +10,7 @@ class Order extends Entity
     protected $fillable = [
         'uuid',
         'total',
-        'status',
+        'order_status_id',
         'client_id'
     ];
 
@@ -27,6 +27,11 @@ class Order extends Entity
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function orderStatus()
+    {
+        return $this->belongsTo(OrderStatus::class);
     }
 
 }

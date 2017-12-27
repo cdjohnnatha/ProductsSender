@@ -17,11 +17,11 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('uuid');
             $table->decimal('total')->nullable();
-            $table->integer('order_status');
+            $table->integer('order_status_id');
             $table->integer('client_id');
 
             $table->index('client_id');
-            $table->index('order_status');
+            $table->index('order_status_id');
             $table->timestamps();
             $table->softDeletes();
         });

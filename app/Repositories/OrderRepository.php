@@ -14,15 +14,21 @@ class OrderRepository
 {
 
     private $model;
+    private $allRelations;
 
     public function __construct(Order $order)
     {
         $this->model = $order;
+        $this->allRelations = [
+            'orderStatus',
+            'orderPackages',
+            'client'
+        ];
     }
 
     public function getAll()
     {
-        return $this->model->paginate(30);
+        return $this->model->with($this->allRelations)->paginate(30);
     }
 
     public function store($attributes)

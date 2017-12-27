@@ -155,14 +155,7 @@ class PackageRepository implements RepositoryInterface
 
     public function findById($attribute)
     {
-        return Package::with([
-            'pictures',
-            'companyWarehouse',
-            'packageStatus',
-            'client',
-            'goodsDeclaration',
-            'orderPackage'
-        ])->find($attribute);
+        return Package::with($this->allRelations)->find($attribute);
     }
 
     public function destroy($id)

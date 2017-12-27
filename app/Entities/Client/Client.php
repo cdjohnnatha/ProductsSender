@@ -3,6 +3,7 @@
 namespace App\Entities\Client;
 
 use App\Entities\Entity;
+use App\Entities\Order\Order;
 use App\Entities\Package\Package;
 use App\Entities\User;
 
@@ -45,5 +46,10 @@ class Client extends Entity
     public function phones()
     {
         return $this->hasMany(ClientPhones::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

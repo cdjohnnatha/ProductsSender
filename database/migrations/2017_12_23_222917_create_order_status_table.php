@@ -17,6 +17,7 @@ class CreateOrderStatusTable extends Migration
             $table->increments('id');
             $table->string('message');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
