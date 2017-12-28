@@ -16,21 +16,21 @@
                                 <th>Addon Name</th>
                                 <th>{{__('common.titles.price')}}</th>
                                 <th data-orderable="false" class="col-xs-2">
-                                    <a href="{{Route('admin.companies.warehouses.addons.create', [$companyId, $companyWarehouse->id])}}">
+                                    <a href="{{Route('admin.companies.warehouses.addons.create', [ $data['companyId'], $data['companyWarehouse']->id ])}}">
                                         <button class="btn btn-primary btn-fab animate-fab"><i class="zmdi zmdi-plus"></i></button>
                                     </a>
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($companyWarehouse->addons as $addon)
+                            @foreach($data['companyWarehouse']->addons as $addon)
                                 <tr>
                                     <td>{{$addon->id}}</td>
                                     <td>{{$addon->companyAddons->title}}</td>
                                     <td>{{$addon->price}}</td>
                                     <td>
                                         <a href="#" class="icon"
-                                           onclick="window.location='{{Route("admin.companies.warehouses.addons.edit", [$companyId, $companyWarehouse->id, $addon->id])}}'"
+                                           onclick="window.location='{{Route("admin.companies.warehouses.addons.edit", [$data['companyId'], $data['companyWarehouse']->id, $addon->id])}}'"
                                            data-toggle="tooltip"
                                            data-placement="top" title="{{__('buttons.titles.edit')}}">
                                             <i class="zmdi zmdi-edit"></i>

@@ -19,9 +19,12 @@ return [
 
     'company_warehouse' => [
         'title' => 'Company Warehouse',
+        'home' => 'Home',
+        'fee_rules' => 'Fee Rules',
         'addon' => [
             'nav_title' => 'Company Warehouse Addons',
-            'data_info' => 'All the addons in warehouse are listed here.'
+            'data_info' => 'All the addons in warehouse are listed here.',
+            'addons' => 'Addons'
         ]
     ],
 

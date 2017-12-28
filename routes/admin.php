@@ -23,6 +23,7 @@
 
                     Route::group(['as' => 'warehouses.', 'prefix' => 'warehouses/{warehouse}'], function () {
                         Route::resource('addons', 'CompanyWarehouseAddonsController');
+                        Route::resource('fee-rules', 'FeeRulesController');
                     });
 
                 });
