@@ -148,6 +148,7 @@ class ClientPackageController extends Controller
                 $page .= $steps;
                 $data['step'] = $steps;
                 break;
+
             case 3:
                 if($request->has('next')){
                     $validator = Validator::make($request->all(), [
@@ -159,9 +160,9 @@ class ClientPackageController extends Controller
                     }
 
                     if($this->packageRepository->preparePackage($request)){
-                        return redirect()->route('user.packages.index');
+                        $steps++;
                     }
-                    $steps++;
+
 
                 } else {
                     $steps--;
@@ -172,7 +173,6 @@ class ClientPackageController extends Controller
                 $data['step'] = $steps;
                 $page .= $steps;
 
-                $this->packageRepository->preparePackage($request);
                 break;
 
             default:

@@ -40,7 +40,9 @@
                 <div class="row">
                     <div class="card card-data-tables product-table-wrapper">
                         <div class="card-body p-0">
-                            @include('client.order.fragments._table_select', ['data' => $data['orders'],'table_id' => 'index-orders'])
+                            @if(!isset($data['orders']))
+                                @include('client.order.fragments._table_select', ['data' => $data['orders'],'table_id' => 'index-orders'])
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -54,7 +56,6 @@
                 <div class="row">
                     <div class="card card-data-tables product-table-wrapper">
                         <div class="card-body p-0">
-{{--                            @include('package._table', ['packages' => $packagesIncoming,'table_id' => 'incoming-table'])--}}
                         </div>
                     </div>
                 </div>

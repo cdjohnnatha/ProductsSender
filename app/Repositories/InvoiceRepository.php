@@ -14,15 +14,21 @@ class InvoiceRepository
 {
 
     private $model;
+    private $allRelations;
 
     public function __construct(Invoice $invoice)
     {
         $this->model = $invoice;
+        $this->allRelations = [
+            'invoiceOrder',
+            'invoiceStatus',
+            'invoiceTransaction'
+        ];
     }
 
     public function getAll()
     {
-        return $this->model->paginate(30);
+        return $this->model->with($this->allRelations)->paginate(30);
     }
 
     public function store($attributes)

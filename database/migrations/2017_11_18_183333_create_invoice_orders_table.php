@@ -16,7 +16,10 @@ class CreateInvoiceOrdersTable extends Migration
         Schema::create('invoice_orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id');
-            $table->integer('invoice_order');
+            $table->integer('invoice_id');
+
+            $table->index('order_id');
+            $table->index('invoice_id');
 
             $table->timestamps();
             $table->softDeletes();

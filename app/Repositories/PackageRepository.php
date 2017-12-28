@@ -47,6 +47,7 @@ class PackageRepository implements RepositoryInterface
         $this->companyWarehouseAddonRepository = $companyWarehouseAddonRepository;
         $this->orderRepository = $orderRepository;
         $this->packageStatus = $packageStatusRepository;
+        $this->invoiceRepository = $invoiceRepository;
     }
 
     public function getAll()
@@ -245,6 +246,7 @@ class PackageRepository implements RepositoryInterface
             }
 
             $order->update(['total' => $this->orderRepository->calculateTotalOrder($order->id)]);
+//            $invoice = $this->invoiceRepository->store(['']);
             return $order;
         }
     }

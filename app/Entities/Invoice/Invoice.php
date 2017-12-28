@@ -1,13 +1,19 @@
 <?php
 
-namespace App\Entities;
+namespace App\Entities\Invoice;
 
 
+use App\Entities\Entity;
 use App\Entities\Order\Order;
-use App\invoiceStatus;
 
 class Invoice extends Entity
 {
+
+    protected $fillable = [
+        'amount',
+        'invoice_status_id'
+    ];
+
     public function invoiceOrder()
     {
         return $this->belongsToMany(Order::class);
