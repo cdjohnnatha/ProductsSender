@@ -17,11 +17,17 @@ class CompanyWarehouseRepository implements RepositoryInterface
 {
 
     private $model;
-
+    private $allRelations;
 
     public function __construct(CompanyWarehouse $model)
     {
         $this->model = $model;
+        $this->allRelations = [
+            'address',
+            'addons',
+            'fees',
+            'phones'
+        ];
     }
 
     public function getAll()
@@ -63,7 +69,7 @@ class CompanyWarehouseRepository implements RepositoryInterface
 
     public function findById($attribute)
     {
-        return $this->model->with('address', 'addons')->findOrFail($attribute);
+        return $this->model->with($this->allRelations)->findOrFail($attribute);
     }
 
     public function destroy($id)

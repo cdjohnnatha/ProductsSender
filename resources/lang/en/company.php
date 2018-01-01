@@ -24,7 +24,8 @@ return [
         'addon' => [
             'nav_title' => 'Company Warehouse Addons',
             'data_info' => 'All the addons in warehouse are listed here.',
-            'addons' => 'Addons'
+            'addons' => 'Addons',
+            'price' => 'Price'
         ]
     ],
 
@@ -34,6 +35,13 @@ return [
         'form_title' => 'Give a name for that Addon',
         'data_info' => 'All addons are listed here for that company.'
 
+    ],
+
+    'fee_rules' => [
+        'title' => 'Fee Rules',
+        'initial_fee' => 'Initial Fee',
+        'max_weight' => 'Max Weight Fee',
+        'over_weight' => 'Over Weight Fee',
     ],
 
     'adm' => [

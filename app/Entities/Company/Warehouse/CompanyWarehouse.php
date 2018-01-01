@@ -37,4 +37,9 @@ class CompanyWarehouse extends Entity
         return $this->belongsTo(Company::class);
     }
 
+    public function fees()
+    {
+        return $this->hasMany(FeeRules::class);
+    }
+
 }

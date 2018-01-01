@@ -18,9 +18,9 @@ class CreateFeeRulesTable extends Migration
             $table->decimal('initial_fee');
             $table->decimal('max_weight_fee');
             $table->decimal('overweight_fee');
-            $table->integer('warehouse_id');
+            $table->integer('company_warehouse_id');
 
-            $table->index('warehouse_id');
+            $table->index('company_warehouse_id');
             $table->timestamps();
             $table->softDeletes();
         });

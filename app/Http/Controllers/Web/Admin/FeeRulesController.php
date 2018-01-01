@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
+use App\Repositories\CompanyWarehouseFeesRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class FeeRulesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    private $feeRules;
+    public function __construct(CompanyWarehouseFeesRepository $companyWarehouseFeesRepository)
     {
-        //
+        $this->feeRules = $companyWarehouseFeesRepository;
     }
 
     /**
@@ -22,9 +20,11 @@ class FeeRulesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($companyId, $warehouseId)
     {
-        return view('company.warehouse.fees.create');
+        $data['companyId'] = $companyId;
+        $data['warehouseId'] = $warehouseId;
+        return view('company.warehouse.fees.create', compact('data'));
     }
 
     /**
@@ -33,9 +33,17 @@ class FeeRulesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $companyId, $warehouseId)
     {
-        //
+        $this->validate($request, [
+            'company_warehouse_id' => 'required|min:1',
+            'initial_fee' => 'required|min:0|numeric',
+            'max_weight_fee' => 'required|min:0|numeric',
+            'overweight_fee' => 'required|min:0|numeric',
+        ]);
+        $this->feeRules->store($request);
+
+        return redirect(route('admin.companies.warehouses.show', [$companyId, $warehouseId]));
     }
 
     /**
