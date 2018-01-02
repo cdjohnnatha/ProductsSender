@@ -53,8 +53,9 @@ class CompanyWarehouseController extends Controller
 
     public function show($companyId, $id)
     {
-        $companyWarehouse = $this->warehouseRepository->findById($id);
-        return view('company.warehouse.show', compact('companyWarehouse', 'companyId'));
+        $data['companyWarehouse'] = $this->warehouseRepository->findById($id);
+        $data['companyId'] = $companyId;
+        return view('company.warehouse.show', compact('data'));
     }
 
 

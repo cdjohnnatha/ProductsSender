@@ -13,14 +13,14 @@ class CreateFeeRulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fee_rules', function (Blueprint $table) {
+        Schema::create('fee_weight_rules', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('initial_fee');
             $table->decimal('max_weight_fee');
             $table->decimal('overweight_fee');
-            $table->integer('warehouse_id');
+            $table->integer('company_warehouse_id');
 
-            $table->index('warehouse_id');
+            $table->index('company_warehouse_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +33,6 @@ class CreateFeeRulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fee_rules');
+        Schema::dropIfExists('fee_weight_rules');
     }
 }
