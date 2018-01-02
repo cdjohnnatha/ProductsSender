@@ -25,7 +25,7 @@ class CompanyWarehouseRepository implements RepositoryInterface
         $this->allRelations = [
             'address',
             'addons',
-            'fees',
+            'feeWeightRules',
             'phones'
         ];
     }

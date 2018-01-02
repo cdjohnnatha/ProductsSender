@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entities\Company\Warehouse;
+namespace App\Entities\Company\Warehouse\Fees;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FeeRules extends Model
+class FeeWeightRules extends Model
 {
     protected $fillable = [
         'initial_fee',

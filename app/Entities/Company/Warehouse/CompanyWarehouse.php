@@ -3,6 +3,7 @@
 namespace App\Entities\Company\Warehouse;
 
 use App\Entities\Company\Company;
+use App\Entities\Company\Warehouse\Fees\FeeWeightRules;
 use App\Entities\Entity;
 use Illuminate\Notifications\Notifiable;
 
@@ -37,9 +38,9 @@ class CompanyWarehouse extends Entity
         return $this->belongsTo(Company::class);
     }
 
-    public function fees()
+    public function feeWeightRules()
     {
-        return $this->hasMany(FeeRules::class);
+        return $this->hasOne(FeeWeightRules::class);
     }
 
 }

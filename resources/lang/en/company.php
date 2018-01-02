@@ -36,13 +36,15 @@ return [
         'data_info' => 'All addons are listed here for that company.'
 
     ],
-
-    'fee_rules' => [
-        'title' => 'Fee Rules',
-        'initial_fee' => 'Initial Fee',
-        'max_weight' => 'Max Weight Fee',
-        'over_weight' => 'Over Weight Fee',
+    'fees' =>[
+        'weight' => [
+            'title' => 'Weight Rules',
+            'initial_fee' => 'Initial Fee',
+            'max_weight' => 'Max Weight Fee',
+            'over_weight' => 'Over Weight Fee',
+        ],
     ],
+
 
     'adm' => [
         'index' => [

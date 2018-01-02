@@ -8,14 +8,14 @@
 
 namespace App\Repositories;
 
-use App\Entities\Company\Warehouse\FeeRules;
+use App\Entities\Company\Warehouse\Fees\FeeWeightRules;
 use App\Repositories\Interfaces\RepositoryInterface;
 
-class CompanyWarehouseFeesRepository implements RepositoryInterface
+class CompanyWarehouseFeeWeightRulesRepository implements RepositoryInterface
 {
     private $model;
 
-    public function __construct(FeeRules $model)
+    public function __construct(FeeWeightRules $model)
     {
         $this->model = $model;
     }
