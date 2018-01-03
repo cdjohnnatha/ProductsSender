@@ -1,7 +1,7 @@
 <div class="card card-data-tables" style="margin-bottom: 0;">
     <header class="panel-heading" role="tab" id="heading-weight">
         <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-weight" aria-expanded="false" aria-controls="collapse-weight">
+            <a role="button" data-toggle="collapse" data-parent="#fee-rules-parent" href="#collapse-weight" aria-expanded="false" aria-controls="collapse-weight">
                 @lang('company.fees.weight.title')
             </a>
         </h4>
@@ -18,7 +18,7 @@
                         <th>@lang('company.fees.weight.over_weight')</th>
                         @if(!$data['companyWarehouse']->feeWeightRules)
                             <th data-orderable="false" class="col-xs-2">
-                                <a href="{{ Route('admin.companies.warehouses.fees.weight.create', [$data['companyId'], $data['companyWarehouse']->id]) }}">
+                                <a href="{{ Route('admin.companies.warehouses.weight-fees.create', [$data['companyId'], $data['companyWarehouse']->id]) }}">
                                     <button class="btn btn-primary btn-fab  animate-fab"><i
                                                 class="zmdi zmdi-plus"></i></button>
                                 </a>
@@ -34,7 +34,7 @@
                             <td>{{ $data['companyWarehouse']->feeWeightRules->overweight_fee }}</td>
                             <td>
                                 <a href="#" class="icon"
-                                   onclick="window.location='{{ Route('admin.companies.warehouses.fees.weight.edit', [$data['companyId'], $data['companyWarehouse']->id, $data['companyWarehouse']->feeWeightRules->id]) }}'"
+                                   onclick="window.location='{{ Route('admin.companies.warehouses.weight-fees.edit', [$data['companyId'], $data['companyWarehouse']->id, $data['companyWarehouse']->feeWeightRules->id]) }}'"
                                    data-toggle="tooltip"
                                    data-placement="top" title="{{ __('buttons.titles.edit') }}">
                                     <i class="zmdi zmdi-edit"></i>
@@ -47,7 +47,7 @@
                                    data-placement="top" title="{{ __('buttons.titles.delete') }}">
                                     <i class="zmdi zmdi-delete"></i>
                                 </a>
-                                <form action="{{ route('admin.companies.warehouses.fees.weight.destroy', [$data['companyId'], $data['companyWarehouse']->id, $data['companyWarehouse']->feeWeightRules->id]) }}" method="POST" role="form" id="delete-form-weight">
+                                <form action="{{ route('admin.companies.warehouses.weight-fees.destroy', [$data['companyId'], $data['companyWarehouse']->id, $data['companyWarehouse']->feeWeightRules->id]) }}" method="POST" role="form" id="delete-form-weight">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                 </form>

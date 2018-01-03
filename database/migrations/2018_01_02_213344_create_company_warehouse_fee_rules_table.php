@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFeeWeightRulesTable extends Migration
+class CreateCompanyWarehouseFeeRulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateFeeWeightRulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fee_weight_rules', function (Blueprint $table) {
+        Schema::create('company_warehouse_fee_rules', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('initial_fee');
-            $table->decimal('max_weight_fee');
-            $table->decimal('overweight_fee');
+            $table->integer('fee_rules_id');
             $table->integer('company_warehouse_id');
 
+            $table->index('fee_rules_id');
             $table->index('company_warehouse_id');
+
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +33,6 @@ class CreateFeeWeightRulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fee_weight_rules');
+        Schema::dropIfExists('company_warehouse_fee_rules');
     }
 }

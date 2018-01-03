@@ -23,9 +23,8 @@
 
                     Route::group(['as' => 'warehouses.', 'prefix' => 'warehouses/{warehouse}'], function () {
                         Route::resource('addons', 'CompanyWarehouseAddonsController');
-                        Route::group(['as' => 'fees.', 'prefix' => 'fees/'], function () {
-                            Route::resource('weight', 'FeeWeightRulesController', ['except' => ['index', 'show']]);
-                        });
+                            Route::resource('fees', 'CompanyWarehouseFeeRulesController', ['except' => ['index', 'show']]);
+                            Route::resource('weight-fees', 'FeeWeightRulesController', ['except' => ['index', 'show']]);
                     });
 
                 });
