@@ -8,27 +8,21 @@
 
 namespace App\Repositories;
 
-use App\Entities\Invoice\Invoice;
+use App\Entities\Order\OrderStatus;
 
-class InvoiceRepository
+class OrderStatusRepository
 {
 
     private $model;
-    private $allRelations;
 
-    public function __construct(Invoice $invoice)
+    public function __construct(OrderStatus $order)
     {
-        $this->model = $invoice;
-        $this->allRelations = [
-            'invoiceOrder',
-            'invoiceStatus',
-            'invoiceTransaction'
-        ];
+        $this->model = $order;
     }
 
     public function getAll()
     {
-        return $this->model->with($this->allRelations)->paginate(30);
+        return $this->model->paginate(30);
     }
 
     public function store($attributes)
@@ -49,5 +43,10 @@ class InvoiceRepository
     public function destroy($id)
     {
         return $this->model->find($id)->delete();
+    }
+
+    public function findByMessage($message)
+    {
+        return $this->model->where('message', 'like', $message)->first();
     }
 }

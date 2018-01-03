@@ -15,10 +15,12 @@ class OrderRepository
 
     private $model;
     private $allRelations;
+    private $orderStatusRepository;
 
-    public function __construct(Order $order)
+    public function __construct(Order $order, OrderStatusRepository $orderStatusRepository)
     {
         $this->model = $order;
+        $this->orderStatusRepository = $orderStatusRepository;
         $this->allRelations = [
             'orderStatus',
             'orderPackages',
@@ -31,8 +33,13 @@ class OrderRepository
         return $this->model->with($this->allRelations)->paginate(30);
     }
 
-    public function store($attributes)
+    public function store($attributes, $status=null)
     {
+        if(is_null($status)){
+            $attributes['order_status_id'] = $this->orderStatusRepository->findByMessage('WAITING_PAYMENT')->id;
+        } else {
+            $attributes['order_status_id'] = $this->orderStatusRepository->findByMessage($status)->id;
+        }
         return $this->model->create($attributes);
     }
 

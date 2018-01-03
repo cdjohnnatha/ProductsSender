@@ -125,7 +125,7 @@ $factory->define(CompanyAddons::class, function(Faker\Generator $faker) {
 $factory->define(CompanyWarehouse::class, function (Faker\Generator $faker) {
 
     return [
-        'name' => $faker->company,
+        'name' => 'Holyship ' . $faker->numberBetween(1, 501),
         'storage_time' => $faker->numberBetween($min = 30, $max = 60),
         'box_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 4),
         'company_id' => function() {

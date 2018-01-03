@@ -4,8 +4,7 @@
             <div class="card-body p-50 p-t-10 invoice">
                 <div class="row">
                     <div class="col-xs-6">
-                        <h2>Warehouse</h2>
-                        <h3>{{ __('common.titles.warehouse') }}</h3>
+                        <h3>@lang('packages.show.warehouse')</h3>
                         <address class="address">
                             {{ $package->companyWarehouse->name }}<br>
                             {{ $package->companyWarehouse->address->formatted_address }}<br>
@@ -17,8 +16,7 @@
                         </address>
                     </div>
                     <div class="col-xs-6">
-                        <h2>Destiny Address</h2>
-                        <h3>{{ __('common.titles.warehouse') }}</h3>
+                        <h3>@lang('packages.show.destiny_address')</h3>
                         <address class="address">
                             {{ $package->companyWarehouse->name }}<br>
                             {{ $package->companyWarehouse->address->formatted_address }}<br>

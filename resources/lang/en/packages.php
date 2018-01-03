@@ -45,7 +45,9 @@ return [
         'address' => 'Address',
         'order_info' => 'Order Informations',
         'comments' => 'Comments',
-        'custom_clearance' => 'Custom Clearance'
+        'custom_clearance' => 'Custom Clearance',
+        'warehouse' => 'Warehouse',
+        'destiny_address' => 'Destiny Address'
     ],
 
     'user' => [
@@ -78,6 +80,24 @@ return [
         'short_description_goods' => 'Here are the informations described by the user',
         'required_declaration' => 'Goods declaration required',
         'content_description' => 'Content Description'
-    ]
+    ],
+
+    'custom_clearance' => [
+      'show' => [
+          'warehouse' => 'Warehouse',
+          'goods' =>  'Goods',
+          'item' => 'Item',
+          'description' => 'Description',
+          'quantity' => 'Quantity',
+          'unit_price' => 'Unit Price',
+          'total' => 'TOTAL',
+          'price' => 'Price',
+          'sub_total' => 'SUB TOTAL',
+          'discount' => 'DISCOUNT',
+          'phones' => 'Phones',
+          'addons' => 'Addons',
+          'address_from' => 'Address From'
+      ]
+    ],
 
 ];
