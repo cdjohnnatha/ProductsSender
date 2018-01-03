@@ -37,6 +37,10 @@ return [
 
     ],
     'fees' =>[
+        'title' => 'Title',
+        'amount' => 'Amount',
+        'fees' => 'Fees',
+        'form' => 'Fees Form',
         'weight' => [
             'title' => 'Weight Rules',
             'initial_fee' => 'Initial Fee',

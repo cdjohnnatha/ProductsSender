@@ -26,7 +26,7 @@ class CompanyWarehouseAddonRepository
 
     public function getAll()
     {
-        return $this->model::with('companyWarehouse', 'companyAddons')->get();
+        return $this->model->with('companyWarehouse', 'companyAddons')->get();
     }
 
     public function store($request, $warehouseId)
@@ -48,6 +48,6 @@ class CompanyWarehouseAddonRepository
 
     public function destroy($id)
     {
-        return $this->model::findOrFail($id)->delete();
+        return $this->model->findOrFail($id)->delete();
     }
 }

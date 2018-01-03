@@ -26,7 +26,8 @@ class CompanyWarehouseRepository implements RepositoryInterface
             'address',
             'addons',
             'feeWeightRules',
-            'phones'
+            'phones',
+            'feeRules',
         ];
     }
 

@@ -37,8 +37,9 @@
                             @include('company.warehouse.addon.index')
                         </div>
                         <div class="tab-pane fadeIn" id="tab-3">
-                            <section class="panel-group" id="fee-rules" role="tablist" aria-multiselectable="true">
+                            <section class="panel-group" id="fee-rules-parent" role="tablist" aria-multiselectable="true">
                                 <div class="panel panel-default">
+                                    @include('company.warehouse.fee_rules._table')
                                     @include('company.warehouse.fee_rules.weight._table')
                                 </div>
                             </section>
