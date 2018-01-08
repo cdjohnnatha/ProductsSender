@@ -228,7 +228,7 @@ class PackageRepository implements RepositoryInterface
             $order->orderFowards()->create(
                 [
                     'price' => $shipment['amount'],
-                    'address_id' => $shipment['address_id'],
+                    'client_address_id' => $shipment['client_address_id'],
                     'package_id' => $packagesId,
                     'goshippo_shipment' => $shipment['rate_id'],
                 ]);
@@ -246,8 +246,9 @@ class PackageRepository implements RepositoryInterface
             }
 
             $order->update(['total' => $this->orderRepository->calculateTotalOrder($order->id)]);
-//            $invoice = $this->invoiceRepository->store(['']);
-            return $order;
+            $invoice = $this->invoiceRepository->store(['client_id' => Auth::user()->client->id, 'amount' => $order->total]);
+            $invoice->invoiceOrder()->save($order);
+            return $invoice;
         }
     }
 }

@@ -46,7 +46,7 @@
                                                           <label>
                                                             <input type="radio" value="{{ $rate->object_id }}" name="package_shipment[{{ $index }}][rate_id]" class="shipment_value">
                                                             <input type="hidden" value="{{ $rate->amount }}" name="package_shipment[{{ $index }}][amount]" class="shipment_value">
-                                                            <input type="hidden" value="{{ Auth::user()->client->defaultAddress->id }}" name="package_shipment[{{ $index }}][address_id]" class="shipment_value">
+                                                            <input type="hidden" value="{{ Auth::user()->client->defaultAddress->id }}" name="package_shipment[{{ $index }}][client_address_id]" class="shipment_value">
                                                           </label>
                                                         </span>
                                                     </div>

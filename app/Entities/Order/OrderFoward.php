@@ -2,16 +2,22 @@
 
 namespace App\Entities\Order;
 
+use App\Entities\Client\ClientAddress;
 use App\Entities\Entity;
 
 class OrderFoward extends Entity
 {
     protected $fillable = [
         'price',
-        'address_id',
+        'client_address_id',
         'package_id',
         'goshippo_shipment',
         'order_id',
         'track_number',
     ];
+
+    public function address()
+    {
+        return $this->belongsTo(ClientAddress::class, 'client_address_id', 'id');
+    }
 }

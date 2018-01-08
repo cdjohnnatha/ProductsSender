@@ -3,6 +3,7 @@
 namespace App\Entities\Invoice;
 
 
+use App\Entities\Client\Client;
 use App\Entities\Entity;
 use App\Entities\Order\Order;
 
@@ -11,7 +12,8 @@ class Invoice extends Entity
 
     protected $fillable = [
         'amount',
-        'invoice_status_id'
+        'invoice_status_id',
+        'client_id'
     ];
 
     public function invoiceOrder()
@@ -21,11 +23,16 @@ class Invoice extends Entity
 
     public function invoiceStatus()
     {
-        return $this->hasOne(InvoiceStatus::class);
+        return $this->belongsTo(InvoiceStatus::class);
     }
 
     public function invoiceTransaction()
     {
         return $this->hasMany(InvoiceTransaction::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }

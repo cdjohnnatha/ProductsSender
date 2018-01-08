@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInvoiceOrdersTable extends Migration
+class CreateInvoiceOrderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateInvoiceOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_orders', function (Blueprint $table) {
+        Schema::create('invoice_order', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id');
             $table->integer('invoice_id');

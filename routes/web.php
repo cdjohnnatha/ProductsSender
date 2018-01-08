@@ -41,6 +41,7 @@
                 Route::resource('addresses', 'ClientAddressController');
                 Route::post('addresses/default/{id}', 'ClientAddressController@defaultAddress')->name('addresses.default');
                 Route::resource('orders', 'OrdersController');
+                Route::resource('invoices', 'ClientInvoicesController');
             });
 
             Route::resource('user', 'UserController', ['except' => ['index']]);

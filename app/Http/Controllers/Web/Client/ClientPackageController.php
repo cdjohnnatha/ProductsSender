@@ -6,7 +6,6 @@ use App\Entities\Package\Package;
 use App\Http\Controllers\Controller;
 use App\Library\Services\Shipment;
 use App\Library\Services\ShipmentInterface;
-use App\Library\WizardSteps;
 use App\Repositories\CompanyWarehouseRepository;
 use App\Repositories\PackageRepository;
 use Illuminate\Http\Request;
@@ -159,9 +158,9 @@ class ClientPackageController extends Controller
                     if($validator->fails()){
                         return view('package.client.sendPackage.send_wizard_1', compact('data'))->withErrors($validator);
                     }
-
-                    if($this->packageRepository->preparePackage($request)){
-                        $steps++;
+                    $invoice = $this->packageRepository->preparePackage($request);
+                    if($invoice){
+                        return redirect(route('user.invoices.show', $invoice->id));
                     }
 
 
@@ -173,8 +172,6 @@ class ClientPackageController extends Controller
                 }
                 $data['packages'] = $this->packageRepository->getPackagesCheckWarehouse($request);
                 $data['step'] = $steps;
-
-
                 break;
 
             default:

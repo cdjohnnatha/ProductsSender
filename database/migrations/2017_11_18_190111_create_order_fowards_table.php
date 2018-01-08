@@ -19,12 +19,12 @@ class CreateOrderFowardsTable extends Migration
             $table->string('track_number')->nullable();
             $table->string('goshippo_shipment')->nullable();
             $table->integer('order_id');
-            $table->integer('address_id');
+            $table->integer('client_address_id');
             $table->integer('provider_id')->nullable();
             $table->integer('package_id');
 
             $table->index('order_id');
-            $table->index('address_id');
+            $table->index('client_address_id');
             $table->index('provider_id');
             $table->index('package_id');
             $table->timestamps();

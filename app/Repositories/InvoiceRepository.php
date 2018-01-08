@@ -15,10 +15,12 @@ class InvoiceRepository
 
     private $model;
     private $allRelations;
+    private $invoiceStatusRepository;
 
-    public function __construct(Invoice $invoice)
+    public function __construct(Invoice $invoice, InvoiceStatusRepository $invoiceStatusRepository)
     {
         $this->model = $invoice;
+        $this->invoiceStatusRepository = $invoiceStatusRepository;
         $this->allRelations = [
             'invoiceOrder',
             'invoiceStatus',
@@ -31,8 +33,13 @@ class InvoiceRepository
         return $this->model->with($this->allRelations)->paginate(30);
     }
 
-    public function store($attributes)
+    public function store($attributes, $status=null)
     {
+        if(is_null($status)){
+            $attributes['invoice_status_id'] = $this->invoiceStatusRepository->findByMessage('WAITING_PAYMENT')->id;
+        } else {
+            $attributes['invoice_status_id'] = $this->invoiceStatusRepository->findByMessage($status)->id;
+        }
         return $this->model->create($attributes);
     }
 
@@ -43,7 +50,7 @@ class InvoiceRepository
 
     public function findById($attribute)
     {
-        return $this->model->find($attribute);
+        return $this->model->with($this->allRelations)->find($attribute);
     }
 
     public function destroy($id)

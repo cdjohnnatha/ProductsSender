@@ -34,6 +34,22 @@ class StatusTableSeeder extends Seeder
            'message' => 'PAIED'
         ]);
 
+        DB::table('invoice_status')->insert([
+            'message' => 'WAITING_PAYMENT'
+        ]);
+
+        DB::table('invoice_status')->insert([
+            'message' => 'WAITING_PAYMENT_APPROVAL'
+        ]);
+
+        DB::table('invoice_status')->insert([
+            'message' => 'REFUSED'
+        ]);
+
+        DB::table('invoice_status')->insert([
+            'message' => 'PAYED'
+        ]);
+
 
 
 

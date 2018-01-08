@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class InvoiceStatus extends Entity
 {
-    //
+    protected $table = 'invoice_status';
 }
