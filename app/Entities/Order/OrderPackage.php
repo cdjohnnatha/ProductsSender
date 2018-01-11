@@ -27,5 +27,10 @@ class OrderPackage extends Entity
         return $this->belongsTo(Package::class);
     }
 
+    public function orderFeeWeightRules()
+    {
+        return $this->hasOne(OrderFeeWeightRules::class);
+    }
+
 
 }

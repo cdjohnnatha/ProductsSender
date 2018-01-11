@@ -78,11 +78,38 @@ class OrderRepository
         return $total_fowards;
     }
 
+    public function calculateTotalOrderFees($orderId)
+    {
+        $orderFeesRulesArr = $this->findById($orderId)->orderFeeRules()->get();
+        $total_fees = 0;
+        foreach ($orderFeesRulesArr as $orderFees){
+            $total_fees += $orderFees->sum('price');
+        }
+        return $total_fees;
+    }
+
+    public function calculateTotalOrderFeeWeightRules($orderId)
+    {
+        $orderPackagesArr = $this->findById($orderId)->orderPackages()->get();
+        $total_weight_fee = 0;
+        foreach ($orderPackagesArr as $orderPackage){
+            $total_weight_fee += $orderPackage->orderFeeWeightRules()->sum('total');
+        }
+        return $total_weight_fee;
+    }
+
     public function calculateTotalOrder($orderId)
     {
         $total = $this->calculateTotalOrderFowards($orderId);
         $total += $this->calculateTotalOrderAddons($orderId);
-
+        $total += $this->calculateTotalOrderFees($orderId);
+        $total += $this->calculateTotalOrderFeeWeightRules($orderId);
         return $total;
+    }
+
+    public function listByUserStatusOrder($clientId, $message)
+    {
+        $message = $this->orderStatusRepository->findByMessage($message)->id;
+        return $this->model->with($this->allRelations)->where('client_id', $clientId)->where('order_status_id', $message)->get();
     }
 }

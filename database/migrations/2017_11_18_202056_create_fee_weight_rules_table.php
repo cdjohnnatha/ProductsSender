@@ -18,6 +18,10 @@ class CreateFeeWeightRulesTable extends Migration
             $table->decimal('initial_fee');
             $table->decimal('max_weight_fee');
             $table->decimal('overweight_fee');
+
+            $table->decimal('max_initial_weight');
+            $table->decimal('max_weight');
+            $table->decimal('overweight');
             $table->integer('company_warehouse_id');
 
             $table->index('company_warehouse_id');
