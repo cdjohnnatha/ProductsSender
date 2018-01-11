@@ -8,7 +8,7 @@ class OrderFoward extends Entity
 {
     protected $fillable = [
         'price',
-        'address_id',
+        'client_address_id',
         'package_id',
         'goshippo_shipment',
         'order_id',

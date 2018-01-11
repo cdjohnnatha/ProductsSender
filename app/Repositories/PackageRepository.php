@@ -228,7 +228,7 @@ class PackageRepository implements RepositoryInterface
             $order->orderFowards()->create(
                 [
                     'price' => $shipment['amount'],
-                    'address_id' => $shipment['address_id'],
+                    'client_address_id' => $shipment['address_id'],
                     'package_id' => $packagesId,
                     'goshippo_shipment' => $shipment['rate_id'],
                 ]);
@@ -244,6 +244,50 @@ class PackageRepository implements RepositoryInterface
                         ]);
                 }
             }
+            $warehouse = $package->companyWarehouse;
+
+
+            foreach($warehouse->feeRules as $fees) {
+                $order->orderFeeRules()->create([
+                    'price' => $fees->amount,
+                    'fee_rules_id' => $fees->id
+                ]);
+            }
+
+            switch($package->weight_measure) {
+                case 'kg':
+                    $weight = 1000.00;
+                    break;
+                case 'g':
+                    $weight = 1.00;
+                    break;
+                case 'lbs':
+                    $weight = 453.59;
+                    break;
+            }
+
+            $weight = $weight * $package->weight;
+            $weightFee = 0;
+            $overweight = 0;
+
+            if($weight <= $warehouse->feeWeightRules->max_initial_weight){
+                $weightFee = $warehouse->feeWeightRules->initial_fee;
+                dd('aqui');
+            } else if($weight <= $warehouse->feeWeightRules->max_weight) {
+                $weightFee = $warehouse->feeWeightRules->max_weight_fee;
+
+            } else {
+                $weightFee = $warehouse->feeWeightRules->max_weight_fee;
+                $overweight = ($weight - $warehouse->feeWeightRules->max_weight) / $warehouse->feeWeightRules->overweight;
+                $weightFee += ($overweight * $warehouse->feeWeightRules->overweight_fee);
+            }
+
+            $orderPackage->orderFeeWeightRules()->create([
+                'fee_weight_rules_id' => $warehouse->feeWeightRules->id,
+                'total' => $weightFee,
+                'overweight' => $overweight
+
+            ]);
 
             $order->update(['total' => $this->orderRepository->calculateTotalOrder($order->id)]);
 //            $invoice = $this->invoiceRepository->store(['']);
