@@ -85,4 +85,10 @@ class OrderRepository
 
         return $total;
     }
+
+    public function listByUserStatusOrder($clientId, $message)
+    {
+        $message = $this->orderStatusRepository->findByMessage($message)->id;
+        return $this->model->with($this->allRelations)->where('client_id', $clientId)->where('order_status_id', $message)->get();
+    }
 }

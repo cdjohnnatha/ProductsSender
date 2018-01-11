@@ -10,6 +10,9 @@ class FeeWeightRules extends Model
         'initial_fee',
         'max_weight_fee',
         'overweight_fee',
-        'company_warehouse_id'
+        'company_warehouse_id',
+        'max_initial_weight',
+        'max_weight',
+        'overweight'
     ];
 }

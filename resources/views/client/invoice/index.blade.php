@@ -24,15 +24,25 @@
         <section class="tab-content  p-20">
 
             <section class="tab-pane fadeIn active" id="tab-1">
+                <header class="card-heading">
+                    <ul class="card-actions right-top">
+                        <li>
+                            <button type="button" id="send_packages" class="btn btn-info btn-flat">
+                                <i class="zmdi zmdi-money"></i>
+                                @lang('order.index.make_payment')
+                            </button>
+                        </li>
+                    </ul>
+                </header>
                 <h2 class="card-title"> @lang('order.index.orders')</h2>
                 <small class="dataTables_info">@lang('order.index.short_title_inbox')</small>
 
                 <div class="row">
                     <div class="card card-data-tables product-table-wrapper">
                         <div class="card-body p-0">
-                            @if(isset($data['inbox']))
-                                @include('client.order.fragments._table_select', ['data' => $data['inbox'],'table_id' => 'index-orders'])
-                            @endif
+                            {{--@if(!isset($data['invoices']))--}}
+                                @include('client.order.fragments._table_select', ['data' => $data['orders'],'table_id' => 'index-orders'])
+                            {{--@endif--}}
                         </div>
                     </div>
                 </div>

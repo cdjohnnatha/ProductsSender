@@ -44,8 +44,11 @@ return [
         'weight' => [
             'title' => 'Weight Rules',
             'initial_fee' => 'Initial Fee',
-            'max_weight' => 'Max Weight Fee',
-            'over_weight' => 'Over Weight Fee',
+            'max_weight_fee' => 'Max Weight Fee',
+            'overweight_fee' => 'Overweight Fee',
+            'max_initial_weight' => 'Maximum Initial Weight',
+            'max_weight' => 'Max Weight',
+            'overweight' => 'Overweight',
         ],
     ],
 

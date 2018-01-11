@@ -24,11 +24,11 @@
                         <h2 class="card-title">@lang('company.addons.form')</h2>
                     </header>
                     @if(Request::is('*/edit'))
-                        <form action="{{ route('admin.companies.warehouses.fees.weight.update', [$data['companyId'],
+                        <form action="{{ route('admin.companies.warehouses.weight-fees.update', [$data['companyId'],
                         $data['warehouseId'], $data['feeRule']->id]) }}" role="form" method="POST">
                             <input name="_method" type="hidden" value="PUT">
                     @else
-                        <form action="{{ route('admin.companies.warehouses.fees.weight.store', [$data['companyId'],
+                        <form action="{{ route('admin.companies.warehouses.weight-fees.store', [$data['companyId'],
                         $data['warehouseId']]) }}" role="form" method="POST">
                             @endif
                             {{ csrf_field() }}
@@ -74,7 +74,7 @@
                                         <div class="form-group col-sm-4 label-floating {{ $errors->has('overweight_fee') ? 'has-error' : '' }}">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="zmdi zmdi-money"></i></span>
-                                                <label class="control-label">@lang('company.fees.weight.over_weight')</label>
+                                                <label class="control-label">@lang('company.fees.weight.overweight_fee')</label>
                                                 <input type="number" min="0" step="0.01" class="form-control" name="overweight_fee" value="{{ $data['feeRule']->overweight_fee or old('overweight_fee') }}">
                                                 @if ($errors->has('overweight_fee'))
                                                     <span class="help-block">
@@ -87,8 +87,58 @@
                                                 @endif
                                             </div>
                                         </div>
+                                    </section>
+                                    <section class="row">
+                                        <div class="form-group col-sm-4 label-floating {{ $errors->has('max_initial_weight') ? 'has-error' : '' }}">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-ruler"></i></span>
+                                                <label class="control-label">@lang('company.fees.weight.max_initial_weight')</label>
+                                                <input type="number" min="0" step="0.01" class="form-control" name="max_initial_weight" value="{{ $data['feeRule']->max_initial_weight or old('max_initial_weight') }}">
+                                                @if ($errors->has('max_initial_weight'))
+                                                    <span class="help-block">
+                                                      <strong class="text-danger" class="alert-danger">
+                                                        {{ $errors->first('max_initial_weight') }}
+                                                          <span class="zmdi zmdi-close form-control-feedback"
+                                                                aria-hidden="true"></span>
+                                                      </strong>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
 
+                                        <div class="form-group col-sm-4 label-floating {{ $errors->has('max_weight') ? 'has-error' : '' }}">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-ruler"></i></span>
+                                                <label class="control-label">@lang('company.fees.weight.max_weight')</label>
+                                                <input type="number" min="0" step="0.01" class="form-control" name="max_weight" value="{{ $data['feeRule']->max_weight or old('max_weight') }}">
+                                                @if ($errors->has('max_weight'))
+                                                    <span class="help-block">
+                                                      <strong class="text-danger" class="alert-danger">
+                                                        {{ $errors->first('max_weight') }}
+                                                          <span class="zmdi zmdi-close form-control-feedback"
+                                                                aria-hidden="true"></span>
+                                                      </strong>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
 
+                                        <div class="form-group col-sm-4 label-floating {{ $errors->has('overweight') ? 'has-error' : '' }}">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-ruler"></i></span>
+                                                <label class="control-label">@lang('company.fees.weight.overweight')</label>
+                                                <input type="number" min="0" step="0.01" class="form-control" name="overweight" value="{{ $data['feeRule']->overweight or old('overweight') }}">
+                                                @if ($errors->has('overweight'))
+                                                    <span class="help-block">
+                                                      <strong class="text-danger" class="alert-danger">
+                                                        {{ $errors->first('overweight') }}
+                                                          <span class="zmdi zmdi-close form-control-feedback"
+                                                                aria-hidden="true"></span>
+                                                      </strong>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </section>
 
 
