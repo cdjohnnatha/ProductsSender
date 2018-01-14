@@ -7,6 +7,7 @@ use App\Entities\Company\CompanyPhone;
 use App\Entities\Company\Warehouse\CompanyWarehouse;
 use App\Entities\Company\Warehouse\CompanyWarehouseAddress;
 use App\Entities\Company\Warehouse\CompanyWarehousePhones;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -43,7 +44,9 @@ class DatabaseSeeder extends Seeder
             'postal_code' => '32904',
             'number' => '123',
             'formatted_address' => '123 6th St. Melbourne, FL 32904',
-            'company_warehouse_id' => 1
+            'company_warehouse_id' => 1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('company_warehouse_addresses')->insert([
@@ -55,38 +58,53 @@ class DatabaseSeeder extends Seeder
             'postal_code' => '60185',
             'number' => '44',
             'formatted_address' => '44 Shirley Ave. West Chicago, IL 60185',
-            'company_warehouse_id' => 2
+            'company_warehouse_id' => 2,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('company_warehouse_addons')->insert([
             'company_warehouse_id' => 1,
             'company_addons_id' => 1,
-            'price' => 1.35
+            'price' => 1.35,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('company_warehouse_addons')->insert([
             'company_warehouse_id' => 1,
             'company_addons_id' => 1,
-            'price' => 2.00
+            'price' => 2.00,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('company_warehouse_addons')->insert([
             'company_warehouse_id' => 2,
             'company_addons_id' => 2,
-            'price' => 2.35
+            'price' => 2.35,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('company_warehouse_addons')->insert([
             'company_warehouse_id' => 2,
             'company_addons_id' => 2,
-            'price' => 3.00
+            'price' => 3.00,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('fee_weight_rules')->insert([
             'initial_fee' => 1,
             'max_weight_fee' => 2,
             'overweight_fee' => 2.4,
-            'company_warehouse_id' => 1
+            'company_warehouse_id' => 1,
+            'max_initial_weight' => 100.00,
+            'max_weight' => 200.00,
+            'overweight' => 100.00,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('packages')->insert([
@@ -104,6 +122,8 @@ class DatabaseSeeder extends Seeder
             'client_id' => 1,
             'package_status_id' => 2,
             'company_warehouse_id' => 1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
 
