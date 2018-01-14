@@ -86,7 +86,10 @@ class DatabaseSeeder extends Seeder
             'initial_fee' => 1,
             'max_weight_fee' => 2,
             'overweight_fee' => 2.4,
-            'company_warehouse_id' => 1
+            'company_warehouse_id' => 1,
+            'max_initial_weight' => 100.00,
+            'max_weight' => 150.00,
+            'overweight' => 100.00
         ]);
 
         DB::table('packages')->insert([
