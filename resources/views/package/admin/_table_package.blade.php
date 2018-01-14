@@ -8,7 +8,7 @@
     <th>Content Type</th>
     <th>Note</th>
     <th data-orderable="false" class="col-xs-2">
-      <a href="{{Route('admin.packages.create')}}">
+      <a href="{{ Route('admin.packages.create') }}">
         <button class="btn btn-primary btn-fab  animate-fab"><i class="zmdi zmdi-plus"></i></button>
       </a>
     </th>
