@@ -7,6 +7,7 @@ use App\Entities\Company\CompanyPhone;
 use App\Entities\Company\Warehouse\CompanyWarehouse;
 use App\Entities\Company\Warehouse\CompanyWarehouseAddress;
 use App\Entities\Company\Warehouse\CompanyWarehousePhones;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -107,6 +108,34 @@ class DatabaseSeeder extends Seeder
             'client_id' => 1,
             'package_status_id' => 2,
             'company_warehouse_id' => 1,
+        ]);
+
+        DB::table('fee_rules')->insert([
+            'title' => 'Fast pack',
+            'amount' => 2.00,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('fee_rules')->insert([
+            'title' => 'Fast pack',
+            'amount' => 3.00,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('company_warehouse_fee_rules')->insert([
+            'fee_rules_id' => 1,
+            'company_warehouse_id' => 1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('company_warehouse_fee_rules')->insert([
+            'fee_rules_id' => 2,
+            'company_warehouse_id' => 2,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
 

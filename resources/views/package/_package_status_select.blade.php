@@ -1,5 +1,5 @@
 <section>
-  <label class="control-label">{{__('common.titles.status')}}</label>
+  <label class="control-label">{{ __('packages.form.status') }}</label>
   <select class="select form-control" name="{{ $tagName }}">
     @foreach($packageStatus as $item)
       @if(Request::is('*/edit'))

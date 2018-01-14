@@ -33,7 +33,8 @@ return [
         'title' => 'Addons',
         'form' => 'Addons Form',
         'form_title' => 'Give a name for that Addon',
-        'data_info' => 'All addons are listed here for that company.'
+        'data_info' => 'All addons are listed here for that company.',
+        'price' => 'Price'
 
     ],
     'fees' =>[

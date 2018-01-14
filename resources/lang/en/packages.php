@@ -18,7 +18,8 @@ return [
         'suite' => 'Suite',
         'description' => 'Package Description',
         'provider' => 'Provider',
-        'content_type' => 'Package Content Type'
+        'content_type' => 'Package Content Type',
+        'status' => 'Status'
     ],
 
     'index' => [
@@ -36,7 +37,9 @@ return [
         'address_from' => 'Address From',
         'address_to' => 'Address to',
         'btn_merge_packages' => 'Merge Packages',
-        'btn_send_packages' => 'Send Packages'
+        'btn_send_packages' => 'Send Packages',
+        'incoming_packages' => 'Incoming Packages'
+
 
     ],
 

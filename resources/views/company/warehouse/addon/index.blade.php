@@ -14,7 +14,7 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Addon Name</th>
-                                <th>@lang('com.titles.price')</th>
+                                <th>@lang('company.addons.price')</th>
                                 <th data-orderable="false" class="col-xs-2">
                                     <a href="{{Route('admin.companies.warehouses.addons.create', [ $data['companyId'], $data['companyWarehouse']->id ])}}">
                                         <button class="btn btn-primary btn-fab animate-fab"><i class="zmdi zmdi-plus"></i></button>

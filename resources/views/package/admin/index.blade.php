@@ -76,9 +76,9 @@
             <div class="card card-data-tables product-table-wrapper">
               <div class="card-body p-0">
                 <header class="card-heading">
-                  <h2 class="card-title">{{__('common.titles.incoming_package')}}</h2>
+                  <h2 class="card-title">{{ __('packages.index.incoming_packages') }}</h2>
                   <small
-                    class="dataTables_info">{{__('common.short_description.main', ['entity' => 'incoming package'])}}</small>
+                    class="dataTables_info">{{ __('packages.index.incoming_short_description') }}</small>
                 </header>
                 @include('package.admin._table_package', ['idName' => 'incomingPackages', 'packages' => $incomingPackages])
               </div>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('panel_header')
-    {{__('company.addons.title')}}
+    {{ __('company.addons.title') }}
 @endsection
 
 
@@ -21,26 +21,26 @@
         <div class="col-xs-12">
             <div class="card">
                 <header class="card-heading ">
-                    <h2 class="card-title">{{__('company.addons.form')}}</h2>
+                    <h2 class="card-title">{{ __('company.addons.form') }}</h2>
                 </header>
                 @if(Request::is('*/edit'))
                     <?php $action = 'admin.companies.warehouses.addons.update' ?>
-                        <form action="{{route($action, [$companyId, $warehouseId, $warehouseAddon->id])}}" role="form" method="POST">
+                        <form action="{{ route($action, [$companyId, $warehouseId, $warehouseAddon->id] )}}" role="form" method="POST">
                         <input name="_method" type="hidden" value="PUT">
                     @else
                         <?php $action = 'admin.companies.warehouses.addons.store'?>
-                        <form action="{{route($action, [$companyId, $warehouseId])}}" role="form" method="POST">
+                        <form action="{{ route($action, [$companyId, $warehouseId]) }}" role="form" method="POST">
                     @endif
                             {{ csrf_field() }}
                             <section class="card-body">
                               <article>
                                 <section class="row">
-                                  <input type="hidden" name="company_warehouse_id" value="{{$warehouseId}}">
+                                  <input type="hidden" name="company_warehouse_id" value="{{ $warehouseId }}">
 
                                   <div class="form-group col-sm-8 label-floating {{ $errors->has('company_addons_id') ? 'has-error' : '' }}">
                                     <select class="select form-control" name="company_addons_id">
                                       @foreach($companyAddons as $addon)
-                                        <option value="{{$addon->id or old('company_addons_id')}}">
+                                        <option value="{{ $addon->id or old('company_addons_id') }}">
                                           {{$addon->title}}
                                         </option>
                                       @endforeach
@@ -57,7 +57,7 @@
                                   <div class="form-group col-sm-4 label-floating {{ $errors->has('price') ? 'has-error' : '' }}">
                                     <div class="input-group">
                                       <span class="input-group-addon"><i class="zmdi zmdi-money"></i></span>
-                                      <label class="control-label">{{ __('common.titles.price')}}</label>
+                                      <label class="control-label">{{ __('company.addons.price')}}</label>
                                       <input type="number" min="0" step="0.01" class="form-control" name="price"
                                              value="{{ $warehouseAddon->price or old('price') }}" id="price">
 
