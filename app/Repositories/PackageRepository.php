@@ -225,6 +225,7 @@ class PackageRepository implements RepositoryInterface
             $package->update(['package_status_id' => $this->packageStatus->getStatusFromMessage('PREPARING')->id]);
             $orderPackage = $order->orderPackages()->create(['package_id' => $package->id, 'order_id' => $order->id]);
             $shipment = $request->input('package_shipment')[$index];
+
             $order->orderFowards()->create(
                 [
                     'price' => $shipment['amount'],
