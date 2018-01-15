@@ -11,7 +11,8 @@ class Order extends Entity
         'uuid',
         'total',
         'order_status_id',
-        'client_id'
+        'client_id',
+        'company_warehouse_id'
     ];
 
     public function orderPackages()
@@ -38,7 +39,5 @@ class Order extends Entity
     {
         return $this->hasMany(OrderFeeRules::class);
     }
-
-
 
 }

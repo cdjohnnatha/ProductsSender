@@ -13,6 +13,7 @@
             <input type="hidden" name="step" value="{{ $data['step'] }}">
             <section class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
+                    <input type="hidden" name="company_warehouse_id" value="{{ $data['warehouses']->id }}">
                     @foreach($data['packages'] as $key => $package)
                         <input type="hidden" name="packages_id[]" value="{{ $package->id }}">
 

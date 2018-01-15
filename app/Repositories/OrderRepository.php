@@ -9,6 +9,7 @@
 namespace App\Repositories;
 
 use App\Entities\Order\Order;
+use Webpatser\Uuid\Uuid;
 
 class OrderRepository
 {
@@ -33,8 +34,15 @@ class OrderRepository
         return $this->model->with($this->allRelations)->paginate(30);
     }
 
-    public function store($attributes, $status=null)
+    public function store($clientId, $companyWarehouseId, $status=null)
     {
+        $attributes['client_id'] = $clientId;
+        $attributes['company_warehouse_id'] = $companyWarehouseId;
+        try {
+            $attributes['uuid'] = Uuid::generate();
+        } catch (\Exception $e) {
+        }
+
         if(is_null($status)){
             $attributes['order_status_id'] = $this->orderStatusRepository->findByMessage('WAITING_PAYMENT')->id;
         } else {

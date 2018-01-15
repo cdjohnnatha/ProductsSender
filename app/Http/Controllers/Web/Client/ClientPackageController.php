@@ -131,7 +131,6 @@ class ClientPackageController extends Controller
                 $data['step'] = $steps;
                 $data['warehouses'] = $this->packageRepository->findById($data['packages_id'][0])->companyWarehouse;
                 $data['packages'] = $this->packageRepository->getPackagesCheckWarehouse($request);
-
                 return view($page, compact('data'));
 
 
@@ -162,8 +161,6 @@ class ClientPackageController extends Controller
                     if($invoice){
                         return redirect(route('user.invoices.show', $invoice->id));
                     }
-
-
                 } else {
                     $steps--;
                     $data = $request->except('_token', 'previous');

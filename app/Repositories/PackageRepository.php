@@ -9,13 +9,13 @@
 namespace App\Repositories;
 
 
+use App\Entities\Order\OrderFeeWeightRules;
 use App\Entities\Package\Package;
 use App\Entities\Package\PackageFiles;
 use App\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Webpatser\Uuid\Uuid;
 
 class PackageRepository implements RepositoryInterface
 {
@@ -26,13 +26,19 @@ class PackageRepository implements RepositoryInterface
     private $orderRepository;
     private $packageStatus;
     private $invoiceRepository;
+    private $feeRulesRepository;
+    private $feeWeightRulesRepository;
+    private $orderFowardRepository;
 
     public function __construct(
         Package $package,
         CompanyWarehouseAddonRepository $companyWarehouseAddonRepository,
         OrderRepository $orderRepository,
         PackageStatusRepository $packageStatusRepository,
-        InvoiceRepository $invoiceRepository)
+        InvoiceRepository $invoiceRepository,
+        OrderFeeRulesRepository $orderFeeRulesRepository,
+        OrderFeeWeightRulesRepository $orderFeeWeightRules,
+        OrderFowardRepository $orderFowardRepository)
     {
         $this->model = $package;
 
@@ -48,6 +54,9 @@ class PackageRepository implements RepositoryInterface
         $this->orderRepository = $orderRepository;
         $this->packageStatus = $packageStatusRepository;
         $this->invoiceRepository = $invoiceRepository;
+        $this->feeRulesRepository = $orderFeeRulesRepository;
+        $this->feeWeightRulesRepository = $orderFeeWeightRules;
+        $this->orderFowardRepository = $orderFowardRepository;
     }
 
     public function getAll()
@@ -219,20 +228,15 @@ class PackageRepository implements RepositoryInterface
 
     public function preparePackage($request)
     {
-        $order = $this->orderRepository->store(['uuid' => Uuid::generate(), 'client_id' => Auth::user()->client->id]);
+        $order = $this->orderRepository->store(Auth::user()->client->id, $request->input('company_warehouse_id'));
+
         foreach ($request->input('packages_id') as $index => $packagesId) {
             $package = $this->findById($packagesId);
             $package->update(['package_status_id' => $this->packageStatus->getStatusFromMessage('PREPARING')->id]);
             $orderPackage = $order->orderPackages()->create(['package_id' => $package->id, 'order_id' => $order->id]);
             $shipment = $request->input('package_shipment')[$index];
+            $this->orderFowardRepository->store($order->id, $shipment);
 
-            $order->orderFowards()->create(
-                [
-                    'price' => $shipment['amount'],
-                    'client_address_id' => $shipment['client_address_id'],
-                    'package_id' => $packagesId,
-                    'goshippo_shipment' => $shipment['rate_id'],
-                ]);
 
             if ($request->input('package_addons')) {
                 $addon = $request->input('package_addons')[$index + 1];
@@ -247,51 +251,33 @@ class PackageRepository implements RepositoryInterface
             }
             $warehouse = $package->companyWarehouse;
 
-
             foreach($warehouse->feeRules as $fees) {
-                $order->orderFeeRules()->create([
-                    'price' => $fees->amount,
-                    'fee_rules_id' => $fees->id
-                ]);
+                $this->feeRulesRepository->store($order, $fees);
             }
 
-            switch($package->weight_measure) {
-                case 'kg':
-                    $weight = 1000.00;
-                    break;
-                case 'g':
-                    $weight = 1.00;
-                    break;
-                case 'lbs':
-                    $weight = 453.59;
-                    break;
-            }
-
-            $weight = $weight * $package->weight;
-            $weightFee = 0;
-            $overweight = 0;
-
-            if($weight <= $warehouse->feeWeightRules->max_initial_weight){
-                $weightFee = $warehouse->feeWeightRules->initial_fee;
-            } else if($weight <= $warehouse->feeWeightRules->max_weight) {
-                $weightFee = $warehouse->feeWeightRules->max_weight_fee;
-
-            } else {
-                $weightFee = $warehouse->feeWeightRules->max_weight_fee;
-                $overweight = ($weight - $warehouse->feeWeightRules->max_weight) / $warehouse->feeWeightRules->overweight;
-                $weightFee += ($overweight * $warehouse->feeWeightRules->overweight_fee);
-            }
-
-            $orderPackage->orderFeeWeightRules()->create([
-                'fee_weight_rules_id' => $warehouse->feeWeightRules->id,
-                'total' => $weightFee,
-                'overweight' => $overweight
-            ]);
+            $this->feeWeightRulesRepository->store($warehouse, $orderPackage, $this->weightToGrams($package));
 
             $order->update(['total' => $this->orderRepository->calculateTotalOrder($order->id)]);
             $invoice = $this->invoiceRepository->store(['client_id' => Auth::user()->client->id, 'amount' => $order->total]);
             $invoice->invoiceOrder()->save($order);
             return $invoice;
         }
+    }
+
+    public function weightToGrams($package)
+    {
+        switch($package->weight_measure) {
+            case 'kg':
+                $weight = 1000.00;
+                break;
+            case 'g':
+                $weight = 1.00;
+                break;
+            case 'lbs':
+                $weight = 453.59;
+                break;
+        }
+
+        return $weight * $package->weight;
     }
 }
