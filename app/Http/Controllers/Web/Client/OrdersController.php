@@ -28,6 +28,7 @@ class OrdersController extends Controller
     public function show($id)
     {
         $data['order'] = $this->orders->findById($id);
+        dd($data['order']->orderFeeRules);
         return view('client.order.show', compact('data'));
     }
 

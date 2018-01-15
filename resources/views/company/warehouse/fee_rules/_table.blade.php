@@ -30,7 +30,7 @@
                                 <td>{{ $fees->amount }}</td>
                                 <td>
                                     <a href="#" class="icon"
-                                       onclick="window.location='{{ Route('admin.companies.warehouses.fees.edit', [$data['companyId'], $data['companyWarehouse']->id, $data['companyWarehouse']->feeWeightRules->id]) }}'"
+                                       onclick="window.location='{{ Route('admin.companies.warehouses.fees.edit', [ $data['companyId'], $data['companyWarehouse']->id, $fees->id ]) }}'"
                                        data-toggle="tooltip"
                                        data-placement="top" title="{{ __('buttons.titles.edit') }}">
                                         <i class="zmdi zmdi-edit"></i>

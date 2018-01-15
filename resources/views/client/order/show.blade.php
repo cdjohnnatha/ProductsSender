@@ -16,6 +16,9 @@
                     'order_fowards' => $data['order']->orderFowards[$index],
                     'order_addons' => $package->orderAddons])
                 @endforeach
+                @foreach($data['order']->orderFeeRules as $fees)
+                    {{ $fees->feeRules->name }}
+                @endforeach
             </div>
         </section>
     </section>
