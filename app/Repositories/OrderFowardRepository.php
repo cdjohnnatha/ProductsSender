@@ -16,7 +16,6 @@ class OrderFowardRepository
 {
 
     private $model;
-    private $orderRepository;
 
     public function __construct(OrderFoward $order)
     {
