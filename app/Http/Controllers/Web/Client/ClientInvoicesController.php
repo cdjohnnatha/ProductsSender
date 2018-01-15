@@ -18,6 +18,7 @@ class ClientInvoicesController extends Controller
     public function index()
     {
         $data['invoices'] = $this->invoiceRepository->getAllByClient(Auth::user()->client->id);
+
         return view('client.invoice.index', compact('data'));
     }
 

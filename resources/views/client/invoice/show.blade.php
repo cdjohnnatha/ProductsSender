@@ -71,9 +71,6 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <h3>@lang('invoice.show.addons')</h3>
-                                    </tr>
-                                    <tr>
                                         <th>Item#</th>
                                         <th>Description</th>
                                         <th>QTY</th>
@@ -82,18 +79,34 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($data['invoice']->invoiceOrder()->first()->orderPackages as $orderPackages)
-                                        @foreach($orderPackages->orderAddons as $addons)
+                                        @foreach($data['invoice']->invoiceOrder()->first()->orderPackages as $index => $orderPackages)
+                                            @foreach($orderPackages->orderAddons as $addons)
+                                                <tr>
+                                                    <th scope="row">{{ $orderPackages->package->id }}</th>
+                                                    <td>
+                                                        {{ $addons->companyWarehouseAddon->companyAddons->title }}
+                                                    </td>
+                                                    <td>1</td>
+                                                    <td>$ {{ $addons->price }}</td>
+                                                    <td>$ {{ $addons->price }}</td>
+                                                </tr>
+                                            @endforeach
                                             <tr>
-                                                <th scope="row">{{ $orderPackages->package->id }}</th>
-                                                <td>{{ $addons->companyWarehouseAddon->companyAddons->title }}
-                                                </td>
+                                                <td>{{ $data['invoice']->invoiceOrder()->first()->orderFowards[$index]->package_id }}</td>
+                                                <td>Shipment</td>
                                                 <td>1</td>
-                                                <td>${{ $addons->price }}</td>
-                                                <td>${{ $addons->price }}</td>
+                                                <td>$ {{ $data['invoice']->invoiceOrder()->first()->orderFowards[$index]->price }}</td>
+                                                <td>$ {{ $data['invoice']->invoiceOrder()->first()->orderFowards[$index]->price }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ $orderPackages->package->id }}</td>
+                                                <td>Weight fees</td>
+                                                <td>1</td>
+                                                <td>$ {{ $orderPackages->orderFeeWeightRules->total }}</td>
+                                                <td>$ {{ $orderPackages->orderFeeWeightRules->total }}</td>
                                             </tr>
                                         @endforeach
-                                    @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
@@ -110,7 +123,7 @@
                                     <div class="col-xs-1">
                                         <span>$9,700</span>
                                         <span>$970</span>
-                                        <span class="total">$8,730</span>
+                                        <span class="total">${{ $data['invoice']->amount }}</span>
                                     </div>
                                 </div>
                                 <button class="btn btn-primary btn-round pull-right m-t-20 m-b-20">Make a Payment

@@ -229,14 +229,12 @@ class PackageRepository implements RepositoryInterface
     public function preparePackage($request)
     {
         $order = $this->orderRepository->store(Auth::user()->client->id, $request->input('company_warehouse_id'));
-
         foreach ($request->input('packages_id') as $index => $packagesId) {
             $package = $this->findById($packagesId);
             $package->update(['package_status_id' => $this->packageStatus->getStatusFromMessage('PREPARING')->id]);
             $orderPackage = $order->orderPackages()->create(['package_id' => $package->id, 'order_id' => $order->id]);
             $shipment = $request->input('package_shipment')[$index];
             $this->orderFowardRepository->store($order->id, $shipment);
-
 
             if ($request->input('package_addons')) {
                 $addon = $request->input('package_addons')[$index + 1];
@@ -256,12 +254,11 @@ class PackageRepository implements RepositoryInterface
             }
 
             $this->feeWeightRulesRepository->store($warehouse, $orderPackage, $this->weightToGrams($package));
-
-            $order->update(['total' => $this->orderRepository->calculateTotalOrder($order->id)]);
-            $invoice = $this->invoiceRepository->store(['client_id' => Auth::user()->client->id, 'amount' => $order->total]);
-            $invoice->invoiceOrder()->save($order);
-            return $invoice;
         }
+        $order->update(['total' => $this->orderRepository->calculateTotalOrder($order->id)]);
+        $invoice = $this->invoiceRepository->store(['client_id' => Auth::user()->client->id, 'amount' => $order->total]);
+        $invoice->invoiceOrder()->save($order);
+        return $invoice;
     }
 
     public function weightToGrams($package)

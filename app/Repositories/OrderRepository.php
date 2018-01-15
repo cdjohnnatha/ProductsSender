@@ -79,29 +79,23 @@ class OrderRepository
     public function calculateTotalOrderFowards($orderId)
     {
         $orderPackagesArr = $this->findById($orderId)->orderFowards()->get();
-        $total_fowards = 0;
-        foreach ($orderPackagesArr as $orderFowards){
-            $total_fowards += $orderFowards->sum('price');
-        }
-        return $total_fowards;
+        return $orderPackagesArr->sum('price');
+
     }
 
     public function calculateTotalOrderFees($orderId)
     {
         $orderFeesRulesArr = $this->findById($orderId)->orderFeeRules()->get();
-        $total_fees = 0;
-        foreach ($orderFeesRulesArr as $orderFees){
-            $total_fees += $orderFees->sum('price');
-        }
-        return $total_fees;
+        return $orderFeesRulesArr->sum('price');
     }
 
     public function calculateTotalOrderFeeWeightRules($orderId)
     {
         $orderPackagesArr = $this->findById($orderId)->orderPackages()->get();
+
         $total_weight_fee = 0;
         foreach ($orderPackagesArr as $orderPackage){
-            $total_weight_fee += $orderPackage->orderFeeWeightRules()->sum('total');
+            $total_weight_fee += $orderPackage->orderFeeWeightRules()->first()->total;
         }
         return $total_weight_fee;
     }
@@ -112,6 +106,7 @@ class OrderRepository
         $total += $this->calculateTotalOrderAddons($orderId);
         $total += $this->calculateTotalOrderFees($orderId);
         $total += $this->calculateTotalOrderFeeWeightRules($orderId);
+
         return $total;
     }
 
