@@ -116,13 +116,9 @@
 
                                     </div>
                                     <div class="col-xs-7">
-                                        <span class="text-right text-gray">SUB TOTAL</span>
-                                        <span class="text-right text-gray">DISCOUNT</span>
                                         <span class="text-right m-t-10"><strong>TOTAL</strong></span>
                                     </div>
                                     <div class="col-xs-1">
-                                        <span>$9,700</span>
-                                        <span>$970</span>
                                         <span class="total">${{ $data['invoice']->amount }}</span>
                                     </div>
                                 </div>

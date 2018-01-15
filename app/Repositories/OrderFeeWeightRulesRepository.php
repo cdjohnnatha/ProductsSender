@@ -39,8 +39,8 @@ class OrderFeeWeightRulesRepository
 
         } else {
             $weightFee = $warehouse->feeWeightRules->max_weight_fee;
-            $overweight = ($weight - $warehouse->feeWeightRules->max_weight) / $warehouse->feeWeightRules->overweight;
-            $weightFee += ($overweight * $warehouse->feeWeightRules->overweight_fee);
+            $overweight = ($weight - $warehouse->feeWeightRules->max_weight);
+            $weightFee += ($overweight * $warehouse->feeWeightRules->overweight_fee)  / $warehouse->feeWeightRules->overweight;
         }
 
         return $this->model->create([
