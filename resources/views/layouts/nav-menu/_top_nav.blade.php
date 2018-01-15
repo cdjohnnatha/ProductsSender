@@ -6,24 +6,32 @@
       </a>
     </li>
   </ul>
+  @if(auth()->user()->type == 'user')
+    <ul class="nav navbar-nav left-menu hidden-xs">
+      <li>
+        <span>
+          <a href="">
+            <i class="zmdi zmdi-balance-wallet zmdi-2x"></i>
+          </a>
+        </span>
+      </li>
+    </ul>
+  @endif
   <ul class="nav navbar-nav pull-right">
     <li class="dropdown avatar-menu">
       <a href="javascript:void(0)" data-toggle="dropdown" aria-expanded="false">
-								<span class="meta">
-									<span class="avatar">
-										<img src="{{asset('img/logo/holyship-circle.png')}}" alt="" class="img-circle max-w-35">
-										<i class="badge mini success status"></i>
-									</span>
-									<span class="name">{{Auth::user()->name}}</span>
-									<span class="caret"></span>
-								</span>
+        <span class="meta">
+            <span class="avatar">
+                <img src="{{asset('img/logo/holyship-circle.png')}}" alt="" class="img-circle max-w-35">
+                <i class="badge mini success status"></i>
+            </span>
+            <span class="name">{{ Auth::user()->name }}</span>
+            <span class="caret"></span>
+        </span>
       </a>
       <ul class="dropdown-menu btn-primary dropdown-menu-right">
         <li>
           <a href="page-profile.html"><i class="zmdi zmdi-account"></i> Profile</a>
-        </li>
-        <li>
-          <a href="app-mail.html"><i class="zmdi zmdi-email"></i> Messages</a>
         </li>
         <li>
           <a href="javascript:void(0)"><i class="zmdi zmdi-settings"></i> Account Settings</a>
@@ -45,17 +53,7 @@
         <option option="BR" value="br">Português</option>
       </select>
     </li>
-    <li>
-      <a href="javascript:void(0)" data-navsearch-open>
-        <i class="zmdi zmdi-search"></i>
-      </a>
-    </li>
     @include('layouts.nav-menu._notifications')
-    <li class="last">
-      <a href="javascript:void(0)" data-toggle-state="sidebar-overlay-open" data-key="rightSideBar">
-        <i class="mdi mdi-playlist-plus"></i>
-      </a>
-    </li>
   </ul>
 </section>
 

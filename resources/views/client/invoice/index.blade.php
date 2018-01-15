@@ -29,13 +29,13 @@
                         <li>
                             <button type="button" id="send_packages" class="btn btn-info btn-flat">
                                 <i class="zmdi zmdi-money"></i>
-                                @lang('order.index.make_payment')
+                                @lang('invoice.index.make_payment')
                             </button>
                         </li>
                     </ul>
                 </header>
-                <h2 class="card-title"> @lang('order.index.orders')</h2>
-                <small class="dataTables_info">@lang('order.index.short_title_inbox')</small>
+                <h2 class="card-title"> @lang('invoice.title') </h2>
+                <small class="dataTables_info"> @lang('invoice.index.short_title_inbox') </small>
 
                 <div class="row">
                     <div class="card card-data-tables product-table-wrapper">

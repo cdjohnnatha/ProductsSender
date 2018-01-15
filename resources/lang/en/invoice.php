@@ -18,7 +18,9 @@ return [
 
     'index' => [
         'inbox' => 'Inbox',
-        'history' => 'History'
+        'history' => 'History',
+        'short_title_inbox' => 'Invoices at inbox can be found here',
+        'make_payment' => 'Make Payment'
     ],
 
 ];
