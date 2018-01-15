@@ -1,6 +1,9 @@
 <?php
 
 return [
+
+    'title' => 'Invoices',
+
     'show' => [
         'invoice_from' => 'INVOICE FROM',
         'invoice_to' => 'INVOICE TO',
@@ -11,6 +14,11 @@ return [
         'total' => 'Total',
         'invoice_title' => 'Invoice',
         'addons' => 'Addons'
+    ],
+
+    'index' => [
+        'inbox' => 'Inbox',
+        'history' => 'History'
     ],
 
 ];

@@ -15,9 +15,20 @@
                     'index' => $index,
                     'order_fowards' => $data['order']->orderFowards[$index],
                     'order_addons' => $package->orderAddons])
+                    <h4>
+                        Weight Fees
+                    </h4>
+                    <p>
+                        {{ "total: " . $package->orderFeeWeightRules->total }}
+                        {{ "overweight: " . $package->orderFeeWeightRules->overweight }}
+                    </p>
+
                 @endforeach
+                <h4>Fees</h4>
                 @foreach($data['order']->orderFeeRules as $fees)
-                    {{ $fees->feeRules->name }}
+                    <p>
+                        {{ $fees->feeRules->title . ' - price :' . $fees->price}}
+                    </p>
                 @endforeach
             </div>
         </section>

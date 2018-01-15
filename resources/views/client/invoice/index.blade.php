@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('panel_header')
-    @lang('order.index.orders')
+    @lang('invoice.title')
 @endsection
 
 
@@ -11,10 +11,10 @@
             <div class="tabpanel">
                 <ul class="nav nav-tabs nav-tabs-right">
                     <li class="active" role="presentation">
-                        <a href="#tab-1" data-toggle="tab" aria-expanded="true">@lang('order.index.inbox')</a>
+                        <a href="#tab-1" data-toggle="tab" aria-expanded="true">@lang('invoice.index.inbox')</a>
                     </li>
                     <li class="presentation" role="presentation">
-                        <a href="#tab-2" data-toggle="tab" aria-expanded="true">@lang('order.index.history')</a>
+                        <a href="#tab-2" data-toggle="tab" aria-expanded="true">@lang('invoice.index.history')</a>
                     </li>
                 </ul>
             </div>
@@ -40,9 +40,32 @@
                 <div class="row">
                     <div class="card card-data-tables product-table-wrapper">
                         <div class="card-body p-0">
-                            {{--@if(!isset($data['invoices']))--}}
-                                @include('client.order.fragments._table_select', ['data' => $data['orders'],'table_id' => 'index-orders'])
-                            {{--@endif--}}
+                            <table class="mdl-data-table product-table m-t-30" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Number</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($data['invoices'] as $invoice)
+                                        <tr>
+                                            <td>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" name="packages_id[]" value="{{$invoice->id}}">
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>{{ $invoice->id }}</td>
+                                            <td>{{ $invoice->amount }}</td>
+                                            <td>{{ $invoice->invoiceStatus->message }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

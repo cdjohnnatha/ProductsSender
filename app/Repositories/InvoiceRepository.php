@@ -16,11 +16,13 @@ class InvoiceRepository
     private $model;
     private $allRelations;
     private $invoiceStatusRepository;
+    private $clientRepository;
 
-    public function __construct(Invoice $invoice, InvoiceStatusRepository $invoiceStatusRepository)
+    public function __construct(Invoice $invoice, InvoiceStatusRepository $invoiceStatusRepository, ClientRepository $clientRepository)
     {
         $this->model = $invoice;
         $this->invoiceStatusRepository = $invoiceStatusRepository;
+        $this->clientRepository = $clientRepository;
         $this->allRelations = [
             'invoiceOrder',
             'invoiceStatus',
@@ -56,5 +58,11 @@ class InvoiceRepository
     public function destroy($id)
     {
         return $this->model->find($id)->delete();
+    }
+
+    public function getAllByClient($clientId)
+    {
+        $client = $this->clientRepository->findById($clientId);
+        return $client->invoices;
     }
 }

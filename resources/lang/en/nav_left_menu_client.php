@@ -5,6 +5,7 @@ return [
     'packages' => 'Packages',
     'dashboard' => 'Dashboard',
     'address' => 'Address',
-    'orders' => 'Orders'
+    'orders' => 'Orders',
+    'invoices' => 'Invoices'
 
 ];
