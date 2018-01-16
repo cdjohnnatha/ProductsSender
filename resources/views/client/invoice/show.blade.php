@@ -18,18 +18,21 @@
                                     </a>
                                     <ul class="dropdown-menu btn-primary dropdown-menu-right">
                                         <li>
-                                            <a href="javascript:void(0)"><i class="zmdi zmdi-email"></i>
+                                            <a href="javascript:void(0)">
+                                                <i class="zmdi zmdi-email"></i>
                                                 <span class="p-l-5">Email Invoice</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)" onclick="javascript:window.print();"><i
-                                                        class="zmdi zmdi-print p-r-5"></i> <span
-                                                        class="p-l-5">Print Invoice</span></a>
+                                            <a href="javascript:void(0)" onclick="javascript:window.print();">
+                                                <i class="zmdi zmdi-print p-r-5"></i>
+                                                <span class="p-l-5">Print Invoice</span></a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)"><i class="mdi mdi-file-pdf"></i> <span
-                                                        class="p-l-5">Download PDF</span></a>
+                                            <a href="javascript:void(0)">
+                                                <i class="mdi mdi-file-pdf"></i>
+                                                <span class="p-l-5">Download PDF</span>
+                                            </a>
                                         </li>
                                     </ul>
                                 </li>

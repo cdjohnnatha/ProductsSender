@@ -8,13 +8,10 @@
 
 namespace App\Repositories;
 
-
-use App\Entities\Order\OrderFeeWeightRules;
 use App\Entities\Package\Package;
 use App\Entities\Package\PackageFiles;
 use App\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class PackageRepository implements RepositoryInterface
@@ -36,7 +33,7 @@ class PackageRepository implements RepositoryInterface
         OrderRepository $orderRepository,
         PackageStatusRepository $packageStatusRepository,
         InvoiceRepository $invoiceRepository,
-        OrderFeeRulesRepository $orderFeeRulesRepository,
+        OrderPackageFeeRulesRepository $orderPackageFeeRulesRepository,
         OrderFeeWeightRulesRepository $orderFeeWeightRules,
         OrderFowardRepository $orderFowardRepository)
     {
@@ -54,7 +51,7 @@ class PackageRepository implements RepositoryInterface
         $this->orderRepository = $orderRepository;
         $this->packageStatus = $packageStatusRepository;
         $this->invoiceRepository = $invoiceRepository;
-        $this->feeRulesRepository = $orderFeeRulesRepository;
+        $this->feeRulesRepository = $orderPackageFeeRulesRepository;
         $this->feeWeightRulesRepository = $orderFeeWeightRules;
         $this->orderFowardRepository = $orderFowardRepository;
     }
@@ -231,7 +228,9 @@ class PackageRepository implements RepositoryInterface
         $order = $this->orderRepository->store(Auth::user()->client->id, $request->input('company_warehouse_id'));
         foreach ($request->input('packages_id') as $index => $packagesId) {
             $package = $this->findById($packagesId);
+
             $package->update(['package_status_id' => $this->packageStatus->getStatusFromMessage('PREPARING')->id]);
+
             $orderPackage = $order->orderPackages()->create(['package_id' => $package->id, 'order_id' => $order->id]);
             $shipment = $request->input('package_shipment')[$index];
             $this->orderFowardRepository->store($order->id, $shipment);
@@ -248,9 +247,8 @@ class PackageRepository implements RepositoryInterface
                 }
             }
             $warehouse = $package->companyWarehouse;
-
             foreach($warehouse->feeRules as $fees) {
-                $this->feeRulesRepository->store($order, $fees);
+                $this->feeRulesRepository->store($orderPackage, $fees);
             }
 
             $this->feeWeightRulesRepository->store($warehouse, $orderPackage, $this->weightToGrams($package));

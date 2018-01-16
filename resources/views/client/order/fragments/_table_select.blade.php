@@ -19,20 +19,13 @@
                 <td>{{Carbon\Carbon::parse($order->updated_at)->format('d/m/Y')}}</td>
                 <td>$: {{ $order->total }}</td>
                 <td>
-
-
                     <section id="sweet_alerts_card">
-                        @if($order->orderStatus->message == 'WAITING_PAYMENT')
-                            <a href="#" onclick="window.location=''" class="icon" data-placement="top" title="@lang('order.tooltip.generate_payment')" data-toggle="tooltip">
-                                <i class="zmdi zmdi-money"></i>
-                            </a>
-                        @endif
-                            <a href="#" class="icon"
-                               onclick="window.location='{{ Route("user.orders.show", $order->id) }}'"
-                               data-toggle="tooltip"
-                               data-placement="top" title="@lang('buttons.titles.show')">
-                                <i class="zmdi zmdi-search"></i>
-                            </a>
+                        <a href="#" class="icon"
+                           onclick="window.location='{{ Route("user.orders.show", $order->id) }}'"
+                           data-toggle="tooltip"
+                           data-placement="top" title="@lang('buttons.titles.show')">
+                            <i class="zmdi zmdi-search"></i>
+                        </a>
                     </section>
                 </td>
             </tr>

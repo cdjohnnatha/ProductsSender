@@ -20,7 +20,11 @@ return [
         'inbox' => 'Inbox',
         'history' => 'History',
         'short_title_inbox' => 'Invoices at inbox can be found here',
-        'make_payment' => 'Make Payment'
+        'make_payment' => 'Make Payment',
+        'number' => 'Number',
+        'amount' => 'Amount',
+        'status' => 'Status',
+        'actions' => 'Actions'
     ],
 
 ];

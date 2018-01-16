@@ -14,8 +14,8 @@ class RemoveColumnInitialFeeAndMaxInitialWeight extends Migration
     public function up()
     {
         Schema::table('fee_weight_rules', function (Blueprint $table) {
-            $table->removeColumn('initial_fee');
-            $table->removeColumn('max_initial_weight');
+            $table->dropColumn('initial_fee');
+            $table->dropColumn('max_initial_weight');
         });
     }
 

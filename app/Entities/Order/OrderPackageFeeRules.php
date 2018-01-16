@@ -5,7 +5,7 @@ namespace App\Entities\Order;
 use App\Entities\Company\Warehouse\Fees\FeeRules;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderFeeRules extends Model
+class OrderPackageFeeRules extends Model
 {
     protected $fillable = [
         'order_package_id',

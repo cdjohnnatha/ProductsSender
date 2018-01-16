@@ -85,8 +85,12 @@ class OrderRepository
 
     public function calculateTotalOrderFees($orderId)
     {
-        $orderFeesRulesArr = $this->findById($orderId)->orderFeeRules()->get();
-        return $orderFeesRulesArr->sum('price');
+        $orderPackages = $this->findById($orderId)->orderPackages()->get();
+        $totalOrderFee = 0;
+        foreach($orderPackages as $orderPackage) {
+            $totalOrderFee += $orderPackage->orderPackageFeeRules()->sum('price');
+        }
+        return $totalOrderFee;
     }
 
     public function calculateTotalOrderFeeWeightRules($orderId)

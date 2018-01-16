@@ -35,9 +35,5 @@ class Order extends Entity
         return $this->belongsTo(OrderStatus::class);
     }
 
-    public function orderFeeRules()
-    {
-        return $this->hasMany(OrderFeeRules::class);
-    }
 
 }

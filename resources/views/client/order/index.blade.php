@@ -20,12 +20,10 @@
             </div>
         </header>
 
-
         <section class="tab-content  p-20">
-
             <section class="tab-pane fadeIn active" id="tab-1">
                 <h2 class="card-title"> @lang('order.index.orders')</h2>
-                <small class="dataTables_info">@lang('order.index.short_title_inbox')</small>
+                <small class="dataTables_info"> @lang('order.index.short_title_inbox')</small>
 
                 <div class="row">
                     <div class="card card-data-tables product-table-wrapper">
@@ -40,7 +38,7 @@
 
 
             <section class="tab-pane fadeIn" id="tab-2">
-                <h2 class="card-title">@lang('order.index.history')</h2>
+                <h2 class="card-title"> @lang('order.index.history') </h2>
                 <small class="dataTables_info">@lang('order.index.short_title_history')</small>
 
                 <div class="row">
@@ -51,19 +49,4 @@
                 </div>
             </section>
         </section>
-        @endsection
-
-        @section('footerJS')
-            <script>
-                var form = $('#send_merge_packages');
-                console.log(form);
-                $('#send_packages').click(function(){
-                   {{--form.attr('action', '{{ Route('user.packages.sendPackage') }}');--}}
-                   form.submit();
-                });
-
-                $('#merge_packages').click(function(){
-                   alert("test");
-                });
-            </script>
-        @endsection
+@endsection
