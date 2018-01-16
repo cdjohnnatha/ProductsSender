@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderFeeRules extends Model
 {
     protected $fillable = [
-        'order_id',
+        'order_package_id',
         'price',
         'fee_rules_id'
     ];

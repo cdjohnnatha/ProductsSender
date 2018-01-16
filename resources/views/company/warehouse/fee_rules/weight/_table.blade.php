@@ -13,10 +13,8 @@
                        width="100%">
                     <thead>
                     <tr>
-                        <th>@lang('company.fees.weight.initial_fee')</th>
                         <th>@lang('company.fees.weight.max_weight_fee')</th>
                         <th>@lang('company.fees.weight.overweight_fee')</th>
-                        <th>@lang('company.fees.weight.max_initial_weight')</th>
                         <th>@lang('company.fees.weight.max_weight')</th>
                         <th>@lang('company.fees.weight.overweight') (g)</th>
                         @if(!$data['companyWarehouse']->feeWeightRules)
@@ -32,10 +30,8 @@
                     <tbody>
                     <tr>
                         @if($data['companyWarehouse']->feeWeightRules)
-                            <td>$: {{ $data['companyWarehouse']->feeWeightRules->initial_fee }}</td>
                             <td>$: {{ $data['companyWarehouse']->feeWeightRules->max_weight_fee }}</td>
                             <td>$: {{ $data['companyWarehouse']->feeWeightRules->overweight_fee }}</td>
-                            <td>{{ $data['companyWarehouse']->feeWeightRules->max_initial_weight }}</td>
                             <td>{{ $data['companyWarehouse']->feeWeightRules->max_weight }}</td>
                             <td>{{ $data['companyWarehouse']->feeWeightRules->overweight }}</td>
                             <td>

@@ -9,7 +9,7 @@
 namespace App\Repositories;
 
 use App\Entities\Order\Order;
-use App\Entities\Order\OrderFeeRules;
+use App\Entities\Order\OrderPackageFeeRules;
 use Webpatser\Uuid\Uuid;
 
 class OrderFeeRulesRepository
@@ -17,7 +17,7 @@ class OrderFeeRulesRepository
 
     private $model;
 
-    public function __construct(OrderFeeRules $orderFeeRules)
+    public function __construct(OrderPackageFeeRules $orderFeeRules)
     {
        $this->model = $orderFeeRules;
     }
@@ -27,9 +27,9 @@ class OrderFeeRulesRepository
         return $this->model->paginate(30);
     }
 
-    public function store($order, $fees)
+    public function store($orderPackage, $fees)
     {
-        return $order->orderFeeRules()->create([
+        return $orderPackage->orderFeeRules()->create([
             'price' => $fees->amount,
             'fee_rules_id' => $fees->id
         ]);

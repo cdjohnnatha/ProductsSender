@@ -9,7 +9,7 @@
 namespace App\Repositories;
 
 use App\Entities\Order\Order;
-use App\Entities\Order\OrderFeeRules;
+use App\Entities\Order\OrderPackageFeeRules;
 use App\Entities\Order\OrderFeeWeightRules;
 use Webpatser\Uuid\Uuid;
 
@@ -32,9 +32,7 @@ class OrderFeeWeightRulesRepository
     {
         $overweight = 0;
 
-        if($weight <= $warehouse->feeWeightRules->max_initial_weight){
-            $weightFee = $warehouse->feeWeightRules->initial_fee;
-        } else if($weight <= $warehouse->feeWeightRules->max_weight) {
+        if($weight <= $warehouse->feeWeightRules->max_weight) {
             $weightFee = $warehouse->feeWeightRules->max_weight_fee;
 
         } else {
