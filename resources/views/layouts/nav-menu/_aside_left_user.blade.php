@@ -35,12 +35,6 @@
           </a>
         </li>
 
-        <li class="{{ Route::is('user.orders.*') ? 'active' : '' }}">
-          <a href="{{ Route('user.orders.index') }}">
-            <i class="zmdi zmdi-money"></i>
-            @lang('nav_left_menu_client.orders')
-          </a>
-        </li>
         <li class="{{ Route::is('user.invoices.*') ? 'active' : '' }}">
           <a href="{{ Route('user.invoices.index') }}">
             <i class="zmdi zmdi-money"></i>

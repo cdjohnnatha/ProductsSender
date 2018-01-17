@@ -13,8 +13,12 @@ return [
         'inbox' => 'Inbox',
         'history' => 'History',
         'orders' => 'Orders',
+        'order' => 'Order',
+        'title' => 'Title',
         'short_title_inbox' => 'Orders at inbox can be found here',
         'short_title_history' => 'Orders which are not at index can be found here',
+        'invoice' => 'Invoice',
+        'status' => 'Status'
     ],
 
     'table_fragment' => [

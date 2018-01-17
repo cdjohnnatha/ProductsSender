@@ -28,6 +28,7 @@ class CompanyWarehouseRepository implements RepositoryInterface
             'feeWeightRules',
             'phones',
             'feeRules',
+            'warehouseOrders'
         ];
     }
 

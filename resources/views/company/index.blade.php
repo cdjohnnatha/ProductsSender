@@ -27,7 +27,6 @@
                             <table id="productsTable" class="mdl-data-table product-table m-t-30" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th>Name</th>
                                     <th>Phones</th>
                                     <th>Country</th>
@@ -41,7 +40,6 @@
                                 <tbody>
                                 @foreach($companies as $company)
                                     <tr>
-                                        <td>{{$company->id}}</td>
                                         <td>{{$company->name}}</td>
                                         <td>
                                             @foreach($company->phones as $phone)

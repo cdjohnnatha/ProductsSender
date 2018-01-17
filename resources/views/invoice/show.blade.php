@@ -10,7 +10,17 @@
                         <header class="card-heading">
                             <h2 class="card-title">@lang('invoice.show.invoice_title')
                                 No. {{ $data['invoice']->id }}</h2>
-                            <small class="">{{ $data['invoice']->created_at }}</small>
+                            <small class="">{{ $data['invoice']->updated_at }}</small>
+                            <small class="">
+                                @lang('invoice.show.status'):
+                                {{ $data['invoice']->invoiceStatus->message }}
+                            </small>
+                            <h2 class="card-title">@lang('order.index.orders')</h2>
+
+                            @foreach($data['invoice']->invoiceOrder as $order)
+                                <small>Nº: {{ $order->uuid }} - @lang('invoice.show.status'): {{ $order->orderStatus->message }}</small>
+                            @endforeach
+
                             <ul class="card-actions icons right-top">
                                 <li class="dropdown">
                                     <a href="javascript:void(0)" data-toggle="dropdown">

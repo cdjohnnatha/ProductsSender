@@ -6,6 +6,7 @@ use App\Entities\Company\Company;
 use App\Entities\Company\Warehouse\Fees\FeeRules;
 use App\Entities\Company\Warehouse\Fees\FeeWeightRules;
 use App\Entities\Entity;
+use App\Entities\Order\Order;
 use Illuminate\Notifications\Notifiable;
 
 class CompanyWarehouse extends Entity
@@ -47,6 +48,11 @@ class CompanyWarehouse extends Entity
     public function feeRules()
     {
         return $this->belongsToMany(FeeRules::class);
+    }
+
+    public function warehouseOrders()
+    {
+        return $this->hasMany(Order::class);
     }
 
 }

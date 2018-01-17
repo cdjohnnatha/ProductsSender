@@ -17,11 +17,13 @@ class OrderRepository
     private $model;
     private $allRelations;
     private $orderStatusRepository;
+    private $orderFowardRepository;
 
-    public function __construct(Order $order, OrderStatusRepository $orderStatusRepository)
+    public function __construct(Order $order, OrderStatusRepository $orderStatusRepository, OrderFowardRepository $orderFowardRepository)
     {
         $this->model = $order;
         $this->orderStatusRepository = $orderStatusRepository;
+        $this->orderFowardRepository = $orderFowardRepository;
         $this->allRelations = [
             'orderStatus',
             'orderPackages',
@@ -33,6 +35,7 @@ class OrderRepository
     {
         return $this->model->with($this->allRelations)->paginate(30);
     }
+
 
     public function store($clientId, $companyWarehouseId, $status=null)
     {
@@ -51,14 +54,19 @@ class OrderRepository
         return $this->model->create($attributes);
     }
 
+
     public function update($id, $request)
     {
-        // TODO: Implement update() method.
+        $status = $this->orderStatusRepository->findByMessage($request->input('order_status_id'));
+        if($status->message == 'SENT') {
+//            $this->orderFowardRepository->
+        }
+        return $this->findById($id)->update($request->all());
     }
 
     public function findById($attribute)
     {
-        return $this->model->find($attribute);
+        return $this->model->with($this->allRelations)->find($attribute);
     }
 
     public function destroy($id)

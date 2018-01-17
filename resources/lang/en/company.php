@@ -5,7 +5,7 @@ return [
         'name' => 'Give a name for that company',
         'form' => 'Company Form',
         'select_company' => 'Choose a company',
-        'company' => 'Company'
+        'company' => 'Company',
 
     ],
 
@@ -26,6 +26,9 @@ return [
             'data_info' => 'All the addons in warehouse are listed here.',
             'addons' => 'Addons',
             'price' => 'Price'
+        ],
+        'orders' => [
+            'tab_name' => 'Client Orders',
         ]
     ],
 

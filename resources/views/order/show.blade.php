@@ -51,13 +51,12 @@
                                                     <td>Weight Fees</td>
                                                     <td>{{ $package->orderFeeWeightRules->total }}</td>
                                                 </tr>
-                                                    @foreach($data['order']->orderPackages[$index]->orderPackageFeeRules as $fees)
-                                                        <tr>
-                                                            <td>{{ $fees->feeRules->title }}</td>
-                                                            <td>{{ $fees->price }}</td>
-                                                        </tr>
-                                                    @endforeach
-
+                                                @foreach($data['order']->orderPackages[$index]->orderPackageFeeRules as $fees)
+                                                    <tr>
+                                                        <td>{{ $fees->feeRules->title }}</td>
+                                                        <td>{{ $fees->price }}</td>
+                                                    </tr>
+                                                @endforeach
                                                 </tbody>
                                             </table>
                                             <input type="hidden" id="package_id" value="{{ $package->id }}">
@@ -69,16 +68,6 @@
                         </div>
                     </div>
                 @endforeach
-                    <div id="content" class="container">
-                        <div class="row">
-                            <div class="pull-right">
-                                <div class="col-xs-12">
-                                    <span class="text-right m-t-10"><strong>TOTAL:</strong></span>
-                                    <span class="total">${{ $data['order']->total }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
             </div>
         </section>
     </section>

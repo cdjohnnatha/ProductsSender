@@ -26,6 +26,10 @@
                                 <a href="#tab-3" data-toggle="tab"
                                    aria-expanded="true">@lang('company.company_warehouse.fee_rules')</a>
                             </li>
+                            <li role="presentation">
+                                <a href="#tab-4" data-toggle="tab"
+                                   aria-expanded="true">@lang('company.company_warehouse.orders.tab_name')</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="tab-content  p-20">
@@ -43,6 +47,48 @@
                                     @include('company.warehouse.fee_rules.weight._table')
                                 </div>
                             </section>
+                        </div>
+                        <div class="tab-pane fadeIn" id="tab-4">
+                            <div class="card card-data-tables product-table-wrapper">
+                                <div class="card-body p-0">
+                                    <table id="table-orders" class="mdl-data-table product-table m-t-30" cellspacing="0" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th class="col-sm-2" data-orderable="false">@lang('order.table_fragment.uuid')</th>
+                                            <th class="col-sm-2">@lang('order.table_fragment.status')</th>
+                                            <th>@lang('order.table_fragment.updated_at')</th>
+                                            <th data-orderable="false">@lang('order.table_fragment.amount')</th>
+                                            <th data-orderable="false" class="col-xs-2">
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($data['companyWarehouse']->warehouseOrders as $order)
+                                            <tr>
+                                                <td>{{ $order->uuid }}</td>
+                                                <td><span class="label label-default">{{ $order->orderStatus->message }}</span></td>
+                                                <td>{{Carbon\Carbon::parse($order->updated_at)->format('d/m/Y')}}</td>
+                                                <td>$: {{ $order->total }}</td>
+                                                <td>
+                                                    <section id="sweet_alerts_card">
+                                                        <a href="#" class="icon"
+                                                           onclick="window.location='{{ route("admin.companies.warehouses.orders.show", [
+                                                               $data['companyId'],
+                                                               $data['companyWarehouse']->id,
+                                                               $order->id
+                                                           ]) }}'"
+                                                           data-toggle="tooltip"
+                                                           data-placement="top" title="@lang('buttons.titles.show')">
+                                                            <i class="zmdi zmdi-search"></i>
+                                                        </a>
+                                                    </section>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

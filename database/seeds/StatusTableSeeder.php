@@ -31,7 +31,7 @@ class StatusTableSeeder extends Seeder
         ]);
 
         DB::table('order_status')->insert([
-           'message' => 'PAIED'
+           'message' => 'DONE'
         ]);
 
         DB::table('invoice_status')->insert([

@@ -10,12 +10,14 @@ namespace App\Repositories;
 
 use App\Entities\Order\Order;
 use App\Entities\Order\OrderFoward;
+use App\Entities\Package\Package;
 use Webpatser\Uuid\Uuid;
 
 class OrderFowardRepository
 {
 
     private $model;
+    private $packageRepository;
 
     public function __construct(OrderFoward $order)
     {
@@ -39,7 +41,7 @@ class OrderFowardRepository
 
     public function update($id, $request)
     {
-        // TODO: Implement update() method.
+
     }
 
     public function findById($attribute)

@@ -19,7 +19,7 @@ class ClientInvoicesController extends Controller
     {
         $data['invoices'] = $this->invoiceRepository->getAllByClient(Auth::user()->client->id);
 
-        return view('client.invoice.index', compact('data'));
+        return view('invoice.index', compact('data'));
     }
 
     /**
@@ -46,7 +46,7 @@ class ClientInvoicesController extends Controller
     public function show($id)
     {
         $data['invoice'] = $this->invoiceRepository->findById($id);
-        return view('client.invoice.show', compact('data'));
+        return view('invoice.show', compact('data'));
     }
 
     public function edit($id)

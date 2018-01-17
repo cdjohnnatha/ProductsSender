@@ -17,7 +17,6 @@
 
                 Route::resource('/companies', 'CompaniesController');
                 Route::group(['as' => 'companies.', 'prefix' => 'companies/{company}'], function () {
-
                     Route::resource('/addons', 'CompanyAddonsController');
                     Route::resource('/warehouses', 'CompanyWarehouseController');
 
@@ -25,6 +24,7 @@
                         Route::resource('addons', 'CompanyWarehouseAddonsController');
                             Route::resource('fees', 'CompanyWarehouseFeeRulesController', ['except' => ['index', 'show']]);
                             Route::resource('weight-fees', 'FeeWeightRulesController', ['except' => ['index', 'show']]);
+                            Route::resource('orders', 'CompanyWarehouseOrders');
                     });
 
                 });

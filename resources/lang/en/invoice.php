@@ -13,7 +13,8 @@ return [
         'unit_price' => 'Unit Price',
         'total' => 'Total',
         'invoice_title' => 'Invoice',
-        'addons' => 'Addons'
+        'addons' => 'Addons',
+        'status' => 'Status'
     ],
 
     'index' => [

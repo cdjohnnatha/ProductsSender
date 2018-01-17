@@ -6,6 +6,7 @@ use App\Entities\Client\Client;
 use App\Entities\Company\Warehouse\CompanyWarehouse;
 use App\Entities\Entity;
 use App\Entities\Order\Order;
+use App\Entities\Order\OrderFoward;
 use App\Entities\Order\OrderPackage;
 
 class Package extends Entity
@@ -79,6 +80,11 @@ class Package extends Entity
     public function orderPackage()
     {
         return $this->hasOne(OrderPackage::class);
+    }
+
+    public function orderFowards()
+    {
+        return $this->hasOne(OrderFoward::class);
     }
 
 }

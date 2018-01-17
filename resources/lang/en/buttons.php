@@ -19,7 +19,9 @@ return [
         'incoming_package_inform' => 'Inform incoming package',
         'send_package' => 'Send package',
         'merge_packages' => 'Merge packages',
-        'required_custom_clearance' => 'Declare goods'
+        'required_custom_clearance' => 'Declare goods',
+        'done' => 'Done',
+        'sent' => 'Sent'
     ],
 
 

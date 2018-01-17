@@ -8,7 +8,6 @@
                         <table id="warehouseTable" class="mdl-data-table product-table m-t-30" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Name</th>
                                 <th>City</th>
                                 <th>Country</th>
@@ -23,7 +22,6 @@
                             <tbody>
                                 @foreach($company->warehouses as $warehouse)
                                     <tr>
-                                        <td>{{ $warehouse->id }}</td>
                                         <td>{{ $warehouse->name }}</td>
                                         <td>{{ $warehouse->address['city'] }}</td>
                                         <td>{{ $warehouse->address['country'] }}</td>

@@ -275,4 +275,11 @@ class PackageRepository implements RepositoryInterface
 
         return $weight * $package->weight;
     }
+
+    public function updateTrackNumberStatus($packageId, $trackNumber)
+    {
+        $package = $this->findById($packageId);
+        $package->orderFowards()->update(['track_number' => $trackNumber]);
+        
+    }
 }
