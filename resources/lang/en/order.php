@@ -25,7 +25,8 @@ return [
         'uuid' => 'UUID',
         'status' => 'Status',
         'updated_at' => 'Updated At',
-        'amount' => 'Amount'
+        'amount' => 'Amount',
+        'invoice_status' => 'Invoice Status'
     ],
 
     'tooltip' => [

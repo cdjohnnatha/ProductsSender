@@ -61,11 +61,6 @@ class PackageRepository implements RepositoryInterface
         return $this->model->with($this->allRelations)->paginate(50);
     }
 
-    public function getCompaniesAllPackages()
-    {
-//        return $this->model->where('');
-    }
-
     public function getPackagesByStatus($statusType)
     {
         return $this->model->whereHas('packageStatus', function ($query) use ($statusType) {

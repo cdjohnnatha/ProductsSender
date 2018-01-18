@@ -23,13 +23,17 @@
                                 <div class="form-group" style="margin: 0;">
                                     <select class="select form-control" name="order_status_id">
                                         @foreach($data['orderStatus'] as $status)
-                                            <option value="{{ $status->id }}">
+                                            <option value="{{ $status->id }}" {{ $status->id == $data['order']->orderStatus->id ? 'selected' : ''}}>
                                                 {{ $status->message }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </td>
+                        </tr>
+                        <tr>
+                            <td>@lang('order.table_fragment.invoice_status')</td>
+                            <td>{{ $data['order']->invoiceOrder->first()->invoiceStatus->message }}</td>
                         </tr>
                     </tbody>
                 </table>

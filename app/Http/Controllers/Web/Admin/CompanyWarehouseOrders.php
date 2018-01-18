@@ -52,7 +52,6 @@ class CompanyWarehouseOrders extends Controller
 
     public function update(Request $request, $companyId, $warehouseId, $id)
     {
-        dd($request->input());
         if($this->orderRepository->update($id, $request)) {
             return redirect()->route('admin.companies.warehouses.show', [$companyId, $warehouseId]);
         }

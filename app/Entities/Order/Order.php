@@ -4,6 +4,7 @@ namespace App\Entities\Order;
 
 use App\Entities\Client\Client;
 use App\Entities\Entity;
+use App\Entities\Invoice\Invoice;
 
 class Order extends Entity
 {
@@ -33,6 +34,11 @@ class Order extends Entity
     public function orderStatus()
     {
         return $this->belongsTo(OrderStatus::class);
+    }
+
+    public function invoiceOrder()
+    {
+        return $this->belongsToMany(Invoice::class, 'invoice_order');
     }
 
 
