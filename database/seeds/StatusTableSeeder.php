@@ -1,6 +1,8 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class StatusTableSeeder extends Seeder
 {
@@ -13,41 +15,67 @@ class StatusTableSeeder extends Seeder
     {
         DB::table('package_status')->insert([
             'message' => 'INCOMING',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('package_status')->insert([
             'message' => 'REGISTERED',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('package_status')->insert([
             'message' => 'PREPARING',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('package_status')->insert([
             'message' => 'SENT',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('order_status')->insert([
-           'message' => 'WAITING_PAYMENT'
+           'message' => 'DONE',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('order_status')->insert([
-           'message' => 'DONE'
+            'message' => 'ORDERED',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('order_status')->insert([
+            'message' => 'SENT',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('invoice_status')->insert([
-            'message' => 'WAITING_PAYMENT'
+            'message' => 'WAITING_PAYMENT',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('invoice_status')->insert([
-            'message' => 'WAITING_PAYMENT_APPROVAL'
+            'message' => 'WAITING_PAYMENT_APPROVAL',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('invoice_status')->insert([
-            'message' => 'REFUSED'
+            'message' => 'REFUSED',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('invoice_status')->insert([
-            'message' => 'PAYED'
+            'message' => 'PAYED',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
 
