@@ -11,14 +11,14 @@ namespace App\Repositories;
 use App\Entities\Order\Order;
 use App\Entities\Order\OrderFoward;
 use App\Entities\Package\Package;
+use App\Library\Services\Shipment;
 use Webpatser\Uuid\Uuid;
 
 class OrderFowardRepository
 {
 
     private $model;
-    private $packageRepository;
-
+    private $shipment;
     public function __construct(OrderFoward $order)
     {
         $this->model = $order;
@@ -52,5 +52,10 @@ class OrderFowardRepository
     public function destroy($id)
     {
         return $this->model->find($id)->delete();
+    }
+
+    public function prepareTrackForSend($tracks)
+    {
+
     }
 }

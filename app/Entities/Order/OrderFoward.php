@@ -11,7 +11,7 @@ class OrderFoward extends Entity
         'price',
         'client_address_id',
         'package_id',
-        'goshippo_rate_id',
+        'goshippo_object_id',
         'order_id',
         'track_number',
     ];

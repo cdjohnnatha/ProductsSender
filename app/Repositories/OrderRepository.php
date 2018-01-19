@@ -27,15 +27,13 @@ class OrderRepository
         Order $order,
         OrderStatusRepository $orderStatusRepository,
         OrderFowardRepository $orderFowardRepository,
-        InvoiceStatusRepository $invoiceStatusRepository,
-        Package $package
+        InvoiceStatusRepository $invoiceStatusRepository
     )
     {
         $this->model = $order;
         $this->orderStatusRepository = $orderStatusRepository;
         $this->orderFowardRepository = $orderFowardRepository;
-        $invoiceStatusRepository = $invoiceStatusRepository;
-        $this->package = $package;
+        $this->invoiceStatusRepository = $invoiceStatusRepository;
         $this->allRelations = [
             'orderStatus',
             'orderPackages',
@@ -60,7 +58,7 @@ class OrderRepository
         }
 
         if(is_null($status)){
-            $attributes['order_status_id'] = $this->orderStatusRepository->findByMessage('WAITING_PAYMENT')->id;
+            $attributes['order_status_id'] = $this->orderStatusRepository->findByMessage('ORDERED')->id;
         } else {
             $attributes['order_status_id'] = $this->orderStatusRepository->findByMessage($status)->id;
         }
@@ -70,17 +68,16 @@ class OrderRepository
 
     public function update($id, $request)
     {
-        $status = $this->orderStatusRepository->findById($request->input('order_status_id'));
         $order = $this->findById($id);
-        dd($request->input());
-        if($status->message === 'SENT') {
-            $order = $this->statusMachineAprovall($order);
-            if($request->has('order_fowards')) {
-                foreach($request->input('order_fowards') as $orderFowards) {
-                    $this->orderFowardRepository->update($orderFowards->)
-                    $package = $this->package->find($orderFowards->package_id);
+        if($request->has('order_status_id')) {
+            $status = $this->orderStatusRepository->findById($request->input('order_status_id'));
 
-                }
+            if($status->message === 'SENT') {
+                $approved = $this->statusApprovalMachine($order);
+                if($approved && $request->has('order_fowards')) {
+                        $this->orderFowardRepository->prepareTrackForSend($request->input('order_fowards'));
+                    }
+                return $order;
             }
         }
 
@@ -151,14 +148,15 @@ class OrderRepository
         return $this->model->with($this->allRelations)->where('client_id', $clientId)->where('order_status_id', $message)->get();
     }
 
-    public function statusMachineAprovall($order)
+    public function statusApprovalMachine($order)
     {
-        $invoiceStatus = $order->invoiceOrder->invoiceStatus;
+        $invoiceStatus = $order->invoiceOrder->first()->invoiceStatus;
         $payedStatus = $this->invoiceStatusRepository->findByMessage('PAYED');
         if($payedStatus->message === $invoiceStatus->message) {
-            return $order->update(['order_status_id' => $payedStatus->id]);
+            $order->update(['order_status_id' => $payedStatus->id]);
+            return true;
         } else {
-            return $order;
+            return false;
         }
     }
 }

@@ -45,7 +45,7 @@
                                                     <div class="least-content">
                                                         <span class="checkbox">
                                                           <label>
-                                                            <input type="radio" value="{{ $rate->object_id }}" name="package_shipment[{{ $index }}][goshippo_rate_id]" class="shipment_value">
+                                                            <input type="radio" value="{{ $rate->object_id }}" name="package_shipment[{{ $index }}][goshippo_object_id]" class="shipment_value">
                                                             <input type="hidden" value="{{ $rate->amount }}" name="package_shipment[{{ $index }}][price]" class="shipment_value">
                                                             <input type="hidden" value="{{ Auth::user()->client->defaultAddress->id }}" name="package_shipment[{{ $index }}][client_address_id]" class="shipment_value">
                                                             <input type="hidden" value="{{ $package }}" name="package_shipment[{{ $index }}][package_id]" class="shipment_value">
