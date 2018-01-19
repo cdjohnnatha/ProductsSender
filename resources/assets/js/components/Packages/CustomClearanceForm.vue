@@ -16,10 +16,12 @@
           <table id="productsTable" class="mdl-data-table product-table m-t-30" cellspacing="0" width="100%">
               <thead>
               <tr>
-                  <th class="col-sm-6">Description</th>
-                  <th class="col-sm-2">Quantity</th>
+                  <th class="col-sm-5">Description</th>
+                  <th class="col-sm-1">Net Weight</th>
+                  <th class="col-sm-1">Mass Unit</th>
+                  <th class="col-sm-1">Quantity</th>
                   <th class="col-sm-2">Unit Price</th>
-                  <th class="col-sm-2" id="total_title">Total unit</th>
+                  <th class="col-sm-2" id="total_title">Total</th>
               </tr>
               </thead>
               <tbody>
@@ -28,6 +30,16 @@
                         <input type="text" v-model="goods.description" class="form-control" v-bind:name="'custom_clearance[' + index + '][description]'">
 
                         <input v-if="editing.length != 0" type="hidden" v-model="goods.id" class="form-control" v-bind:name="'custom_clearance[' + index + '][id]'">
+                    </td>
+                    <td>
+                        <input type="number" min="0.01" step="0.01" class="form-control" v-model="goods.net_weight" v-bind:name="'custom_clearance[' + index + '][net_weight]'">
+                    </td>
+                    <td>
+                        <select v-bind:name="'custom_clearance[' + index + '][mass_unit]'" class="form-control" v-model="goods.mass_unit">
+                            <option value="g">g</option>
+                            <option value="kg">kg</option>
+                            <option value="lb">lb</option>
+                        </select>
                     </td>
                     <td>
                         <input type="number" min="1" value="1" v-model="goods.quantity" @change="calculateTotal(index)" class="form-control" v-bind:name="'custom_clearance[' + index + '][quantity]'">
@@ -86,7 +98,9 @@
                         description: '',
                         quantity: 1,
                         unit_price: 0.00,
-                        total_unit: 0.0
+                        total_unit: 0.0,
+                        net_weight: 0.01,
+                        mass_unit: 'g'
                     });
                 }
             } else{
@@ -105,7 +119,9 @@
                             description: '',
                             quantity: 1,
                             unit_price: 0.00,
-                            total_unit: 0.0
+                            total_unit: 0.0,
+                            net_weight: 0.01,
+                            mass_unit: 'g'
                         });
                     }
                 });
