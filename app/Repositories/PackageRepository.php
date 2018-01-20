@@ -275,6 +275,15 @@ class PackageRepository implements RepositoryInterface
     {
         $package = $this->findById($packageId);
         $package->orderFowards()->update(['track_number' => $trackNumber]);
-        
+    }
+
+    public function listPackagesById($packageIds)
+    {
+        $packages = array();
+        foreach($packageIds as $id) {
+            array_push($packages, $this->findById($id));
+        }
+
+        return $packages;
     }
 }

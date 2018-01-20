@@ -8,17 +8,13 @@
 
 namespace App\Repositories;
 
-use App\Entities\Order\Order;
 use App\Entities\Order\OrderFoward;
-use App\Entities\Package\Package;
 use App\Library\Services\Shipment;
-use Webpatser\Uuid\Uuid;
 
 class OrderFowardRepository
 {
 
     private $model;
-    private $shipment;
     public function __construct(OrderFoward $order)
     {
         $this->model = $order;
@@ -54,8 +50,8 @@ class OrderFowardRepository
         return $this->model->find($id)->delete();
     }
 
-    public function prepareTrackForSend($tracks)
+    public function listOrderFowardObjectId($orderId)
     {
-
+        return $this->model->select('goshippo_object_id as object_id')->where('order_id', $orderId)->get();
     }
 }

@@ -10,6 +10,7 @@ namespace App\Repositories;
 
 use App\Entities\Order\Order;
 use App\Entities\Package\Package;
+use App\Library\Services\Shipment;
 use Webpatser\Uuid\Uuid;
 
 class OrderRepository
@@ -21,19 +22,22 @@ class OrderRepository
     private $orderFowardRepository;
     private $invoiceStatusRepository;
     private $package;
+    private $shipment;
 
     public function __construct
     (
         Order $order,
         OrderStatusRepository $orderStatusRepository,
         OrderFowardRepository $orderFowardRepository,
-        InvoiceStatusRepository $invoiceStatusRepository
+        InvoiceStatusRepository $invoiceStatusRepository,
+        Shipment $shipment
     )
     {
         $this->model = $order;
         $this->orderStatusRepository = $orderStatusRepository;
         $this->orderFowardRepository = $orderFowardRepository;
         $this->invoiceStatusRepository = $invoiceStatusRepository;
+        $this->shipment = $shipment;
         $this->allRelations = [
             'orderStatus',
             'orderPackages',
@@ -74,9 +78,11 @@ class OrderRepository
 
             if($status->message === 'SENT') {
                 $approved = $this->statusApprovalMachine($order);
-                if($approved && $request->has('order_fowards')) {
-                        $this->orderFowardRepository->prepareTrackForSend($request->input('order_fowards'));
-                    }
+//                if($approved && $request->has('order_fowards')) {
+
+//                } else {
+                    $request->session()->flash('warning', __('order.warehouse.warning'));
+//                }
                 return $order;
             }
         }
@@ -152,11 +158,16 @@ class OrderRepository
     {
         $invoiceStatus = $order->invoiceOrder->first()->invoiceStatus;
         $payedStatus = $this->invoiceStatusRepository->findByMessage('PAYED');
-        if($payedStatus->message === $invoiceStatus->message) {
+//        if($payedStatus->message === $invoiceStatus->message) {
             $order->update(['order_status_id' => $payedStatus->id]);
+
+                $fowards = $this->orderFowardRepository->listOrderFowardObjectId($order->id);
+                $fowards = $this->shipment->createTransaction($fowards);
+                dd($fowards);
+
             return true;
-        } else {
-            return false;
-        }
+//        } else {
+//            return false;
+//        }
     }
 }
