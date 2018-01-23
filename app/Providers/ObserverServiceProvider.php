@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Entities\Order\OrderFoward;
 use App\Entities\Package\Package;
+use App\Observers\OrderFowardsObserver;
 use App\Observers\PackageObserver;
 use App\Observers\WarehouseObserver;
 
@@ -18,7 +20,6 @@ class ObserverServiceProvider extends ServiceProvider
     public function boot()
     {
         Package::observe(PackageObserver::class);
-        Package::observe(WarehouseObserver::class);
     }
 
     /**

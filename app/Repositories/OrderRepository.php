@@ -21,7 +21,7 @@ class OrderRepository
     private $orderStatusRepository;
     private $orderFowardRepository;
     private $invoiceStatusRepository;
-    private $package;
+    private $packageStatusRepository;
     private $shipment;
 
     public function __construct
@@ -30,6 +30,7 @@ class OrderRepository
         OrderStatusRepository $orderStatusRepository,
         OrderFowardRepository $orderFowardRepository,
         InvoiceStatusRepository $invoiceStatusRepository,
+        PackageStatusRepository $packageStatusRepository,
         Shipment $shipment
     )
     {
@@ -38,6 +39,7 @@ class OrderRepository
         $this->orderFowardRepository = $orderFowardRepository;
         $this->invoiceStatusRepository = $invoiceStatusRepository;
         $this->shipment = $shipment;
+        $this->packageStatusRepository = $packageStatusRepository;
         $this->allRelations = [
             'orderStatus',
             'orderPackages',
@@ -158,16 +160,25 @@ class OrderRepository
     {
         $invoiceStatus = $order->invoiceOrder->first()->invoiceStatus;
         $payedStatus = $this->invoiceStatusRepository->findByMessage('PAYED');
+        $apiErrors = array();
 //        if($payedStatus->message === $invoiceStatus->message) {
-            $order->update(['order_status_id' => $payedStatus->id]);
+            $sentStatus = $this->orderStatusRepository->findByMessage('SENT');
+            $order->update(['order_status_id' => $sentStatus->id]);
 
-                $fowards = $this->orderFowardRepository->listOrderFowardObjectId($order->id);
-                $fowards = $this->shipment->createTransaction($fowards);
-                dd($fowards);
+                foreach($order->orderFowards as $foward){
+                    $transaction = $this->shipment->createTransaction($foward);
+                    if($transaction['status'] == "SUCCESS"){
+                        $foward->update(['track_number' => $transaction['tracking_number']]);
+                        $sentPackageStatus = $this->packageStatusRepository->getStatusFromMessage('SENT');
+                        $foward->package()->update(['package_status_id' => $sentPackageStatus->id]);
+                    } else {
+                        $tmpError = array();
+                        $tmpError['status'] = $transaction['status'];
+                        $tmpError['messages'] = $transaction['messages'];
+                        array_push($apiErrors, $tmpError);
+                    }
+                }
 
-            return true;
-//        } else {
-//            return false;
-//        }
+            return $apiErrors;
     }
 }

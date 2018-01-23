@@ -31,6 +31,12 @@ return [
 
     'tooltip' => [
         'generate_payment' => 'Generate Payment'
-    ]
+    ],
+
+    'warehouse' => [
+        'messages' => [
+            'send_status_warning' => 'It is not allowed change status for sent without payment'
+        ]
+    ],
 
 ];

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Library\Services\Shipment;
 use App\Repositories\Interfaces\RepositoryInterface;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;

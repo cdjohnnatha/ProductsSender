@@ -52,6 +52,6 @@ class OrderFowardRepository
 
     public function listOrderFowardObjectId($orderId)
     {
-        return $this->model->select('goshippo_object_id as object_id')->where('order_id', $orderId)->get();
+        return $this->model->select('goshippo_object_id as object_id', 'package_id')->where('order_id', $orderId)->get();
     }
 }

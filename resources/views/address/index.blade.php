@@ -20,7 +20,7 @@
       <section class="tab-pane fadeIn active" id="tab-1">
 
         <header class="card-heading">
-          <h2 class="card-title">{{__('common.titles.address')}}</h2>
+          <h2 class="card-title">@lang('user.address.addresses')}}</h2>
           <small class="dataTables_info">{{__('address.label.short_description')}}</small>
           <ul class="card-actions icons fab-action right-bottom">
             <li>

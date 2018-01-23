@@ -2,7 +2,7 @@
 
 
 @section('panel_header')
-  {{__('common.titles.address')}}
+  @lang('user.address.client_addresses')
 @endsection
 
 @section('content')
@@ -20,7 +20,7 @@
       <section class="tab-pane fadeIn active" id="tab-1">
 
         <header class="card-heading">
-          <h2 class="card-title">@lang('common.titles.address')</h2>
+          <h2 class="card-title">@lang('user.address.addresses')</h2>
           <small class="dataTables_info">@lang('address.label.short_description')</small>
           <ul class="card-actions icons fab-action right-bottom">
             <li>

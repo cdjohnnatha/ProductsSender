@@ -184,6 +184,8 @@ return [
 
         \Webpatser\Uuid\UuidServiceProvider::class,
 
+        App\Providers\ShipmentServiceProvider::class,
+
 
 
     ],

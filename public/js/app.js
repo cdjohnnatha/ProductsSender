@@ -54985,6 +54985,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -55006,7 +55018,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     description: '',
                     quantity: 1,
                     unit_price: 0.00,
-                    total_unit: 0.0
+                    total_unit: 0.0,
+                    net_weight: 0.01,
+                    mass_unit: 'g'
                 });
             }
         } else {
@@ -55027,7 +55041,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         description: '',
                         quantity: 1,
                         unit_price: 0.00,
-                        total_unit: 0.0
+                        total_unit: 0.0,
+                        net_weight: 0.01,
+                        mass_unit: 'g'
                     });
                 }
             });
@@ -55151,6 +55167,63 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       directives: [{
         name: "model",
         rawName: "v-model",
+        value: (goods.net_weight),
+        expression: "goods.net_weight"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "number",
+        "min": "0.01",
+        "step": "0.01",
+        "name": 'custom_clearance[' + index + '][net_weight]'
+      },
+      domProps: {
+        "value": (goods.net_weight)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          goods.net_weight = $event.target.value
+        }
+      }
+    })]), _vm._v(" "), _c('td', [_c('select', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (goods.mass_unit),
+        expression: "goods.mass_unit"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "name": 'custom_clearance[' + index + '][mass_unit]'
+      },
+      on: {
+        "change": function($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+            return o.selected
+          }).map(function(o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val
+          });
+          goods.mass_unit = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        }
+      }
+    }, [_c('option', {
+      attrs: {
+        "value": "g"
+      }
+    }, [_vm._v("g")]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "kg"
+      }
+    }, [_vm._v("kg")]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "lb"
+      }
+    }, [_vm._v("lb")])])]), _vm._v(" "), _c('td', [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
         value: (goods.quantity),
         expression: "goods.quantity"
       }],
@@ -55249,9 +55322,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('small', [_c('mark', [_vm._v("0- All values must be written in U.S dollars.")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', {
-    staticClass: "col-sm-6"
+    staticClass: "col-sm-5"
   }, [_vm._v("Description")]), _vm._v(" "), _c('th', {
-    staticClass: "col-sm-2"
+    staticClass: "col-sm-1"
+  }, [_vm._v("Net Weight")]), _vm._v(" "), _c('th', {
+    staticClass: "col-sm-1"
+  }, [_vm._v("Mass Unit")]), _vm._v(" "), _c('th', {
+    staticClass: "col-sm-1"
   }, [_vm._v("Quantity")]), _vm._v(" "), _c('th', {
     staticClass: "col-sm-2"
   }, [_vm._v("Unit Price")]), _vm._v(" "), _c('th', {
@@ -55259,7 +55336,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "total_title"
     }
-  }, [_vm._v("Total unit")])])])
+  }, [_vm._v("Total")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-xs-6 col-sm-11 text-right "

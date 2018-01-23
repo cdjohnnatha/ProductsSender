@@ -7,7 +7,8 @@ return [
         'plans_title' => 'Choose your plan'
     ],
 
-    'form' => [
-
+    'address' => [
+        'addresses' => 'Addresses',
+        'client_addresses' => 'Client Addresses'
     ]
 ];

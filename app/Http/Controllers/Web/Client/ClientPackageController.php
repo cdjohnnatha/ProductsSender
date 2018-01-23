@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Web\Client;
 use App\Entities\Package\Package;
 use App\Http\Controllers\Controller;
 use App\Library\Services\Shipment;
-use App\Library\Services\ShipmentInterface;
 use App\Repositories\CompanyWarehouseRepository;
 use App\Repositories\PackageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-//TODO update incoming, edit incoming for users. destroy incoming.
+
 class ClientPackageController extends Controller
 {
     private $packageRepository;
@@ -72,6 +71,8 @@ class ClientPackageController extends Controller
                     'custom_clearance.*.quantity' => 'required|integer|min:1',
                     'custom_clearance.*.unit_price' => 'required',
                     'custom_clearance.*.total_unit' => 'required',
+                    'custom_clearance.*.net_weight' => 'required|min:0.01',
+                    'custom_clearance.*.mass_unit' => 'required',
                 ]);
                 $steps = ++$steps;
                 $page = $page . $steps;
@@ -138,7 +139,8 @@ class ClientPackageController extends Controller
                 if($request->has('next')){
                     $steps++;
                     $data = $request->except('_token', 'next');
-                    $data['rates'] = $this->shipment->getRates($request->input('packages_id'), null);
+                    $packages = $this->packageRepository->listPackagesById($request->input('packages_id'));
+                    $data['rates'] = $this->shipment->getRates($packages, null);
 
                 } else {
                     $steps--;

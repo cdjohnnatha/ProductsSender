@@ -14,7 +14,6 @@ class Package extends Entity
     protected $fillable = [
         'provider',
         'store_name',
-        'track_number',
         'merchandise',
         'content_type',
         'width',
@@ -34,7 +33,6 @@ class Package extends Entity
     protected static $logAttributes = [
         'provider',
         'store_name',
-        'track_number',
         'merchandise',
         'content_type',
         'width',

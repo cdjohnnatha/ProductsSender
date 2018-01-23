@@ -4,6 +4,7 @@ namespace App\Entities\Order;
 
 use App\Entities\Client\ClientAddress;
 use App\Entities\Entity;
+use App\Entities\Package\Package;
 
 class OrderFoward extends Entity
 {
@@ -19,5 +20,15 @@ class OrderFoward extends Entity
     public function address()
     {
         return $this->belongsTo(ClientAddress::class, 'client_address_id', 'id');
+    }
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 }

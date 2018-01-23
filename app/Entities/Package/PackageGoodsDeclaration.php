@@ -11,5 +11,7 @@ class PackageGoodsDeclaration extends Entity
         'quantity',
         'unit_price',
         'total_unit',
+        'mass_unit',
+        'net_weight'
     ];
 }

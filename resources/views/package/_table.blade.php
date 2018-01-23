@@ -32,9 +32,6 @@
 
          <section id="sweet_alerts_card">
           @if($package->goodsDeclaration)
-            <a href="#" onclick="window.location='{{Route('user.packages.processPackageWizard', $package->id)}}'" class="icon" data-placement="top" title="{{__('buttons.titles.send_package')}}" data-toggle="tooltip">
-              <i class="zmdi zmdi-mail-send"></i>
-            </a>
 
             <a href="#" class="icon" onclick="window.location='{{Route("user.packages.show", $package->id)}}'" data-toggle="tooltip"
                data-placement="top" title="{{__('buttons.titles.show')}}">

@@ -4,73 +4,71 @@ namespace App\Library\Services;
 
 use App\Repositories\PackageRepository;
 use Illuminate\Support\Facades\Log;
+use Shippo_Address;
+use Shippo_CustomsDeclaration;
 use Shippo_Shipment;
+use Shippo_Transaction;
 
 class Shipment
 {
-
-    public function __construct(PackageRepository $packageRepository)
-    {
-        $this->packageRepository = $packageRepository;
-    }
-
-    public function getRates($packageIds, $address)
+    public function getRates($packages, $address)
     {
         $rates = array();
-        Log::info($packageIds);
-        foreach ($packageIds as $id) {
-            $package = $this->packageRepository->findById($id);
+        foreach ($packages as $package) {
+//
+            $addressFrom = $this->validateAddress(
+                $package->companyWarehouse->name,
+                $package->companyWarehouse->address,
+                $package->companyWarehouse->phones()->first()->number,
+                'holyship@gmail.com',
+                $package->companyWarehouse->company->name
+                );
 
-            $addressFrom = array(
-                'name' => $package->companyWarehouse->name,
-                'street1' => $package->companyWarehouse->address->street,
-                'city' => $package->companyWarehouse->address->city,
-                'state' => $package->companyWarehouse->address->state,
-                'zip' => $package->companyWarehouse->address->postal_code,
-                'country' => $package->companyWarehouse->address->country,
-                'phone' => $package->companyWarehouse->phones()->first()->number,
-                'email' => 'holyship@gmail.com'
-            );
+            if(!$addressFrom) {
+                return null;
+            }
 
             if(is_null($address)) {
                $address = $package->client->defaultAddress;
             }
-            $addressTo = array(
-                'name' => $address->owner_name . ' ' . $address->owner_surname,
-                'street1' => $address->street,
-                'city' => $address->city,
-                'state' => $address->state,
-                'zip' => $address->postal_code,
-                'country' => $address->country,
-                'phone' => $package->client->phones()->first()->number,
-                'email' => $package->client->user->email
-            );
-
-            $items = array();
-
-            foreach ($package->goodsDeclaration as $goods) {
-                $item = array(
-                    "description" => $goods->description,
-                    "quantity" => $goods->quantity,
-                    "value_amount" => $goods->total_unit,
-                    "value_currency" => "USD",
-                    "metadata" => "Customs Item",
-                    "origin_country" => $package->companyWarehouse->address->country
-                );
-                array_push($items, $item);
+            $fullname = $address->owner_name . ' ' . $address->owner_surname;
+            $addressTo = $this->validateAddress(
+                $fullname,
+                $address,
+                $package->client->phones()->first()->number,
+                $package->client->user->email,
+                $address->company_name);
+            if(!$addressTo) {
+                return null;
             }
 
-            $custom_declaration = array(
-                "contents_type" => $package->content_type ? "MERCHANDISE" : 'GIFT',
-                "contents_explanation" => $package->description,
-                "non_delivery_option" => "RETURN",
-                "certify" => true,
-                "certify_signer" => "Holyship",
-                "items" => $items,
-                "metadata" => "Custom declarations"
+            $custom_item = array();
+
+            foreach ($package->goodsDeclaration as $goods) {
+                $item =
+                    array(
+                        'description'=> $goods->description,
+                        'quantity'=> $goods->quantity,
+                        'net_weight'=> $goods->net_weight,
+                        'mass_unit'=> $goods->mass_unit,
+                        'value_amount'=> $goods->total_unit,
+                        'value_currency'=> 'USD',
+                        'origin_country'=> $package->companyWarehouse->address->country
+                );
+                array_push($custom_item, $item);
+            }
+
+
+            $custom_declaration = Shippo_CustomsDeclaration::create(
+                array(
+                    "contents_type" => $package->content_type ? "MERCHANDISE" : 'GIFT',
+                    "contents_explanation" => $package->description,
+                    "non_delivery_option" => "RETURN",
+                    "certify" => true,
+                    "certify_signer" => "Holyship",
+                    "items" => $custom_item
+                )
             );
-
-
 
             $parcel = array(
                 "length" => $package->depth,
@@ -85,7 +83,8 @@ class Shipment
                 'address_to' => $addressTo,
                 'address_from' => $addressFrom,
                 'async' => false,
-                'parcels' => $parcel
+                'parcels' => $parcel,
+                'customs_declaration' => $custom_declaration->object_id
             ))->rates;
             
             array_push($rates, $shipment);
@@ -93,6 +92,41 @@ class Shipment
 
         return $rates;
 
+    }
+
+    public function createTransaction($orderFoward)
+    {
+
+        $transaction = Shippo_Transaction::create( array(
+            'rate' => $orderFoward->goshippo_object_id,
+            'label_file_type' => "PDF",
+            'async' => false ) );
+
+        return $transaction;
+    }
+
+    public function validateAddress($name, $address, $phone, $email, $companyName)
+    {
+        $validAddress = Shippo_Address::create( array(
+            "name" => $name,
+            "phone" => $phone ,
+            "email" => $email,
+            "company" => $companyName,
+            "street1" => $address->street,
+            "street2" => $address->street2,
+            "city" => $address->city,
+            "state" => $address->state ,
+            "zip" => $address->postal_code ,
+            "country" => $address->country ,
+            "street_no" => $address->number,
+            "validate" => true
+        ));
+
+        if($validAddress->is_complete) {
+            return $validAddress;
+        } else {
+            return false;
+        }
     }
 
 

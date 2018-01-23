@@ -35,12 +35,12 @@
                                 @lang('packages.index.btn_send_packages')
                             </button>
                         </li>
-                        <li>
-                            <button type="btn" id="merge_packages" class="btn btn-info btn-flat">
-                                <i class="zmdi zmdi-group"></i>
-                                @lang('packages.index.btn_merge_packages')
-                            </button>
-                        </li>
+                        {{--<li>--}}
+                            {{--<button type="btn" id="merge_packages" class="btn btn-info btn-flat">--}}
+                                {{--<i class="zmdi zmdi-group"></i>--}}
+                                {{--@lang('packages.index.btn_merge_packages')--}}
+                            {{--</button>--}}
+                        {{--</li>--}}
                     </ul>
                 </header>
                 <h2 class="card-title">{{ __('packages.index.title_package') }}</h2>
