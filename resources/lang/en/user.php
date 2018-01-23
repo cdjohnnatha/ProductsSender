@@ -10,5 +10,15 @@ return [
     'address' => [
         'addresses' => 'Addresses',
         'client_addresses' => 'Client Addresses'
+    ],
+
+    'admin' => [
+        'fullname' => 'Fullname',
+        'country' => 'Country',
+        'email' => 'Email',
+        'phone' => 'Phone',
+        'password' => 'Password',
+        'password_confirm' => 'Password Confirm',
+        'select_company' => 'Select Company'
     ]
 ];

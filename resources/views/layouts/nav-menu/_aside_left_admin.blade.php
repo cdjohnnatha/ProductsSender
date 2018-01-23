@@ -20,6 +20,14 @@
     <div class="sidebar-inner sidebar-push">
       <ul class="nav nav-pills nav-stacked">
         <li class="sidebar-header">NAVIGATION</li>
+
+        <li class="{{ Route::is('admin.index') ? 'active' : '' }}">
+          <a href="{{ Route('admin.index') }}">
+            <i class="zmdi zmdi-city"></i>
+            @lang('nav_left_menu_adm.admins')
+          </a>
+        </li>
+
         <li class="{{ Route::is('admin.companies.*') ? 'active' : '' }}">
           <a href="{{ Route('admin.companies.index') }}">
             <i class="zmdi zmdi-city"></i>

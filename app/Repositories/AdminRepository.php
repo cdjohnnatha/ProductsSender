@@ -8,13 +8,15 @@
 
 namespace App\Repositories;
 
-use App\Entities\Admin;
+use App\Entities\Admin\Admin;
 use App\Repositories\Interfaces\RepositoryInterface;
+use Illuminate\Foundation\Auth\User;
 
 class AdminRepository implements RepositoryInterface
 {
 
     private $model;
+    private $user;
 
     public function __construct(Admin $model)
     {
@@ -23,7 +25,8 @@ class AdminRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model::all();
+        return $this->model->with('user')->get();
+
     }
 
     public function store($request)

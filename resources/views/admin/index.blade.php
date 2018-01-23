@@ -12,39 +12,6 @@
                 <header class="card-heading">
                     <h2 class="card-title">Admins</h2>
                     <small class="dataTables_info">All the admins which can use the application are here.</small>
-
-                    <div class="card-search">
-                        <div id="productsTable_wrapper" class="form-group label-floating is-empty">
-                            <i class="zmdi zmdi-search search-icon-left"></i>
-                            <input type="text" class="form-control filter-input" placeholder="Filter Products..." autocomplete="off">
-                            <a href="javascript:void(0)" class="close-search" data-card-search="close" data-toggle="tooltip" data-placement="top" title="Close"><i class="zmdi zmdi-close"></i></a>
-                        </div>
-                    </div>
-                    <ul class="card-actions icons right-top">
-                        <li id="deleteItems" style="display: none;">
-                            <span class="label label-info pull-left m-t-5 m-r-10 text-white"></span>
-                            <a href="javascript:void(0)" id="confirmDelete" data-toggle="tooltip" data-placement="top" data-original-title="Delete Product(s)">
-                                <i class="zmdi zmdi-delete"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" data-card-search="open" data-toggle="tooltip" data-placement="top" data-original-title="Filter Products">
-                                <i class="zmdi zmdi-filter-list"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown" data-toggle="tooltip" data-placement="top" data-original-title="Show Entries">
-                            <a href="javascript:void(0)" data-toggle="dropdown">
-                                <i class="zmdi zmdi-more-vert"></i>
-                            </a>
-                            <div id="dataTablesLength">
-                            </div>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" data-original-title="Export All">
-                                <i class="zmdi zmdi-inbox"></i>
-                            </a>
-                        </li>
-                    </ul>
                 </header>
                 <div class="card-body p-0">
                     <div class="alert alert-info m-20 hidden-md hidden-lg" role="alert">
@@ -58,10 +25,10 @@
                             <tr>
                                 </th>
                                 <th class="col-xs-1">Id</th>
-                                <th class="col-xs-2">{{ __('admin.form.name') }}</th>
-                                <th class="col-xs-1">{{ __('admin.form.country') }}</th>
+                                <th class="col-xs-2">@lang('user.admin.fullname')</th>
+                                <th class="col-xs-1">@lang('user.admin.country')</th>
                                 <th class="col-xs-2">Email</th>
-                                <th class="col-xs-2">{{ __('admin.form.phone') }}</th>
+                                <th class="col-xs-2">@lang('user.admin.phone')</th>
                                 <th data-orderable="false" class="col-xs-2">
                                     <a href="{{Route('admin.create')}}">
                                         <button class="btn btn-primary btn-fab  animate-fab"><i class="zmdi zmdi-plus"></i></button>
@@ -72,11 +39,11 @@
                             <tbody>
                             @foreach($admins as $admin)
                                 <tr>
-                                    <td>{{$admin->id}}</td>
-                                    <td>{{$admin->name.' '.$admin->surname}}</td>
-                                    <td>{{$admin->country}}</td>
-                                    <td>{{$admin->email}}</td>
-                                    <td>{{$admin->phone}}</td>
+                                    <td>{{ $admin->id }}</td>
+                                    <td>{{ $admin->fullname }}</td>
+                                    <td>{{ $admin->country }}</td>
+                                    <td>{{ $admin->user ->email}}</td>
+                                    <td>{{ $admin->phone }}</td>
                                     <td>
                                         @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'admin' ,'id' => $admin->id])
                                     </td>
