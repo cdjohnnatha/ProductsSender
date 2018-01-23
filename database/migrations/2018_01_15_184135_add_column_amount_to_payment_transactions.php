@@ -26,7 +26,7 @@ class AddColumnAmountToPaymentTransactions extends Migration
     public function down()
     {
         Schema::table('payment_transactions', function (Blueprint $table) {
-            $table->removeColumn('amount');
+            $table->dropColumn('amount');
         });
     }
 }

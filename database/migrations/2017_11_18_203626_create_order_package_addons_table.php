@@ -34,6 +34,6 @@ class CreateOrderPackageAddonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_addons');
+        Schema::dropIfExists('order_package_addons');
     }
 }

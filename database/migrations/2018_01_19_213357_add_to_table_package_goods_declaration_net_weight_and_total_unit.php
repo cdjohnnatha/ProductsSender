@@ -28,7 +28,7 @@ class AddToTablePackageGoodsDeclarationNetWeightAndTotalUnit extends Migration
     {
         Schema::table('package_goods_declarations', function (Blueprint $table) {
             $table->dropColumn('net_weight');
-            $table->dropColumn('mass_unit', 10);
+            $table->dropColumn('mass_unit');
         });
     }
 }

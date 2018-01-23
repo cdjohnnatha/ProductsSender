@@ -36,6 +36,6 @@ class CreatePackageGoodsDeclaration extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('goods_declarations');
+        Schema::dropIfExists('package_goods_declarations');
     }
 }
