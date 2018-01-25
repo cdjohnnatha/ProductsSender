@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
-use App\Admin;
 use App\Entities\Company\Warehouse\CompanyWarehouse;
 use App\Http\Controllers\Controller;
 use App\Repositories\AdminRepository;
