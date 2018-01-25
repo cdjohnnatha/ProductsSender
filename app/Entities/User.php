@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Entities\Admin\Admin;
 use App\Entities\Client\Client;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -26,7 +27,5 @@ class User extends Authenticatable
     {
         return $this->hasOne(Client::class);
     }
-
-
 
 }

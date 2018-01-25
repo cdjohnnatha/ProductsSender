@@ -30,6 +30,11 @@ class UserRepository implements RepositoryInterface
         return $this->model->all();
     }
 
+    public function getAllByType($userType)
+    {
+        return $this->model->where('type', $userType)->get();
+    }
+
     public function store($request)
     {
         $user = $this->model->create($request->input('user'));
@@ -59,6 +64,17 @@ class UserRepository implements RepositoryInterface
             return false;
 
         }
+    }
+
+    public function storeUserTypes($request, $userType=null)
+    {
+        $user = $this->model->create($request->all());
+        $user->password = bcrypt($request->input('users.password'));
+        if(!is_null($userType)) {
+            $user->type = $userType;
+        }
+
+        return $user->save();
     }
 
     public function update($id, $request)

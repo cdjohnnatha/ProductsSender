@@ -25,10 +25,7 @@
                             <tr>
                                 </th>
                                 <th class="col-xs-1">Id</th>
-                                <th class="col-xs-2">@lang('user.admin.fullname')</th>
-                                <th class="col-xs-1">@lang('user.admin.country')</th>
                                 <th class="col-xs-2">Email</th>
-                                <th class="col-xs-2">@lang('user.admin.phone')</th>
                                 <th data-orderable="false" class="col-xs-2">
                                     <a href="{{Route('admin.create')}}">
                                         <button class="btn btn-primary btn-fab  animate-fab"><i class="zmdi zmdi-plus"></i></button>
@@ -40,10 +37,7 @@
                             @foreach($admins as $admin)
                                 <tr>
                                     <td>{{ $admin->id }}</td>
-                                    <td>{{ $admin->fullname }}</td>
-                                    <td>{{ $admin->country }}</td>
-                                    <td>{{ $admin->user ->email}}</td>
-                                    <td>{{ $admin->phone }}</td>
+                                    <td>{{ $admin->email}}</td>
                                     <td>
                                         @include('layouts.formButtons._form_edit_delete', ['prefix_name' => 'admin' ,'id' => $admin->id])
                                     </td>

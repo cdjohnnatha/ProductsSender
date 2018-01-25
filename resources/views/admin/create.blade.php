@@ -20,40 +20,21 @@
                     </ul>
                 </header>
                 @if(Request::is('*/edit'))
-                    <?php $action = 'admin.update' ?>
-                    <form action="{{route($action, $admin->id)}}" role="form" method="POST">
+                    <form action="{{route('admin.update', $data['admin']->id)}}" role="form" method="POST">
                     <input name="_method" type="hidden" value="PUT">
                 @else
-                <?php $action = 'admin.store' ?>
-                <form action="{{route($action)}}" role="form" method="POST">
+                <form action="{{ route('admin.store') }}" role="form" method="POST">
                 @endif
                     {{ csrf_field() }}
                     <section class="card-body">
                         <article>
                             <section class="row">
-                                <div class="form-group col-sm-6 label-floating {{ $errors->has('fullname') ? ' has-error' : '' }}">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
-                                        <label class="control-label">@lang('user.admin.fullname')</label>
-                                        <input type="text" class="form-control" name="name"
-                                               value="{{ $admin->fullname or old('fullname') }}">
-
-                                        @if ($errors->has('fullname'))
-                                            <span class="help-block">
-                                                <strong class="text-danger" class="alert-danger">
-                                                  {{ $errors->first('fullname') }}
-                                                </strong>
-                                              </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <section class="form-group col-sm-6 {{ $errors->has('email') ? ' has-error' : '' }} label-floating">
+                                <section class="form-group col-sm-12 {{ $errors->has('email') ? ' has-error' : '' }} label-floating">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
                                         <label class="control-label">Email</label>
                                         <input type="email" class="form-control" name="email"
-                                               value="{{ $admin->email or old('email') }}">
+                                               value="{{ $data['admin']->email or old('email') }}">
 
                                         @if ($errors->has('email'))
                                             <span class="help-block">
@@ -66,33 +47,6 @@
                                 </section>
                             </section>
 
-
-                            <section class="row">
-                                <section class="form-group col-sm-6 {{ $errors->has('phone') ? ' has-error' : '' }} label-floating">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
-                                        <label class="control-label">@lang('user.admin.phone')</label>
-                                        <input type="text" class="form-control" name="phone"
-                                               value="{{ $admin->phone or old('phone') }}">
-
-                                        @if ($errors->has('phone'))
-                                            <span class="help-block">
-                                              <strong class="text-danger" class="alert-danger">
-                                                {{ $errors->first('phone') }}
-                                              </strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </section>
-
-                                <section class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
-                                        <label class="control-label">@lang('user.admin.select_company')</label>
-                                        {{--@include('company_warehouse._select')--}}
-                                    </div>
-                                </section>
-                            </section>
 
                             <section class="row">
                                 <div class="form-group col-sm-6 {{ $errors->has('password') ? 'has-error' : '' }} label-floating">
