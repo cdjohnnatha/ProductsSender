@@ -20,39 +20,80 @@ class UserTest extends DuskTestCase
     public function testRegister()
     {
 
-        $this->browse(function (Browser $browser) {
-            $faker = \Faker\Factory::create();
-            $password = $faker->password(6, 10);
-            $browser->visit(route('register.create'))
-                ->type('client[name]', $faker->firstName)
-                ->type('client[surname]', $faker->lastName)
-                ->type('client[identity_document]', '0000.000')
-                ->type('client[tax_document]', '000.000.000-00')
-                ->type('phones[0][number]', $faker->phoneNumber)
-                ->type('user[email]', $faker->email)
-                ->type('user[password]', $password)
-                ->type('user[password_confirmation]', $password)
+        try {
+            $this->browse(function (Browser $browser) {
+                $faker = \Faker\Factory::create();
+                $password = $faker->password(6, 10);
+                $browser->visit(route('register.create'))
 
-                ->click('#next_btn')
-                ->type('address[label]', $faker->name)
-                ->type('address[owner_name]', $faker->firstName)
-                ->type('address[owner_surname]', $faker->lastName)
-                ->type('address[phone]', $faker->phoneNumber)
-                ->type('address[company_name]', $faker->company)
-                ->type('address[number]', $faker->buildingNumber)
-                ->type('address[postal_code]', $faker->postcode)
-                ->type('#map', 'Rua rita porfirio chaves')
-                ->waitFor('.pac-item')
-                ->click('.pac-item')
-                ->pause(800)
-                ->click('#next_btn')
-                ->attach('identification_card', '/home/claudio/Pictures/package_1.jpg')
-                ->attach('usps_form', '/home/claudio/Pictures/package_1.jpg')
-                ->attach('proof_address', '/home/claudio/Pictures/package_1.jpg')
+                    ->type('client[name]', $faker->firstName)
+                    ->click('#next_btn')
+                    ->assertRouteIs('register.create')
 
-                ->click('#register_btn')
-                ->waitForLocation('/login');
-        });
+                    ->type('phones[0][number]', 9999999988)
+                    ->click('#next_btn')
+                    ->assertRouteIs('register.wizard')
+
+                    ->type('client[name]', $faker->firstName)
+                    ->click('#next_btn')
+                    ->assertRouteIs('register.wizard')
+
+                    ->type('client[surname]', $faker->lastName)
+                    ->click('#next_btn')
+                    ->assertRouteIs('register.wizard')
+
+                    ->type('client[identity_document]', '0000.000')
+                    ->click('#next_btn')
+                    ->assertRouteIs('register.wizard')
+
+                    ->type('client[tax_document]', '000.000.000-00')
+                    ->click('#next_btn')
+                    ->assertRouteIs('register.wizard')
+
+                    ->type('user[email]', 'a')
+                    ->click('#next_btn')
+                    ->assertRouteIs('register.wizard')
+
+                    ->type('user[email]', $faker->email)
+                    ->click('#next_btn')
+                    ->assertRouteIs('register.wizard')
+
+                    ->type('user[email]', 'cdjohnnatha@gmail.com')
+                    ->click('#next_btn')
+                    ->assertRouteIs('register.wizard')
+
+                    ->type('user[password]', $faker->password(6))
+                    ->type('user[password_confirmation]', $password)
+                    ->assertRouteIs('register.wizard')
+                    ->click('#next_btn')
+
+                    ->type('user[password]', $password)
+                    ->type('user[password_confirmation]', $password)
+                    ->assertRouteIs('register.wizard')
+                    ->click('#next_btn')
+
+
+                    ->type('address[label]', $faker->name)
+                    ->type('address[owner_name]', $faker->firstName)
+                    ->type('address[owner_surname]', $faker->lastName)
+                    ->type('address[phone]', $faker->phoneNumber)
+                    ->type('address[company_name]', $faker->company)
+                    ->type('address[number]', $faker->buildingNumber)
+                    ->type('address[postal_code]', $faker->postcode)
+                    ->type('#map', 'Rua rita porfirio chaves')
+                    ->waitFor('.pac-item')
+                    ->click('.pac-item')
+                    ->pause(800)
+                    ->click('#next_btn')
+                    ->attach('identification_card', '/home/claudio/Pictures/package_1.jpg')
+                    ->attach('usps_form', '/home/claudio/Pictures/package_1.jpg')
+                    ->attach('proof_address', '/home/claudio/Pictures/package_1.jpg')
+                    ->click('#register_btn')
+                    ->waitForLocation('/login');
+            });
+        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
+        }
     }
 
     /**
@@ -149,6 +190,5 @@ class UserTest extends DuskTestCase
                 ->waitForLocation($this->prefixUrl.'dashboard');
         });
     }
-
 
 }

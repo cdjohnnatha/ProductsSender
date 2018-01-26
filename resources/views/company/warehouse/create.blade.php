@@ -152,7 +152,7 @@
                                     {{ $errors->has('companyWarehouse.storage_time') ? ' has-error' : '' }}">
                                     <div class="input-group">
                                       <span class="input-group-addon"><i class="zmdi zmdi-alarm"></i></span>
-                                      <label class="control-label">{{__('warehouse.form.storage_time').' ('. __('common.calendar.days').')'}}</label>
+                                      <label class="control-label">{{__('warehouse.form.storage_time').' ('. __('warehouse.form.days').')'}}</label>
                                       <input type="number" min="0" name="companyWarehouse[storage_time]" class="form-control"
                                              value="{{ $companyWarehouse->storage_time or old('companyWarehouse.storage_time') }}">
                                       @if ($errors->has('companyWarehouse.storage_time'))

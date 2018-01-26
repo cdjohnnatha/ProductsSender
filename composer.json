@@ -19,6 +19,7 @@
         "pusher/pusher-php-server": "~2.6",
         "sentry/sentry-laravel": "^0.7.0",
         "spatie/laravel-activitylog": "^1.15",
+        "unicodeveloper/laravel-email-validator": "^1.0",
         "webpatser/laravel-uuid": "^2.0"
     },
     "require-dev": {

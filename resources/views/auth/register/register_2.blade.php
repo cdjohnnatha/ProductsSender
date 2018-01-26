@@ -66,7 +66,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
                                         <label class="control-label">{{__('address.titles.phone')}}</label>
-                                        <input type="text" class="form-control" name="address[phone]"
+                                        <input type="number" class="form-control" name="address[phone]"
                                                value="{{ $data['address']['phone'] or old('address.phone') }}">
 
                                         @if ($errors->has('address.phone'))

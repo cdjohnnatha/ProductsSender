@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Mail\UserRegisterConfirmation;
 use App\Repositories\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -74,33 +71,40 @@ class RegisterController extends Controller
                 $data['step'] = $step;
 
                 if($validator->fails()){
-                    $data = $request->except(['next']);
-                    return view('auth.register.register_1', compact('data'))->withErrors($validator);
+                      $data = $request->except(['next']);
+                      return view('auth.register.register_1', compact('data'))->withErrors($validator);
                 }
-
-                break;
+                $emailValidator = (new \Unicodeveloper\EmailValidator\EmailValidator)->verify($request->input('user.email'))->isValid();
+                if($emailValidator[0]){
+                    break;
+                } else{
+                    $data = $request->except(['next']);
+                    $data['emailValidation'] = $emailValidator[1];
+                    return view('auth.register.register_1', compact('data'));
+                }
 
             case 2:
-                $validator = Validator::make($request->all(), [
-                    'address.label' => 'required',
-                    'address.owner_name' => 'required',
-                    'address.owner_surname' => 'required|string',
-                    'address.city' => 'required|string',
-                    'address.state' => 'required|string',
-                    'address.postal_code' => 'required',
-                    'address.company_name' => 'nullable|string',
-                    'address.phone' => 'required|string',
-                    'address.country' => 'required|string',
-                    'address.street' => 'required|string',
-                    'address.formatted_address' => 'required|string',
-                    'address.number' => 'required|string',
-                ]);
-                if($validator->fails()){
-                    $data = $request->except(['next']);
-                    return view('auth.register.register_2', compact('data'))->withErrors($validator);
-                }
-
                 if($request->has('next')) {
+                    $validator = Validator::make($request->all(), [
+                        'address.label' => 'required',
+                        'address.owner_name' => 'required',
+                        'address.owner_surname' => 'required|string',
+                        'address.city' => 'required|string',
+                        'address.state' => 'required|string',
+                        'address.postal_code' => 'required',
+                        'address.company_name' => 'nullable|string',
+                        'address.phone' => 'required|string',
+                        'address.country' => 'required|string',
+                        'address.street' => 'required|string',
+                        'address.formatted_address' => 'required|string',
+                        'address.number' => 'required|string',
+                    ]);
+
+
+                    if($validator->fails()){
+                        $data = $request->except(['next']);
+                        return view('auth.register.register_2', compact('data'))->withErrors($validator);
+                    }
                     ++$step;
                     $data = $request->except(['next']);
                 } else {

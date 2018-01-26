@@ -186,6 +186,8 @@ return [
 
         App\Providers\ShipmentServiceProvider::class,
 
+        Unicodeveloper\EmailValidator\EmailValidatorServiceProvider::class,
+
 
 
     ],
@@ -240,6 +242,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
         'Uuid' => Webpatser\Uuid\Uuid::class,
+        'EmailValidator' => Unicodeveloper\EmailValidator\EmailValidatorFacade::class,
 
     ],
 

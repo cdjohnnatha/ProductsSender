@@ -55,9 +55,9 @@ class UserRepository implements RepositoryInterface
         if($request->hasFile('proof_address')){
             $this->saveImage($request->file('proof_address'), $user);
         }
-//        Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
+        Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
         if ($user->save()) {
-//            Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
+            Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
             return true;
 
         } else {

@@ -19,15 +19,28 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        factory(Company::class, 2)->create()->each(function($company) {
-            factory(CompanyPhone::class, 3)->create(['company_id' => $company->id]);
-            factory(CompanyAddress::class, 1)->create(['company_id' => $company->id]);
-            factory(CompanyAddons::class, 1)->create(['company_id' => $company->id]);
+        DB::table('companies')->insert([
+            'name' => 'Holyship'
+        ]);
 
-            factory(CompanyWarehouse::class, 1)->create(['company_id' => $company->id])->each(function($warehouse) {
-                factory(CompanyWarehousePhones::class, 3)->create(['company_warehouse_id' => $warehouse->id]);
-            });
-        });
+        DB::table('company_warehouses')->insert([
+           'name' => 'Main Warehouse',
+            'storage_time' => 15,
+            'box_price' => 1.65,
+            'company_id' => 1
+        ]);
+
+        DB::table('company_addresses')->insert([
+            'country' => 'BR',
+            'street' => 'aaa',
+            'street2' => 'bbb',
+            'city' => 'Chicago',
+            'state' => 'FL',
+            'postal_code' => '12345',
+            'number' => '11',
+            'formatted_address' => 'aaa bbb',
+            'company_id' => 1
+        ]);
 
         DB::table('fee_rules')->insert([
             'title' => 'Fast pack',
