@@ -56115,7 +56115,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "form-control",
       attrs: {
         "name": 'phones[' + index + '][number]',
-        "type": "text",
+        "type": "number",
         "id": 'input-number-' + index,
         "required": ""
       },

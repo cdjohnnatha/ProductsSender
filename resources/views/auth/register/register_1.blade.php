@@ -125,12 +125,12 @@
                             </section>
 
                             <section class="row">
-                                <div class="form-group col-sm-6  label-floating {{ $errors->has('password') ? 'has-error' : '' }}">
+                                <div class="form-group col-sm-6  label-floating {{ $errors->has('usr.password') ? 'has-error' : '' }}">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-key"></i></span>
                                         <label class="control-label">@lang('auth.register.password')</label>
                                         <input type="password" class="form-control" name="user[password]"
-                                               value="{{ old('password') }}">
+                                               value="{{ old('user.password') }}">
 
 
                                         @if ($errors->has('password'))
@@ -144,7 +144,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-sm-6 {{ $errors->has('password_confirmation') ? ' has-error' : '' }} label-floating">
+                                <div class="form-group col-sm-6 {{ $errors->has('user.password_confirmation') ? ' has-error' : '' }} label-floating">
                                     <label class="control-label">@lang('auth.register.password_confirm')</label>
                                     <input type="password" class="form-control" name="user[password_confirmation]">
                                 </div>

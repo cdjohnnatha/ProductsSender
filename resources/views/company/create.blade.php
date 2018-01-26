@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('panel_header')
-    {{__('common.titles.companies')}}
+    @lang('company.titles.company')
 @endsection
 
 

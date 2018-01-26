@@ -73,6 +73,11 @@ class RegisterController extends Controller
                 $data = $request->except(['_token','next']);
                 $data['step'] = $step;
 
+                if($validator->fails()){
+                    $data = $request->except(['next']);
+                    return view('auth.register.register_1', compact('data'))->withErrors($validator);
+                }
+
                 break;
 
             case 2:
@@ -88,6 +93,7 @@ class RegisterController extends Controller
                     'address.country' => 'required|string',
                     'address.street' => 'required|string',
                     'address.formatted_address' => 'required|string',
+                    'address.number' => 'required|string',
                 ]);
                 if($validator->fails()){
                     $data = $request->except(['next']);
@@ -131,8 +137,6 @@ class RegisterController extends Controller
                 break;
         }
         return view($page, compact('data'));
-
-
     }
 
     public function store(Request $request)
