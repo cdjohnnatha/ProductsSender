@@ -1,6 +1,10 @@
 <?php
 
 return [
+
+
+    'profile' => 'Profile',
+
     'registration' => [
         'form_info_title' => 'User informations',
         'address_title' => 'Give a name for your address',
@@ -20,5 +24,16 @@ return [
         'password' => 'Password',
         'password_confirm' => 'Password Confirm',
         'select_company' => 'Select Company'
+    ],
+
+    'client' => [
+        'form' => [
+            'name' =>'Name',
+            'surname' => 'Surname',
+            'email' => 'Email',
+            'identity_document' => 'Identity Document',
+            'tax_document' => 'Tax Document',
+
+        ]
     ]
 ];

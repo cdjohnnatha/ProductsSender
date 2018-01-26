@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Web\Client;
 
+use App\Repositories\ClientRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ClientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $clientRepository;
+
+    public function __construct(ClientRepository $clientRepository)
+    {
+        $this->clientRepository = $clientRepository;
+    }
+
     public function index()
     {
 
@@ -46,7 +49,8 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        //
+        $data['client'] = $this->clientRepository->findById($id);
+        return view('user.client.show', compact('data'));
     }
 
     /**

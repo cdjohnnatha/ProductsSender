@@ -31,7 +31,11 @@
       </a>
       <ul class="dropdown-menu btn-primary dropdown-menu-right">
         <li>
-          <a href="page-profile.html"><i class="zmdi zmdi-account"></i> Profile</a>
+          @if(auth()->user()->type == 'user')
+            <a href="{{ route('user.clients.show', Auth::user()->client->id) }}"><i class="zmdi zmdi-account"></i> @lang('user.profile')</a>
+          @else
+            <a href=""><i class="zmdi zmdi-account"></i> @lang('user.profile')</a>
+          @endif
         </li>
         <li>
           <a href="javascript:void(0)"><i class="zmdi zmdi-settings"></i> Account Settings</a>
