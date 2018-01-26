@@ -13,7 +13,28 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => 'Email/Senha não encontrados na nossa base de dados',
+    'throttle' => 'Foi identificado muitas tentativas. Por favor tente novamente em in :seconds segundos.',
+
+    'register' => [
+        'user_informations' => 'Informações Pessoais',
+        'user_address' => 'Nome do Endereço',
+        'user_documents' => 'Documentos Obrigatórios',
+        'name' => 'Nome',
+        'surname' => 'Sobrenome',
+        'identity_document'    => 'Documento de Identificação',
+        'tax_document'  => 'Documento Tax',
+        'phones'   => 'Telefones',
+        'email'   => 'Email',
+        'password'   => 'Senha',
+        'password_confirm'   => 'Confirme a Senha',
+        'city'   => 'Cidade',
+        'state'   => 'Estado/provincia',
+        'postal_code'   => 'Codigo Postal',
+        'country'   => 'Pais',
+        'number'   => 'Número da Casa',
+        'addressee' => 'Nome de quem vai receber',
+        'street2' => 'Complemento de Endereço'
+    ]
 
 ];

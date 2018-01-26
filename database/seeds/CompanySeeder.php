@@ -23,6 +23,11 @@ class CompanySeeder extends Seeder
             'name' => 'Holyship'
         ]);
 
+        DB::table('company_phones')->insert([
+           'number' => '99999999',
+            'company_id' => 1
+        ]);
+
         DB::table('company_warehouses')->insert([
            'name' => 'Main Warehouse',
             'storage_time' => 15,

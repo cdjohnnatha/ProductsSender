@@ -63,5 +63,10 @@ class WarehouseSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
+        DB::table('company_warehouse_phones')->insert([
+           'number' => '999999999',
+            'company_warehouse_id' => 1
+        ]);
+
     }
 }

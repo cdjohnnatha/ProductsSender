@@ -2,26 +2,29 @@
 
 return [
     'titles' => [
-        'name' => 'Crie um Nome para o Endereço',
-        'admin_name' => 'Crie um nome para o administrador',
+        'name' => 'Dê um nome para esse endereço',
+        'admin_name' => 'Dê um nome para esse deposito',
         'first_name'    => 'Primeiro Nome',
-        'last_name'  => 'Ultimo Nome',
+        'last_name'  => 'Sobrenome',
         'phone'   => 'Telefone',
-        'company'   => 'Nome da Companhia',
+        'company'   => 'Nome da Empresa',
         'address'   => 'Endereço',
         'city'   => 'Cidade',
-        'state'   => 'Estado/Provincia',
-        'postal_code'   => 'Código Postal',
+        'state'   => 'Estado/provincia',
+        'postal_code'   => 'Código postal',
         'country'   => 'Pais',
-        'number'   => 'Número',
-        'form' => 'Formulário de Endereço',
-        'addressee' => 'Endereços'
+        'number'   => 'Número da casa',
+        'form' => 'Formulario de Endereço',
+        'addressee' => 'Nome do remetente',
+        'street2' => 'Complemento'
     ],
 
     'label' => [
-        'type_address' => 'Por Favor Digite o seu Endereço',
-        'short_description' => 'Todos os endereços podem ser encontrados aqui',
-        'filter_address' => 'Filtro de endereços'
+        'type_address' => 'Digite seu endereço',
+        'short_description' => 'Todos os endereços podem ser achados aqui',
+        'filter_address' => 'Filtrar endereço',
+        'box_address' => 'Sua caixa de endereços',
+        'mailing_address' => 'Opções de Depositos'
     ]
 
 ];
