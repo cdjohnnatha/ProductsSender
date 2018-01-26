@@ -6,7 +6,9 @@ use App\Entities\Company\Warehouse\CompanyWarehouse;
 use App\Http\Controllers\Controller;
 use App\Repositories\AdminRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Validation\Rule;
+use Unicodeveloper\EmailValidator\EmailValidator;
 
 class AdminController extends Controller
 {
@@ -36,9 +38,16 @@ class AdminController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed'
         ]);
-        $this->adminRepository->store($request);
-        $request->session()->flash('success', 'Admin was successfully created!');
-        return redirect(route('admin.index'));
+
+        $emailValidator = (new \Unicodeveloper\EmailValidator\EmailValidator)->verify($request->input('email'))->isValid();
+        if($emailValidator[0]){
+            $this->adminRepository->store($request);
+            $request->session()->flash('success', 'Admin was successfully created!');
+            return redirect(route('admin.index'));
+        } else{
+            $data['emailValidation'] = $emailValidator[1];
+            return redirect()->back()->withInput()->with($data);
+        }
     }
 
     public function edit($id){

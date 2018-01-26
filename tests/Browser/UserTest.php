@@ -23,40 +23,75 @@ class UserTest extends DuskTestCase
         try {
             $this->browse(function (Browser $browser) {
                 $faker = \Faker\Factory::create();
-                $password = $faker->password(6, 10);
+                $password = '123456789';
                 $browser->visit(route('register.create'))
-
+                    ->assertSee('Name')
+                    ->assertSee('Surname')
+                    ->assertSee('Identification Document')
+                    ->assertSee('Tax Document')
+                    ->assertSee('Email')
+                    ->assertSee('Password')
                     ->type('client[name]', $faker->firstName)
                     ->click('#next_btn')
                     ->assertRouteIs('register.create')
 
+                    ->assertSee('Name')
+                    ->assertSee('Surname')
+                    ->assertSee('Identification Document')
+                    ->assertSee('Tax Document')
+                    ->assertSee('Email')
+                    ->assertSee('Password')
                     ->type('phones[0][number]', 9999999988)
                     ->click('#next_btn')
                     ->assertRouteIs('register.wizard')
 
+                    ->assertSee('Name')
+                    ->assertSee('Surname')
+                    ->assertSee('Identification Document')
+                    ->assertSee('Tax Document')
+                    ->assertSee('Email')
+                    ->assertSee('Password')
                     ->type('client[name]', $faker->firstName)
                     ->click('#next_btn')
                     ->assertRouteIs('register.wizard')
 
+                    ->assertSee('Name')
+                    ->assertSee('Surname')
+                    ->assertSee('Identification Document')
+                    ->assertSee('Tax Document')
+                    ->assertSee('Email')
+                    ->assertSee('Password')
                     ->type('client[surname]', $faker->lastName)
                     ->click('#next_btn')
                     ->assertRouteIs('register.wizard')
 
+                    ->assertSee('Name')
+                    ->assertSee('Surname')
+                    ->assertSee('Identification Document')
+                    ->assertSee('Tax Document')
+                    ->assertSee('Email')
+                    ->assertSee('Password')
                     ->type('client[identity_document]', '0000.000')
                     ->click('#next_btn')
                     ->assertRouteIs('register.wizard')
 
+                    ->assertSee('Name')
+                    ->assertSee('Surname')
+                    ->assertSee('Identification Document')
+                    ->assertSee('Tax Document')
+                    ->assertSee('Email')
+                    ->assertSee('Password')
                     ->type('client[tax_document]', '000.000.000-00')
                     ->click('#next_btn')
                     ->assertRouteIs('register.wizard')
-
-                    ->type('user[email]', 'a')
-                    ->click('#next_btn')
-                    ->assertRouteIs('register.wizard')
-
-                    ->type('user[email]', $faker->email)
-                    ->click('#next_btn')
-                    ->assertRouteIs('register.wizard')
+//
+//                    ->type('user[email]', 'a')
+//                    ->click('#next_btn')
+//                    ->assertRouteIs('register.wizard')
+//
+//                    ->type('user[email]', $faker->email)
+//                    ->click('#next_btn')
+//                    ->assertRouteIs('register.wizard')
 
                     ->type('user[email]', 'cdjohnnatha@gmail.com')
                     ->click('#next_btn')
@@ -74,9 +109,12 @@ class UserTest extends DuskTestCase
 
 
                     ->type('address[label]', $faker->name)
+                    ->click('#next_btn')
+
                     ->type('address[owner_name]', $faker->firstName)
+                    ->click('#next_btn')
                     ->type('address[owner_surname]', $faker->lastName)
-                    ->type('address[phone]', $faker->phoneNumber)
+                    ->type('address[phone]', '999999999')
                     ->type('address[company_name]', $faker->company)
                     ->type('address[number]', $faker->buildingNumber)
                     ->type('address[postal_code]', $faker->postcode)
@@ -89,7 +127,8 @@ class UserTest extends DuskTestCase
                     ->attach('usps_form', '/home/claudio/Pictures/package_1.jpg')
                     ->attach('proof_address', '/home/claudio/Pictures/package_1.jpg')
                     ->click('#register_btn')
-                    ->waitForLocation('/login');
+                    ->waitForLocation('/login')
+                    ->pause(10000);
             });
         } catch (\Exception $e) {
         } catch (\Throwable $e) {

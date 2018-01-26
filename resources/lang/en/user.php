@@ -4,7 +4,8 @@ return [
     'registration' => [
         'form_info_title' => 'User informations',
         'address_title' => 'Give a name for your address',
-        'plans_title' => 'Choose your plan'
+        'plans_title' => 'Choose your plan',
+        'confirmed' => 'The :entity was confirmed successfully',
     ],
 
     'address' => [

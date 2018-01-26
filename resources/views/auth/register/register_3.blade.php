@@ -78,7 +78,8 @@
                            value="{{ $data['client']['identity_document'] }}">
                     <input type="hidden" name="client[tax_document]" value="{{ $data['client']['tax_document'] }}">
                     <input type="hidden" name="user[email]" value="{{ $data['user']['email'] }}">
-                    <input type="hidden" name="user[password]" value="{{ $data['user']['email'] }}">
+                    <input type="hidden" name="user[password]" value="{{ $data['user']['password'] }}">
+                    <input type="hidden" name="user[password_confirmation]" value="{{ $data['user']['password_confirmation'] }}">
 
                     <input type="hidden" name="address[label]" value="{{ $data['address']['label'] }}">
                     <input type="hidden" name="address[owner_name]" value="{{ $data['address']['owner_name'] }}">

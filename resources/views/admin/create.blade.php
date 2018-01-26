@@ -29,17 +29,22 @@
                     <section class="card-body">
                         <article>
                             <section class="row">
-                                <section class="form-group col-sm-12 {{ $errors->has('email') ? ' has-error' : '' }} label-floating">
+                                @if(isset($data['emailValidation']))
+                                    {{ $data['emailValidation'] }}
+                                @endif
+                                <section class="form-group col-sm-12 {{ ($errors->has('email') || Session::has('emailValidation') ) ? ' has-error' : '' }} label-floating">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
                                         <label class="control-label">Email</label>
                                         <input type="email" class="form-control" name="email"
-                                               value="{{ $data['admin']->email or old('email') }}">
-
-                                        @if ($errors->has('email'))
+                                               value="{{ $data['admin']['email'] or old('email') }}">
+                                        @if (($errors->has('email') || Session::has('emailValidation')))
                                             <span class="help-block">
                                           <strong class="text-danger" class="alert-danger">
                                             {{ $errors->first('email') }}
+                                              @if( Session::has('emailValidation'))
+                                                {{ Session::get('emailValidation') }}
+                                              @endif
                                           </strong>
                                         </span>
                                         @endif
@@ -53,7 +58,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-key"></i></span>
                                         <label class="control-label">@lang('user.admin.password')</label>
-                                        <input type="text" class="form-control" name="password"
+                                        <input type="password" class="form-control" name="password"
                                                value="{{ old('password') }}">
 
 
@@ -70,7 +75,7 @@
 
                                 <div class="form-group col-sm-6 {{ $errors->has('password_confirmation') ? ' has-error' : '' }} label-floating">
                                     <label class="control-label">@lang('user.admin.password_confirm')</label>
-                                    <input type="text" class="form-control" name="password_confirmation">
+                                    <input type="password" class="form-control" name="password_confirmation">
                                 </div>
                             </section>
                         </article>

@@ -1,9 +1,4 @@
 <?php
-
-
-//Route::domain('app.dev.holyship.io.localhost')->group(function () {
-
-
     Auth::routes();
 
     Route::get('/locale/{locale}', 'LanguageController@update')->name('locale');
@@ -46,5 +41,4 @@
             Route::resource('user', 'UserController', ['except' => ['index']]);
         });
     });
-//});
 

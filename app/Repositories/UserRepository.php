@@ -14,6 +14,7 @@ use App\Mail\UserRegisterConfirmation;
 use App\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements RepositoryInterface
 {
@@ -41,8 +42,6 @@ class UserRepository implements RepositoryInterface
         $user->client()->create($request->input('client'));
         $address_id = $user->client->address()->create($request->input('address'));
         $user->client()->update(['default_address' => $address_id->id]);
-        $user->password = bcrypt($request->input('users.password'));
-        $user->confirmation_code = base64_encode($user->email);
 
         if($request->hasFile('identification_card')){
             $this->saveImage($request->file('identification_card'), $user);
@@ -55,23 +54,15 @@ class UserRepository implements RepositoryInterface
         if($request->hasFile('proof_address')){
             $this->saveImage($request->file('proof_address'), $user);
         }
-        Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
-        if ($user->save()) {
-            Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
-            return true;
+        return Mail::to($user->email)->send(new UserRegisterConfirmation($user->confirmation_code));
 
-        } else {
-            return false;
-
-        }
     }
 
     public function storeUserTypes($request, $userType=null)
     {
         $user = $this->model->create($request->all());
-        $user->password = bcrypt($request->input('users.password'));
         if(!is_null($userType)) {
-            $user->type = $userType;
+            return $user->update(['type' => $userType]);
         }
 
         return $user->save();

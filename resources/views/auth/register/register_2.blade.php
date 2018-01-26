@@ -188,8 +188,8 @@
                             <input type="hidden" name="client[identity_document]" value="{{ $data['client']['identity_document'] }}">
                             <input type="hidden" name="client[tax_document]" value="{{ $data['client']['tax_document'] }}">
                             <input type="hidden" name="user[email]" value="{{ $data['user']['email'] }}">
-                            <input type="hidden" name="user[password]" value="{{ $data['user']['email'] }}">
-                            <input type="hidden" name="user[password_confirmation]" value="{{ $data['user']['email'] }}">
+                            <input type="hidden" name="user[password]" value="{{ $data['user']['password'] }}">
+                            <input type="hidden" name="user[password_confirmation]" value="{{ $data['user']['password_confirmation'] }}">
                             @foreach($data['phones'] as $key => $phone)
                                 <input type="hidden" name="phones[{{ $key }}][number]" value="{{ $phone['number'] }}">
                             @endforeach

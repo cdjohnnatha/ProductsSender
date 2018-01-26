@@ -31,10 +31,11 @@ class RegisterController extends Controller
     {
         return route('user.dashboard');
     }
+
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param UserRepository $user
      */
     public function __construct(UserRepository $user)
     {
@@ -113,7 +114,6 @@ class RegisterController extends Controller
                 }
                 $page .= $step;
                 $data['step'] = $step;
-
                 break;
             case 3:
                 if($request->has('register')) {
@@ -126,11 +126,10 @@ class RegisterController extends Controller
                         $data = $request->except(['next']);
                         return view('auth.register.register_3', compact('data'))->withErrors($validator);
                     }
-                    ++$step;
-                    if($this->user->store($request)) {
-                        $request->session()->flash('info', __('email_verification.registered_message'));
-                        return redirect()->route('login');
-                    }
+                    $this->user->store($request);
+                    $request->session()->flash('info', __('email_verification.registered_message'));
+                    return redirect()->route('login');
+
                 } else {
                     --$step;
                     $data = $request->except(['_token', 'previous']);
@@ -178,8 +177,8 @@ class RegisterController extends Controller
 
     public function confirm(Request $request, $confirmation_code)
     {
-        if($this->user->confirmeAccount($confirmation_code)){
-            $request->session()->flash('success', __('statusMessage.global_message.entity.confirmed', ['entity' => __('common.titles.account')]));
+        if($this->user->confirmAccount($confirmation_code)){
+            $request->session()->flash('success', __('user.registration.confirmed'));
             return redirect()->route('login');
         } else {
             $request->session()->flash('error',
