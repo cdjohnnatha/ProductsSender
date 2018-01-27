@@ -94,6 +94,14 @@
                         $(this).attr('disabled', true);
                     }
                 }
+
+                if(checkedLength >= 1){
+                    $('#send_packages').attr('disabled', false);
+                } else {
+                    $('#send_packages').attr('disabled', true);
+                }
+
+
             });
         }
 

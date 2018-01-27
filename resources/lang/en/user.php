@@ -29,7 +29,8 @@ return [
             'amount' => 'Amount',
             'balance' => 'Balance',
             'created_at' => 'Register Date',
-            'updated_at' => 'Updated Date'
+            'updated_at' => 'Updated Date',
+            'payment_type' => 'Payment Type'
         ]
     ]
 ];

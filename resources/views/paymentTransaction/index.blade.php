@@ -20,6 +20,7 @@
                         <tr>
                             <th>ID</th>
                             <th>@lang('user.transactions.index.amount')</th>
+                            <th>@lang('user.transactions.index.payment_type')</th>
                             <th>@lang('user.transactions.index.created_at')</th>
                             <th>@lang('user.transactions.index.updated_at')</th>
                         </tr>
@@ -29,6 +30,7 @@
                             <tr>
                                 <td>{{ $transactions->id }}</td>
                                 <td>$ {{ $transactions->amount }}</td>
+                                <td>$ {{ $transactions->payment_type }}</td>
                                 <td>{{ $transactions->created_at }}</td>
                                 <td>{{ $transactions->updated_at }}</td>
                             </tr>
