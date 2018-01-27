@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnAmountToPaymentTransactions extends Migration
+class AddFieldPaymentTypeToPaymentTransactions extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddColumnAmountToPaymentTransactions extends Migration
     public function up()
     {
         Schema::table('payment_transactions', function (Blueprint $table) {
-            $table->decimal('amount');
+            $table->string('payment_type', 50);
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnAmountToPaymentTransactions extends Migration
     public function down()
     {
         Schema::table('payment_transactions', function (Blueprint $table) {
-            $table->dropColumn('amount');
+            $table->dropColumn('payment_type');
         });
     }
 }

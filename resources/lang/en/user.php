@@ -8,7 +8,8 @@ return [
     'registration' => [
         'form_info_title' => 'User informations',
         'address_title' => 'Give a name for your address',
-        'plans_title' => 'Choose your plan'
+        'plans_title' => 'Choose your plan',
+        'confirmed' => 'The :entity was confirmed successfully',
     ],
 
     'address' => [
@@ -33,6 +34,17 @@ return [
             'email' => 'Email',
             'identity_document' => 'Identity Document',
             'tax_document' => 'Tax Document',
+            ]
+        ],
+
+    'transactions' => [
+        'title' => 'Transactions',
+        'index' => [
+            'amount' => 'Amount',
+            'balance' => 'Balance',
+            'created_at' => 'Register Date',
+            'updated_at' => 'Updated Date',
+            'payment_type' => 'Payment Type'
 
         ]
     ]

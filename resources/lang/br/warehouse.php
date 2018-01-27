@@ -9,12 +9,17 @@ return [
         'warehouse_phone' => 'Phone number for this warehouse',
         'storage_time' => 'Storage time',
         'box_price' => 'Box price',
-        'select_warehouse' => 'Select warehouse'
+        'select_warehouse' => 'Select warehouse',
+        'days' => 'Days'
     ],
 
     'titles' => [
         'warehouses_address' => 'Address Warehouses'
-    ]
+    ],
+
+    'addons' => [
+      'price' => 'Price'
+    ],
 
 
 

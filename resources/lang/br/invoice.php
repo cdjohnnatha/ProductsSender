@@ -22,15 +22,10 @@ return [
         'history' => 'History',
         'short_title_inbox' => 'Invoices at inbox can be found here',
         'make_payment' => 'Make Payment',
-        'add_payment' => 'Add Payment to Wallet',
         'number' => 'Number',
         'amount' => 'Amount',
         'status' => 'Status',
         'actions' => 'Actions'
     ],
-
-    'create' => [
-        'payment_options' => 'Payment Options'
-    ]
 
 ];

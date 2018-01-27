@@ -6,6 +6,7 @@ use App\Entities\Entity;
 use App\Entities\Invoice\Invoice;
 use App\Entities\Order\Order;
 use App\Entities\Package\Package;
+use App\Entities\PaymentTransaction;
 use App\Entities\User;
 
 class Client extends Entity
@@ -57,5 +58,15 @@ class Client extends Entity
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function paymentTransactions()
+    {
+        return $this->hasMany(PaymentTransaction::class);
+    }
+
+    public function walletResult()
+    {
+        return $this->paymentTransactions()->sum('amount');
     }
 }

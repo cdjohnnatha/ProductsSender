@@ -18,7 +18,7 @@ return [
 
     'register' => [
         'user_informations' => 'Personal Informations',
-        'user_address' => 'Your Address',
+        'user_address' => 'Address Name',
         'user_documents' => 'Required Documents',
         'name' => 'Name',
         'surname' => 'Surname',

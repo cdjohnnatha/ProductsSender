@@ -87,7 +87,6 @@
 
         function loadCheckbox() {
             $('input[type="checkbox"]').each(function () {
-                console.log('all');
                 if (warehouse_id == 0) {
                     $(this).attr('disabled', false);
                 } else {
@@ -95,6 +94,14 @@
                         $(this).attr('disabled', true);
                     }
                 }
+
+                if(checkedLength >= 1){
+                    $('#send_packages').attr('disabled', false);
+                } else {
+                    $('#send_packages').attr('disabled', true);
+                }
+
+
             });
         }
 

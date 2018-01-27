@@ -30,7 +30,7 @@
                 <header class="card-heading">
                     <ul class="card-actions right-top">
                         <li>
-                            <button type="button" id="send_packages" class="btn btn-info btn-flat">
+                            <button type="button" id="send_packages" class="btn btn-info btn-flat" disabled>
                                 <i class="zmdi zmdi-mail-send"></i>
                                 @lang('packages.index.btn_send_packages')
                             </button>

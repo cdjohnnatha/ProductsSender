@@ -27,19 +27,6 @@ class WarehouseSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
-        DB::table('company_warehouse_addresses')->insert([
-            'country' => 'USA',
-            'street' => '44 Shirley Ave.',
-            'street2' => '',
-            'city' => 'West Chicago',
-            'state' => 'IL',
-            'postal_code' => '60185',
-            'number' => '44',
-            'formatted_address' => '44 Shirley Ave. West Chicago, IL 60185',
-            'company_warehouse_id' => 2,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        ]);
 
         DB::table('company_warehouse_addons')->insert([
             'company_warehouse_id' => 1,
@@ -53,22 +40,6 @@ class WarehouseSeeder extends Seeder
             'company_warehouse_id' => 1,
             'company_addons_id' => 1,
             'price' => 2.00,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        ]);
-
-        DB::table('company_warehouse_addons')->insert([
-            'company_warehouse_id' => 2,
-            'company_addons_id' => 2,
-            'price' => 2.35,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        ]);
-
-        DB::table('company_warehouse_addons')->insert([
-            'company_warehouse_id' => 2,
-            'company_addons_id' => 2,
-            'price' => 3.00,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -92,11 +63,10 @@ class WarehouseSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
-        DB::table('company_warehouse_fee_rules')->insert([
-            'fee_rules_id' => 2,
-            'company_warehouse_id' => 2,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        DB::table('company_warehouse_phones')->insert([
+           'number' => '999999999',
+            'company_warehouse_id' => 1
         ]);
+
     }
 }

@@ -135,8 +135,13 @@
                                         <span class="total">${{ $data['invoice']->amount }}</span>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary btn-round pull-right m-t-20 m-b-20">Make a Payment
-                                </button>
+                                @if($data['invoice']->invoiceStatus->message != 'PAYED')
+                                    <form action="{{ route('user.invoices.store') }}" method="POST" role="form">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="invoices_id[]" value="{{ $data['invoice']->id }}">
+                                        <button type="submit" class="btn btn-primary btn-round pull-right m-t-20 m-b-20">Make a Payment</button>
+                                    </form>
+                                @endif
                             </div>
                             <footer class="invoice-footer">
                                 <div class="row">

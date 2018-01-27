@@ -42,6 +42,12 @@
           </a>
         </li>
 
+        <li class="{{ Route::is('user.payment_transactions.*') ? 'active' : '' }}">
+          <a href="{{ Route('user.payment_transactions.index') }}">
+            <i class="zmdi zmdi-balance-wallet"></i>
+            @lang('nav_left_menu_client.transactions')
+          </a>
+        </li>
       </ul>
     </div>
   </nav>

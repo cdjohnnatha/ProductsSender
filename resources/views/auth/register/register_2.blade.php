@@ -66,7 +66,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
                                         <label class="control-label">{{__('address.titles.phone')}}</label>
-                                        <input type="text" class="form-control" name="address[phone]"
+                                        <input type="number" class="form-control" name="address[phone]"
                                                value="{{ $data['address']['phone'] or old('address.phone') }}">
 
                                         @if ($errors->has('address.phone'))
@@ -188,8 +188,8 @@
                             <input type="hidden" name="client[identity_document]" value="{{ $data['client']['identity_document'] }}">
                             <input type="hidden" name="client[tax_document]" value="{{ $data['client']['tax_document'] }}">
                             <input type="hidden" name="user[email]" value="{{ $data['user']['email'] }}">
-                            <input type="hidden" name="user[password]" value="{{ $data['user']['email'] }}">
-                            <input type="hidden" name="user[password_confirmation]" value="{{ $data['user']['email'] }}">
+                            <input type="hidden" name="user[password]" value="{{ $data['user']['password'] }}">
+                            <input type="hidden" name="user[password_confirmation]" value="{{ $data['user']['password_confirmation'] }}">
                             @foreach($data['phones'] as $key => $phone)
                                 <input type="hidden" name="phones[{{ $key }}][number]" value="{{ $phone['number'] }}">
                             @endforeach

@@ -18,7 +18,7 @@
       <ul class="card-actions left-bottom">
         <li>
           <a href="javascript:void(0)" class="btn btn-flat {{ $default ? 'btn-default' : 'btn-info' }}"
-            {{ $default ? 'disabled' : ''}} onclick="$('#form-makedefault-{{ $address->id }}').submit();">
+            {{ $default ? 'disabled' : ''}} onclick="{{ $default ? '' : "$('#form-makedefault-". $address->id ."').submit();" }}">
             <i class="zmdi {{$default ? 'zmdi-star' : 'zmdi-star-border'}}"></i> Make default
           </a>
           <form action="{{ Route('user.addresses.default', $address->id) }}"

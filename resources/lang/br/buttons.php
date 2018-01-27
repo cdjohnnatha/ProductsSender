@@ -16,9 +16,12 @@ return [
         'next' => 'Próximo',
         'previous' => 'Anterior',
         'confirm' => 'Confirmar',
-        'incoming_package_inform' => 'Informar pacotes a chegar',
-        'send_package' => 'Mandar um Pacote',
-        'merge_packages' => 'Unir Pacotes'
+        'incoming_package_inform' => 'Informar pacote a chegar',
+        'send_package' => 'Enviar Pacote',
+        'merge_packages' => 'Unir Pacotes',
+        'required_custom_clearance' => 'Declaração de bens',
+        'done' => 'Terminar',
+        'sent' => 'Enviar'
     ],
 
 

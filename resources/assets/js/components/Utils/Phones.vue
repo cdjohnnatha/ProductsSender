@@ -8,7 +8,7 @@
         </header>
         <div class="form-group col-sm-3" v-for="(phone, index) in phones">
           <div class="input-group">
-            <input v-bind:name="'phones['+index+'][number]'" class="form-control" type="text"
+            <input v-bind:name="'phones['+index+'][number]'" class="form-control" type="number"
                    v-model="phone.number" v-bind:id="'input-number-' + index" required>
             <div v-bind:hidden="true">
               <input type="number" v-bind:name="'phones['+index+'][id]'" v-bind:value="phone.id">

@@ -105,17 +105,20 @@
 
                             <section class="row">
                                 <section
-                                        class="form-group col-sm-12 {{ $errors->has('user.email') ? ' has-error' : '' }} label-floating">
+                                        class="form-group col-sm-12 {{ ($errors->has('user.email') || isset($data['emailValidation']) ) ? ' has-error' : '' }} label-floating">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
                                         <label class="control-label">@lang('auth.register.email')</label>
                                         <input type="email" class="form-control" name="user[email]"
                                                value="{{ $data['user']['email'] or old('user.email') }}">
 
-                                        @if ($errors->has('user.email'))
+                                        @if ($errors->has('user.email') || isset($data['emailValidation']))
                                             <span class="help-block">
                                                   <strong class="text-danger" class="alert-danger">
                                                     {{ $errors->first('user.email') }}
+                                                      @if(isset($data['emailValidation']))
+                                                        {{ $data['emailValidation'] }}
+                                                      @endif
                                                   </strong>
                                                 </span>
                                         @endif
@@ -125,18 +128,18 @@
                             </section>
 
                             <section class="row">
-                                <div class="form-group col-sm-6  label-floating {{ $errors->has('password') ? 'has-error' : '' }}">
+                                <div class="form-group col-sm-6  label-floating {{ $errors->has('user.password') ? 'has-error' : '' }}">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-key"></i></span>
                                         <label class="control-label">@lang('auth.register.password')</label>
                                         <input type="password" class="form-control" name="user[password]"
-                                               value="{{ old('password') }}">
+                                               value="{{ old('user.password') }}">
 
 
-                                        @if ($errors->has('password'))
+                                        @if ($errors->has('user.password'))
                                             <span class="help-block">
                                                     <strong class="text-danger" class="alert-danger">
-                                                      {{ $errors->first('password') }}
+                                                      {{ $errors->first('user.password') }}
                                                     </strong>
                                                   </span>
                                             <span class="zmdi zmdi-close form-control-feedback"></span>
@@ -144,7 +147,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-sm-6 {{ $errors->has('password_confirmation') ? ' has-error' : '' }} label-floating">
+                                <div class="form-group col-sm-6 {{ $errors->has('user.password_confirmation') ? ' has-error' : '' }} label-floating">
                                     <label class="control-label">@lang('auth.register.password_confirm')</label>
                                     <input type="password" class="form-control" name="user[password_confirmation]">
                                 </div>

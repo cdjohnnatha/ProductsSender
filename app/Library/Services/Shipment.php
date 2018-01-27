@@ -15,7 +15,6 @@ class Shipment
     {
         $rates = array();
         foreach ($packages as $package) {
-//
             $addressFrom = $this->validateAddress(
                 $package->companyWarehouse->name,
                 $package->companyWarehouse->address,

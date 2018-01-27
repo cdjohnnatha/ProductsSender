@@ -10,8 +10,14 @@
     <ul class="nav navbar-nav left-menu hidden-xs">
       <li>
         <span>
-          <a href="">
-            <i class="zmdi zmdi-balance-wallet zmdi-2x"></i>
+          <a href="{{ route('user.payment_transactions.index') }}">
+            <i class="zmdi zmdi-balance-wallet zmdi-2x">
+              <?php if(is_null(Auth::user()->client->walletResult())){
+                  echo "0.00";
+                } else{
+                  echo Auth::user()->client->walletResult();
+                } ?>
+            </i>
           </a>
         </span>
       </li>
