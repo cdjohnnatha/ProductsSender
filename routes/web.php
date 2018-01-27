@@ -35,7 +35,8 @@
                 Route::get('read-all', 'NotificationsController@markAll')->name('notifications.mark.all');
                 Route::resource('addresses', 'ClientAddressController');
                 Route::post('addresses/default/{id}', 'ClientAddressController@defaultAddress')->name('addresses.default');
-                Route::resource('invoices', 'ClientInvoicesController', ['only' => ['index', 'show']]);
+                Route::resource('invoices', 'ClientInvoicesController', ['only' => ['index', 'show', 'store']]);
+                Route::resource('payment_transactions', 'ClientTransactionsController');
             });
 
             Route::resource('user', 'UserController', ['except' => ['index']]);

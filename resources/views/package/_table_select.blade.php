@@ -87,7 +87,6 @@
 
         function loadCheckbox() {
             $('input[type="checkbox"]').each(function () {
-                console.log('all');
                 if (warehouse_id == 0) {
                     $(this).attr('disabled', false);
                 } else {

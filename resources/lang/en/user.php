@@ -21,5 +21,15 @@ return [
         'password' => 'Password',
         'password_confirm' => 'Password Confirm',
         'select_company' => 'Select Company'
+    ],
+
+    'transactions' => [
+        'title' => 'Transactions',
+        'index' => [
+            'amount' => 'Amount',
+            'balance' => 'Balance',
+            'created_at' => 'Register Date',
+            'updated_at' => 'Updated Date'
+        ]
     ]
 ];

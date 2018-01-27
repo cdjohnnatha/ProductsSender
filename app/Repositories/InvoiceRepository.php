@@ -17,12 +17,19 @@ class InvoiceRepository
     private $allRelations;
     private $invoiceStatusRepository;
     private $clientRepository;
+    private $transactionRepository;
 
-    public function __construct(Invoice $invoice, InvoiceStatusRepository $invoiceStatusRepository, ClientRepository $clientRepository)
+    public function __construct(
+        Invoice $invoice,
+        InvoiceStatusRepository $invoiceStatusRepository,
+        ClientRepository $clientRepository,
+        TransactionRepository $transactionRepository
+    )
     {
         $this->model = $invoice;
         $this->invoiceStatusRepository = $invoiceStatusRepository;
         $this->clientRepository = $clientRepository;
+        $this->transactionRepository = $transactionRepository;
         $this->allRelations = [
             'invoiceOrder',
             'invoiceStatus',
@@ -45,9 +52,37 @@ class InvoiceRepository
         return $this->model->create($attributes);
     }
 
+
     public function update($id, $request)
     {
-        // TODO: Implement update() method.
+
+    }
+
+    public function makePayment($client, $request)
+    {
+        $balance = $client->walletResult();
+        $invoiceTotal = 0;
+        $invoicesArr = array();
+        foreach ($request->input('invoices_id') as $invoice) {
+            $invoice = $this->findById($invoice);
+            $invoiceTotal += $invoice->amount;
+            array_push($invoicesArr, $invoice);
+        }
+
+        if($invoiceTotal > $balance) {
+            return false;
+        } else {
+            foreach($invoicesArr as $invoice){
+                if($this->transactionRepository->createFromInvoice([
+                    'client_id' => $invoice->client_id,
+                    'amount' => -$invoice->amount,
+                    'payment_type' => 'Invoice'
+                ])){
+                    $this->updateStatus($invoice, 'PAYED');
+                }
+            }
+            return true;
+        }
     }
 
     public function findById($attribute)
@@ -64,5 +99,20 @@ class InvoiceRepository
     {
         $client = $this->clientRepository->findById($clientId);
         return $client->invoices;
+    }
+
+    public function getNotPayedList($clientId)
+    {
+        $payedStatus = $this->invoiceStatusRepository->findByMessage('PAYED');
+        return $this->model
+            ->with($this->allRelations)
+            ->where('client_id', $clientId)
+            ->where('invoice_status_id', '!=', $payedStatus->id)->get();
+    }
+
+    public function updateStatus($invoice, $status)
+    {
+        $status = $this->invoiceStatusRepository->findByMessage($status);
+        $invoice->update(['invoice_status_id' => $status->id]);
     }
 }

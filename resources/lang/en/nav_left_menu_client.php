@@ -6,6 +6,7 @@ return [
     'dashboard' => 'Dashboard',
     'address' => 'Address',
     'orders' => 'Orders',
-    'invoices' => 'Invoices'
+    'invoices' => 'Invoices',
+    'transactions' => 'Transactions'
 
 ];
