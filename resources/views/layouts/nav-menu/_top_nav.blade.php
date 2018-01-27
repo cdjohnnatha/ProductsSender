@@ -43,9 +43,9 @@
             <a href=""><i class="zmdi zmdi-account"></i> @lang('user.profile')</a>
           @endif
         </li>
-        <li>
-          <a href="javascript:void(0)"><i class="zmdi zmdi-settings"></i> Account Settings</a>
-        </li>
+        {{--<li>--}}
+          {{--<a href="javascript:void(0)"><i class="zmdi zmdi-settings"></i> Account Settings</a>--}}
+        {{--</li>--}}
         <li>
           <a href="{{Route('logout')}}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
