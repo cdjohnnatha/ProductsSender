@@ -23,7 +23,7 @@
             Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
                 Route::get('/dashboard', 'UserController@dashboard')->name('dashboard');
                 Route::get('/notifications', 'NotificationsController@notifications')->name('notifications');
-                Route::resource('/clients', 'ClientController');
+                Route::resource('/clients', 'ClientController', ['only' => ['show', 'update']]);
 
                 Route::group(['as' => 'packages.', 'prefix' => 'packages'], function(){
                     Route::post('/wizard', 'ClientPackageController@wizard')->name('wizard');

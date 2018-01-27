@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Client;
 use App\Repositories\ClientRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 
 class ClientController extends Controller
 {
@@ -15,54 +16,12 @@ class ClientController extends Controller
         $this->clientRepository = $clientRepository;
     }
 
-    public function index()
-    {
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $data['client'] = $this->clientRepository->findById($id);
         return view('user.client.show', compact('data'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -73,17 +32,21 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $this->validate($request,[
+            'name' => 'required',
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($id),
+            ],
+            'surname' => 'required',
+            'identity_document' => 'required',
+            'tax_document' => 'required'
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if($this->clientRepository->update($id, $request->input())){
+            $request->session()->flash('success', 'Updated Successfully!');
+            return redirect()->back();
+        }
+
     }
 }
