@@ -13,10 +13,11 @@ return [
         'state'   => 'State/province',
         'postal_code'   => 'Postal Code ',
         'country'   => 'Country',
-        'number'   => 'House Number',
+        'number'   => 'House/Building Number',
         'form' => 'Address form',
         'addressee' => 'Addressee',
-        'street2' => 'Address Complement'
+        'street2' => 'Address Complement',
+        'street2_additional_info' => ' apartment/suite number, if applicable'
     ],
 
     'label' => [

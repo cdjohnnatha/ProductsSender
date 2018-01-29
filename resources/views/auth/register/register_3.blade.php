@@ -9,64 +9,41 @@
                         {{ csrf_field() }}
 
                         <section class="row">
-                            <section class="col-sm-6">
-                                <div class="form-group is-empty">
+                            <div class="form-group is-empty">
+                                <div class="input-group col-sm-8" data-placement="bottom" title="{{ __('auth.register.placeholder_identity') }}">
+                                    <input type="file" class="form-control" placeholder="File Upload..."
+                                           name="identification_card" accept="image/*">
                                     <div class="input-group">
-                                        <input type="file" class="form-control" placeholder="File Upload..."
-                                               name="identification_card" accept="image/*">
-                                        <div class="input-group">
-                                            <label for="">Documentation</label>
-                                            <input type="text" readonly="" class="form-control"
-                                                   placeholder="Upload of identification card (both sides)">
-                                            <span class="input-group-btn input-group-sm">
-                                                      <button type="button" class="btn btn-info btn-fab btn-fab-sm">
-                                                        <i class="zmdi zmdi-attachment-alt"></i>
-                                                      </button>
-                                                    </span>
-                                        </div>
+                                        <label for="">@lang('auth.register.identity_document')</label>
+                                        <input type="text" readonly="" class="form-control"
+                                               placeholder="{{ __('auth.register.placeholder_input_identity') }}">
+                                        <span class="input-group-btn input-group-sm">
+                                              <button type="button" class="btn btn-info btn-fab btn-fab-sm">
+                                                <i class="zmdi zmdi-attachment-alt"></i>
+                                              </button>
+                                            </span>
                                     </div>
                                 </div>
-                            </section>
-
-                            <section class="col-sm-6">
-                                <div class="form-group is-empty">
-                                    <div class="input-group">
-                                        <input type="file" class="form-control" placeholder="Form of USPS" name="usps_form" accept="image/*">
-                                        <div class="input-group">
-                                            <label for="">Signed USPS 1583 Form</label>
-                                            <input type="text" readonly="" class="form-control"
-                                                   placeholder="Upload a picture of USPS 1583 form">
-                                            <span class="input-group-btn input-group-sm">
-                                                      <button type="button" class="btn btn-info btn-fab btn-fab-sm">
-                                                        <i class="zmdi zmdi-attachment-alt"></i>
-                                                      </button>
-                                                    </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
+                            </div>
                         </section>
 
                         <section class="row">
-                            <section class="col-sm-12">
-                                <div class="form-group is-empty">
+                            <div class="form-group is-empty">
+                                <div class="input-group  col-sm-8" data-placement="bottom" title="{{ __('auth.register.placeholder_proof_your_address') }}">
+                                    <input type="file" class="form-control" placeholder="File Upload..." name="proof_address"
+                                           accept="application/pdf, image/*">
                                     <div class="input-group">
-                                        <input type="file" class="form-control" placeholder="File Upload..."
-                                               name="proof_address"
-                                               accept="application/pdf, image/*">
-                                        <div class="input-group">
-                                            <label for="">Proof of Address</label>
-                                            <input type="text" readonly="" class="form-control"
-                                                   placeholder="Upload proof of address">
-                                            <span class="input-group-btn input-group-sm">
-                                                      <button type="button" class="btn btn-info btn-fab btn-fab-sm">
-                                                        <i class="zmdi zmdi-attachment-alt"></i>
-                                                      </button>
-                                                    </span>
-                                        </div>
+                                        <label for="">Proof of Address</label>
+                                        <input type="text" readonly="" class="form-control"
+                                               placeholder="Upload proof of address">
+                                        <span class="input-group-btn input-group-sm">
+                                              <button type="button" class="btn btn-info btn-fab btn-fab-sm">
+                                                <i class="zmdi zmdi-attachment-alt"></i>
+                                              </button>
+                                            </span>
                                     </div>
                                 </div>
-                            </section>
+                            </div>
                         </section>
                     </section>
 
@@ -79,7 +56,8 @@
                     <input type="hidden" name="client[tax_document]" value="{{ $data['client']['tax_document'] }}">
                     <input type="hidden" name="user[email]" value="{{ $data['user']['email'] }}">
                     <input type="hidden" name="user[password]" value="{{ $data['user']['password'] }}">
-                    <input type="hidden" name="user[password_confirmation]" value="{{ $data['user']['password_confirmation'] }}">
+                    <input type="hidden" name="user[password_confirmation]"
+                           value="{{ $data['user']['password_confirmation'] }}">
 
                     <input type="hidden" name="address[label]" value="{{ $data['address']['label'] }}">
                     <input type="hidden" name="address[owner_name]" value="{{ $data['address']['owner_name'] }}">

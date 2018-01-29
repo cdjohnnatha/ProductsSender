@@ -8,8 +8,8 @@
                     <section class="form-group">
                         {{ csrf_field() }}
                             <section class="row">
-                                <div class="form-group col-sm-4 label-floating {{ $errors->has('address.label') ? 'has-error' : '' }}">
-                                    <div class="input-group">
+                                <div class="form-group col-sm-4 label-floating {{ $errors->has('address.label') ? 'has-error' : '' }}" >
+                                    <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Home,apartment,My uncle's home...">
                                         <span class="input-group-addon"><i class="zmdi zmdi-store"></i></span>
                                         <label class="control-label">@lang('auth.register.user_address')</label>
                                         <input type="text" class="form-control" name="address[label]"
@@ -31,7 +31,7 @@
                                         <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
                                         <label class="control-label">{{__('common.name')}}</label>
                                         <input type="text" class="form-control" name="address[owner_name]"
-                                               value="{{ $data['address']['owner_name'] or old('address.owner_name') }}">
+                                               value="{{ $data['client']['name'] or old('address.owner_name') }}">
                                     </div>
 
                                     @if ($errors->has('address.owner_name'))
@@ -49,7 +49,7 @@
                                             <span class="input-group-addon"><i class="zmdi zmdi-account-box"></i></span>
                                             <label class="control-label">{{__('common.surname')}}</label>
                                             <input type="text" class="form-control" name="address[owner_surname]"
-                                                   value="{{ $data['address']['owner_surname'] or old('address.owner_surname') }}">
+                                                   value="{{ $data['client']['surname'] or old('address.owner_surname') }}">
                                         </div>
                                         @if ($errors->has('address.owner_surname'))
                                             <span class="help-block">
@@ -82,7 +82,7 @@
                                 <section class="form-group col-sm-8 label-floating {{ $errors->has('address.company_name') ? ' has-error' : '' }} label-floating">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-city"></i></span>
-                                        <label class="control-label">{{__('address.titles.company')}}</label>
+                                        <label class="control-label">@lang('address.titles.company') <small style="color: #bdbdbd;">(@lang('auth.register.optional'))</small></label>
                                         <input type="text" class="form-control" name="address[company_name]"
                                                value="{{ $data['address']['company_name'] or old('address.company_name') }}">
 
@@ -103,7 +103,7 @@
                                 <section class="form-group col-sm-2 label-floating {{ $errors->has('address.number') ? 'has-error' : '' }}">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
-                                        <label class="control-label">@lang('address.titles.number')</label>
+                                        <label class="control-label"><small>@lang('address.titles.number')</small></label>
                                         <input type="text" class="form-control" name="address[number]" value="{{ $data['address']['number'] or old('address.number') }}">
                                     </div>
                                     @if ($errors->has('address.number'))
@@ -143,7 +143,10 @@
                                 <div class="form-group col-sm-5 {{ $errors->has('address.street2') ? ' has-error' : '' }} label-floating">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-pin"></i></span>
-                                        <label class="control-label">{{__('address.titles.street2')}}</label>
+                                        <label class="control-label">
+                                            @lang('address.titles.street2')
+                                            <small style="color: #bdbdbd;">( @lang('address.titles.street2_additional_info') )</small>
+                                        </label>
                                         <input type="text" class="form-control" name="address[street2]"
                                                value="{{ $data['address']['street2'] or old('address.street2') }}">
                                     </div>

@@ -18,11 +18,11 @@ return [
 
     'register' => [
         'user_informations' => 'Personal Informations',
-        'user_address' => 'Address Name',
+        'user_address' => 'Name Your Address',
         'user_documents' => 'Required Documents',
         'name' => 'Name',
         'surname' => 'Surname',
-        'identity_document'    => 'Identification Document',
+        'identity_document'    => 'Identity Document',
         'tax_document'  => 'Tax Document',
         'phones'   => 'Phones',
         'email'   => 'Email',
@@ -34,7 +34,11 @@ return [
         'country'   => 'Country',
         'number'   => 'House Number',
         'addressee' => 'Addressee',
-        'street2' => 'Address Complement'
+        'street2' => 'Address Complement',
+        'optional' => 'Optional',
+        'placeholder_input_identity' => 'Upload picture(s) of an ID card (both sides) with photo',
+        'placeholder_proof_your_address' => 'An utility bill: Internet/paid TV, credit card/bank statement containing your home address.',
+        'placeholder_identity' => 'ID card, Driver\'s License, Citizen Card, Passport.',
     ]
 
 ];
