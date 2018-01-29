@@ -118,10 +118,11 @@ class RegisterController extends Controller
             case 3:
                 if($request->has('register')) {
                     $validator = Validator::make($request->all(), [
-                        'identification_card' => 'required|image|max:5000',
-                        'usps_form' => 'required|image|max:5000',
+                        'identification_card' => 'required|array|min:1',
+                        'identification_card.*' => 'image|max:5000',
                         'proof_address' => 'required|image|max:5000',
                     ]);
+
                     if($validator->fails()){
                         $data = $request->except(['next']);
                         return view('auth.register.register_3', compact('data'))->withErrors($validator);

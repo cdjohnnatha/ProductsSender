@@ -10,9 +10,9 @@
 
                         <section class="row">
                             <div class="form-group is-empty">
-                                <div class="input-group col-sm-8" data-placement="bottom" title="{{ __('auth.register.placeholder_identity') }}">
+                                <div class="input-group col-sm-8 {{ $errors->has('identification_card') ? 'has-error' : '' }}" data-placement="bottom" title="{{ __('auth.register.placeholder_identity') }}">
                                     <input type="file" class="form-control" placeholder="File Upload..."
-                                           name="identification_card" accept="image/*">
+                                           name="identification_card[]" accept="image/*" multiple="multiple">
                                     <div class="input-group">
                                         <label for="">@lang('auth.register.identity_document')</label>
                                         <input type="text" readonly="" class="form-control"
@@ -23,13 +23,21 @@
                                               </button>
                                             </span>
                                     </div>
+                                    @if ($errors->has('identification_card'))
+                                        <span class="help-block">
+                                                <strong class="text-danger" class="alert-danger">
+                                                  {{ $errors->first('identification_card') }}
+                                                    <span class="zmdi zmdi-close form-control-feedback" aria-hidden="true"></span>
+                                                </strong>
+                                            </span>
+                                    @endif
                                 </div>
                             </div>
                         </section>
 
                         <section class="row">
                             <div class="form-group is-empty">
-                                <div class="input-group  col-sm-8" data-placement="bottom" title="{{ __('auth.register.placeholder_proof_your_address') }}">
+                                <div class="input-group col-sm-8 {{ $errors->has('proof_address') ? 'has-error' : '' }}" data-placement="bottom" title="{{ __('auth.register.placeholder_proof_your_address') }}">
                                     <input type="file" class="form-control" placeholder="File Upload..." name="proof_address"
                                            accept="application/pdf, image/*">
                                     <div class="input-group">
@@ -43,6 +51,14 @@
                                             </span>
                                     </div>
                                 </div>
+                                @if ($errors->has('proof_address'))
+                                    <span class="help-block">
+                                        <strong class="text-danger" class="alert-danger">
+                                          {{ $errors->first('proof_address') }}
+                                            <span class="zmdi zmdi-close form-control-feedback" aria-hidden="true"></span>
+                                        </strong>
+                                    </span>
+                                @endif
                             </div>
                         </section>
                     </section>

@@ -44,7 +44,10 @@ class UserRepository implements RepositoryInterface
         $user->client()->update(['default_address' => $address_id->id]);
 
         if($request->hasFile('identification_card')){
-            $this->saveImage($request->file('identification_card'), $user);
+            foreach($request->file('identification_card') as $image){
+                $this->saveImage($image, $user);
+            }
+
         }
 
         if($request->hasFile('usps_form')){
